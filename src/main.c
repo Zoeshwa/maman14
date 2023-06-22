@@ -1,99 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "first_pass.h"
+#include "main.h"
 
 #define MAX_LEN 80
 
-
-// Macro_Node in macro linked list
-struct Macro_Node {
-    char* name;
-    char* content;
-    int lines;
-    struct Macro_Node* next;
-};
-
-// Function to insert a new Macro_Node at the beginning of the list
-void insertMacro_Node(struct Macro_Node** head, char* name) {
-    // Create a new Macro_Node
-    struct Macro_Node* newMacro_Node = (struct Macro_Node*)malloc(sizeof(struct Macro_Node));
-    // Allocate memory for the name and copy the string
-    newMacro_Node->name = (char*)malloc((strlen(name) + 1) * sizeof(char));
-    strcpy(newMacro_Node->name, name);
-    newMacro_Node->content = (char*)malloc(MAX_LEN*sizeof(char));
-    int lines =0;
-    newMacro_Node->next = NULL;
-
-    // If the list is empty, make the new Macro_Node the head of the list
-    if (*head == NULL) {
-        *head = newMacro_Node;
-    } else {
-        // Otherwise, insert the new Macro_Node at the beginning
-        newMacro_Node->next = *head;
-        *head = newMacro_Node;
-    }
-}
-
-/* gets a pointer and moves it forward untill reaches non white char */
-char* skip_spaces(char* p){
-	while (*p == ' ' || *p == '	'){
-		p++;
-	}
-	return p;
-}
-
-char* get_next_word(char* str, char* word, char* ptr){
-    int i=0;
-    ptr = skip_spaces(ptr);
-    while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t'){
-        word[i] = *ptr;
-        i++;
-        ptr++;
-    }
-    word[i] = '\0';
-return word;
-}
-
-
-void make_am_name(char* file, char* name){
-    int i =0;
-    while (*file != '.'){
-         name[i] = *file;
-         i++;
-         file++;
-    }
-    name[i++] = '.';
-    name[i++] = 'a';
-    name[i++] = 'm';
-    name[i] = '\0';
-}
-
-void update_macro_contect(struct Macro_Node** head, char* line){
-    (*head)->lines += 1;
-    (head)->content = (char)realloc((head)->content, MAX_LEN(*head)->lines*sizeof(char));
-    //first insertion of content
-    if ((*head)->lines == 1){(*head)->content[0] = '\0';}
-    line = skip_spaces(line);
-    strcat( (*head)->content, line);
-    printf("macro contect is: %s\n", (*head)->content );
-}
-
-struct Macro_Node* search_macro_list(struct Macro_Node* head, char* name) {
-    struct Macro_Node* current = head;
-
-    // Traverse the list and search for the target value
-    while (current != NULL) {
-        if (strcmp(current->name,name) == 0) {
-            printf("found in macro list. macro %s\n", current->name);
-            return current;  // Found the value, return the Macro_Node
-        }
-        current = current->next;
-    }
-    printf("not in macro list\n");
-    return NULL;  // Value not found, return NULL
-}
-
+//TODO
 // update_data_list ( ){
 //                     if (Data_head = NULL){ //first line
 //                         insertIns_Node(&Data_head, DC);
@@ -192,7 +104,6 @@ void main(int argc, char* argv[]){
             p = input;
             char* lable = NULL;
             
-
             if (empty_line(input) || comment_line(input)){continue;}
 
             //otherwise lines should be added
@@ -229,16 +140,12 @@ void main(int argc, char* argv[]){
             }
             else{ // is instruction
                 if (lable != NULL){
-                    insertLable_Node(&Lables_head, lable, DC , 1); //1 is for DC 0 for IC
+                    //TODO: not compiling
+                    // insertLable_Node(&Lables_head, lable, DC , 1); //1 is for DC 0 for IC
                 }
                 cur_line = update_Ins_list(cur_line, p, input, IC);
 
             }
-
-
-         
-        
-        
         
         }    
 

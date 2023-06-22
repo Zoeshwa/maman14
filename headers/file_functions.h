@@ -1,0 +1,1 @@
+void make_am_name(char* file, char* name);
