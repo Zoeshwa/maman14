@@ -4,31 +4,31 @@
 #include "line_functions.h"
 
 
-//Description: check if a given line is empty
-//Input: a string line (pointer to array of chars)
-//Output: 1 - true, the line have only space chars, 0- false the line is not empty
+/*Description: check if a given line is empty*/
+/*Input: a string line (pointer to array of chars)*/
+/*Output: 1 - true, the line have only space chars, 0- false the line is not empty*/
 int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
-    if (*pointer == '\n' || *pointer == '\0'){ //TODO/ASK: add EOF?
-        return 1; //return true
+    if (*pointer == '\n' || *pointer == '\0'){ /*TODO/ASK: add EOF?*/
+        return 1; /*return true*/
     }
     else{
-        return 0; //return false
+        return 0; /*return false*/
     }
 }
 
-//Description: check if a given line is a commant line
-//Input: a string line (pointer to array of chars)
-//Output: 1 - true, the line is a commant, 0- false the line is not a commant
+/*Description: check if a given line is a commant line*/
+/*Input: a string line (pointer to array of chars)*/
+/*Output: 1 - true, the line is a commant, 0- false the line is not a commant*/
 int comment_line(char* line){
     char* pointer =line;
-    pointer = skip_spaces(pointer); //ASK: where it is? 
+    pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
-        return 1; //true
+        return 1; /*true*/
     }
     else{
-        return 0; //false
+        return 0; /*false*/
     }
 }
 

@@ -1,7 +1,7 @@
 
 
 
-// Macro_Node in macro linked list
+/* Macro_Node in macro linked list*/
 struct Macro_Node {
     char* name;
     char* content;

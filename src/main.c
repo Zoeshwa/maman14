@@ -5,36 +5,37 @@
 
 #define MAX_LEN 80
 
-//TODO
-// update_data_list ( ){
-//                     if (Data_head = NULL){ //first line
-//                         insertIns_Node(&Data_head, DC);
-//                         cur_Data = Data_head;
-//                     }
-//                     else{ // any other line
-//                         DC +=1;
-//                         insertIns_Node(&cur_Data, DC);
-//                     }
+/*
+TODO
+update_data_list ( ){
+                    if (Data_head = NULL){ //first line
+                        insertIns_Node(&Data_head, DC);
+                        cur_Data = Data_head;
+                    }
+                    else{ // any other line
+                        DC +=1;
+                        insertIns_Node(&cur_Data, DC);
+                    }
 
-// }
+}*/
 
-void main(int argc, char* argv[]){
+int main(int argc, char* argv[]){
     int ctr;
 
-    // for every file read from terminal
+    /* for every file read from terminal*/
     for (ctr=1; ctr < argc; ctr++){
 
-        //first pass phase
+        /*first pass phase*/
 
 
 
-        //macro phase vars
+        /*macro phase vars*/
         FILE* am_file, *src_file;
         char *p, *file_name;
         char cur_word[MAX_LEN], input[MAX_LEN];
         int mcro=0;
 
-        //open an am file
+        /*open an am file*/
         make_am_name(argv[ctr], cur_word);
         file_name = argv[ctr];
         am_file = fopen(cur_word,"w+");
@@ -45,19 +46,19 @@ void main(int argc, char* argv[]){
         struct Macro_Node* head_ptr = NULL;
 
 
-        //start reading line by line
+        /*start reading line by line*/
         while (fgets(input, MAX_LEN, src_file) != NULL){
             printf("input is: %s\n", input);
             p = input;
             get_next_word(input,cur_word, p);
             printf("cur_word is: %s\n", cur_word);
             if (mcro == 1){
-                //checking end of macro def
+                /*checking end of macro def*/
                 if (strcmp(cur_word,"endmcro") ==0){
                     printf("end of macro def\n");
                     mcro=0;
                 }
-                // if we are inside a macro, insert the lines to macro content
+                /* if we are inside a macro, insert the lines to macro content*/
                 else{
                     printf("updating macro contect\n");
                     update_macro_contect(&head, input);
@@ -69,7 +70,7 @@ void main(int argc, char* argv[]){
                 printf("found in macro list, writing content to file\n");
                 fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file);
             }
-            // beginning of macro def
+            /* beginning of macro def*/
             else if(strcmp(cur_word,"mcro") == 0){
                 printf("its a macro def\n");
                 p = skip_spaces(p);
@@ -79,7 +80,7 @@ void main(int argc, char* argv[]){
                 insertMacro_Node(&head, cur_word);
                 mcro=1;
             }
-            // regular line
+            /* regular line*/
             else{
                 printf("regular line\n");
                 fwrite(input, 1, strlen(input), am_file);
@@ -98,7 +99,7 @@ void main(int argc, char* argv[]){
         struct Data_Node* Data_head = NULL;
         struct Data_Node* cur_Data = Data_head;       
 
-        //first pass
+        /*first pass*/
         while (fgets(input, MAX_LEN, am_file) != NULL){        
             
             p = input;
@@ -106,12 +107,12 @@ void main(int argc, char* argv[]){
             
             if (empty_line(input) || comment_line(input)){continue;}
 
-            //otherwise lines should be added
-            if (lines_head == NULL){ //first line
+            /*otherwise lines should be added*/
+            if (lines_head == NULL) { /*first line*/
                 insertIns_Node(&lines_head, IC, line_num);
                 cur_line = lines_head;
             }
-            else{ // any other line
+            else { /* any other line*/
                 IC += 1;
                 insertIns_Node(&cur_line, IC, line_num);
             }
@@ -119,7 +120,7 @@ void main(int argc, char* argv[]){
             get_next_word(input,cur_word, p);
             p = skip_spaces(p);
 
-            if (is_lable(cur_word)){
+            if (is_lable(cur_word)) {
                 if (!(is_valid_lable(cur_word))) {
                     cur_line->error = 1;
                     update_error(&cur_line, "not a valid lable\n");
@@ -132,16 +133,19 @@ void main(int argc, char* argv[]){
                 p = skip_spaces(p);
             }
             
-            if (is_data(cur_word)){ // .data, .extern or .string .entry
-                insertLable_Node(&Lables_head, lable, DC ,cur_word, "D"); //1 is for DC 0 for IC
+            if (is_data(cur_word)){ /* .data, .extern or .string .entry*/
+                insertLable_Node(&Lables_head, lable, DC ,cur_word, "D"); /*1 is for DC 0 for IC*/
                 p = skip_spaces(p);
+                /* TODO
                 DC = update_data_list(cur_Data, p, input, DC);
+                */
                 continue;
             }
-            else{ // is instruction
+            else{ /* is instruction*/
                 if (lable != NULL){
-                    //TODO: not compiling
-                    // insertLable_Node(&Lables_head, lable, DC , 1); //1 is for DC 0 for IC
+                    /*TODO: not compiling*/
+                    /* insertLable_Node(&Lables_head, lable, DC , 1); */
+                    /*1 is for DC 0 for IC*/
                 }
                 cur_line = update_Ins_list(cur_line, p, input, IC);
 
@@ -150,5 +154,6 @@ void main(int argc, char* argv[]){
         }    
 
     }
+    return 0;
 
 }

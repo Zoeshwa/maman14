@@ -1,6 +1,6 @@
 # Compiler options
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -ansi -pedantic
 LDFLAGS :=
 
 # Directories
@@ -20,8 +20,10 @@ all: directories $(EXECUTABLE)
 
 # Create necessary directories
 directories:
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(BIN_DIR)
+	$(shell if not exist $(OBJ_DIR) mkdir $(OBJ_DIR))
+	$(shell if not exist $(BIN_DIR) mkdir $(BIN_DIR))
+
+
 
 # Link object files and create the executable
 $(EXECUTABLE): $(OBJECTS)
