@@ -10,3 +10,16 @@ struct Data_Node {
     int d;
     struct Data_Node* next;
 };
+/*
+TODO
+update_data_list ( ){
+                    if (Data_head = NULL){ //first line
+                        insertIns_Node(&Data_head, DC);
+                        cur_Data = Data_head;
+                    }
+                    else{ // any other line
+                        DC +=1;
+                        insertIns_Node(&cur_Data, DC);
+                    }
+
+}*/

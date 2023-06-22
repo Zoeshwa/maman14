@@ -25,9 +25,6 @@ int is_valid_Ins(char* Ins){
     */ return 0;
 }
 
-int is_lable(char* word) {
-    return 0;
-}
 /*
 int update_data_list(struct Data_Node** cur_Data, char* p,char* input, int DC){
     return 0;
@@ -35,6 +32,6 @@ int update_data_list(struct Data_Node** cur_Data, char* p,char* input, int DC){
 */
 /*TODO:*/
 
-int is_data(char * cur_word){
+int is_data_storage_ins(char * line){
     return 0;
 }

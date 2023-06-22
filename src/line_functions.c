@@ -40,7 +40,6 @@ char* skip_spaces(char* p){
 	return p;
 }
 
-
 char* get_next_word(char* str, char* word, char* ptr){
     int i=0;
     ptr = skip_spaces(ptr);

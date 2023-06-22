@@ -4,22 +4,11 @@
 #include "main.h"
 
 #define MAX_LEN 80
+#define TRUE 1
+#define FALSE 0
 
-/*
-TODO
-update_data_list ( ){
-                    if (Data_head = NULL){ //first line
-                        insertIns_Node(&Data_head, DC);
-                        cur_Data = Data_head;
-                    }
-                    else{ // any other line
-                        DC +=1;
-                        insertIns_Node(&cur_Data, DC);
-                    }
 
-}*/
-
-int main(int argc, char* argv[]){
+int runProg(int argc, char* argv[]){
     int ctr;
 
     /* for every file read from terminal*/
@@ -88,33 +77,37 @@ int main(int argc, char* argv[]){
 
         }
 
-        int IC = 100;
-        int DC = 0;
-        int line_num = 1;
-        struct Ins_Node* lines_head = NULL;
-        struct Ins_Node* cur_line = NULL;
+        int IC, DC, line_num;
+        struct Ins_Node *ins_head, *curr_ins;
+        struct Data_Node *Data_head, *cur_Data;       
+        struct Lable_Node* Lables_head;
 
-        struct Lable_Node* Lables_head = NULL;
-
-        struct Data_Node* Data_head = NULL;
-        struct Data_Node* cur_Data = Data_head;       
+        line_num = 1;
+        IC = 100;
+        DC = 0;
+        ins_head = NULL;
+        curr_ins = NULL;
+        Data_head = NULL;
+        cur_Data = Data_head;
+        Lables_head = NULL;
 
         /*first pass*/
         while (fgets(input, MAX_LEN, am_file) != NULL){        
             
             p = input;
-            char* lable = NULL;
+            char* lable;
+            lable = NULL;
             
             if (empty_line(input) || comment_line(input)){continue;}
 
             /*otherwise lines should be added*/
-            if (lines_head == NULL) { /*first line*/
-                insertIns_Node(&lines_head, IC, line_num);
-                cur_line = lines_head;
+            if (ins_head == NULL) { /*first line*/
+                insertIns_Node(&ins_head, IC, line_num);
+                curr_ins = ins_head;
             }
             else { /* any other line*/
                 IC += 1;
-                insertIns_Node(&cur_line, IC, line_num);
+                insertIns_Node(&curr_ins, IC, line_num);
             }
             
             get_next_word(input,cur_word, p);
@@ -122,8 +115,8 @@ int main(int argc, char* argv[]){
 
             if (is_lable(cur_word)) {
                 if (!(is_valid_lable(cur_word))) {
-                    cur_line->error = 1;
-                    update_error(&cur_line, "not a valid lable\n");
+                    curr_ins->is_error = 1;
+                    update_error(&curr_ins, "not a valid lable\n");
                     continue;
                 }
                 lable = (char*)malloc((strlen(cur_word)) * sizeof(char));
@@ -147,7 +140,7 @@ int main(int argc, char* argv[]){
                     /* insertLable_Node(&Lables_head, lable, DC , 1); */
                     /*1 is for DC 0 for IC*/
                 }
-                cur_line = update_Ins_list(cur_line, p, input, IC);
+                curr_ins = update_Ins_list(curr_ins, p, input, IC);
 
             }
         
@@ -157,3 +150,99 @@ int main(int argc, char* argv[]){
     return 0;
 
 }
+
+void run_first_pass(char* input) {
+    
+        char * pointer;
+        char cur_word[MAX_LEN];
+
+        
+        int IC, DC, line_num, is_line_have_symbol, is_line_data_ins;
+        struct Ins_Node *ins_head, *curr_ins;
+        struct Data_Node *Data_head, *cur_Data;       
+        Lable_Node* Lables_head;
+        Symbol_Table* symbol_table;
+
+        line_num = 1;
+        IC = 100;
+        DC = 0;
+        ins_head = NULL;
+        curr_ins = NULL;
+        Data_head = NULL;
+        cur_Data = Data_head;
+        Lables_head = NULL;
+        symbol_table = intialiez_symbol_table();
+
+
+        /*first pass*/
+        /*
+        while (fgets(input, MAX_LEN, am_file) != NULL){    
+            */    
+        while (fgets(input, MAX_LEN, stdin) != NULL){    
+            pointer = input;
+            char* lable;
+            lable = NULL;
+
+            if (empty_line(input) || comment_line(input)){continue;}
+
+            /*otherwise lines should be added*/
+            add_ins_to_list(ins_head,curr_ins,IC,line_num);
+            
+            /*get the first word in the line*/
+            get_next_word(input,cur_word, pointer);
+            pointer = skip_spaces(pointer);
+
+            is_line_have_symbol = is_lable(cur_word);
+            /*TODO - also get next word if the first is symbol*/
+            is_line_data_ins = is_data_storage_ins(input);/*.data or .string*/
+            
+            if (is_line_have_symbol && is_line_data_ins) { 
+                if (!(is_valid_lable(cur_word))) {
+                    curr_ins->is_error = TRUE;
+                    update_error(&curr_ins, "not a valid lable\n");
+                    continue;
+                }
+                /*TODO: STOP HERE*/
+                /*TODO: type of node*/
+                insert_to_symbol_table(&symbol_table, cur_word, "D", DC ,type); /*1 is for DC 0 for IC*/
+                pointer = skip_spaces(pointer);
+                /* TODO
+                DC = update_data_list(cur_Data, pointer, input, DC);
+                */
+                continue;
+            }
+
+            if (is_line_have_symbol) {
+                
+
+                lable = (char*)malloc((strlen(cur_word)) * sizeof(char));
+                strcpy(lable, cur_word);
+
+                pointer += strlen(cur_word);
+                get_next_word(input,cur_word, pointer);
+                pointer = skip_spaces(pointer);
+            }
+            else{ /* is instruction*/
+                if (lable != NULL){
+                    /*TODO: not compiling*/
+                    /* insertLable_Node(&Lables_head, lable, DC , 1); */
+                    /*1 is for DC 0 for IC*/
+                }
+                curr_ins = update_Ins_list(curr_ins, pointer, input, IC);
+
+            }
+        
+        }    
+}
+
+
+
+
+
+int main(int argc, char* argv[]){
+
+    run_tester();
+
+    return 0;
+    }
+

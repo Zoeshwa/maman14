@@ -10,9 +10,9 @@ void insertIns_Node(struct Ins_Node** head, int IC, int line_num) {
     /* Create a new Ins_Node*/
     struct Ins_Node* newIns_Node = (struct Ins_Node*)malloc(sizeof(struct Ins_Node));
     /* Allocate memory for the name and copy the string*/
-    newIns_Node->error = 0;
+    newIns_Node->is_error = 0;
     newIns_Node->IC = IC;
-    newIns_Node->line = line_num;
+    newIns_Node->line_number = line_num;
     newIns_Node->next = NULL;
 
     /* If the list is empty, make the new Ins_Node the head of the list*/
@@ -38,3 +38,15 @@ struct Ins_Node* update_Ins_list(struct Ins_Node* cur_line, char * p, char * inp
     return NULL;
 }
 
+
+/*zoe*/
+void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int IC,int line_num) {
+    if (ins_head == NULL) { /*first ins*/
+        insertIns_Node(&ins_head, IC, line_num);
+        curr_ins = ins_head;
+    }
+    else { /* any other ins*/
+        IC += 1;
+        insertIns_Node(&curr_ins, IC, line_num);
+    }
+}

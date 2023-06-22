@@ -8,6 +8,7 @@
         "words_functions.h": "c",
         "stdio.h": "c",
         "labals.h": "c",
-        "data_struct.h": "c"
+        "data_struct.h": "c",
+        "testers.h": "c"
     }
 }
