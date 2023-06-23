@@ -13,6 +13,9 @@ void run_first_pass(char* input) {
         char * pointer;
         char cur_word[MAX_LEN];
 
+        File_Config* file_config;
+        
+
         
         int IC_counter, DC_counter, line_num, is_line_have_symbol, is_line_data_ins;
         struct Ins_Node *ins_head, *curr_ins;
