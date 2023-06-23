@@ -53,6 +53,7 @@ int is_scope_ins(char* input) {
 
     return result;
     */
+   return (is_type_ins(is_extern_word, input) || is_type_ins(is_entry_word, input));
 }
 
 int is_extern_word(char* cur_word) {
@@ -72,6 +73,7 @@ int is_entry_word(char* cur_word) {
 }
 
 int is_extern_ins(char* input) {
+    /*
     char cur_word[MAX_LEN];
     char * ptr;
     int result; 
@@ -90,23 +92,25 @@ int is_extern_ins(char* input) {
     }
 
     return result;
+    */
+   return is_type_ins(is_extern_word, input);
 }
 
 int is_type_ins(int (*function)(char*), char* input) {
-    char cur_word[MAX_LEN];
     char * ptr;
+    char cur_word[MAX_LEN];
     int result; 
 
-    ptr = input;
     result = 0;
+    ptr = input;
+
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr); 
     
     if(is_lable(cur_word)) {
-        printf("-----is_lable(cur_word) TRUE - this is the word: |%s|\n", is_lable(cur_word), cur_word);
+        ptr =  ptr + strlen(cur_word);
         get_next_word(cur_word, ptr);
     }
-    printf("------word_to_test:|%s|\n", cur_word);
 
     if(function(cur_word)) {
         result = 1;

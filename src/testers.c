@@ -10,8 +10,15 @@
 
 void run_tester() 
 {
+    
+
     run_is_lable_testers();
+    
     run_input_testers();
+ /*
+    tests_get_next_word();
+ 
+ */
 }
 
 
@@ -21,8 +28,8 @@ void run_is_lable_testers()
     i = 0;
     START_TEST("run_label_testers");
     tester_O_int_I_charP(is_lable, "hi:", 1, i++);
-    tester_O_int_I_charP(is_lable, "hi", 1, i++);
-    tester_O_int_I_charP(is_lable, "5i", 1, i++);
+    tester_O_int_I_charP(is_lable, "hi", 0, i++);
+    tester_O_int_I_charP(is_lable, "5i", 0, i++);
 }
 
 int tester_is_lable(char * word, int expacted) 
@@ -138,7 +145,27 @@ void run_comment_line_testers()
     tester_O_int_I_charP(comment_line, "     ;   xtern", 1, i++);
 }
 
+void tester_get_next_word(char * str) {
+    char * ptr;
+    char cur_word[MAX_LEN];
 
+    ptr = str;
+    
+    while (strlen(ptr) > 0) 
+    {
+        printf("This is str:|%s|\n", ptr);
+        get_next_word(cur_word, ptr);
+        ptr= skip_spaces(ptr);
+        ptr =  ptr + strlen(cur_word);
+        printf("cur_word:|%s|\n", cur_word);
+    }
+}
+
+void tests_get_next_word() {
+    tester_get_next_word("entry input");
+    tester_get_next_word("LOOP:          .extern");
+    tester_get_next_word("LOOP: .extern");
+}
 
 
 /*

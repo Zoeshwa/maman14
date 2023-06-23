@@ -21,6 +21,8 @@
     void run_is_extern_ins_testers(); 
     void run_empty_line_testers();
     void run_comment_line_testers(); 
+    void tests_get_next_word();
+    void tester_get_next_word(char * str);
 
 #endif
 

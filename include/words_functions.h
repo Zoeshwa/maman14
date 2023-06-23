@@ -20,6 +20,7 @@
     int is_extern_word(char* cur_word);
     int is_entry_word(char* cur_word);
     int is_extern_ins(char* input);
+    int is_type_ins(int (*function)(char*), char* input);
 
 
 #endif
