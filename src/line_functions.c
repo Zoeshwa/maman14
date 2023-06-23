@@ -22,7 +22,7 @@ int empty_line(char* line){
 /*Input: a string line (pointer to array of chars)*/
 /*Output: 1 - true, the line is a commant, 0- false the line is not a commant*/
 int comment_line(char* line){
-    char* pointer =line;
+    char* pointer = line;
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
         return 1; /*true*/
@@ -40,7 +40,9 @@ char* skip_spaces(char* p){
 	return p;
 }
 
-char* get_next_word(char* str, char* word, char* ptr){
+/*TODO: check why ptr and return value*/
+/*OLD V*/
+char* get_next_word_old(char* str, char* word, char* ptr){
     int i=0;
     ptr = skip_spaces(ptr);
     while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t'){
@@ -49,5 +51,20 @@ char* get_next_word(char* str, char* word, char* ptr){
         ptr++;
     }
     word[i] = '\0';
-return word;
+    return word;
 }
+
+char* get_next_word(char* word, char* line){
+    int i=0;
+    char * ptr;
+    ptr = line; 
+    ptr = skip_spaces(ptr);
+    while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t'){
+        word[i] = *ptr;
+        i++;
+        ptr++;
+    }
+    word[i] = '\0';
+    return word;
+}
+

@@ -8,14 +8,17 @@
 
 /* Function to insert a new Macro_Node at the beginning of the list*/
 void insertMacro_Node(struct Macro_Node** head, char* name) {
+    /* TODO: not use?
+    int lines;
+    lines = 0;
+    */
+
     /* Create a new Macro_Node*/
     struct Macro_Node* newMacro_Node = (struct Macro_Node*)malloc(sizeof(struct Macro_Node));
     /* Allocate memory for the name and copy the string*/
     newMacro_Node->name = (char*)malloc((strlen(name) + 1) * sizeof(char));
     strcpy(newMacro_Node->name, name);
     newMacro_Node->content = (char*)malloc(MAX_LEN*sizeof(char));
-    int lines;
-    lines = 0;
     newMacro_Node->next = NULL;
 
     /* If the list is empty, make the new Macro_Node the head of the list*/
@@ -31,7 +34,7 @@ void insertMacro_Node(struct Macro_Node** head, char* name) {
 
 void update_macro_contect(struct Macro_Node** head, char* line){
     (*head)->lines += 1;
-    (*head)->content = (char)realloc((*head)->content, MAX_LEN*(*head)->lines*sizeof(char));
+    (*head)->content = (char*)realloc((*head)->content, MAX_LEN*(*head)->lines*sizeof(char));
     /*first insertion of content*/
     if ((*head)->lines == 1){(*head)->content[0] = '\0';}
     line = skip_spaces(line);

@@ -30,42 +30,87 @@ int is_lable(char* word) {
     return 1; /*return true*/
 }
 
-
-
-/*Description: check if a given word is a valid lable*/
-/*Input: a string word (pointer to array of chars)*/
-/*Output: 1 - true, 0- false*/
-int is_valid_lable(char* word){
+int is_scope_ins(char* input) {
+    /*
+    char cur_word[MAX_LEN];
     char * ptr;
-    int i;
+    int result; 
 
-    ptr = word;
+    ptr = input;
+    result = 0;
+    get_next_word(cur_word, ptr);
+    ptr = skip_spaces(ptr); 
+    
+    if(is_lable(cur_word)) {
+        printf("-----is_lable(cur_word) TRUE - this is the word: |%s|\n", is_lable(cur_word), cur_word);
+        get_next_word(cur_word, ptr);
+    }
+    printf("------word_to_test:|%s|\n", cur_word);
 
-    /*MAYBE - skip spaces in the begining?*/
-
-    /*starts with A-Z/a-z*/
-    if(!IS_UPPERCASE_LETTERS(*ptr) && !IS_LOWERCASE_LETTERS(*ptr)) {
-        return 0; /*return false*/
+    if(is_extern_word(cur_word) || is_entry_word(cur_word)) {
+        result = 1;
     }
 
-    /*have only max len for labels and end with : and no spaces before ":"*/
-    if(strlen(word) > MAX_LABEL_LEN || !is_lable(word)) {
-        return 0; /*return false*/
+    return result;
+    */
+}
+
+int is_extern_word(char* cur_word) {
+    if(strcmp(cur_word, ".extern") == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+int is_entry_word(char* cur_word) {
+    if(strcmp(cur_word, ".entry") == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+int is_extern_ins(char* input) {
+    char cur_word[MAX_LEN];
+    char * ptr;
+    int result; 
+
+    ptr = input;
+    result = 0;
+    get_next_word(cur_word, ptr);
+    ptr = skip_spaces(ptr); 
+    
+    if(is_lable(cur_word)) {
+        get_next_word(cur_word, ptr);
     }
 
-    /*all othe chars is valid*/
-    for(i = 0; i < strlen(word) - 1; i++) {
-        if(!is_valid_char(*ptr)){
-            return 0; /*return false*/
-        }
-        ptr++;
+      if(is_extern_word(cur_word)) {
+        result = 1;
     }
 
+    return result;
+}
 
-    /*TODO*/
-    /*there is no other label like this*/
+int is_type_ins(int (*function)(char*), char* input) {
+    char cur_word[MAX_LEN];
+    char * ptr;
+    int result; 
 
-    /*its not a save word*/
+    ptr = input;
+    result = 0;
+    get_next_word(cur_word, ptr);
+    ptr = skip_spaces(ptr); 
+    
+    if(is_lable(cur_word)) {
+        printf("-----is_lable(cur_word) TRUE - this is the word: |%s|\n", is_lable(cur_word), cur_word);
+        get_next_word(cur_word, ptr);
+    }
+    printf("------word_to_test:|%s|\n", cur_word);
 
-    return 1; /*return true*/
+    if(function(cur_word)) {
+        result = 1;
+    }
+
+    return result;
 }

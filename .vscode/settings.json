@@ -9,6 +9,7 @@
         "stdio.h": "c",
         "labals.h": "c",
         "data_struct.h": "c",
-        "testers.h": "c"
+        "testers.h": "c",
+        "string.h": "c"
     }
 }

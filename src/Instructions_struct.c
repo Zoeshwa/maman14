@@ -30,7 +30,7 @@ void insertIns_Node(struct Ins_Node** head, int IC, int line_num) {
 /*TODO: remark*/
 /*ASK: where is the void? return type i domt understand the ** to head. the line param is the new msg?*/
 void update_error(struct Ins_Node** head, char* line){
-    (*head)->err_msg = (char)malloc(strlen(line)*sizeof(char));
+    (*head)->err_msg = (char*)malloc(strlen(line)*sizeof(char));
     strcpy((*head)->err_msg, line);
 }
 /*TODO:*/
