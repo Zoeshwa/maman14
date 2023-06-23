@@ -4,12 +4,7 @@
 #include "data_struct.h"
 
 
-/*TODO: think about*/
-struct Data_Node {
-    char c; /*ASK why not the U? do we need also type maybe?*/
-    int d;
-    struct Data_Node* next;
-};
+
 /*
 TODO
 update_data_list ( ){
@@ -23,3 +18,11 @@ update_data_list ( ){
                     }
 
 }*/
+
+
+/*
+int update_data_list(struct Data_Node** cur_Data, char* p,char* input, int DC){
+    return 0;
+}
+*/
+

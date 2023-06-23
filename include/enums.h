@@ -17,6 +17,14 @@
     #define TRUE 1
     #define FALSE 0
 
+    /*ERROR STR*/
+    #define ERROR_NOT_VALID_LABEL "not a valid lable\n"
+
+    /*Warnning STR*/
+
+    #define WARNING_LABEL_NOT_USE "This label is not use\n"
+
+
     typedef enum Counter_Type {
         DC,
         IC

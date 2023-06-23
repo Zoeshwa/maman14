@@ -10,6 +10,8 @@
         "labals.h": "c",
         "data_struct.h": "c",
         "testers.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "labels.h": "c",
+        "enums.h": "c"
     }
 }

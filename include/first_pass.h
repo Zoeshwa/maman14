@@ -1,10 +1,27 @@
+#ifndef _FIRST_PASS_HEADER_
+#define _FIRST_PASS_HEADER_
+
+    void run_first_pass(char* input);
+#endif
+
+#ifndef _LABELS_HEADER_
+#define _FIRST_PASS_LABELS_HEADER_
+    #include "labels.h"
+#endif
 
 
-/*TODO*/
+#ifndef _INSTRUCTIONS_HEADER_
+    #include "Instructions_struct.h"
+#endif
 
-/*
-int update_data_list(struct Data_Node** cur_Data, char* p,char* input, int DC);
 
-int update_data_list(struct Data_Node** cur_Data, char* p,char* input, int DC);
-*/
-int is_data_storage_ins(char * cur_word);
+#ifndef _ENUMS_HEADER_
+    #include "enums.h"
+#endif
+
+#ifndef _FILES_FUNCTIONS_HEADER_
+    #include "file_functions.h"
+#endif
+
+
+

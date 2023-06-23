@@ -31,28 +31,6 @@ int is_lable(char* word) {
 }
 
 int is_scope_ins(char* input) {
-    /*
-    char cur_word[MAX_LEN];
-    char * ptr;
-    int result; 
-
-    ptr = input;
-    result = 0;
-    get_next_word(cur_word, ptr);
-    ptr = skip_spaces(ptr); 
-    
-    if(is_lable(cur_word)) {
-        printf("-----is_lable(cur_word) TRUE - this is the word: |%s|\n", is_lable(cur_word), cur_word);
-        get_next_word(cur_word, ptr);
-    }
-    printf("------word_to_test:|%s|\n", cur_word);
-
-    if(is_extern_word(cur_word) || is_entry_word(cur_word)) {
-        result = 1;
-    }
-
-    return result;
-    */
    return (is_type_ins(is_extern_word, input) || is_type_ins(is_entry_word, input));
 }
 
@@ -72,27 +50,27 @@ int is_entry_word(char* cur_word) {
     }
 }
 
+int is_data_word(char* cur_word) {
+    if(strcmp(cur_word, ".data") == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+int is_string_word(char* cur_word) {
+    if(strcmp(cur_word, ".string") == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+int is_data_storage_ins(char * input) {
+    return (is_type_ins(is_data_word, input) || is_type_ins(is_string_word, input));
+}
+
 int is_extern_ins(char* input) {
-    /*
-    char cur_word[MAX_LEN];
-    char * ptr;
-    int result; 
-
-    ptr = input;
-    result = 0;
-    get_next_word(cur_word, ptr);
-    ptr = skip_spaces(ptr); 
-    
-    if(is_lable(cur_word)) {
-        get_next_word(cur_word, ptr);
-    }
-
-      if(is_extern_word(cur_word)) {
-        result = 1;
-    }
-
-    return result;
-    */
    return is_type_ins(is_extern_word, input);
 }
 

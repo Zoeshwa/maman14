@@ -15,12 +15,16 @@
     #define MAX_LABEL_LEN 31
     #define COLON 58
 
-    int is_lable(char* word);
     int is_scope_ins(char* input);
+    int is_extern_ins(char* input);
+    int is_data_storage_ins(char * input);
+    int is_type_ins(int (*function)(char*), char* input);
     int is_extern_word(char* cur_word);
     int is_entry_word(char* cur_word);
-    int is_extern_ins(char* input);
-    int is_type_ins(int (*function)(char*), char* input);
+    int is_string_word(char* cur_word);
+    int is_data_word(char* cur_word);
+    int is_lable(char* word);
+
 
 
 #endif
