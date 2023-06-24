@@ -155,6 +155,148 @@ void tester_file_set_int_fileds(File_Config* file_config, void (*set_func)(File_
 
 /*TODO: rest of get and set files*/
 
+/*Labels testers*/
+void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number) {
+    Lable_Node* node_result;
+    int result;
+    node_result = new_label_node(word, counter_value, symbol_type);
+    result = 0;
+    if(get_label_counter_value(node_result) == counter_value) {
+        result = 1;
+    } else {
+        result = 0;
+    }
+    if(get_label_symbol_type(node_result) == symbol_type) {
+        result = 1;
+    } else {
+        result = 0;
+    }
+    if(strcmp(get_label_name(node_result),word) == 0) {
+        result = 1;
+    } else {
+        result = 0;
+    }
+
+    if (result == 1) {
+        PASS_PRINT(1);
+    } else {
+        FAIL_PRINT(test_number,1, result);
+    }
+}
+
+void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) {
+    int result;
+    set_label_name(new_lable, word);
+    result = strcmp(new_lable->name, word);
+    if (result == 0) {
+        PASS_PRINT(0);
+    } else {
+        FAIL_PRINT(test_number, 0, result);
+    }
+}
+
+void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number) {
+    int result;
+    Counter_Type counter_type;
+    result = 0;
+    set_label_types(new_lable, symbol_type);
+
+    if(symbol_type == DATA) {
+        counter_type = DC;
+    } else {
+        counter_type = IC;
+    }
+
+    if(symbol_type == new_lable->symbol_type && counter_type == new_lable->counter_type) {
+        result = 1;
+    } 
+
+    if (result == 1) {
+        PASS_PRINT(1);
+    } else {
+        FAIL_PRINT(test_number, 1, result);
+    }
+}
+
+void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number){
+    int result;
+    result = function(label);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+} 
+
+void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number){
+    int result, cmp_result;
+    cmp_result = strcmp(get_label_name(label), word);
+    if(cmp_result == 0) {
+        result = 1;
+    } else {
+        result = 0;
+    }
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
+
+void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number) {
+    Lable_Node* search_result;
+    int result;
+    search_result = is_symbol_already_exist(table, symbol_name);
+
+    if(search_result == NULL) {
+        result = 0;
+    } else {
+        result = 1;
+    }
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number,expected_result, result);
+    }
+}
+
+void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result, int test_number){ 
+    int result;
+    result = is_valid_lable(table, word);
+
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number,expected_result, result);
+    }
+}
+
+
+/*TODO:
+    Symbol_Table* intialiez_symbol_table() {
+    void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type) {
+    void set_label_next(Lable_Node* new_lable, Symbol_Table* table) {
+    Lable_Node* get_label_next(Lable_Node* new_lable) {
+Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
+Counter_Type get_label_counter_type(Lable_Node* new_lable) {
+
+*/
+
+/*first pass*/
+
+void tester_handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type) {
+    /*if error in ins && symbol table equals*/
+}
+
+/* TODO
+void tester_handle_ins(void (*handlefunc)(File_Config*, struct Ins_Node*, char*, char*), File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
+    
+    if file_config state is like expted
+}
+*/
+
+/*utils */
+
 int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b) {
 
     if(get_DC_counter(file_config_a) != get_DC_counter(file_config_b)) {
@@ -305,144 +447,5 @@ int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
 }
 
 
-/*Labels testers*/
-void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number) {
-    Lable_Node* node_result;
-    int result;
-    node_result = new_label_node(word, counter_value, symbol_type);
-    result = 0;
-    if(get_label_counter_value(node_result) == counter_value) {
-        result = 1;
-    } else {
-        result = 0;
-    }
-    if(get_label_symbol_type(node_result) == symbol_type) {
-        result = 1;
-    } else {
-        result = 0;
-    }
-    if(strcmp(get_label_name(node_result),word) == 0) {
-        result = 1;
-    } else {
-        result = 0;
-    }
-
-    if (result == 1) {
-        PASS_PRINT(1);
-    } else {
-        FAIL_PRINT(test_number,1, result);
-    }
-}
-
-void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) {
-    int result;
-    set_label_name(new_lable, word);
-    result = strcmp(new_lable->name, word);
-    if (result == 0) {
-        PASS_PRINT(0);
-    } else {
-        FAIL_PRINT(test_number, 0, result);
-    }
-}
-
-void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number) {
-    int result;
-    Counter_Type counter_type;
-    result = 0;
-    set_label_types(new_lable, symbol_type);
-
-    if(symbol_type == DATA) {
-        counter_type = DC;
-    } else {
-        counter_type = IC;
-    }
-
-    if(symbol_type == new_lable->symbol_type && counter_type == new_lable->counter_type) {
-        result = 1;
-    } 
-
-    if (result == 1) {
-        PASS_PRINT(1);
-    } else {
-        FAIL_PRINT(test_number, 1, result);
-    }
-}
-
-void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number){
-    int result;
-    result = function(label);
-    if (result == expected_result) {
-        PASS_PRINT(expected_result);
-    } else {
-        FAIL_PRINT(test_number, expected_result, result);
-    }
-} 
-
-void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number){
-    int result, cmp_result;
-    cmp_result = strcmp(get_label_name(label), word);
-    if(cmp_result == 0) {
-        result = 1;
-    } else {
-        result = 0;
-    }
-    if (result == expected_result) {
-        PASS_PRINT(expected_result);
-    } else {
-        FAIL_PRINT(test_number, expected_result, result);
-    }
-}
-
-void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number) {
-    Lable_Node* search_result;
-    int result;
-    search_result = is_symbol_already_exist(table, symbol_name);
-
-    if(search_result == NULL) {
-        result = 0;
-    } else {
-        result = 1;
-    }
-    if (result == expected_result) {
-        PASS_PRINT(expected_result);
-    } else {
-        FAIL_PRINT(test_number,expected_result, result);
-    }
-}
-
-void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result, int test_number){ 
-    int result;
-    result = is_valid_lable(table, word);
-
-    if (result == expected_result) {
-        PASS_PRINT(expected_result);
-    } else {
-        FAIL_PRINT(test_number,expected_result, result);
-    }
-}
-
-
-/*TODO:
-    Symbol_Table* intialiez_symbol_table() {
-    void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type) {
-    void set_label_next(Lable_Node* new_lable, Symbol_Table* table) {
-    Lable_Node* get_label_next(Lable_Node* new_lable) {
-Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
-Counter_Type get_label_counter_type(Lable_Node* new_lable) {
-
-*/
-
-/*first pass*/
-
-void tester_handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type) {
-    /*if error in ins && symbol table equals*/
-}
-
-/* TODO
-void tester_handle_ins(void (*handlefunc)(File_Config*, struct Ins_Node*, char*, char*), File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
-    
-    if file_config state is like expted
-}
-*/
 
 

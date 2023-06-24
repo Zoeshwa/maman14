@@ -79,5 +79,15 @@
     void run_tests_is_symbol_already_exist();
     void run_tests_is_valid_lable();
 
+    /*utils testers*/
+    int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b);
+    int is_symbol_table_equals(Symbol_Table* symbol_table_a, Symbol_Table* symbol_table_b);
+    int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b);
+    int is_DATA_Table_equals(DATA_Table* data_table_a, DATA_Table* data_table_b);
+    int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b);
+    int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
+    int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b);
+
+
 #endif
 
