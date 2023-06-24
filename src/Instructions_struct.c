@@ -3,13 +3,16 @@
 #include <string.h>
 #include "Instructions_struct.h"
 
+
+
+/*List functions*/
+
 /*MAYBE: delete*/
 Ins_Node* intialiez_ins_head() {
     Ins_Node* ins_head;
     ins_head = (Ins_Node*)malloc(sizeof(Ins_Node));
     return ins_head;
 }
-
 
 
 /* Function to insert a new Ins_Node at the beginning of the list*/
@@ -32,43 +35,7 @@ void insertIns_Node(struct Ins_Node** head, int IC, int line_num) {
     }
 }
 
-void set_error_ins(struct Ins_Node* ins_to_update, int is_error, char* error_msg) {
-    ins_to_update->is_error = is_error;
-    update_error(&ins_to_update, "not a valid lable\n");
-}
-
-
-/*ASK: where is the void? return type i domt understand the ** to head. the line param is the new msg?*/
-void update_error(struct Ins_Node** head, char* error_msg){
-    (*head)->err_msg = (char*)malloc(strlen(error_msg)*sizeof(char));
-    strcpy((*head)->err_msg, error_msg);
-}
 /*TODO:*/
-struct Ins_Node* update_Ins_list(struct Ins_Node* cur_line, char * p, char * input, int IC){
-    return NULL;
-}
-
-/*TODO:*/
-int is_valid_Ins(char* Ins){
-    /*
-    if (strlen(Ins)>= 31){
-        return 0;
-    }
-    */
-    /*needs a function that checks its not a saved word*/
-    /* missing a function that goes over Ins list to check Ins os not defined twice*/
-    /*
-    while (is_valid_char(*Ins)) {Ins++;}
-    if (*Ins == ':'){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-    */ return 0;
-}
-
-/*zoe*/
 void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int IC,int line_num) {
     if (ins_head == NULL) { /*first ins*/
         insertIns_Node(&ins_head, IC, line_num);
@@ -79,3 +46,55 @@ void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int I
         insertIns_Node(&curr_ins, IC, line_num);
     }
 }
+
+
+/*Node functions*/
+
+void set_IC_ins(Ins_Node* ins_to_update, int IC_count) {
+    ins_to_update->IC_count = IC_count;
+}
+
+void set_line_number_ins(Ins_Node* ins_to_update, int line_number) {
+    ins_to_update->line_number = line_number;
+}
+
+void set_encoding_type_ins(Ins_Node* ins_to_update, int encoding_type) {
+    ins_to_update->encoding_type = encoding_type;
+}
+
+void set_opcode_ins(Ins_Node* ins_to_update, int opcode) {
+    ins_to_update->opcode = opcode;
+}
+
+/*TODO: set params*/
+void set_ins_params() {
+
+}
+
+void set_ins_num_of_extra_lines(Ins_Node* ins_to_update, int num_of_extra_lines) {
+    ins_to_update->num_of_extra_lines = num_of_extra_lines;
+}
+
+void set_error_ins(Ins_Node* ins_to_update, int is_error, char* error_msg) {
+    ins_to_update->is_error = is_error;
+    update_error(&ins_to_update, "not a valid lable\n");
+}
+
+/*ASK: where is the void? return type i domt understand the ** to head. the line param is the new msg?*/
+void update_error(struct Ins_Node** head, char* error_msg){
+    (*head)->err_msg = (char*)malloc(strlen(error_msg)*sizeof(char));
+    strcpy((*head)->err_msg, error_msg);
+}
+
+
+void set_next_ins(Ins_Node* ins_to_update, Ins_Node* next) {
+    ins_to_update->next = next;
+}
+
+void update_extern_ins(Ins_Node* curr_ins, int num_of_lines) {
+    set_encoding_type_ins(curr_ins, 1);
+    set_ins_num_of_extra_lines(curr_ins, num_of_lines);
+    /*TODO: what else to update? opcode? params?*/
+
+}
+

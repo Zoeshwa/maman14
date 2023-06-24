@@ -25,6 +25,8 @@ void first_pass() {
 
         if (empty_line(input) || comment_line(input)){continue;}
         
+        /*TODO: line counter update*/
+
         /*otherwise lines should be added*/
         add_ins_to_list(file_config->ins_head,curr_ins,file_config->IC_counter,line_num);
         
@@ -32,17 +34,7 @@ void first_pass() {
         get_next_word(cur_word, ptr);
         ptr = skip_spaces(ptr);
 
-        is_line_have_symbol = is_lable(cur_word); /*label of the line*/
-        
-        
-        if(is_line_have_symbol) {
-            /*validate the starting label*/
-            if (!(is_valid_lable(file_config->symbol_table, cur_word))) {
-                set_error_ins(curr_ins, TRUE, ERROR_NOT_VALID_LABEL);
-                continue;
-            }
-        }
-    
+        is_line_have_symbol = is_lable(cur_word); /*label of the line*/    
         is_line_data_ins = is_data_storage_ins(input);/*ins: .data or .string*/
         
         if(is_line_data_ins) {
@@ -94,20 +86,25 @@ void first_pass() {
 void handle_extren_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
     char * ptr;
     char cur_word[MAX_LEN];
+    int number_of_oprends;
 
     ptr = curr_ptr;
-    /*update the cur_ins */
+    number_of_oprends = 0;
 
     /*add to symbol table each label*/
     while (strlen(ptr) > 0) 
     {
+        /*TODO: get params from the ins - with comma*/
         get_next_word(cur_word, ptr);
         ptr= skip_spaces(ptr);
         ptr =  ptr + strlen(cur_word);
         /*add the label to the symbol_table*/
         handle_label(file_config, curr_ins, cur_word, EXTERNALT);
+        number_of_oprends++;
     }
-    /*TODO....*/
+    /*update the cur_ins*/
+    update_extern_ins(curr_ins, number_of_oprends);
+    /*TODO: add the params also to the ins?*/
 }
 
 
@@ -131,6 +128,7 @@ void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* wor
     /*validate the starting label*/
     if (!(is_valid_lable(file_config->symbol_table, word))) {
         set_error_ins(curr_ins, TRUE, ERROR_NOT_VALID_LABEL);
+        /*MAYBE: we need to continou?*/
         return;
     }
     /*add to symbol table*/

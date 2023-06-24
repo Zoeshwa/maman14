@@ -193,3 +193,9 @@ void insertLable_Node(struct Lable_Node** head, char* name, int counter_value, c
         *head = newLable_Node;
     }
 }
+
+
+/*TODO:*/
+struct Ins_Node* update_Ins_list(struct Ins_Node* cur_line, char * p, char * input, int IC){
+    return NULL;
+}

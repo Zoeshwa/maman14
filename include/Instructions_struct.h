@@ -10,14 +10,15 @@
         }u;
 
     typedef struct Ins_Node {
-        int IC_count; /*This INS IC*/
+        int IC_count; /*what about extren or data commands?*/
         int line_number; /*num of line in the file after macro*/
         /*Symbol_Type type of command*/
         /*int is there symbol for command*/
+        int encoding_type; /*Absolute, External, Relocatable*/
         int opcode; /*MAYBE need other for binary */
         u param1;
         u param2;
-        int is_error;
+        int is_error; /*ASK: what about warning*/
         char* err_msg;
         int num_of_extra_lines; /*ASK: number or the lines? - how many we need*/
         struct Ins_Node* next;

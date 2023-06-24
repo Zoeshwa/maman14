@@ -34,7 +34,7 @@ int get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type) {
     switch (symbol_type)
     {
         case EXTERNALT:
-            counter_value = -1; /*MAYBE: not good?*/
+            counter_value = -1; /*MAYBE: not good? need no value*/
             break;
         case CODE:
             counter_value = file_config->IC_counter; 
