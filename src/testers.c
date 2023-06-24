@@ -162,13 +162,23 @@ void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
     int result;
     node_result = new_label_node(word, counter_value, symbol_type);
     result = 0;
-    if()
-    if(search_result == NULL) {
-        result = 0;
-    } else {
+    if(get_label_counter_value(node_result) == counter_value) {
         result = 1;
+    } else {
+        result = 0;
     }
-    if (result == expected_result) {
+    if(get_label_symbol_type(node_result) == symbol_type) {
+        result = 1;
+    } else {
+        result = 0;
+    }
+    if(strcmp(get_label_symbol_type(node_result),word)) {
+        result = 1;
+    } else {
+        result = 0;
+    }
+
+    if (result == 1) {
         PASS_PRINT(1);
     } else {
         FAIL_PRINT(test_number,1, result);
@@ -209,6 +219,16 @@ void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int 
     }
 }
 
+void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number){
+    int result;
+    result = function(label);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+} 
+
 void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number) {
     Lable_Node* search_result;
     int result;
@@ -237,11 +257,23 @@ void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result
     }
 }
 
+void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number){
+    int result;
+    result = strcmp(get_label_name(label), word);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
 
 /*TODO:
     Symbol_Table* intialiez_symbol_table() {
     void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type) {
     void set_label_next(Lable_Node* new_lable, Symbol_Table* table) {
+    Lable_Node* get_label_next(Lable_Node* new_lable) {
+Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
+Counter_Type get_label_counter_type(Lable_Node* new_lable) {
 
 */
 
