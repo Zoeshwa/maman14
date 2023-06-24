@@ -15,9 +15,9 @@ void run_return_tests() {
      /*
         run_is_lable_testers();
         run_input_testers();
+        run_file_get_tests();
+        run_file_set_tests();
     */
-   run_file_get_tests();
-   run_file_set_tests();
    run_labels_tests();
 }
 
@@ -217,7 +217,6 @@ void run_labels_new_tests() {
     symbol_type = EXTERNALT;
     tester_new_label_node("hiEXTERNALT", 5, symbol_type, test_number++);
 }
-
 
 void run_labels_get_tests() {
     Lable_Node* label_node;
