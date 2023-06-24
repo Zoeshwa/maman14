@@ -80,32 +80,32 @@ void print_DATA_Table(DATA_Table* data_table) {
 }
 
 void print_Ins_Node(Ins_Node* ins) {
-        if(ins == NULL) {
+    if(ins == NULL) {
         printf("ins is NULL\n");
         return;
     }
     printf("This is Ins_Node print: {\n");
     printf("\tline_number: %d, IC_count: %d\n\t",ins->line_number, ins->IC_count);
-    /*TODO*/
     printf("}\n");
 
 } 
 
 void print_Lable_Node(Lable_Node* label_node) {
     if(label_node == NULL) {
-        printf("Lable_Node is NULL\n");
+        printf("Lable_Node=NULL\n");
         return;
     }
-    printf("This is Lable_Node print: {\n");
+    printf("Lable_Node: ");
     printf("\tname: %s, ",label_node->name);
-    printf("\tcounter_type: %d, \n",label_node->counter_type);
-    printf("\tcounter_value: %d, \n",label_node->counter_value);
-    printf("\tsymbol_type: %d, ",label_node->symbol_type);
-    printf("\tis_entry: %d\n",label_node->is_entry);
-
-    printf("\tnext: %s\n", label_node->next->name);
-    printf("}\n");
-
+    printf("\tcounter_type: %d,",label_node->counter_type);
+    printf("\tcounter_value: %d,",label_node->counter_value);
+    printf("\tsymbol_type: %d,",label_node->symbol_type);
+    printf("\tis_entry: %d,",label_node->is_entry);
+    if(label_node->next  != NULL) {
+        printf("\tnext: %s\n", label_node->next->name);
+    }else {
+        printf("\tnext: NULL\n");
+    }
 } 
 
 void print_Data_Node(Data_Node* data_node) {
@@ -266,7 +266,10 @@ void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result
     result = is_valid_lable(table, word);
 
     if (result == expected_result) {
+        /*
         PASS_PRINT(expected_result);
+        
+        */
     } else {
         FAIL_PRINT(test_number,expected_result, result);
     }
@@ -288,7 +291,10 @@ Counter_Type get_label_counter_type(Lable_Node* new_lable) {
 void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* word, Symbol_Type symbol_type, Ins_Node* expted_node, Symbol_Table* expted_symbol_table, int test_number) {
     int result;
     result = 1;
+    printf("hi");
     handle_label(file_config, node, word, symbol_type);
+    printf("hi2");
+
 
     if(is_Ins_Node_err_equals(node, expted_node) == 0) {
         result = 1;

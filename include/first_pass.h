@@ -27,6 +27,5 @@
     void handle_code_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr);
     void handle_data_ins(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr);
     void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type);
-
 #endif
 

@@ -12,7 +12,7 @@
 
 #ifndef _LINES_HEADER_
 #define _TESTERS_LINES_HEADER_
-    #include "words_functions.h"
+    #include "line_functions.h"
 #endif
 
 #ifndef _DATA_HEADER_
@@ -23,6 +23,10 @@
 #ifndef _FILES_FUNCTIONS_HEADER_
 #define _TESTERS_FILES_HEADER_
     #include "file_functions.h"
+#endif
+
+#ifndef _FIRST_PASS_HEADER_
+    #include "first_pass.h"
 #endif
 
 #ifndef _TESTERS_HEADER_
@@ -46,7 +50,7 @@
     void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number);
     void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number);
     void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result, int test_number);
-
+    void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* word, Symbol_Type symbol_type, Ins_Node* expted_node, Symbol_Table* expted_symbol_table, int test_number);
 
     void print_file_config(File_Config* file_config);
     void print_Symbol_table(Symbol_Table* symbol_table);
@@ -79,6 +83,11 @@
     void run_tests_is_symbol_already_exist();
     void run_tests_is_valid_lable();
 
+    void run_first_pass_tests();
+    void run_handle_functions();
+    void tests_handle_label();
+
+
     /*utils testers*/
     int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b);
     int is_symbol_table_equals(Symbol_Table* symbol_table_a, Symbol_Table* symbol_table_b);
@@ -87,6 +96,8 @@
     int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b);
     int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
     int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b);
+    int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
+
 
 
 #endif

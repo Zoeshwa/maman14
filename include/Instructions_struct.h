@@ -43,6 +43,7 @@
     void set_ins_num_of_extra_lines(Ins_Node* ins_to_update, int num_of_extra_lines);
     void set_error_ins(struct Ins_Node* ins_to_update, int is_error, char* error_msg);    
     void set_next_ins(Ins_Node* ins_to_update, Ins_Node* next);
+    
     void update_error(struct Ins_Node** head, char* line);
     void update_extern_ins(Ins_Node* curr_ins, int num_of_lines);
 

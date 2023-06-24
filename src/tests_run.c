@@ -8,8 +8,8 @@ void run_tester()
     run_return_tests();
     /*
     run_void_tests();
-    */
    run_first_pass_tests();
+    */
 }
 
 void run_return_tests() {
@@ -171,12 +171,12 @@ void run_file_set_tests() {
 /*labels*/
 
 void run_labels_tests() {
+    run_tests_is_symbol_already_exist();
+    run_tests_is_valid_lable();
+    /*
     run_labels_new_tests();
     run_labels_set_tests();
     run_labels_get_tests();
-    /*
-    run_tests_is_symbol_already_exist();
-    run_tests_is_valid_lable();
     */
 }
 
@@ -240,22 +240,98 @@ void run_labels_get_tests() {
 
 
 void run_tests_is_symbol_already_exist() {
-    /*TODO:*/
+    Symbol_Table* table;
+    int expected_result, test_number;
+    Symbol_Type symbol_type;
+    
+    START_TEST("run_tests_is_symbol_already_exist");
 
+    test_number = 0;
+    table = intialiez_symbol_table();
+    
+    /*tables is empty*/
+    tester_is_symbol_already_exist(table, "hi:", 0, test_number++);
+    tester_is_symbol_already_exist(table, "hi", 0, test_number++);
+    tester_is_symbol_already_exist(table, "5i", 0, test_number++);
+    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(table, "A555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(table, "i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(table, "#5i:", 0, test_number++);
+    tester_is_symbol_already_exist(table, "a5$i:", 0, test_number++);
+
+
+    symbol_type = DATA;
+    insert_to_symbol_table(table, "hi:", test_number, symbol_type);
+
+    tester_is_symbol_already_exist(table, "hi:", 1, test_number++);
+    tester_is_symbol_already_exist(table, "hi", 0, test_number++); 
+    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
+
+    insert_to_symbol_table(table, "hi2:", test_number, symbol_type);
+
+    tester_is_symbol_already_exist(table, "hi:", 1, test_number++); 
+    tester_is_symbol_already_exist(table, "hi2:", 1, test_number++);
+    tester_is_symbol_already_exist(table, "hi", 0, test_number++);
+    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
+
+    symbol_type = CODE;
+    insert_to_symbol_table(table, "hi3:", test_number, symbol_type);
+    insert_to_symbol_table(table, "hi4:", test_number, symbol_type);
+    symbol_type = EXTERNALT;
+    insert_to_symbol_table(table, "hi5:", test_number, symbol_type);
+    insert_to_symbol_table(table, "hi6:", test_number, symbol_type);
+
+    tester_is_symbol_already_exist(table, "hi:", 1, test_number++); 
+    tester_is_symbol_already_exist(table, "hi2:", 1, test_number++);
+    tester_is_symbol_already_exist(table, "hi3:", 1, test_number++); 
+    tester_is_symbol_already_exist(table, "hi4:", 1, test_number++);
+    tester_is_symbol_already_exist(table, "hi5:", 1, test_number++); 
+    tester_is_symbol_already_exist(table, "hi6:", 1, test_number++);
+    
+    tester_is_symbol_already_exist(table, "hi", 0, test_number++);
+    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
+
+    print_Symbol_table(table);
+    free_symbol_table(table);
 }
 
 void run_tests_is_valid_lable() {
-    /*
-        tester_is_valid_lable("hi:", 1);
-        tester_is_valid_lable("hi", 0);
-        tester_is_valid_lable("5i", 0);
-        tester_is_valid_lable("i555ADMSasjd555:", 1);
-        tester_is_valid_lable("A555ADMSasjd555:", 1);
-        tester_is_valid_lable("i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0);
-        tester_is_valid_lable("#5i:", 0);
-        tester_is_valid_lable("a5$i:", 0);
-    */
+    Symbol_Table* table;
+    char word[MAX_LEN];
+    int expected_result, test_number;
+    Symbol_Type symbol_type;
     
+    START_TEST("run_tests_is_valid_lable");
+
+    test_number = 0;
+    table = intialiez_symbol_table();
+    
+    /*tables is empty*/
+    tester_is_valid_lable(table, "hi:", 1, test_number++); /*FAIL is_symbol_already_exist*/
+    tester_is_valid_lable(table, "hi", 0, test_number++);
+    tester_is_valid_lable(table, "5i", 0, test_number++);
+    tester_is_valid_lable(table, "i555ADMSasjd555:", 1, test_number++);  /*FAIL is_symbol_already_exist*/
+    tester_is_valid_lable(table, "A555ADMSasjd555:", 1, test_number++); /*FAIL is_symbol_already_exist*/
+    tester_is_valid_lable(table, "i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0, test_number++);
+    tester_is_valid_lable(table, "#5i:", 0, test_number++);
+    tester_is_valid_lable(table, "a5$i:", 0, test_number++);
+
+
+    symbol_type = DATA;
+    insert_to_symbol_table(table, "hi:", test_number, symbol_type);
+
+    tester_is_valid_lable(table, "hi:", 0, test_number++);
+    tester_is_valid_lable(table, "hi", 0, test_number++);
+    tester_is_valid_lable(table, "i555ADMSasjd555:", 1, test_number++);
+
+    insert_to_symbol_table(table, "hi2:", test_number, symbol_type);
+
+    tester_is_valid_lable(table, "hi:", 0, test_number++); /*FAIL - is exist*/
+    tester_is_valid_lable(table, "hi", 0, test_number++);
+    tester_is_valid_lable(table, "i555ADMSasjd555:", 1, test_number++);
+    tester_is_valid_lable(table, "hi2:", 1, test_number++);
+    print_Symbol_table(table);
+    free_symbol_table(table);
 }
 
 void run_first_pass_tests(){
@@ -267,8 +343,8 @@ void run_handle_functions() {
 }
 
 void tests_handle_label() {
-    File_config* file_config;
-    Ins_Node* expted_node, node;
+    File_Config* file_config;
+    Ins_Node* expted_node, *node;
     Symbol_Table* expted_symbol_table;
 
     int test_num;
@@ -279,8 +355,26 @@ void tests_handle_label() {
 
     test_num = 0;
     file_config = intialiez_file_config();
+    expted_symbol_table = intialiez_symbol_table();
+    node = intialiez_ins_head();
+    expted_node = intialiez_ins_head();
+  
+  
+    symbol_type = DATA;
     strcpy(word1, "hi:");
-    expted_node
 
-    tester_handle_label(file_config, node, word, symbol_type, expted_node, expted_symbol_table, test_num);
+    set_error_ins(expted_node, 0, "");
+    expted_node->IC_count = file_config->IC_counter;
+    expted_node->line_number = 0;
+    expted_node->next = NULL;
+    
+    set_error_ins(node, 0, "");
+    node->IC_count = file_config->IC_counter;
+    node->line_number = 0;
+    node->next = NULL;
+
+    expted_symbol_table = intialiez_symbol_table();
+    insert_to_symbol_table(expted_symbol_table, word1, file_config->DC_counter, symbol_type);
+
+    tester_handle_label(file_config, node, word1, symbol_type, expted_node, expted_symbol_table, test_num);
 }

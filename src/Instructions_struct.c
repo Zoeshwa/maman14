@@ -47,7 +47,6 @@ void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int I
     }
 }
 
-
 /*Node functions*/
 
 int get_Ins_Node_IC_count(Ins_Node* node) {
