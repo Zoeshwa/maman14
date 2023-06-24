@@ -18,6 +18,7 @@ void run_return_tests() {
     */
    run_file_get_tests();
    run_file_set_tests();
+   run_labels_tests();
 }
 
 void run_void_tests() {
@@ -169,17 +170,64 @@ void run_file_set_tests() {
 
 /*labels*/
 
+void run_labels_tests() {
+    run_labels_new_tests();
+    /*
+    run_labels_set_tests();
+    run_labels_get_tests();
+    run_tests_is_symbol_already_exist();
+    run_tests_is_valid_lable();
+    */
+}
+
 void run_labels_set_tests() {
     Lable_Node* label_node;
+    Symbol_Type symbol_type;
+    int test_number, counter;
+    /*TODO:*/
+}
+
+void run_labels_new_tests() {
+    Lable_Node* label_node_data, *label_node_code, *label_node_ext;
+    Symbol_Type symbol_type;
+    int test_number;
+    test_number = 0;
+
+    symbol_type = DATA;
+    label_node_data = tester_new_label_node("hi", 15, symbol_type, test_number);
+    free_label_node(label_node_data);
+
+    symbol_type = CODE;
+    label_node_code = tester_new_label_node("hicode", 7, symbol_type, test_number++);
+    free_label_node(label_node_code);
+
+    symbol_type = EXTERNALT;
+    label_node_ext = tester_new_label_node("hiEXTERNALT", 5, symbol_type, test_number++);
+    free_label_node(label_node_ext);
+}
+
+
+void run_labels_get_tests() {
+    /*TODO:*/
+
+}
+
+
+void run_tests_is_symbol_already_exist() {
+    /*TODO:*/
+
+}
+
+void run_tests_is_valid_lable() {
+    /*
+        tester_is_valid_lable("hi:", 1);
+        tester_is_valid_lable("hi", 0);
+        tester_is_valid_lable("5i", 0);
+        tester_is_valid_lable("i555ADMSasjd555:", 1);
+        tester_is_valid_lable("A555ADMSasjd555:", 1);
+        tester_is_valid_lable("i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0);
+        tester_is_valid_lable("#5i:", 0);
+        tester_is_valid_lable("a5$i:", 0);
+    */
     
 }
-/*
-    tester_is_valid_lable("hi:", 1);
-    tester_is_valid_lable("hi", 0);
-    tester_is_valid_lable("5i", 0);
-    tester_is_valid_lable("i555ADMSasjd555:", 1);
-    tester_is_valid_lable("A555ADMSasjd555:", 1);
-    tester_is_valid_lable("i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0);
-    tester_is_valid_lable("#5i:", 0);
-    tester_is_valid_lable("a5$i:", 0);
-*/

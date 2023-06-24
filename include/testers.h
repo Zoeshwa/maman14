@@ -38,6 +38,14 @@
     void tester_file_get_int_fileds(File_Config* file_config, int (*function)(File_Config*), int expected_result, int test_number);
     void tester_file_get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type, int expected_result, int test_number);
 
+    void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number);
+    void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number);
+    void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number);
+    void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number);
+    void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number);
+    void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number);
+    void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result, int test_number);
+
 
     void print_file_config(File_Config* file_config);
     void print_Symbol_table(Symbol_Table* symbol_table);
@@ -62,6 +70,12 @@
     void run_file_config_tests();
     void run_file_get_tests();
 
+    void run_labels_tests();
+    void run_labels_set_tests();
+    void run_labels_new_tests();
+    void run_labels_get_tests();
+    void run_tests_is_symbol_already_exist();
+    void run_tests_is_valid_lable();
 
 #endif
 

@@ -148,3 +148,10 @@ int is_valid_lable(Symbol_Table* table, char* word){
 
     return 1; /*return true*/
 }
+
+void free_label_node(Lable_Node* lable_node) {
+    if(get_label_next(lable_node) != NULL) {
+        free_label_node(get_label_next(lable_node));
+    }
+    free(lable_node);
+}

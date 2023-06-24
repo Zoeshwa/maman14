@@ -229,6 +229,16 @@ void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*)
     }
 } 
 
+void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number){
+    int result;
+    result = strcmp(get_label_name(label), word);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
+
 void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number) {
     Lable_Node* search_result;
     int result;
@@ -257,15 +267,6 @@ void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result
     }
 }
 
-void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number){
-    int result;
-    result = strcmp(get_label_name(label), word);
-    if (result == expected_result) {
-        PASS_PRINT(expected_result);
-    } else {
-        FAIL_PRINT(test_number, expected_result, result);
-    }
-}
 
 /*TODO:
     Symbol_Table* intialiez_symbol_table() {
