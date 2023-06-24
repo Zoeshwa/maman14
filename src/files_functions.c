@@ -84,3 +84,8 @@ void set_file_config_DC(File_Config* file_config,int DC_counter) {
     file_config->DC_counter = DC_counter; 
 }
 
+/*MAYBE: pass only how many to add?*/
+void set_file_config_IC(File_Config* file_config,int IC_counter) {
+    file_config->IC_counter = IC_counter; 
+}
+

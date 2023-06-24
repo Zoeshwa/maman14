@@ -35,6 +35,10 @@
 
     void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number);   
     void tester_get_next_word(char * str);
+    void tester_file_get_int_fileds(File_Config* file_config, int (*function)(File_Config*), int expected_result, int test_number);
+    void tester_file_get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type, int expected_result, int test_number);
+
+
     void print_file_config(File_Config* file_config);
     void print_Symbol_table(Symbol_Table* symbol_table);
     void print_DATA_Table(DATA_Table* data_table);
@@ -54,6 +58,10 @@
     void run_empty_line_testers();
     void run_comment_line_testers(); 
     void run_is_lable_testers();
+
+    void run_file_config_tests();
+    void run_file_get_tests();
+
 
 #endif
 

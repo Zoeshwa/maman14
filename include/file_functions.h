@@ -37,5 +37,6 @@
     DATA_Table* get_file_data_table(File_Config* file_config);
 
     void set_file_config_DC(File_Config* file_config,int DC_counter);
+    void set_file_config_IC(File_Config* file_config,int IC_counter);
 #endif
 

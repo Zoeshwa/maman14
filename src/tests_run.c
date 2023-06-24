@@ -6,7 +6,9 @@
 void run_tester() 
 {
     run_return_tests();
+    /*
     run_void_tests();
+    */
 }
 
 void run_return_tests() {
@@ -14,6 +16,8 @@ void run_return_tests() {
         run_is_lable_testers();
         run_input_testers();
     */
+   run_file_get_tests();
+   run_file_set_tests();
 }
 
 void run_void_tests() {
@@ -125,6 +129,8 @@ void run_comment_line_testers()
 
 
 void tests_get_next_word() {
+    START_TEST("get_next_word");
+
     tester_get_next_word("entry input");
     tester_get_next_word("LOOP:          .extern");
     tester_get_next_word("LOOP: .extern");
@@ -133,9 +139,32 @@ void tests_get_next_word() {
 void run_file_config_tests() {
     File_Config* file_config;
     file_config = intialiez_file_config();
+    START_TEST("print_file_config");
+
     print_file_config(file_config);
 }
 
+
+void run_file_get_tests() {
+    File_Config* file_config;
+    Symbol_Type symbol_type;
+    file_config = intialiez_file_config();
+    START_TEST("file_get_tests");
+    tester_file_get_int_fileds(file_config, get_DC_counter, 0, 1);
+    tester_file_get_int_fileds(file_config, get_IC_counter, 100, 2);
+    symbol_type = DATA;
+    tester_file_get_counter_by_type(file_config, symbol_type, 0, 3);
+    symbol_type = CODE;
+    tester_file_get_counter_by_type(file_config, symbol_type, 100, 4);
+}
+
+void run_file_set_tests() {
+    File_Config* file_config;
+    file_config = intialiez_file_config();
+    START_TEST("file_set_tests");
+    tester_file_set_int_fileds(file_config, set_file_config_DC,get_DC_counter, 1, 1);
+    tester_file_set_int_fileds(file_config, set_file_config_IC, get_IC_counter, 101, 2);
+}
 /*
     tester_is_valid_lable("hi:", 1);
     tester_is_valid_lable("hi", 0);
