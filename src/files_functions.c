@@ -21,7 +21,7 @@ File_Config* intialiez_file_config() {
     File_Config* file_config;
     file_config = (File_Config*)malloc(sizeof(Symbol_Table));
     file_config->symbol_table = intialiez_symbol_table();
-    file_config->ins_head = intialiez_ins_table();
+    file_config->ins_head = intialiez_ins_head();
     file_config->data_head = intialiez_data_table();
     file_config->DC_counter = 0;
     file_config->IC_counter = 100;

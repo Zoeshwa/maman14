@@ -10,6 +10,7 @@
         Data_Node* data_head;
     }File_Config;
 
+    File_Config* intialiez_file_config();
     int get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type); 
 
 #endif

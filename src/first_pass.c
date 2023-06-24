@@ -5,7 +5,26 @@
 
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
+void first_pass() {
+    /*initilazed varabels*/
+    File_Config* file_config;
+    char cur_word[MAX_LEN], input[MAX_LEN];
+    Ins_Node *curr_ins;
+    int line_num, is_line_have_symbol, is_line_data_ins; 
+    char * ptr;
 
+    line_num = 1;
+    file_config = intialiez_file_config();
+    curr_ins = NULL;
+
+    /* TODO: change stind -> am_file) */    
+    /*for each line in the file*/
+    while (fgets(input, MAX_LEN, stdin) != NULL){    
+            ptr = input;
+
+            if (empty_line(input) || comment_line(input)){continue;}
+    }
+}
 
 
 void run_first_pass(char* input) {
@@ -14,7 +33,7 @@ void run_first_pass(char* input) {
         char cur_word[MAX_LEN];
 
         File_Config* file_config;
-        
+
 
         
         int IC_counter, DC_counter, line_num, is_line_have_symbol, is_line_data_ins;
@@ -27,8 +46,9 @@ void run_first_pass(char* input) {
         */    
         Symbol_Table* symbol_table;
 
-
+        file_config = intialiez_file_config();
         line_num = 1;
+        /*TODO: delete*/
         IC_counter = 100;
         DC_counter = 0;
         ins_head = NULL;

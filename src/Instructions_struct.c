@@ -3,6 +3,14 @@
 #include <string.h>
 #include "Instructions_struct.h"
 
+/*MAYBE: delete*/
+Ins_Node* intialiez_ins_head() {
+    Ins_Node* ins_head;
+    ins_head = (Ins_Node*)malloc(sizeof(Ins_Node));
+    return ins_head;
+}
+
+
 
 /* Function to insert a new Ins_Node at the beginning of the list*/
 void insertIns_Node(struct Ins_Node** head, int IC, int line_num) {

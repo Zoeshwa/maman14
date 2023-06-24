@@ -4,6 +4,14 @@
 #include "data_struct.h"
 
 
+/*TODO*/
+DATA_Table* intialiez_data_table() {
+    DATA_Table* data_table;
+    data_table = (DATA_Table*)malloc(sizeof(DATA_Table));
+    data_table->head = NULL;
+    data_table->tail = data_table->head;
+    return data_table;
+}
 
 /*
 TODO

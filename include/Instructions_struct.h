@@ -23,6 +23,7 @@
         struct Ins_Node* next;
     } Ins_Node;
 
+    Ins_Node* intialiez_ins_head();
     void insertIns_Node(struct Ins_Node** head, int IC, int line_num);
     void update_error(struct Ins_Node** head, char* line);
     struct Ins_Node* update_Ins_list(struct Ins_Node* cur_line, char * p, char * input, int IC);
