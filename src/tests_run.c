@@ -184,6 +184,8 @@ void run_labels_set_tests() {
     Lable_Node* label_node;
     Symbol_Type symbol_type;
     int test_number, counter;
+    START_TEST("labels_set_tests");
+
     symbol_type = DATA;
     label_node = new_label_node("hi", 0, symbol_type);
 
@@ -220,6 +222,8 @@ void run_labels_get_tests() {
     Lable_Node* label_node;
     Symbol_Type symbol_type;
     int test_number, counter;
+    START_TEST("labels_get_tests");
+
     symbol_type = DATA;
     label_node = new_label_node("hi", 0, symbol_type);
 
