@@ -128,6 +128,7 @@ void update_extern_ins(Ins_Node* curr_ins, int num_of_lines) {
 
 
 void free_ins_node(Ins_Node* node) {
+    /*TODO: FIX*/
     if(get_Ins_Node_next(node) != NULL) {
         free_ins_node(get_Ins_Node_next(node));
     }

@@ -91,15 +91,19 @@ void set_file_config_IC(File_Config* file_config,int IC_counter) {
 
 
 void free_file_config(File_Config* file_config) {
+
     if(get_file_symbol_table(file_config) != NULL){
         free_symbol_table(get_file_symbol_table(file_config));
     }
+
     if(get_file_ins_head(file_config) != NULL){
         free_ins_node(get_file_ins_head(file_config));
     }
+
     if(get_file_data_table(file_config) != NULL){
         free_data_table(get_file_data_table(file_config));
     }
+
     free(file_config);
 }
 

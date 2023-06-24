@@ -38,5 +38,7 @@
 
     void set_file_config_DC(File_Config* file_config,int DC_counter);
     void set_file_config_IC(File_Config* file_config,int IC_counter);
+
+    void free_file_config(File_Config* file_config);
 #endif
 

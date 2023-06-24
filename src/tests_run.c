@@ -5,29 +5,25 @@
 
 void run_tester() 
 {
-    run_labels_tests();
-    run_first_pass_tests();
-
-    /*
     run_return_tests();
+    run_file_config_tests();/*FIX: memory?*/
+    run_first_pass_tests(); /*FIX: memory?*/
+    run_labels_tests();/*FIX: memory?*/
+    /*
     run_void_tests();
     */
 }
 
 void run_return_tests() {
-     /*
-        run_is_lable_testers();
-        run_input_testers();
-        run_file_get_tests();
-        run_file_set_tests();
-    */
+    run_is_lable_testers();
+    run_input_testers();
 }
 
 void run_void_tests() {
     /*
         tests_get_next_word();
+        run_file_config_print();
     */
-    run_file_config_tests();
 }
 
 /*strings*/
@@ -40,6 +36,7 @@ void run_is_lable_testers()
     tester_O_int_I_charP(is_lable, "hi:", 1, i++);
     tester_O_int_I_charP(is_lable, "hi", 0, i++);
     tester_O_int_I_charP(is_lable, "5i", 0, i++);
+    END_TEST("run_label_testers");
 }
 
 void run_input_testers() 
@@ -50,7 +47,7 @@ void run_input_testers()
     run_is_extern_ins_testers();
     run_empty_line_testers();
     run_comment_line_testers();
-
+    END_TEST("input_testers");
 }
 
 void run_is_scope_ins_testers() 
@@ -72,7 +69,7 @@ void run_is_scope_ins_testers()
     tester_O_int_I_charP(is_scope_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
     tester_O_int_I_charP(is_scope_ins, "\t.extern          ", 1, i++);
     tester_O_int_I_charP(is_scope_ins, ".extern \t LOOP, JH", 1, i++);
-    
+    END_TEST("");
 }
 
 void run_is_extern_ins_testers() 
@@ -92,7 +89,8 @@ void run_is_extern_ins_testers()
     tester_O_int_I_charP(is_extern_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
     tester_O_int_I_charP(is_extern_ins, "\t.extern          ", 1, i++);
     tester_O_int_I_charP(is_extern_ins, ".extern \t LOOP, JH", 1, i++);
-    
+    END_TEST("");
+
 }
 
 void run_empty_line_testers() 
@@ -107,6 +105,8 @@ void run_empty_line_testers()
     tester_O_int_I_charP(empty_line, "", 1, i++);
     tester_O_int_I_charP(empty_line, "\n", 1, i++);
     tester_O_int_I_charP(empty_line, "\t", 1, i++);
+    END_TEST(" ");
+
 }
 
 void run_comment_line_testers() 
@@ -129,6 +129,8 @@ void run_comment_line_testers()
     tester_O_int_I_charP(comment_line, ";.extern", 1, i++);
     tester_O_int_I_charP(comment_line, ";", 1, i++);
     tester_O_int_I_charP(comment_line, "     ;   xtern", 1, i++);
+    END_TEST(" ");
+
 }
 
 void tests_get_next_word() {
@@ -137,15 +139,22 @@ void tests_get_next_word() {
     tester_get_next_word("entry input");
     tester_get_next_word("LOOP:          .extern");
     tester_get_next_word("LOOP: .extern");
+    END_TEST(" ");
 }
 
 /*file config*/
-void run_file_config_tests() {
+void run_file_config_print() {
     File_Config* file_config;
     file_config = intialiez_file_config();
     START_TEST("print_file_config");
 
     print_file_config(file_config);
+    END_TEST(" ");
+}
+
+void run_file_config_tests() {
+    run_file_get_tests();
+    run_file_set_tests();
 }
 
 void run_file_get_tests() {
@@ -159,6 +168,8 @@ void run_file_get_tests() {
     tester_file_get_counter_by_type(file_config, symbol_type, 0, 3);
     symbol_type = CODE;
     tester_file_get_counter_by_type(file_config, symbol_type, 100, 4);
+    free_file_config(file_config);
+    END_TEST(" ");
 }
 
 void run_file_set_tests() {
@@ -167,6 +178,8 @@ void run_file_set_tests() {
     START_TEST("file_set_tests");
     tester_file_set_int_fileds(file_config, set_file_config_DC,get_DC_counter, 1, 1);
     tester_file_set_int_fileds(file_config, set_file_config_IC, get_IC_counter, 101, 2);
+    free_file_config(file_config);
+    END_TEST(" ");
 }
 
 /*labels*/
@@ -197,6 +210,7 @@ void run_labels_set_tests() {
     symbol_type = EXTERNALT;
     tester_set_label_types(label_node, symbol_type, test_number++);
     free_label_node(label_node);
+    END_TEST(" ");
 }
 
 void run_labels_new_tests() {
@@ -215,6 +229,7 @@ void run_labels_new_tests() {
 
     symbol_type = EXTERNALT;
     tester_new_label_node("hiEXTERNALT", 5, symbol_type, test_number++);
+    END_TEST(" ");
 }
 
 void run_labels_get_tests() {
@@ -235,12 +250,12 @@ void run_labels_get_tests() {
         tester_label_get_int_fileds(label_node, get_label_is_entry, ,test_number)
     */
     free_label_node(label_node);
+    END_TEST(" ");
 }
-
 
 void run_tests_is_symbol_already_exist() {
     Symbol_Table* table;
-    int expected_result, test_number;
+    int test_number;
     Symbol_Type symbol_type;
     
     START_TEST("run_tests_is_symbol_already_exist");
@@ -291,12 +306,12 @@ void run_tests_is_symbol_already_exist() {
     tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
 
     free_symbol_table(table);
+    END_TEST(" ");
 }
 
 void run_tests_is_valid_lable() {
     Symbol_Table* table;
-    char word[MAX_LEN];
-    int expected_result, test_number;
+    int test_number;
     Symbol_Type symbol_type;
     
     START_TEST("run_tests_is_valid_lable");
@@ -329,6 +344,7 @@ void run_tests_is_valid_lable() {
     tester_is_valid_lable(table, "i555ADMSasjd555:", 1, test_number++);
     tester_is_valid_lable(table, "hi2:", 0, test_number++);
     free_symbol_table(table);
+    END_TEST(" ");
 }
 
 
@@ -378,17 +394,47 @@ void run_tests_handle_label() {
     /*good label*/
     insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
     tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-    /*try agien and cant TODO:*/
+    /*try agien and cant*/
+    set_error_ins(expted_node_good, 1, ERROR_NOT_VALID_LABEL);
+    set_error_ins(node, 0, "");
     tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
 
-    /*TODO: every kind*/
+    /*every kind*/
+    set_error_ins(expted_node_good, 0, "");
+    set_error_ins(node, 0, "");
+    symbol_type = CODE;
+    strcpy(good_word1, "hi:");
+    insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
+    tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
+    
+    set_error_ins(expted_node_good, 0, "");
+    set_error_ins(node, 0, "");
+    symbol_type = EXTERNALT;
+    strcpy(good_word1, "hi:");
+    insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
+    tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
 
     /*bad label*/
     symbol_type = CODE;
-    strcpy(bad_word1, "hi:");
+    strcpy(bad_word1, good_word1);
+    set_error_ins(node, 0, "");
     tester_handle_label(file_config, node, bad_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-    
-    free_ins_node(node);
-    free_ins_node(expted_node_good);
-    free_symbol_table(expted_symbol_table);
+    /*not legal label*/
+    strcpy(bad_word1, "ssss");
+    set_error_ins(node, 0, "");
+    tester_handle_label(file_config, node, bad_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
+
+    if(node!=NULL) {
+        free_ins_node(node);
+    }
+    if(expted_node_good!=NULL) {
+        free_ins_node(expted_node_good);
+    }
+    if(expted_symbol_table!=NULL) {
+        free_symbol_table(expted_symbol_table);
+    }
+    if(file_config!=NULL) {
+        free_file_config(file_config);
+    }
+    END_TEST(" ");
 }

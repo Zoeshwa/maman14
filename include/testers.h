@@ -36,6 +36,7 @@
     #define NOT_GOOD printf("----------BAD------------\n")
     #define GOOD printf("----------GOOD------------\n")
     #define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)
+    #define END_TEST(fun_name) printf("END TEST: %s\n", fun_name)
 
     void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number);   
     void tester_get_next_word(char * str);
