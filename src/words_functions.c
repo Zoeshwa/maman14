@@ -42,32 +42,13 @@ int is_extern_word(char* cur_word) {
     }
 }
 
-int is_entry_word(char* cur_word) {
-    if(strcmp(cur_word, ".entry") == 0) {
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
-
-int is_data_word(char* cur_word) {
-    if(strcmp(cur_word, ".data") == 0) {
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
-
-int is_string_word(char* cur_word) {
-    if(strcmp(cur_word, ".string") == 0) {
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
 
 int is_data_storage_ins(char * input) {
     return (is_type_ins(is_data_word, input) || is_type_ins(is_string_word, input));
+}
+
+int is_type_storge_string_ins(char * input) {
+    return is_type_ins(is_string_word, input);
 }
 
 int is_extern_ins(char* input) {
@@ -95,4 +76,28 @@ int is_type_ins(int (*function)(char*), char* input) {
     }
 
     return result;
+}
+
+int is_entry_word(char* cur_word) {
+    if(strcmp(cur_word, ".entry") == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+int is_data_word(char* cur_word) {
+    if(strcmp(cur_word, ".data") == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+int is_string_word(char* cur_word) {
+    if(strcmp(cur_word, ".string") == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }

@@ -1,10 +1,13 @@
 
 #ifndef _DATA_HEADER_
 #define _DATA_HEADER_
+    
     /*TODO: think about*/
+    /*MAYBE:is valid?*/
     typedef struct Data_Node {
-        char c; /*ASK why not the U? do we need also type maybe?*/
-        int d;
+        int value; /*ascii code or int*/
+        int is_char; /*MAYBE: ?*/
+        int DC_counter; /*MAYBE?*/
         struct Data_Node* next;
     } Data_Node;
 
@@ -14,7 +17,14 @@
     }DATA_Table;
 
     DATA_Table* intialiez_data_table();
+    void add_data_node_to_table(DATA_Table* table, int value, int is_char, int counter);
     
+    Data_Node* new_data_node(int value, int is_char, int counter);
+    void set_data_node_value(Data_Node* data_node, int is_char, int value);
+    void set_data_node_DC_counter(Data_Node* data_node, int DC_counter);
+    void set_data_node_next(Data_Node* data_node, Data_Node* next);
+
+
 #endif
 
 

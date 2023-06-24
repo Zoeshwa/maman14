@@ -22,9 +22,9 @@ File_Config* intialiez_file_config() {
     file_config = (File_Config*)malloc(sizeof(Symbol_Table));
     file_config->symbol_table = intialiez_symbol_table();
     file_config->ins_head = intialiez_ins_head();
-    file_config->data_head = intialiez_data_table();
+    file_config->data_table = intialiez_data_table();
     file_config->DC_counter = 0;
-    file_config->IC_counter = 100;
+    file_config->IC_counter = 100; /*TODO: = 0? like page 36*/
     return file_config;
 }
 
@@ -49,5 +49,18 @@ int get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type) {
     }
 
     return counter_value;
+}
+
+int get_DC_counter(File_Config* file_config) {
+    int counter_value;
+    Symbol_Type symbol_type;
+    symbol_type = DATA;
+    counter_value = get_counter_by_type(file_config, symbol_type);
+    return counter_value;
+}
+
+/*MAYBE: pass only how many to add?*/
+void set_file_config_DC(File_Config* file_config,int DC_counter) {
+    file_config->DC_counter = DC_counter; 
 }
 

@@ -3,8 +3,9 @@
 #include <string.h>
 #include "data_struct.h"
 
+/*Table functions*/
 
-/*TODO*/
+/*MAYBE:*/
 DATA_Table* intialiez_data_table() {
     DATA_Table* data_table;
     data_table = (DATA_Table*)malloc(sizeof(DATA_Table));
@@ -12,25 +13,33 @@ DATA_Table* intialiez_data_table() {
     data_table->tail = data_table->head;
     return data_table;
 }
-
-/*
-TODO
-update_data_list ( ){
-                    if (Data_head = NULL){ //first line
-                        insertIns_Node(&Data_head, DC);
-                        cur_Data = Data_head;
-                    }
-                    else{ // any other line
-                        DC +=1;
-                        insertIns_Node(&cur_Data, DC);
-                    }
-
-}*/
-
-
-/*
-int update_data_list(struct Data_Node** cur_Data, char* p,char* input, int DC){
-    return 0;
+void add_data_node_to_table(DATA_Table* table, int value, int is_char, int counter) {
+    Data_Node* new_node;
+    new_node = new_data_node(value, is_char, counter);
+    set_data_node_next(table->tail, new_node);
+    table->tail = new_node; 
 }
-*/
+
+/*Node functions*/
+Data_Node* new_data_node(int value, int is_char, int counter) {
+    Data_Node* data_node;
+    data_node = (Data_Node*)malloc(sizeof(Data_Node));
+    set_data_node_value(data_node, is_char, value);
+    set_data_node_DC_counter(data_node, counter);
+    data_node->next = NULL;
+    return data_node;
+}
+
+void set_data_node_value(Data_Node* data_node, int is_char, int value) {
+    data_node->value = value;
+    data_node->is_char = is_char;
+}
+
+void set_data_node_DC_counter(Data_Node* data_node, int DC_counter) {
+    data_node->DC_counter = DC_counter;
+}
+
+void set_data_node_next(Data_Node* data_node, Data_Node* next) {
+    data_node->next = next;
+}
 

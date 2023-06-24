@@ -41,6 +41,7 @@ void first_pass() {
             if(is_line_have_symbol) {
                 /*handle insert data symbol for the command*/
                 handle_label(file_config, curr_ins, cur_word, DATA);
+                
                 /*get next words*/
                 ptr += strlen(cur_word);
                 get_next_word_old(input, cur_word, ptr);
@@ -116,10 +117,43 @@ void handle_code_line(File_Config* file_config, struct Ins_Node* curr_ins, char*
 
 void handle_data_ins(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
      
-        /* TODO: 7 in page 18 - handle data ins
-            DC = update_data_list(cur_Data, pointer, input, DC);
-        */
+        /* TODO: 7 in page 18 - handle data ins*/
+        int counter, number_of_oprends, curr_value, is_char;
+        char cur_word[MAX_LEN];
+
+        counter = get_DC_counter(file_config);
+        number_of_oprends = 0;
+
+       /*which type of data*/
+        is_char = is_type_storge_string_ins(line);
+
+        /*TODO: update data table*/
+        while (strlen(curr_ptr) > 0)
+        {
+            /*TODO: get params from the ins - with comma*/
+
+            /*next word*/
+            get_next_word(cur_word, curr_ptr);
+            curr_ptr= skip_spaces(curr_ptr);
+            curr_ptr =  curr_ptr + strlen(cur_word);
+            
+            /*TODO: validate data*/
+
+            /*TODO: convert to int*/
+
+            /*add to DATA table TODO: value set
+            counter += number_of_oprends;
+            add_data_node_to_table(file_config->data_table, value, is_char, counter);
+            number_of_oprends++;
+            
+            */
+        }
         
+
+        /*TODO: update ins*/
+
+        /*update DC_counter*/
+        set_file_config_DC(file_config, counter);
 }
 
 

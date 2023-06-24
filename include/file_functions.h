@@ -7,7 +7,7 @@
         int IC_counter;
         Symbol_Table* symbol_table;
         Ins_Node* ins_head;
-        Data_Node* data_head;
+        DATA_Table* data_table;
     }File_Config;
 
     File_Config* intialiez_file_config();

@@ -12,7 +12,7 @@
     
     typedef struct Lable_Node {
         char* name;
-        Counter_Type counter_type; /*maybe we need none?*/
+        Counter_Type counter_type; /*maybe we need none? may be we dont need?*/
         int counter_value; /*value of DC/IC - the address*/
         Symbol_Type symbol_type; /* external OR relocatable*/
         int is_entry; 
