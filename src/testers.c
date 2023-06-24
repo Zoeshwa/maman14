@@ -230,8 +230,13 @@ void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*)
 } 
 
 void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number){
-    int result;
-    result = strcmp(get_label_name(label), word);
+    int result, cmp_result;
+    cmp_result = strcmp(get_label_name(label), word);
+    if(cmp_result == 0) {
+        result = 1;
+    } else {
+        result = 0;
+    }
     if (result == expected_result) {
         PASS_PRINT(expected_result);
     } else {

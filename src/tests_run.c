@@ -172,9 +172,9 @@ void run_file_set_tests() {
 
 void run_labels_tests() {
     run_labels_new_tests();
-    /*
     run_labels_set_tests();
     run_labels_get_tests();
+    /*
     run_tests_is_symbol_already_exist();
     run_tests_is_valid_lable();
     */
@@ -184,7 +184,17 @@ void run_labels_set_tests() {
     Lable_Node* label_node;
     Symbol_Type symbol_type;
     int test_number, counter;
-    /*TODO:*/
+    symbol_type = DATA;
+    label_node = new_label_node("hi", 0, symbol_type);
+
+    tester_set_label_name(label_node, "hi", test_number);
+
+    tester_set_label_types(label_node, symbol_type, test_number++);
+    symbol_type = CODE;
+    tester_set_label_types(label_node, symbol_type, test_number++);
+    symbol_type = EXTERNALT;
+    tester_set_label_types(label_node, symbol_type, test_number++);
+    free_label_node(label_node);
 }
 
 void run_labels_new_tests() {
@@ -207,8 +217,19 @@ void run_labels_new_tests() {
 
 
 void run_labels_get_tests() {
-    /*TODO:*/
+    Lable_Node* label_node;
+    Symbol_Type symbol_type;
+    int test_number, counter;
+    symbol_type = DATA;
+    label_node = new_label_node("hi", 0, symbol_type);
 
+    tester_label_get_label_name(label_node, "hi", 1, test_number++);
+    tester_label_get_label_name(label_node, "dddd", 0, test_number++)
+
+    tester_label_get_int_fileds(label_node, get_label_counter_value, 0,test_number, test_number++);
+    /* TODO:
+        tester_label_get_int_fileds(label_node, get_label_is_entry, ,test_number)
+    */
 }
 
 
