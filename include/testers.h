@@ -11,6 +11,12 @@
 
 #ifndef _TESTERS_HEADER_
 #define _TESTERS_HEADER_
+
+
+    #define NOT_GOOD printf("----------BAD------------\n")
+    #define GOOD printf("----------GOOD------------\n")
+#define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)
+
     void run_tester();
     void run_is_lable_testers();
 
@@ -39,4 +45,14 @@
 #ifndef _LINES_HEADER_
 #define _TESTERS_LINES_HEADER_
     #include "words_functions.h"
+#endif
+
+#ifndef _DATA_HEADER_
+#define _TESTERS_DATA_HEADER_
+    #include "data_struct.h"
+#endif
+
+#ifndef _FILES_FUNCTIONS_HEADER_
+#define _TESTERS_FILES_HEADER_
+    #include "file_functions.h"
 #endif
