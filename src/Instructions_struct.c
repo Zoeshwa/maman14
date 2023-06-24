@@ -50,6 +50,31 @@ void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int I
 
 /*Node functions*/
 
+int get_Ins_Node_IC_count(Ins_Node* node) {
+    return node->IC_count;
+}
+
+int get_Ins_Node_line_number(Ins_Node* node) {
+    return node->line_number;
+}
+
+int get_Ins_Node_encoding_type(Ins_Node* node) {
+    return node->encoding_type;
+}
+
+int get_Ins_Node_is_error(Ins_Node* node) {
+    return node->is_error;
+}
+
+int get_Ins_Node_num_of_lines(Ins_Node* node) {
+    return node->num_of_extra_lines;
+}
+
+char* get_Ins_Node_err_msg(Ins_Node* node) {
+    return node->err_msg;
+}
+
+
 void set_IC_ins(Ins_Node* ins_to_update, int IC_count) {
     ins_to_update->IC_count = IC_count;
 }

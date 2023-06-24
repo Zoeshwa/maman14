@@ -6,7 +6,7 @@
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
 /*TODO: update counters after handle*/
-void first_pass() {
+File_Config* first_pass() {
     /*initilazed varabels*/
     File_Config* file_config;
     char cur_word[MAX_LEN], input[MAX_LEN];
@@ -81,6 +81,7 @@ void first_pass() {
 
     /*TODO: check if theres error. if so - print them and stop */
     /*TODO: else - update symbol of type data by addinig IC final value*/
+    return file_config;
     /*TODO: run secound pass*/
 }
 
@@ -155,7 +156,6 @@ void handle_data_ins(File_Config* file_config, struct Ins_Node* curr_ins, char* 
         /*update DC_counter*/
         set_file_config_DC(file_config, counter);
 }
-
 
 void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type) { 
     int counter_value;

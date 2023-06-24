@@ -155,6 +155,148 @@ void tester_file_set_int_fileds(File_Config* file_config, void (*set_func)(File_
 
 /*TODO: rest of get and set files*/
 
+int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b) {
+
+    if(get_DC_counter(file_config_a) != get_DC_counter(file_config_b)) {
+        return 0;
+    }
+    
+    if(get_IC_counter(file_config_a) != get_IC_counter(file_config_b)) {
+        return 0;
+    }
+    if(is_symbol_table_equals(file_config_a->symbol_table, file_config_b->symbol_table) == 0) {
+        return 0;
+    }
+    if(is_Ins_Node_equals(file_config_a->ins_head, file_config_b->ins_head) == 0) {
+        return 0;
+    }
+    if(is_DATA_Table_equals(file_config_a->data_table, file_config_b->data_table) == 0) {
+        return 0;
+    }
+    return 1;
+}
+
+int is_symbol_table_equals(Symbol_Table* symbol_table_a, Symbol_Table* symbol_table_b) {
+    Lable_Node* curr_node_a, *curr_node_b;
+
+    curr_node_a = symbol_table_a->head;
+    curr_node_b = symbol_table_b->head;
+
+    while (curr_node_a != NULL && curr_node_b != NULL)
+    {
+        if(is_Lable_Node_equals(curr_node_a, curr_node_b) == 0) {
+            return 0;
+        }
+        curr_node_a = curr_node_a->next;
+        curr_node_b = curr_node_b->next;
+    }
+    if(curr_node_a == NULL && curr_node_b == NULL) {
+        return 1;
+    } 
+
+    return 0;
+}
+
+int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
+    Ins_Node* curr_node_a, *curr_node_b;
+
+    curr_node_a = ins_head_a;
+    curr_node_b = ins_head_b;
+
+    while (curr_node_a != NULL && curr_node_b != NULL)
+    {
+        if(is_Ins_Node_equals(curr_node_a, curr_node_b) == 0) {
+            return 0;
+        }
+        curr_node_a = curr_node_a->next;
+        curr_node_b = curr_node_b->next;
+    }
+    if(curr_node_a == NULL && curr_node_b == NULL) {
+        return 1;
+    } 
+
+    return 0;
+}
+
+int is_DATA_Table_equals(DATA_Table* data_table_a, DATA_Table* data_table_b) {
+    Data_Node* curr_node_a, *curr_node_b;
+
+    curr_node_a = data_table_a->head;
+    curr_node_b = data_table_b->head;
+
+    while (curr_node_a != NULL && curr_node_b != NULL)
+    {
+        if(is_data_Node_equals(curr_node_a, curr_node_b) == 0) {
+            return 0;
+        }
+        curr_node_a = curr_node_a->next;
+        curr_node_b = curr_node_b->next;
+    }
+    
+    if(curr_node_a == NULL && curr_node_b == NULL) {
+        return 1;
+    } 
+
+    return 0;
+}
+
+int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b) {
+    
+    if(get_label_counter_value(curr_node_a) != get_label_counter_value(curr_node_b)) {
+        return 0;
+    }
+    
+    if(strcmp(get_label_name(curr_node_a),get_label_name(curr_node_b)) != 0) {
+        return 0;
+    }
+    if(get_label_counter_type(curr_node_a) != get_label_counter_type(curr_node_b)) {
+        return 0;
+    }
+
+    if(get_label_symbol_type(curr_node_a) != get_label_symbol_type(curr_node_b)) {
+        return 0;
+    }
+    /*TODO: more filds*/
+    return 0;
+}
+
+int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
+            
+    if(get_Ins_Node_IC_count(curr_node_a) != get_Ins_Node_IC_count(curr_node_b)) {
+        return 0;
+    }
+    if(get_Ins_Node_line_number(curr_node_a) != get_Ins_Node_line_number(curr_node_b)) {
+        return 0;
+    }
+
+    if(get_Ins_Node_encoding_type(curr_node_a) != get_Ins_Node_encoding_type(curr_node_b)) {
+        return 0;
+    }
+    
+    if(get_Ins_Node_is_error(curr_node_a) != get_Ins_Node_is_error(curr_node_b)) {
+        return 0;
+    }
+    
+    if(get_Ins_Node_num_of_lines(curr_node_a) != get_Ins_Node_num_of_lines(curr_node_b)) {
+        return 0;
+    }
+    
+    if(strcmp(get_Ins_Node_err_msg(curr_node_a),get_Ins_Node_err_msg(curr_node_b)) != 0) {
+        return 0;
+    }
+
+    /*TODO: more filds*/
+    return 0;
+}
+
+int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
+        int value; /*ascii code or int*/
+        int is_char; /*MAYBE: ?*/
+        int DC_counter; /*MAYBE?*/
+        struct Data_Node* next;
+}
+
+/*TODO - node equals*/
 
 /*Labels testers*/
 void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number) {
@@ -281,6 +423,19 @@ void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result
 Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
 Counter_Type get_label_counter_type(Lable_Node* new_lable) {
 
+*/
+
+/*first pass*/
+
+void tester_handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type) {
+    /*if error in ins && symbol table equals*/
+}
+
+/* TODO
+void tester_handle_ins(void (*handlefunc)(File_Config*, struct Ins_Node*, char*, char*), File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
+    
+    if file_config state is like expted
+}
 */
 
 

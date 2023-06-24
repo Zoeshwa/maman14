@@ -22,7 +22,7 @@
 #ifndef _FIRST_PASS_HEADER_
 #define _FIRST_PASS_HEADER_
 
-    void first_pass();
+    File_Config* first_pass();
     void handle_extren_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr);
     void handle_code_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr);
     void handle_data_ins(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr);
