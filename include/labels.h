@@ -44,6 +44,8 @@
     void set_label_next(Lable_Node* new_lable, Symbol_Table* table);
     Lable_Node* is_symbol_already_exist(Symbol_Table* table, char * symbol_name);
 
+    void free_label_node(Lable_Node* lable_node);
+
 #endif
 
 

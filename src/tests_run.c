@@ -146,7 +146,6 @@ void run_file_config_tests() {
     print_file_config(file_config);
 }
 
-
 void run_file_get_tests() {
     File_Config* file_config;
     Symbol_Type symbol_type;
@@ -183,10 +182,12 @@ void run_labels_tests() {
 void run_labels_set_tests() {
     Lable_Node* label_node;
     Symbol_Type symbol_type;
-    int test_number, counter;
+    int test_number;
     START_TEST("labels_set_tests");
 
     symbol_type = DATA;
+    test_number = 0;
+
     label_node = new_label_node("hi", 0, symbol_type);
 
     tester_set_label_name(label_node, "hi", test_number);
@@ -221,16 +222,17 @@ void run_labels_new_tests() {
 void run_labels_get_tests() {
     Lable_Node* label_node;
     Symbol_Type symbol_type;
-    int test_number, counter;
+    int test_number;
     START_TEST("labels_get_tests");
 
     symbol_type = DATA;
+    test_number = 0;
     label_node = new_label_node("hi", 0, symbol_type);
 
     tester_label_get_label_name(label_node, "hi", 1, test_number++);
-    tester_label_get_label_name(label_node, "dddd", 0, test_number++)
+    tester_label_get_label_name(label_node, "dddd", 0, test_number++);
 
-    tester_label_get_int_fileds(label_node, get_label_counter_value, 0,test_number, test_number++);
+    tester_label_get_int_fileds(label_node, get_label_counter_value, 0, test_number++);
     /* TODO:
         tester_label_get_int_fileds(label_node, get_label_is_entry, ,test_number)
     */

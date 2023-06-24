@@ -37,7 +37,8 @@
     void tester_get_next_word(char * str);
     void tester_file_get_int_fileds(File_Config* file_config, int (*function)(File_Config*), int expected_result, int test_number);
     void tester_file_get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type, int expected_result, int test_number);
-
+    void tester_file_set_int_fileds(File_Config* file_config, void (*set_func)(File_Config*, int),int (*get_func)(File_Config*), int expected_result, int test_number);
+    
     void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number);
     void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number);
     void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number);
@@ -56,19 +57,20 @@
 
     /*tests - run tests*/
     void run_tester();
-    void run_void_tests();
-    void tests_get_next_word();
     void run_return_tests();
-    void run_file_config_tests();
+    void run_void_tests();
+    void run_is_lable_testers();
     void run_input_testers();
     void run_is_scope_ins_testers();
     void run_is_extern_ins_testers(); 
     void run_empty_line_testers();
     void run_comment_line_testers(); 
-    void run_is_lable_testers();
+
+    void tests_get_next_word();
 
     void run_file_config_tests();
     void run_file_get_tests();
+    void run_file_set_tests();
 
     void run_labels_tests();
     void run_labels_set_tests();
