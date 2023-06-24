@@ -5,11 +5,12 @@
 
 #define MAX_LEN 80
 
+/*TODO free functions*/
 
 int main(int argc, char* argv[]){
 
     run_tester();
 
     return 0;
-    }
+}
 

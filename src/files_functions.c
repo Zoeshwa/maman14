@@ -59,6 +59,26 @@ int get_DC_counter(File_Config* file_config) {
     return counter_value;
 }
 
+int get_IC_counter(File_Config* file_config) {
+    int counter_value;
+    Symbol_Type symbol_type;
+    symbol_type = CODE;
+    counter_value = get_counter_by_type(file_config, symbol_type);
+    return counter_value;
+}
+
+Symbol_Table* get_file_symbol_table(File_Config* file_config) {
+    return file_config->symbol_table;
+}
+
+Ins_Node* get_file_ins_head(File_Config* file_config) {
+    return file_config->ins_head;
+}
+
+DATA_Table* get_file_data_table(File_Config* file_config) {
+    return file_config->data_table;
+}
+
 /*MAYBE: pass only how many to add?*/
 void set_file_config_DC(File_Config* file_config,int DC_counter) {
     file_config->DC_counter = DC_counter; 

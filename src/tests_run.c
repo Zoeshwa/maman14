@@ -3,15 +3,24 @@
 #include <string.h>
 #include "testers.h"
 
-
-
 void run_tester() 
 {
-    run_is_lable_testers();
-    run_input_testers();
- /*
-    tests_get_next_word();
- */
+    run_return_tests();
+    run_void_tests();
+}
+
+void run_return_tests() {
+     /*
+        run_is_lable_testers();
+        run_input_testers();
+    */
+}
+
+void run_void_tests() {
+    /*
+        tests_get_next_word();
+    */
+    run_file_config_tests();
 }
 
 
@@ -24,8 +33,6 @@ void run_is_lable_testers()
     tester_O_int_I_charP(is_lable, "hi", 0, i++);
     tester_O_int_I_charP(is_lable, "5i", 0, i++);
 }
-
-
 
 void run_input_testers() 
 {
@@ -123,7 +130,11 @@ void tests_get_next_word() {
     tester_get_next_word("LOOP: .extern");
 }
 
-
+void run_file_config_tests() {
+    File_Config* file_config;
+    file_config = intialiez_file_config();
+    print_file_config(file_config);
+}
 
 /*
     tester_is_valid_lable("hi:", 1);

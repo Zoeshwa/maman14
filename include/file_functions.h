@@ -28,8 +28,14 @@
     }File_Config;
 
     File_Config* intialiez_file_config();
+
     int get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type); 
     int get_DC_counter(File_Config* file_config);
+    int get_IC_counter(File_Config* file_config);
+    Symbol_Table* get_file_symbol_table(File_Config* file_config);
+    Ins_Node* get_file_ins_head(File_Config* file_config);
+    DATA_Table* get_file_data_table(File_Config* file_config);
+
     void set_file_config_DC(File_Config* file_config,int DC_counter);
 #endif
 

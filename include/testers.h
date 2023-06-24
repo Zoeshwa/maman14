@@ -1,36 +1,4 @@
-/*
-#if !defined(_TESTERS_HEADER_)
-    #define _TESTERS_HEADER_
-    int tester_is_lable(char * word, int expacted);
-    int tester_is_valid_lable(char * word, int expacted);
-    void run_label_testers();
-    void run_tester();
 
-#endif
-*/
-
-#ifndef _TESTERS_HEADER_
-#define _TESTERS_HEADER_
-
-
-    #define NOT_GOOD printf("----------BAD------------\n")
-    #define GOOD printf("----------GOOD------------\n")
-#define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)
-
-    void run_tester();
-    void run_is_lable_testers();
-
-    int tester_is_lable(char * word, int expacted);
-    void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number);   
-    void run_input_testers();
-    void run_is_scope_ins_testers();
-    void run_is_extern_ins_testers(); 
-    void run_empty_line_testers();
-    void run_comment_line_testers(); 
-    void tests_get_next_word();
-    void tester_get_next_word(char * str);
-
-#endif
 
 #ifndef _LABELS_HEADER_
 #define _TESTERS_LABELS_HEADER_
@@ -56,3 +24,36 @@
 #define _TESTERS_FILES_HEADER_
     #include "file_functions.h"
 #endif
+
+#ifndef _TESTERS_HEADER_
+#define _TESTERS_HEADER_
+
+
+    #define NOT_GOOD printf("----------BAD------------\n")
+    #define GOOD printf("----------GOOD------------\n")
+    #define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)
+
+    void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number);   
+    void tester_get_next_word(char * str);
+    void print_file_config(File_Config* file_config);
+    void print_Symbol_table(Symbol_Table* symbol_table);
+    void print_DATA_Table(DATA_Table* data_table);
+    void print_Ins_Node(Ins_Node* ins);
+    void print_Lable_Node(Lable_Node* label_node);
+    void print_Data_Node(Data_Node* data_node);
+
+    /*tests - run tests*/
+    void run_tester();
+    void run_void_tests();
+    void tests_get_next_word();
+    void run_return_tests();
+    void run_file_config_tests();
+    void run_input_testers();
+    void run_is_scope_ins_testers();
+    void run_is_extern_ins_testers(); 
+    void run_empty_line_testers();
+    void run_comment_line_testers(); 
+    void run_is_lable_testers();
+
+#endif
+

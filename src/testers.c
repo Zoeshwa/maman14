@@ -36,8 +36,78 @@ void tester_get_next_word(char * str) {
 
 
 void print_file_config(File_Config* file_config) {
-
+    if(file_config == NULL) {
+        printf("file_config is NULL");
+        return;
+    }
+    printf("This is file config print\n");
+    printf("Counters - DC: %d, IC: %d\n", get_DC_counter(file_config), get_IC_counter(file_config));
+    print_Symbol_table(get_file_symbol_table(file_config));
+    print_Ins_Node(get_file_ins_head(file_config));
+    print_DATA_Table(get_file_data_table(file_config));
 }
+
+
+void print_Symbol_table(Symbol_Table* symbol_table) {
+    if(symbol_table == NULL) {
+        printf("symbol_table is NULL");
+        return;
+    }
+    printf("This is Symbol_Table print:\n");
+    printf("print head:\n");
+    print_Lable_Node(symbol_table->head);
+    printf("print tail:\n");
+    print_Lable_Node(symbol_table->tail);
+}
+
+void print_DATA_Table(DATA_Table* data_table) {
+    if(data_table == NULL) {
+        printf("data_table is NULL");
+        return;
+    }
+    printf("This is DATA_Table print:\n");
+    printf("print head:\n");
+    print_Data_Node(data_table->head);
+    printf("print tail:\n");
+    print_Data_Node(data_table->tail);
+}
+
+void print_Ins_Node(Ins_Node* ins) {
+        if(ins == NULL) {
+        printf("ins is NULL");
+        return;
+    }
+    printf("This is Ins_Node print:\n");
+    printf("line_number: %d, IC_count: %d\n",ins->line_number, ins->IC_count);
+    /*TODO*/
+} 
+
+void print_Lable_Node(Lable_Node* label_node) {
+    if(label_node == NULL) {
+        printf("Lable_Node is NULL");
+        return;
+    }
+    printf("This is Lable_Node print:\n");
+    printf("name: %s, ",label_node->name);
+    printf("counter_type: %d, \n",label_node->counter_type);
+    printf("counter_value: %d, \n",label_node->counter_value);
+    printf("symbol_type: %d, ",label_node->symbol_type);
+    printf("is_entry: %d\n",label_node->is_entry);
+
+    printf("next: %s\n", label_node->next->name);
+} 
+
+void print_Data_Node(Data_Node* data_node) {
+    if(data_node == NULL) {
+        printf("Lable_Node is NULL");
+        return;
+    }
+    printf("This is Lable_Node print:\n");
+    printf("value: %d, ",data_node->value);
+    printf("is_char: %d, \n",data_node->is_char);
+    printf("DC_counter: %d, \n",data_node->DC_counter);
+    printf("next: %s\n", data_node->next->value);
+} 
 
 /*
 int tester_is_valid_lable(char * word, int expacted) 
