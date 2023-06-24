@@ -43,6 +43,6 @@
         DATA,
         CODE,
         EXTERNALT
-    } Symbol_Type;
+    }Symbol_Type;
 
 #endif

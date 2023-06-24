@@ -24,6 +24,7 @@
     int is_string_word(char* cur_word);
     int is_data_word(char* cur_word);
     int is_lable(char* word);
+    int is_type_storge_string_ins(char * input);
 
 
 

@@ -44,7 +44,7 @@ void first_pass() {
                 
                 /*get next words*/
                 ptr += strlen(cur_word);
-                get_next_word_old(input, cur_word, ptr);
+                get_next_word(cur_word, input);
                 ptr = skip_spaces(ptr);
             }
 
@@ -56,12 +56,12 @@ void first_pass() {
             if(is_line_have_symbol) {
                 set_error_ins(curr_ins, FALSE, WARNING_LABEL_NOT_USE);
                 ptr += strlen(cur_word);
-                get_next_word_old(input,cur_word, ptr);
+                get_next_word(cur_word, input);
                 ptr = skip_spaces(ptr);
             }
 
             if(is_extern_ins(input)) {
-                handle_extren_line(file_config, cur_word, input, ptr);
+                handle_extren_line(file_config, curr_ins, input, ptr);
             }
             continue;
 
@@ -70,10 +70,10 @@ void first_pass() {
                 handle_label(file_config, curr_ins, cur_word, CODE);
 
                 ptr += strlen(cur_word);
-                get_next_word_old(input,cur_word, ptr);
+                get_next_word(cur_word, input);
                 ptr = skip_spaces(ptr);
             }
-            handle_code_line(file_config, cur_word, input, ptr);
+            handle_code_line(file_config, curr_ins, input, ptr);
             continue;
 
         }

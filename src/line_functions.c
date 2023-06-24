@@ -41,19 +41,6 @@ char* skip_spaces(char* p){
 }
 
 /*TODO: check why ptr and return value*/
-/*OLD V*/
-char* get_next_word_old(char* str, char* word, char* ptr){
-    int i=0;
-    ptr = skip_spaces(ptr);
-    while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t'){
-        word[i] = *ptr;
-        i++;
-        ptr++;
-    }
-    word[i] = '\0';
-    return word;
-}
-
 char* get_next_word(char* word, char* line){
     int i=0;
     char * ptr;

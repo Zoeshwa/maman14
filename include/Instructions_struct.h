@@ -26,10 +26,19 @@
 
     Ins_Node* intialiez_ins_head();
     void insertIns_Node(struct Ins_Node** head, int IC, int line_num);
-    void update_error(struct Ins_Node** head, char* line);
-    struct Ins_Node* update_Ins_list(struct Ins_Node* cur_line, char * p, char * input, int IC);
     void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int IC,int line_num);
+    
+    void set_IC_ins(Ins_Node* ins_to_update, int IC_count);
+    void set_line_number_ins(Ins_Node* ins_to_update, int line_number);
+    void set_encoding_type_ins(Ins_Node* ins_to_update, int encoding_type);
+    void set_opcode_ins(Ins_Node* ins_to_update, int opcode);
+    void set_ins_params();
+    void set_ins_num_of_extra_lines(Ins_Node* ins_to_update, int num_of_extra_lines);
     void set_error_ins(struct Ins_Node* ins_to_update, int is_error, char* error_msg);    
+    void update_error(struct Ins_Node** head, char* line);
+    void set_next_ins(Ins_Node* ins_to_update, Ins_Node* next);
+    void update_extern_ins(Ins_Node* curr_ins, int num_of_lines);
+
 #endif
 
 #ifndef _ENUMS_HEADER_

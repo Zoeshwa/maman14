@@ -1,21 +1,3 @@
-#ifndef _FILES_FUNCTIONS_HEADER_
-#define _FILES_FUNCTIONS_HEADER_
-    void make_am_name(char* file, char* name);
-
-    typedef struct File_Config {
-        int DC_counter;
-        int IC_counter;
-        Symbol_Table* symbol_table;
-        Ins_Node* ins_head;
-        DATA_Table* data_table;
-    }File_Config;
-
-    File_Config* intialiez_file_config();
-    int get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type); 
-
-#endif
-
-
 #ifndef _LABELS_HEADER_
     #include "labels.h"
 #endif
@@ -31,5 +13,23 @@
 
 #ifndef _ENUMS_HEADER_
     #include "enums.h"
+#endif
+
+#ifndef _FILES_FUNCTIONS_HEADER_
+#define _FILES_FUNCTIONS_HEADER_
+    void make_am_name(char* file, char* name);
+
+    typedef struct File_Config {
+        int DC_counter;
+        int IC_counter;
+        struct Symbol_Table* symbol_table;
+        struct Ins_Node* ins_head;
+        struct DATA_Table* data_table;
+    }File_Config;
+
+    File_Config* intialiez_file_config();
+    int get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type); 
+    int get_DC_counter(File_Config* file_config);
+    void set_file_config_DC(File_Config* file_config,int DC_counter);
 #endif
 
