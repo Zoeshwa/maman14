@@ -33,7 +33,7 @@ void tester_get_next_word(char * str) {
     }
 }
 
-
+/*print func*/
 
 void print_file_config(File_Config* file_config) {
     if(file_config == NULL) {
@@ -122,6 +122,7 @@ void print_Data_Node(Data_Node* data_node) {
 
 } 
 
+/*files testers*/
 void tester_file_get_int_fileds(File_Config* file_config, int (*function)(File_Config*), int expected_result, int test_number){
     int result;
     result = function(file_config);

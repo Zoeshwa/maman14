@@ -11,10 +11,11 @@ File_Config* first_pass() {
     File_Config* file_config;
     char cur_word[MAX_LEN], input[MAX_LEN];
     Ins_Node *curr_ins;
-    int line_num, is_line_have_symbol, is_line_data_ins; 
+    int line_num, is_valid; 
     char * ptr;
 
     line_num = 1;
+    is_valid = 1;
     file_config = intialiez_file_config();
     curr_ins = NULL;
 
@@ -24,65 +25,69 @@ File_Config* first_pass() {
         ptr = input;
 
         if (empty_line(input) || comment_line(input)){continue;}
-        
-        /*TODO: line counter update*/
-
-        /*otherwise lines should be added*/
-        add_ins_to_list(file_config->ins_head,curr_ins,file_config->IC_counter,line_num);
-        
-        /*get the first word*/
-        get_next_word(cur_word, ptr);
-        ptr = skip_spaces(ptr);
-
-        is_line_have_symbol = is_lable(cur_word); /*label of the line*/    
-        is_line_data_ins = is_data_storage_ins(input);/*ins: .data or .string*/
-        
-        if(is_line_data_ins) {
-            if(is_line_have_symbol) {
-                /*handle insert data symbol for the command*/
-                handle_label(file_config, curr_ins, cur_word, DATA);
-                
-                /*get next words*/
-                ptr += strlen(cur_word);
-                get_next_word(cur_word, input);
-                ptr = skip_spaces(ptr);
-            }
-
-            handle_data_ins(file_config, curr_ins, input, ptr);
-            continue;
-
-        } else if(is_scope_ins(input)) { /*.entry or .extranal*/
-            
-            if(is_line_have_symbol) {
-                set_error_ins(curr_ins, FALSE, WARNING_LABEL_NOT_USE);
-                ptr += strlen(cur_word);
-                get_next_word(cur_word, input);
-                ptr = skip_spaces(ptr);
-            }
-
-            if(is_extern_ins(input)) {
-                handle_extren_line(file_config, curr_ins, input, ptr);
-            }
-            continue;
-
-        } else{ /* is instruction*/
-            if (is_line_have_symbol) {
-                handle_label(file_config, curr_ins, cur_word, CODE);
-
-                ptr += strlen(cur_word);
-                get_next_word(cur_word, input);
-                ptr = skip_spaces(ptr);
-            }
-            handle_code_line(file_config, curr_ins, input, ptr);
-            continue;
-
-        }
+        is_valid = handle_new_line(file_config, line_num, input, curr_ins, cur_word);
     }
 
     /*TODO: check if theres error. if so - print them and stop */
     /*TODO: else - update symbol of type data by addinig IC final value*/
     return file_config;
     /*TODO: run secound pass*/
+}
+
+int handle_new_line(File_Config* file_config, int line_num, char* line, Ins_Node *curr_ins, char* cur_word) {
+    char * ptr;
+    int is_line_have_symbol, is_line_data_ins; 
+    /*TODO: line counter update*/
+
+    /*otherwise lines should be added*/
+    add_ins_to_list(file_config->ins_head,curr_ins,file_config->IC_counter,line_num);
+    
+    /*get the first word*/
+    get_next_word(cur_word, ptr);
+    ptr = skip_spaces(ptr);
+
+    is_line_have_symbol = is_lable(cur_word); /*label of the line*/    
+    is_line_data_ins = is_data_storage_ins(line);/*ins: .data or .string*/
+    
+    if(is_line_data_ins) {
+        if(is_line_have_symbol) {
+            /*handle insert data symbol for the command*/
+            handle_label(file_config, curr_ins, cur_word, DATA);
+            
+            /*get next words*/
+            ptr += strlen(cur_word);
+            get_next_word(cur_word, line);
+            ptr = skip_spaces(ptr);
+        }
+
+        handle_data_ins(file_config, curr_ins, line, ptr);
+        return TRUE;
+
+    } else if(is_scope_ins(line)) { /*.entry or .extranal*/
+        
+        if(is_line_have_symbol) {
+            set_error_ins(curr_ins, FALSE, WARNING_LABEL_NOT_USE);
+            ptr += strlen(cur_word);
+            get_next_word(cur_word, line);
+            ptr = skip_spaces(ptr);
+        }
+
+        if(is_extern_ins(line)) {
+            handle_extren_line(file_config, curr_ins, line, ptr);
+        }
+        return TRUE;
+
+    } else{ /* is instruction*/
+        if (is_line_have_symbol) {
+            handle_label(file_config, curr_ins, cur_word, CODE);
+
+            ptr += strlen(cur_word);
+            get_next_word(cur_word, line);
+            ptr = skip_spaces(ptr);
+        }
+        handle_code_line(file_config, curr_ins, line, ptr);
+        return TRUE;
+    }
 }
 
 void handle_extren_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
@@ -108,7 +113,6 @@ void handle_extren_line(File_Config* file_config, struct Ins_Node* curr_ins, cha
     update_extern_ins(curr_ins, number_of_oprends);
     /*TODO: add the params also to the ins?*/
 }
-
 
 void handle_code_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
      
