@@ -290,13 +290,20 @@ int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
 }
 
 int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
-        int value; /*ascii code or int*/
-        int is_char; /*MAYBE: ?*/
-        int DC_counter; /*MAYBE?*/
-        struct Data_Node* next;
+    if(get_data_node_value(curr_node_a) != get_data_node_value(curr_node_b)) {
+        return 0;
+    }
+    if(get_data_node_is_char(curr_node_a) != get_data_node_is_char(curr_node_b)) {
+        return 0;
+    }
+
+    if(get_data_node_DC_counter(curr_node_a) != get_data_node_DC_counter(curr_node_b)) {
+        return 0;
+    }
+
+    return 1;
 }
 
-/*TODO - node equals*/
 
 /*Labels testers*/
 void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number) {
