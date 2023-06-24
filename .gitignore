@@ -1,5 +1,5 @@
-# obj/
-# bin/
+obj/
+bin/
 
-# .o
-# .exe
+.o
+.exe
