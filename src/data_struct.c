@@ -30,6 +30,21 @@ Data_Node* new_data_node(int value, int is_char, int counter) {
     return data_node;
 }
 
+int get_data_node_value(Data_Node* node) {
+    return node->value;
+}
+
+int get_data_node_is_char(Data_Node* node) {
+    return node->is_char;
+}
+int get_data_node_DC_counter(Data_Node* node) {
+    return node->DC_counter;
+}
+
+Data_Node* get_data_node_next(Data_Node* node) {
+    return node->next;
+}
+
 void set_data_node_value(Data_Node* data_node, int is_char, int value) {
     data_node->value = value;
     data_node->is_char = is_char;
