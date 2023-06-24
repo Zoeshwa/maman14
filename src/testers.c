@@ -285,8 +285,27 @@ Counter_Type get_label_counter_type(Lable_Node* new_lable) {
 
 /*first pass*/
 
-void tester_handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type) {
-    /*if error in ins && symbol table equals*/
+void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* word, Symbol_Type symbol_type, Ins_Node* expted_node, Symbol_Table* expted_symbol_table, int test_number) {
+    int result;
+    result = 1;
+    handle_label(file_config, node, word, symbol_type);
+
+    if(is_Ins_Node_err_equals(node, expted_node) == 0) {
+        result = 1;
+    }
+    
+    if(is_symbol_table_equals(file_config->symbol_table, expted_symbol_table) == 0) {
+        result = 1;
+    }
+
+    if (result == 1) {
+        PASS_PRINT(1);
+    } else {
+        FAIL_PRINT(test_number, 1, result);
+        print_Symbol_table(file_config->symbol_table);
+        print_Ins_Node(node);
+    }
+
 }
 
 /* TODO
@@ -400,7 +419,7 @@ int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b) {
         return 0;
     }
     /*TODO: more filds*/
-    return 0;
+    return 1;
 }
 
 int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
@@ -429,7 +448,22 @@ int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
     }
 
     /*TODO: more filds*/
-    return 0;
+    return 1;
+}
+
+int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
+               
+    if(get_Ins_Node_is_error(curr_node_a) != get_Ins_Node_is_error(curr_node_b)) {
+        return 0;
+    }
+
+    
+    if(strcmp(get_Ins_Node_err_msg(curr_node_a),get_Ins_Node_err_msg(curr_node_b)) != 0) {
+        return 0;
+    }
+
+    /*TODO: more filds*/
+    return 1;
 }
 
 int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {

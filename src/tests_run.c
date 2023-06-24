@@ -9,6 +9,7 @@ void run_tester()
     /*
     run_void_tests();
     */
+   run_first_pass_tests();
 }
 
 void run_return_tests() {
@@ -255,4 +256,31 @@ void run_tests_is_valid_lable() {
         tester_is_valid_lable("a5$i:", 0);
     */
     
+}
+
+void run_first_pass_tests(){
+    run_handle_functions();
+}
+
+void run_handle_functions() {
+    tests_handle_label();
+}
+
+void tests_handle_label() {
+    File_config* file_config;
+    Ins_Node* expted_node, node;
+    Symbol_Table* expted_symbol_table;
+
+    int test_num;
+    char word1[MAX_LEN];
+    Symbol_Type symbol_type;
+    
+    START_TEST("tests_handle_label");
+
+    test_num = 0;
+    file_config = intialiez_file_config();
+    strcpy(word1, "hi:");
+    expted_node
+
+    tester_handle_label(file_config, node, word, symbol_type, expted_node, expted_symbol_table, test_num);
 }
