@@ -188,22 +188,21 @@ void run_labels_set_tests() {
 }
 
 void run_labels_new_tests() {
-    Lable_Node* label_node_data, *label_node_code, *label_node_ext;
     Symbol_Type symbol_type;
     int test_number;
+
+    START_TEST("labels_new_tests");
+
     test_number = 0;
 
     symbol_type = DATA;
-    label_node_data = tester_new_label_node("hi", 15, symbol_type, test_number);
-    free_label_node(label_node_data);
+    tester_new_label_node("hi", 15, symbol_type, test_number);
 
     symbol_type = CODE;
-    label_node_code = tester_new_label_node("hicode", 7, symbol_type, test_number++);
-    free_label_node(label_node_code);
+    tester_new_label_node("hicode", 7, symbol_type, test_number++);
 
     symbol_type = EXTERNALT;
-    label_node_ext = tester_new_label_node("hiEXTERNALT", 5, symbol_type, test_number++);
-    free_label_node(label_node_ext);
+    tester_new_label_node("hiEXTERNALT", 5, symbol_type, test_number++);
 }
 
 

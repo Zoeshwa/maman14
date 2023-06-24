@@ -39,7 +39,7 @@
     Symbol_Type get_label_symbol_type(Lable_Node* new_lable);
     Lable_Node* get_label_next(Lable_Node* new_lable);
     
-    void set_label_name(Lable_Node* new_lable, char * word);
+    void set_label_name(Lable_Node* new_lable, char* word);
     void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type);
     void set_label_next(Lable_Node* new_lable, Symbol_Table* table);
     Lable_Node* is_symbol_already_exist(Symbol_Table* table, char * symbol_name);

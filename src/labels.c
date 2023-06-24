@@ -25,7 +25,7 @@ void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, 
 Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type) {
     Lable_Node* new_lable;
     new_lable = (Lable_Node*)malloc(sizeof(Lable_Node));
-    set_label_name(word, new_lable);
+    set_label_name(new_lable, word);
     set_label_types(new_lable, symbol_type);
     new_lable->counter_value = counter_value;
     new_lable->next = NULL;

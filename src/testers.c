@@ -172,7 +172,7 @@ void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
     } else {
         result = 0;
     }
-    if(strcmp(get_label_symbol_type(node_result),word)) {
+    if(strcmp(get_label_name(node_result),word) == 0) {
         result = 1;
     } else {
         result = 0;
