@@ -136,6 +136,7 @@ void tests_get_next_word() {
     tester_get_next_word("LOOP: .extern");
 }
 
+/*file config*/
 void run_file_config_tests() {
     File_Config* file_config;
     file_config = intialiez_file_config();
@@ -164,6 +165,13 @@ void run_file_set_tests() {
     START_TEST("file_set_tests");
     tester_file_set_int_fileds(file_config, set_file_config_DC,get_DC_counter, 1, 1);
     tester_file_set_int_fileds(file_config, set_file_config_IC, get_IC_counter, 101, 2);
+}
+
+/*labels*/
+
+void run_labels_set_tests() {
+    Lable_Node* label_node;
+    
 }
 /*
     tester_is_valid_lable("hi:", 1);

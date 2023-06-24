@@ -17,15 +17,47 @@ Symbol_Table* intialiez_symbol_table() {
 /* Function to insert a new Lable_Node at the beginning of the list*/
 void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new Lable_Node*/
-    Lable_Node* new_lable = (Lable_Node*)malloc(sizeof(Lable_Node));
-    set_label_name(word, new_lable);
-    set_label_types(new_lable, symbol_type);
-    new_lable->counter_value = counter_value;
+    Lable_Node* new_lable;
+    new_lable = new_label_node(word,counter_value,symbol_type);
     set_label_next(new_lable, table);
 }
 
+Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type) {
+    Lable_Node* new_lable;
+    new_lable = (Lable_Node*)malloc(sizeof(Lable_Node));
+    set_label_name(word, new_lable);
+    set_label_types(new_lable, symbol_type);
+    new_lable->counter_value = counter_value;
+    new_lable->next = NULL;
+    return new_lable;
+}
+
+int get_label_counter_value(Lable_Node* new_lable) {
+    return new_lable->counter_value;
+}
+
+int get_label_is_entry(Lable_Node* new_lable) {
+    return new_lable->is_entry;
+}
+
+char* get_label_name(Lable_Node* new_lable) {
+    return new_lable->name;
+}
+
+Counter_Type get_label_counter_type(Lable_Node* new_lable) {
+    return new_lable->counter_type;
+}
+
+Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
+    return new_lable->symbol_type;
+}
+
+Lable_Node* get_label_next(Lable_Node* new_lable) {
+    return new_lable->next;
+}
+
 /*TODO: is needed?*/
-void set_label_name(char * word, Lable_Node* new_lable) {
+void set_label_name(Lable_Node* new_lable, char * word) {
     /* Allocate memory for the name and copy the string*/
     new_lable->name = (char*)malloc((strlen(word) + 1) * sizeof(char));
     strcpy(new_lable->name, word);

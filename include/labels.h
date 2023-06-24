@@ -28,10 +28,20 @@
 
     Symbol_Table* intialiez_symbol_table();
     void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type);
-    void set_label_name(char * word, Lable_Node* new_lable);
+    int is_valid_lable(Symbol_Table* table, char* word);
+    
+    Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type);
+    
+    int get_label_counter_value(Lable_Node* new_lable);
+    int get_label_is_entry(Lable_Node* new_lable);
+    char* get_label_name(Lable_Node* new_lable);
+    Counter_Type get_label_counter_type(Lable_Node* new_lable);
+    Symbol_Type get_label_symbol_type(Lable_Node* new_lable);
+    Lable_Node* get_label_next(Lable_Node* new_lable);
+    
+    void set_label_name(Lable_Node* new_lable, char * word);
     void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type);
     void set_label_next(Lable_Node* new_lable, Symbol_Table* table);
-    int is_valid_lable(Symbol_Table* table, char* word);
     Lable_Node* is_symbol_already_exist(Symbol_Table* table, char * symbol_name);
 
 #endif
