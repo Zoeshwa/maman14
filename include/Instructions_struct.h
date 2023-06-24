@@ -34,7 +34,8 @@
     int get_Ins_Node_is_error(Ins_Node* node);
     int get_Ins_Node_num_of_lines(Ins_Node* node);
     char* get_Ins_Node_err_msg(Ins_Node* node);
-
+    Ins_Node* get_Ins_Node_next(Ins_Node* node);
+    
     void set_IC_ins(Ins_Node* ins_to_update, int IC_count);
     void set_line_number_ins(Ins_Node* ins_to_update, int line_number);
     void set_encoding_type_ins(Ins_Node* ins_to_update, int encoding_type);
@@ -47,6 +48,7 @@
     void update_error(struct Ins_Node** head, char* line);
     void update_extern_ins(Ins_Node* curr_ins, int num_of_lines);
 
+    void free_ins_node(Ins_Node* node);
 #endif
 
 #ifndef _ENUMS_HEADER_

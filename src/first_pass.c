@@ -164,24 +164,17 @@ void handle_data_ins(File_Config* file_config, struct Ins_Node* curr_ins, char* 
 void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type) { 
     int counter_value;
 
-    printf("handle_label");
     /*validate the starting label*/
     if (!(is_valid_lable(file_config->symbol_table, word))) {
         set_error_ins(curr_ins, TRUE, ERROR_NOT_VALID_LABEL);
         /*MAYBE: we need to continou?*/
-        printf("is_valid_lable");
 
         return;
     }
     /*add to symbol table*/
-    printf("handle_label2");
-
     counter_value = get_counter_by_type(file_config, symbol_type);
-        printf("handle_label3");
 
     insert_to_symbol_table(file_config->symbol_table, word, counter_value, symbol_type);
-        printf("handle_label4");
-
 }
 
 

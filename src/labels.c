@@ -124,20 +124,17 @@ int is_valid_lable(Symbol_Table* table, char* word){
 
     /*starts with A-Z/a-z*/
     if(!IS_UPPERCASE_LETTERS(*ptr) && !IS_LOWERCASE_LETTERS(*ptr)) {
-        printf("starts with A-Z/a-z\n");
         return 0; /*return false*/
     }
 
     /*have only max len for labels and end with : and no spaces before ":"*/
     if(strlen(word) > MAX_LABEL_LEN || !is_lable(word)) {
-        printf("strlen(word) > MAX_LABEL_LEN || !is_lable(word)\n");
         return 0; /*return false*/
     }
 
     /*all othe chars is valid*/
     for(i = 0; i < strlen(word) - 1; i++) {
         if(!is_valid_char(*ptr)){
-            printf("!is_valid_char(*ptr)\n");
             return 0; /*return false*/
         }
         ptr++;
@@ -145,14 +142,11 @@ int is_valid_lable(Symbol_Table* table, char* word){
 
 
     /*there is no other label like this*/
-    if(is_symbol_already_exist(table, word) == NULL) {
-        printf("is_symbol_already_exist\n");
-
+    if(is_symbol_already_exist(table, word) != NULL) {
         return 0; /*return false*/
     }
 
-    /*TODO*/
-    /*its not a save word*/
+    /*TODO: its not a save word*/
 
     return 1; /*return true*/
 }
@@ -165,6 +159,11 @@ void free_label_node(Lable_Node* lable_node) {
 }
 
 void free_symbol_table(Symbol_Table* table) {
-    free_label_node(table->head);
+    if(table->head != NULL){
+        free_label_node(table->head);
+    }
+    if(table->tail != NULL){
+        free_label_node(table->tail);
+    }
     free(table);
 }

@@ -73,6 +73,10 @@ char* get_Ins_Node_err_msg(Ins_Node* node) {
     return node->err_msg;
 }
 
+Ins_Node* get_Ins_Node_next(Ins_Node* node) {
+    return node->next;
+}
+
 
 void set_IC_ins(Ins_Node* ins_to_update, int IC_count) {
     ins_to_update->IC_count = IC_count;
@@ -120,5 +124,13 @@ void update_extern_ins(Ins_Node* curr_ins, int num_of_lines) {
     set_ins_num_of_extra_lines(curr_ins, num_of_lines);
     /*TODO: what else to update? opcode? params?*/
 
+}
+
+
+void free_ins_node(Ins_Node* node) {
+    if(get_Ins_Node_next(node) != NULL) {
+        free_ins_node(get_Ins_Node_next(node));
+    }
+    free(node);
 }
 

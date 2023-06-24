@@ -183,6 +183,7 @@ void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
     } else {
         FAIL_PRINT(test_number,1, result);
     }
+    free_label_node(node_result);
 }
 
 void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) {
@@ -266,10 +267,7 @@ void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result
     result = is_valid_lable(table, word);
 
     if (result == expected_result) {
-        /*
         PASS_PRINT(expected_result);
-        
-        */
     } else {
         FAIL_PRINT(test_number,expected_result, result);
     }
@@ -291,9 +289,7 @@ Counter_Type get_label_counter_type(Lable_Node* new_lable) {
 void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* word, Symbol_Type symbol_type, Ins_Node* expted_node, Symbol_Table* expted_symbol_table, int test_number) {
     int result;
     result = 1;
-    printf("hi");
     handle_label(file_config, node, word, symbol_type);
-    printf("hi2");
 
 
     if(is_Ins_Node_err_equals(node, expted_node) == 0) {

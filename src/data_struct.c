@@ -58,3 +58,20 @@ void set_data_node_next(Data_Node* data_node, Data_Node* next) {
     data_node->next = next;
 }
 
+
+void free_data_node(Data_Node* node) {
+    if(get_data_node_next(node) != NULL) {
+        free_data_node(get_data_node_next(node));
+    }
+    free(node);
+}
+
+void free_data_table(DATA_Table* table) {
+    if(table->head != NULL){
+        free_data_node(table->head);
+    }
+    if(table->tail != NULL){
+        free_data_node(table->tail);
+    }
+    free(table);
+}

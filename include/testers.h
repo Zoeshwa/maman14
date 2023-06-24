@@ -85,7 +85,7 @@
 
     void run_first_pass_tests();
     void run_handle_functions();
-    void tests_handle_label();
+    void run_tests_handle_label();
 
 
     /*utils testers*/
