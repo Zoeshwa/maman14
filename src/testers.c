@@ -42,18 +42,12 @@ void print_file_config(File_Config* file_config) {
     }
     printf("This is file config print: {\n");
     printf("\tCounters - DC: %d, IC: %d\n\t", get_DC_counter(file_config), get_IC_counter(file_config));
-    print_Symbol_table(get_file_symbol_table(file_config));
     printf("\t");
     print_Ins_Node(get_file_ins_head(file_config));
     printf("\t");
-    print_DATA_Table(get_file_data_table(file_config));
     printf("}\n");
 
 }
-
-
-
-
 
 void print_Ins_Node(Ins_Node* ins) {
     if(ins == NULL) {
@@ -220,11 +214,11 @@ void tester_label_get_label_name(Lable_Node* label, char* word, int expected_res
         FAIL_PRINT(test_number, expected_result, result);
     }
 }
-/*
-void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number) {
+
+void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number) {
     Lable_Node* search_result;
     int result;
-    search_result = is_symbol_already_exist(table, symbol_name);
+    search_result = is_symbol_already_exist(lable_head, symbol_name);
 
     if(search_result == NULL) {
         result = 0;
@@ -237,12 +231,10 @@ void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int
         FAIL_PRINT(test_number,expected_result, result);
     }
 }
-*/
-/*
 
-void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result, int test_number){ 
+void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number){ 
     int result;
-    result = is_valid_lable(table, word);
+    result = is_valid_lable(lable_head, word);
 
     if (result == expected_result) {
         PASS_PRINT(expected_result);
@@ -250,17 +242,8 @@ void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result
         FAIL_PRINT(test_number,expected_result, result);
     }
 }
-*/
 
 
-/*TODO:
-    void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type) {
-    void set_label_next(Lable_Node* new_lable, Symbol_Table* table) {
-    Lable_Node* get_label_next(Lable_Node* new_lable) {
-Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
-Counter_Type get_label_counter_type(Lable_Node* new_lable) {
-
-*/
 
 /*first pass*/
 /*
@@ -393,33 +376,18 @@ int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
         return 0;
     }
     
-    if(get_Ins_Node_is_error(curr_node_a) != get_Ins_Node_is_error(curr_node_b)) {
-        return 0;
-    }
+
     
     if(get_Ins_Node_num_of_lines(curr_node_a) != get_Ins_Node_num_of_lines(curr_node_b)) {
         return 0;
     }
-    
-    if(strcmp(get_Ins_Node_err_msg(curr_node_a),get_Ins_Node_err_msg(curr_node_b)) != 0) {
-        return 0;
-    }
+
 
     /*TODO: more filds*/
     return 1;
 }
 
 int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
-               
-    if(get_Ins_Node_is_error(curr_node_a) != get_Ins_Node_is_error(curr_node_b)) {
-        return 0;
-    }
-
-    
-    if(strcmp(get_Ins_Node_err_msg(curr_node_a),get_Ins_Node_err_msg(curr_node_b)) != 0) {
-        return 0;
-    }
-
     /*TODO: more filds*/
     return 1;
 }

@@ -70,7 +70,6 @@ void handle_new_line(File_Config* file_config, char* line) {
     } else{ /* is instruction*/
         if (is_line_have_symbol) {
             handle_label(file_config, cur_word, CODE);
-
             ptr += strlen(cur_word);
             get_next_word(cur_word, ptr);
             ptr = skip_spaces(ptr);
