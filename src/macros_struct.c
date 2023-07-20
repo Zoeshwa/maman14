@@ -19,6 +19,7 @@ void insertMacro_Node(struct Macro_Node** head, char* name) {
     newMacro_Node->name = (char*)malloc((strlen(name) + 1) * sizeof(char));
     strcpy(newMacro_Node->name, name);
     newMacro_Node->content = (char*)malloc(MAX_LEN*sizeof(char));
+    newMacro_Node->lines = 0;
     newMacro_Node->next = NULL;
 
     /* If the list is empty, make the new Macro_Node the head of the list*/
@@ -35,8 +36,11 @@ void insertMacro_Node(struct Macro_Node** head, char* name) {
 void update_macro_contect(struct Macro_Node** head, char* line){
     (*head)->lines += 1;
     (*head)->content = (char*)realloc((*head)->content, MAX_LEN*(*head)->lines*sizeof(char));
+    
     /*first insertion of content*/
-    if ((*head)->lines == 1){(*head)->content[0] = '\0';}
+    if (((*head)->lines) == 1){
+        (*head)->content[0] = '\0';
+    }
     line = skip_spaces(line);
     strcat( (*head)->content, line);
     printf("macro contect is: %s\n", (*head)->content );
