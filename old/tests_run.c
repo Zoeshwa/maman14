@@ -253,6 +253,7 @@ void run_labels_get_tests() {
     END_TEST(" ");
 }
 
+/*
 void run_tests_is_symbol_already_exist() {
     Symbol_Table* table;
     int test_number;
@@ -263,7 +264,6 @@ void run_tests_is_symbol_already_exist() {
     test_number = 0;
     table = intialiez_symbol_table();
     
-    /*tables is empty*/
     tester_is_symbol_already_exist(table, "hi:", 0, test_number++);
     tester_is_symbol_already_exist(table, "hi", 0, test_number++);
     tester_is_symbol_already_exist(table, "5i", 0, test_number++);
@@ -308,7 +308,8 @@ void run_tests_is_symbol_already_exist() {
     free_symbol_table(table);
     END_TEST(" ");
 }
-
+*/
+/*
 void run_tests_is_valid_lable() {
     Symbol_Table* table;
     int test_number;
@@ -319,7 +320,6 @@ void run_tests_is_valid_lable() {
     test_number = 0;
     table = intialiez_symbol_table();
     
-    /*tables is empty*/
     tester_is_valid_lable(table, "hi:", 1, test_number++);
     tester_is_valid_lable(table, "hi", 0, test_number++);
     tester_is_valid_lable(table, "5i", 0, test_number++);
@@ -346,9 +346,9 @@ void run_tests_is_valid_lable() {
     free_symbol_table(table);
     END_TEST(" ");
 }
+*/
 
 
-/*first pass*/
 void run_first_pass_tests(){
     run_handle_functions();
 }
@@ -358,6 +358,7 @@ void run_handle_functions() {
     /*TODO: the other ones*/
 }
 
+/*
 void run_tests_handle_label() {
     File_Config* file_config;
     Ins_Node *expted_node_good, *node;
@@ -391,15 +392,14 @@ void run_tests_handle_label() {
 
     expted_symbol_table = intialiez_symbol_table();
 
-    /*good label*/
     insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
     tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-    /*try agien and cant*/
     set_error_ins(expted_node_good, 1, ERROR_NOT_VALID_LABEL);
     set_error_ins(node, 0, "");
     tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-
+*/
     /*every kind*/
+    /*
     set_error_ins(expted_node_good, 0, "");
     set_error_ins(node, 0, "");
     symbol_type = CODE;
@@ -413,13 +413,14 @@ void run_tests_handle_label() {
     strcpy(good_word1, "hi:");
     insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
     tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-
+*/
     /*bad label*/
+    /*
     symbol_type = CODE;
     strcpy(bad_word1, good_word1);
     set_error_ins(node, 0, "");
     tester_handle_label(file_config, node, bad_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-    /*not legal label*/
+    */ /*not legal label*/ /*
     strcpy(bad_word1, "ssss");
     set_error_ins(node, 0, "");
     tester_handle_label(file_config, node, bad_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
@@ -438,3 +439,5 @@ void run_tests_handle_label() {
     }
     END_TEST(" ");
 }
+
+*/

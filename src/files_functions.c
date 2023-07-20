@@ -20,11 +20,14 @@ void make_am_name(char* file, char* name){
 File_Config* intialiez_file_config() {
     File_Config* file_config;
     file_config = (File_Config*)malloc(sizeof(File_Config));
-    file_config->symbol_table = intialiez_symbol_table();
-    file_config->ins_head = intialiez_ins_head();
-    file_config->data_table = intialiez_data_table();
+    file_config->label_head = (Lable_Node*)malloc(sizeof(Lable_Node));
+    file_config->ins_head = NULL;
+    file_config->ins_tail = file_config->ins_head;
+    file_config->data_head = NULL;
+    file_config->data_tail = file_config->data_head;
+    file_config->is_valid = 1;
     file_config->DC_counter = 0;
-    file_config->IC_counter = 100; /*TODO: = 0? like page 36*/
+    file_config->IC_counter = 100; 
     return file_config;
 }
 
@@ -67,17 +70,13 @@ int get_IC_counter(File_Config* file_config) {
     return counter_value;
 }
 
-Symbol_Table* get_file_symbol_table(File_Config* file_config) {
-    return file_config->symbol_table;
-}
+
 
 Ins_Node* get_file_ins_head(File_Config* file_config) {
     return file_config->ins_head;
 }
 
-DATA_Table* get_file_data_table(File_Config* file_config) {
-    return file_config->data_table;
-}
+
 
 /*MAYBE: pass only how many to add?*/
 void set_file_config_DC(File_Config* file_config,int DC_counter) {
@@ -90,18 +89,12 @@ void set_file_config_IC(File_Config* file_config,int IC_counter) {
 }
 
 
-void free_file_config(File_Config* file_config) {
+/*TODO: update*/
 
-    if(get_file_symbol_table(file_config) != NULL){
-        free_symbol_table(get_file_symbol_table(file_config));
-    }
+void free_file_config(File_Config* file_config) {
 
     if(get_file_ins_head(file_config) != NULL){
         free_ins_node(get_file_ins_head(file_config));
-    }
-
-    if(get_file_data_table(file_config) != NULL){
-        free_data_table(get_file_data_table(file_config));
     }
 
     free(file_config);

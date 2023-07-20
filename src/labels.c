@@ -5,21 +5,16 @@
 
 
 
-Symbol_Table* intialiez_symbol_table() {
-    Symbol_Table* symbol_table;
-    symbol_table = (Symbol_Table*)malloc(sizeof(Symbol_Table));
-    symbol_table->head = NULL;
-    symbol_table->tail = symbol_table->head;
-    return symbol_table;
-}
+
 
 /*MAYBE: no need of table struct*/
 /* Function to insert a new Lable_Node at the beginning of the list*/
-void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type) {
+Lable_Node* insert_to_symbol_table(Lable_Node* head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new Lable_Node*/
     Lable_Node* new_lable;
     new_lable = new_label_node(word,counter_value,symbol_type);
-    set_label_next(new_lable, table);
+    set_label_next(new_lable, head);
+    return new_lable;
 }
 
 Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type) {
@@ -77,27 +72,25 @@ void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type) {
     }
 }
  
-void set_label_next(Lable_Node* new_lable, Symbol_Table* table) {
+void set_label_next(Lable_Node* new_lable, Lable_Node* head) {
 
     /* If the list is empty, make the new Lable_Node the head of the list*/
-    if (table->head == NULL)
+    if (head == NULL)
     {
-        new_lable->next = NULL;
-        table->head = new_lable;
-        table->tail = new_lable;
+        head = new_lable;
+        head->next = NULL;
 
     } else {
         /* Otherwise, insert the new Lable_Node at the beginning*/
-        new_lable->next = table->head;
-        table->head = new_lable;
+        new_lable->next = head;
     }
 }
 
 /*TODO and add to valid label*/
-Lable_Node* is_symbol_already_exist(Symbol_Table* table, char * symbol_name) {
+Lable_Node* is_symbol_already_exist(Lable_Node* head, char * symbol_name) {
     Lable_Node* ptr;
 
-    ptr = table->head;
+    ptr = head;
 
     while (ptr != NULL)
     {
@@ -114,13 +107,11 @@ Lable_Node* is_symbol_already_exist(Symbol_Table* table, char * symbol_name) {
 /*Description: check if a given word is a valid lable*/
 /*Input: a string word (pointer to array of chars)*/
 /*Output: 1 - true, 0- false*/
-int is_valid_lable(Symbol_Table* table, char* word){
+int is_valid_lable(Lable_Node* head, char* word){
     char * ptr;
     int i;
 
     ptr = word;
-
-    /*MAYBE - skip spaces in the begining?*/
 
     /*starts with A-Z/a-z*/
     if(!IS_UPPERCASE_LETTERS(*ptr) && !IS_LOWERCASE_LETTERS(*ptr)) {
@@ -142,7 +133,7 @@ int is_valid_lable(Symbol_Table* table, char* word){
 
 
     /*there is no other label like this*/
-    if(is_symbol_already_exist(table, word) != NULL) {
+    if(is_symbol_already_exist(head, word) != NULL) {
         return 0; /*return false*/
     }
 
@@ -158,12 +149,3 @@ void free_label_node(Lable_Node* lable_node) {
     free(lable_node);
 }
 
-void free_symbol_table(Symbol_Table* table) {
-    if(table->head != NULL){
-        free_label_node(table->head);
-    }
-    if(table->tail != NULL){
-        free_label_node(table->tail);
-    }
-    free(table);
-}

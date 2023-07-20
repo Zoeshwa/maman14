@@ -49,17 +49,12 @@
     void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number);
     void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number);
     void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number);
-    void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number);
-    void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result, int test_number);
-    void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* word, Symbol_Type symbol_type, Ins_Node* expted_node, Symbol_Table* expted_symbol_table, int test_number);
-
-    void print_file_config(File_Config* file_config);
-    void print_Symbol_table(Symbol_Table* symbol_table);
-    void print_DATA_Table(DATA_Table* data_table);
+/*
     void print_Ins_Node(Ins_Node* ins);
     void print_Lable_Node(Lable_Node* label_node);
     void print_Data_Node(Data_Node* data_node);
 
+*/
     /*tests - run tests*/
     void run_tester();
     void run_return_tests();
@@ -91,9 +86,7 @@
 
     /*utils testers*/
     int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b);
-    int is_symbol_table_equals(Symbol_Table* symbol_table_a, Symbol_Table* symbol_table_b);
     int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b);
-    int is_DATA_Table_equals(DATA_Table* data_table_a, DATA_Table* data_table_b);
     int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b);
     int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
     int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b);

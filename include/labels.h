@@ -20,15 +20,9 @@
     } Lable_Node;
 
 
-    /*TODO:*/
-    typedef struct Symbol_Table {
-        Lable_Node* head;
-        Lable_Node* tail;
-    }Symbol_Table;
 
-    Symbol_Table* intialiez_symbol_table();
-    void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type);
-    int is_valid_lable(Symbol_Table* table, char* word);
+    Lable_Node* insert_to_symbol_table(Lable_Node* head, char* word, int counter_value, Symbol_Type symbol_type);
+    int is_valid_lable(Lable_Node* head, char* word);
     
     Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type);
     
@@ -41,11 +35,10 @@
     
     void set_label_name(Lable_Node* new_lable, char* word);
     void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type);
-    void set_label_next(Lable_Node* new_lable, Symbol_Table* table);
-    Lable_Node* is_symbol_already_exist(Symbol_Table* table, char * symbol_name);
+    void set_label_next(Lable_Node* new_lable, Lable_Node* head);
+    Lable_Node* is_symbol_already_exist(Lable_Node* head, char * symbol_name);
 
     void free_label_node(Lable_Node* lable_node);
-    void free_symbol_table(Symbol_Table* table);
 
 #endif
 

@@ -3,21 +3,13 @@
 #include <string.h>
 #include "data_struct.h"
 
-/*Table functions*/
 
-/*MAYBE:*/
-DATA_Table* intialiez_data_table() {
-    DATA_Table* data_table;
-    data_table = (DATA_Table*)malloc(sizeof(DATA_Table));
-    data_table->head = NULL;
-    data_table->tail = data_table->head;
-    return data_table;
-}
-void add_data_node_to_table(DATA_Table* table, int value, int is_char, int counter) {
+
+void add_data_node_to_table(Data_Node* tail, int value, int is_char, int counter) {
     Data_Node* new_node;
     new_node = new_data_node(value, is_char, counter);
-    set_data_node_next(table->tail, new_node);
-    table->tail = new_node; 
+    set_data_node_next(tail, new_node);
+    tail = new_node; 
 }
 
 /*Node functions*/
@@ -64,14 +56,4 @@ void free_data_node(Data_Node* node) {
         free_data_node(get_data_node_next(node));
     }
     free(node);
-}
-
-void free_data_table(DATA_Table* table) {
-    if(table->head != NULL){
-        free_data_node(table->head);
-    }
-    if(table->tail != NULL){
-        free_data_node(table->tail);
-    }
-    free(table);
 }

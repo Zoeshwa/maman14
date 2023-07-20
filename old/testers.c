@@ -52,32 +52,8 @@ void print_file_config(File_Config* file_config) {
 }
 
 
-void print_Symbol_table(Symbol_Table* symbol_table) {
-    if(symbol_table == NULL) {
-        printf("symbol_table is NULL\n");
-        return;
-    }
-    printf("This is Symbol_Table print {:\n");
-    printf("\tprint head:\n\t");
-    print_Lable_Node(symbol_table->head);
-    printf("\tprint tail:\n\t");
-    print_Lable_Node(symbol_table->tail);
-    printf("}\n");
-}
 
-void print_DATA_Table(DATA_Table* data_table) {
-    if(data_table == NULL) {
-        printf("data_table is NULL\n");
-        return;
-    }
-    printf("This is DATA_Table print: {\n");
-    printf("\tprint head:\n\t");
-    print_Data_Node(data_table->head);
-    printf("\tprint tail:\n\t");
-    print_Data_Node(data_table->tail);
-    printf("}\n");
 
-}
 
 void print_Ins_Node(Ins_Node* ins) {
     if(ins == NULL) {
@@ -244,7 +220,7 @@ void tester_label_get_label_name(Lable_Node* label, char* word, int expected_res
         FAIL_PRINT(test_number, expected_result, result);
     }
 }
-
+/*
 void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int expected_result, int test_number) {
     Lable_Node* search_result;
     int result;
@@ -261,6 +237,8 @@ void tester_is_symbol_already_exist(Symbol_Table* table, char * symbol_name, int
         FAIL_PRINT(test_number,expected_result, result);
     }
 }
+*/
+/*
 
 void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result, int test_number){ 
     int result;
@@ -272,10 +250,10 @@ void tester_is_valid_lable(Symbol_Table* table, char* word,  int expected_result
         FAIL_PRINT(test_number,expected_result, result);
     }
 }
+*/
 
 
 /*TODO:
-    Symbol_Table* intialiez_symbol_table() {
     void insert_to_symbol_table(Symbol_Table* table, char* word, int counter_value, Symbol_Type symbol_type) {
     void set_label_next(Lable_Node* new_lable, Symbol_Table* table) {
     Lable_Node* get_label_next(Lable_Node* new_lable) {
@@ -285,7 +263,7 @@ Counter_Type get_label_counter_type(Lable_Node* new_lable) {
 */
 
 /*first pass*/
-
+/*
 void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* word, Symbol_Type symbol_type, Ins_Node* expted_node, Symbol_Table* expted_symbol_table, int test_number) {
     int result;
     result = 1;
@@ -309,16 +287,12 @@ void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* 
     }
 
 }
-
-/* TODO
-void tester_handle_ins(void (*handlefunc)(File_Config*, struct Ins_Node*, char*, char*), File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
-    
-    if file_config state is like expted
-}
 */
+
 
 /*utils */
 
+/*
 int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b) {
 
     if(get_DC_counter(file_config_a) != get_DC_counter(file_config_b)) {
@@ -339,7 +313,9 @@ int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b
     }
     return 1;
 }
+*/
 
+/*
 int is_symbol_table_equals(Symbol_Table* symbol_table_a, Symbol_Table* symbol_table_b) {
     Lable_Node* curr_node_a, *curr_node_b;
 
@@ -360,6 +336,7 @@ int is_symbol_table_equals(Symbol_Table* symbol_table_a, Symbol_Table* symbol_ta
 
     return 0;
 }
+*/
 
 int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
     Ins_Node* curr_node_a, *curr_node_b;
@@ -382,27 +359,6 @@ int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
     return 0;
 }
 
-int is_DATA_Table_equals(DATA_Table* data_table_a, DATA_Table* data_table_b) {
-    Data_Node* curr_node_a, *curr_node_b;
-
-    curr_node_a = data_table_a->head;
-    curr_node_b = data_table_b->head;
-
-    while (curr_node_a != NULL && curr_node_b != NULL)
-    {
-        if(is_data_Node_equals(curr_node_a, curr_node_b) == 0) {
-            return 0;
-        }
-        curr_node_a = curr_node_a->next;
-        curr_node_b = curr_node_b->next;
-    }
-    
-    if(curr_node_a == NULL && curr_node_b == NULL) {
-        return 1;
-    } 
-
-    return 0;
-}
 
 int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b) {
     

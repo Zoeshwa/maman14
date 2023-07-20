@@ -5,19 +5,16 @@
 
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
-/*TODO: update counters after handle*/
 File_Config* first_pass(FILE* am_file) {
     /*initilazed varabels*/
     File_Config* file_config;
     char input[MAX_LEN];
-    Ins_Node *curr_ins; /*TODO: delete - every line if needed*/
     int line_num, is_valid; 
     char * ptr;
 
     line_num = 1;
     is_valid = 1;
     file_config = intialiez_file_config();
-    curr_ins = NULL; /*TODO: pointer to the head of the ins*/
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
@@ -164,7 +161,7 @@ void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* wor
     int counter_value;
 
     /*validate the starting label*/
-    if (!(is_valid_lable(file_config->symbol_table, word))) {
+    if (!(is_valid_lable(file_config->label_head, word))) {
         set_error_ins(curr_ins, TRUE, ERROR_NOT_VALID_LABEL);
         /*MAYBE: we need to continou?*/
 
@@ -173,7 +170,7 @@ void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* wor
     /*add to symbol table*/
     counter_value = get_counter_by_type(file_config, symbol_type);
 
-    insert_to_symbol_table(file_config->symbol_table, word, counter_value, symbol_type);
+    insert_to_symbol_table(file_config->label_head, word, counter_value, symbol_type);
 }
 
 
