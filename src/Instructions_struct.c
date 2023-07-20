@@ -20,7 +20,6 @@ void insertIns_Node(struct Ins_Node** head, int IC, int line_num) {
     /* Create a new Ins_Node*/
     struct Ins_Node* newIns_Node = (struct Ins_Node*)malloc(sizeof(struct Ins_Node));
     /* Allocate memory for the name and copy the string*/
-    newIns_Node->is_error = 0;
     newIns_Node->IC_count = IC;
     newIns_Node->line_number = line_num;
     newIns_Node->next = NULL;
@@ -61,17 +60,12 @@ int get_Ins_Node_encoding_type(Ins_Node* node) {
     return node->encoding_type;
 }
 
-int get_Ins_Node_is_error(Ins_Node* node) {
-    return node->is_error;
-}
 
 int get_Ins_Node_num_of_lines(Ins_Node* node) {
     return node->num_of_extra_lines;
 }
 
-char* get_Ins_Node_err_msg(Ins_Node* node) {
-    return node->err_msg;
-}
+
 
 Ins_Node* get_Ins_Node_next(Ins_Node* node) {
     return node->next;
@@ -103,16 +97,7 @@ void set_ins_num_of_extra_lines(Ins_Node* ins_to_update, int num_of_extra_lines)
     ins_to_update->num_of_extra_lines = num_of_extra_lines;
 }
 
-void set_error_ins(Ins_Node* ins_to_update, int is_error, char* error_msg) {
-    ins_to_update->is_error = is_error;
-    update_error(&ins_to_update, "not a valid lable\n");
-}
 
-/*ASK: where is the void? return type i domt understand the ** to head. the line param is the new msg?*/
-void update_error(struct Ins_Node** head, char* error_msg){
-    (*head)->err_msg = (char*)malloc(strlen(error_msg)*sizeof(char));
-    strcpy((*head)->err_msg, error_msg);
-}
 
 
 void set_next_ins(Ins_Node* ins_to_update, Ins_Node* next) {

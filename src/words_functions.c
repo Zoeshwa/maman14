@@ -30,7 +30,7 @@ int is_lable(char* word) {
     return 1; /*return true*/
 }
 
-int is_scope_ins(char* input) {
+int is_external_or_entry_ins(char* input) {
    return (is_type_ins(is_extern_word, input) || is_type_ins(is_entry_word, input));
 }
 

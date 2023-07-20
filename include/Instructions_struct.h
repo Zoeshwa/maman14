@@ -18,8 +18,6 @@
         int opcode; /*MAYBE need other for binary */
         u param1;
         u param2;
-        int is_error; /*ASK: what about warning*/
-        char* err_msg;
         int num_of_extra_lines; /*ASK: number or the lines? - how many we need*/
         struct Ins_Node* next;
     } Ins_Node;

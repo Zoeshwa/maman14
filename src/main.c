@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
         int mcro=0;
         struct Macro_Node* head = NULL;
         struct Macro_Node* head_ptr = NULL;
-        File_Config * file_Config;
+        File_Config * file_config;
 
         /*open an am file*/
         make_am_name(argv[ctr], cur_word);
@@ -42,7 +42,8 @@ int main(int argc, char* argv[]) {
         while (fgets(input, MAX_LEN, src_file) != NULL) {
             printf("input is: %s\n", input);
             p = input;
-            get_next_word(input,cur_word);
+            p = skip_spaces(p);
+            get_next_word(cur_word, p);
             printf("cur_word is: %s\n", cur_word);
             if (mcro == 1){
                 /*checking end of macro def*/
@@ -65,9 +66,9 @@ int main(int argc, char* argv[]) {
             /* beginning of macro def*/
             else if(strcmp(cur_word,"mcro") == 0){
                 printf("its a macro def\n");
-                p = skip_spaces(p);
                 p += strlen(cur_word);
-                get_next_word(p,cur_word);
+                p = skip_spaces(p);
+                get_next_word(cur_word,p);
                 printf("macro name is: %s\n", cur_word);
                 insertMacro_Node(&head, cur_word);
                 mcro=1;
@@ -80,7 +81,12 @@ int main(int argc, char* argv[]) {
 
         }
 
-    file_Config = first_pass(am_file);
+    file_config = first_pass(am_file);
+    if (!file_config->is_valid){
+        continue;
+    }
+
+     /*TODO: run secound pass*/
 
     }
     

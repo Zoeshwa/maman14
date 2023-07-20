@@ -9,34 +9,30 @@ File_Config* first_pass(FILE* am_file) {
     /*initilazed varabels*/
     File_Config* file_config;
     char input[MAX_LEN];
-    int line_num, is_valid; 
-    char * ptr;
 
-    line_num = 1;
-    is_valid = 1;
     file_config = intialiez_file_config();
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        ptr = input;
 
         if (empty_line(input) || comment_line(input)){continue;}
-        is_valid = handle_new_line(file_config, line_num, input);
-        line_num++;
+        handle_new_line(file_config, input);
+        file_config->line_num++;
     }
 
-    /*TODO: check if theres error. if so - print them and stop */
-    /*TODO: else - update symbol of type data by addinig IC final value*/
+    /*checks if needs to continue process since it might have an error*/
+    if (file_config->is_valid){
+        /*TODO:*/
+        update_symbol_table_by_IC(file_config);
+    }
     return file_config;
-    /*TODO: run secound pass*/
 }
 
-int handle_new_line(File_Config* file_config, int line_num, char* line) {
+void handle_new_line(File_Config* file_config, char* line) {
     char * ptr;
-    Ins_Node *curr_ins;
     char cur_word[MAX_LEN];
-    int is_line_have_symbol, is_line_data_ins; 
-    
+    int is_line_have_symbol; 
+    ptr = line;
     /*get the first word*/
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr);
@@ -46,7 +42,7 @@ int handle_new_line(File_Config* file_config, int line_num, char* line) {
     if(is_data_storage_ins(line)) { /*ins: .data or .string*/
         if(is_line_have_symbol) {
             /*handle insert data symbol for the command*/
-            handle_label(file_config, curr_ins, cur_word, DATA);
+            handle_label(file_config, cur_word, DATA);
             
             /*get next words*/
             ptr += strlen(cur_word);
@@ -54,39 +50,38 @@ int handle_new_line(File_Config* file_config, int line_num, char* line) {
             ptr = skip_spaces(ptr);
         }
 
-        handle_data_ins(file_config, curr_ins, line, ptr);
-        return TRUE;
+        handle_data_ins(file_config, line, ptr);
+        return;
 
-    } else if(is_scope_ins(line)) { /*.entry or .extranal*/
+    } else if(is_external_or_entry_ins(line)) { /*.entry or .extranal*/
         
+        /*insert symbol with type*/
         if(is_line_have_symbol) {
-            set_error_ins(curr_ins, FALSE, WARNING_LABEL_NOT_USE);
             ptr += strlen(cur_word);
-            get_next_word(cur_word, line);
+            get_next_word(cur_word, ptr);
             ptr = skip_spaces(ptr);
         }
 
         if(is_extern_ins(line)) {
-            handle_extren_line(file_config, curr_ins, line, ptr);
+            handle_extren_line(file_config, line, ptr);
         }
-        return TRUE;
+        return ;
 
     } else{ /* is instruction*/
         if (is_line_have_symbol) {
-            handle_label(file_config, curr_ins, cur_word, CODE);
+            handle_label(file_config, cur_word, CODE);
 
             ptr += strlen(cur_word);
-            get_next_word(cur_word, line);
+            get_next_word(cur_word, ptr);
             ptr = skip_spaces(ptr);
         }
-        add_ins_to_list(file_config->ins_head,curr_ins,file_config->IC_counter,line_num);
 
-        handle_code_line(file_config, curr_ins, line, ptr);
-        return TRUE;
+        handle_code_line(file_config, line, ptr);
+        return ;
     }
 }
 
-void handle_extren_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
+void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     char * ptr;
     char cur_word[MAX_LEN];
     int number_of_oprends;
@@ -102,31 +97,33 @@ void handle_extren_line(File_Config* file_config, struct Ins_Node* curr_ins, cha
         ptr= skip_spaces(ptr);
         ptr =  ptr + strlen(cur_word);
         /*add the label to the symbol_table*/
-        handle_label(file_config, curr_ins, cur_word, EXTERNALT);
+        handle_label(file_config, cur_word, EXTERNALT);
         number_of_oprends++;
     }
     /*update the cur_ins*/
+    /* TODO:
     update_extern_ins(curr_ins, number_of_oprends);
+    */
     /*TODO: add the params also to the ins?*/
 }
 
-void handle_code_line(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
-     
+void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
+    /* 
+    add_ins_to_list(file_config->ins_head,file_config->IC_counter);
+*/
         /* TODO*/
         
 }
 
-void handle_data_ins(File_Config* file_config, struct Ins_Node* curr_ins, char* line, char* curr_ptr) {
+void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
      
         /* TODO: 7 in page 18 - handle data ins*/
-        int counter, number_of_oprends, curr_value, is_char;
+        int counter;
         char cur_word[MAX_LEN];
 
         counter = get_DC_counter(file_config);
-        number_of_oprends = 0;
 
        /*which type of data*/
-        is_char = is_type_storge_string_ins(line);
 
         /*TODO: update data table*/
         while (strlen(curr_ptr) > 0)
@@ -157,12 +154,12 @@ void handle_data_ins(File_Config* file_config, struct Ins_Node* curr_ins, char* 
         set_file_config_DC(file_config, counter);
 }
 
-void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* word, Symbol_Type symbol_type) { 
+void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type) { 
     int counter_value;
 
     /*validate the starting label*/
     if (!(is_valid_lable(file_config->label_head, word))) {
-        set_error_ins(curr_ins, TRUE, ERROR_NOT_VALID_LABEL);
+        /*TODO: print the error & line num*/
         /*MAYBE: we need to continou?*/
 
         return;
@@ -175,5 +172,7 @@ void handle_label(File_Config* file_config, struct Ins_Node* curr_ins, char* wor
 
 
 
+void update_symbol_table_by_IC(File_Config * file_config) {
 
+}
 

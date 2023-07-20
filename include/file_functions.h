@@ -20,6 +20,7 @@
     void make_am_name(char* file, char* name);
 
     typedef struct File_Config {
+        int line_num;
         int is_valid;
         int DC_counter;
         int IC_counter;

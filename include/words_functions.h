@@ -15,7 +15,7 @@
     #define MAX_LABEL_LEN 31
     #define COLON 58
 
-    int is_scope_ins(char* input);
+    int is_external_or_entry_ins(char* input);
     int is_extern_ins(char* input);
     int is_data_storage_ins(char * input);
     int is_type_ins(int (*function)(char*), char* input);

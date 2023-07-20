@@ -13,17 +13,17 @@
 
 
     
-    int get_Data_node_value(Data_Node* node);
-    int get_Data_node_is_char(Data_Node* node);
-    int get_Data_node_DC_counter(Data_Node* node);
-    Data_Node* get_Data_node_next(Data_Node* node);
+    int get_data_node_value(Data_Node* node);
+    int get_data_node_is_char(Data_Node* node);
+    int get_data_node_DC_counter(Data_Node* node);
+    Data_Node* get_data_node_next(Data_Node* node);
 
     Data_Node* new_data_node(int value, int is_char, int counter);
-    void set_Data_node_value(Data_Node* Data_node, int is_char, int value);
-    void set_Data_node_DC_counter(Data_Node* Data_node, int DC_counter);
-    void set_Data_node_next(Data_Node* Data_node, Data_Node* next);
+    void set_data_node_value(Data_Node* Data_node, int is_char, int value);
+    void set_data_node_DC_counter(Data_Node* Data_node, int DC_counter);
+    void set_data_node_next(Data_Node* Data_node, Data_Node* next);
 
-    void free_Data_node(Data_Node* node);
+    void free_data_node(Data_Node* node);
 
 #endif
 
