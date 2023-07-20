@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "first_pass.h": "c",
+        "line_functions.h": "c",
+        "instructions_struct.h": "c",
+        "file_functions.h": "c",
+        "stdlib.h": "c",
+        "words_functions.h": "c",
+        "stdio.h": "c",
+        "labals.h": "c",
+        "data_struct.h": "c",
+        "testers.h": "c",
+        "string.h": "c",
+        "labels.h": "c",
+        "enums.h": "c"
+    }
+}
