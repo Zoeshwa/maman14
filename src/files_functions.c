@@ -19,7 +19,7 @@ void make_am_name(char* file, char* name){
 
 File_Config* intialiez_file_config() {
     File_Config* file_config;
-    file_config = (File_Config*)malloc(sizeof(Symbol_Table));
+    file_config = (File_Config*)malloc(sizeof(File_Config));
     file_config->symbol_table = intialiez_symbol_table();
     file_config->ins_head = intialiez_ins_head();
     file_config->data_table = intialiez_data_table();

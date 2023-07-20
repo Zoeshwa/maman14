@@ -6,26 +6,26 @@
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
 /*TODO: update counters after handle*/
-File_Config* first_pass() {
+File_Config* first_pass(FILE* am_file) {
     /*initilazed varabels*/
     File_Config* file_config;
-    char cur_word[MAX_LEN], input[MAX_LEN];
-    Ins_Node *curr_ins;
+    char input[MAX_LEN];
+    Ins_Node *curr_ins; /*TODO: delete - every line if needed*/
     int line_num, is_valid; 
     char * ptr;
 
     line_num = 1;
     is_valid = 1;
     file_config = intialiez_file_config();
-    curr_ins = NULL;
+    curr_ins = NULL; /*TODO: pointer to the head of the ins*/
 
-    /* TODO: change stind -> am_file) */    
     /*for each line in the file*/
-    while (fgets(input, MAX_LEN, stdin) != NULL){    
+    while (fgets(input, MAX_LEN, am_file) != NULL){    
         ptr = input;
 
         if (empty_line(input) || comment_line(input)){continue;}
-        is_valid = handle_new_line(file_config, line_num, input, curr_ins, cur_word);
+        is_valid = handle_new_line(file_config, line_num, input);
+        line_num++;
     }
 
     /*TODO: check if theres error. if so - print them and stop */
@@ -34,22 +34,19 @@ File_Config* first_pass() {
     /*TODO: run secound pass*/
 }
 
-int handle_new_line(File_Config* file_config, int line_num, char* line, Ins_Node *curr_ins, char* cur_word) {
+int handle_new_line(File_Config* file_config, int line_num, char* line) {
     char * ptr;
+    Ins_Node *curr_ins;
+    char cur_word[MAX_LEN];
     int is_line_have_symbol, is_line_data_ins; 
-    /*TODO: line counter update*/
-
-    /*otherwise lines should be added*/
-    add_ins_to_list(file_config->ins_head,curr_ins,file_config->IC_counter,line_num);
     
     /*get the first word*/
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr);
 
     is_line_have_symbol = is_lable(cur_word); /*label of the line*/    
-    is_line_data_ins = is_data_storage_ins(line);/*ins: .data or .string*/
     
-    if(is_line_data_ins) {
+    if(is_data_storage_ins(line)) { /*ins: .data or .string*/
         if(is_line_have_symbol) {
             /*handle insert data symbol for the command*/
             handle_label(file_config, curr_ins, cur_word, DATA);
@@ -85,6 +82,8 @@ int handle_new_line(File_Config* file_config, int line_num, char* line, Ins_Node
             get_next_word(cur_word, line);
             ptr = skip_spaces(ptr);
         }
+        add_ins_to_list(file_config->ins_head,curr_ins,file_config->IC_counter,line_num);
+
         handle_code_line(file_config, curr_ins, line, ptr);
         return TRUE;
     }

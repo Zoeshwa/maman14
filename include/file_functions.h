@@ -24,6 +24,7 @@
         int IC_counter;
         struct Symbol_Table* symbol_table;
         struct Ins_Node* ins_head;
+        struct Ins_Node* ins_tail;
         struct DATA_Table* data_table;
     }File_Config;
 
