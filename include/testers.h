@@ -61,7 +61,7 @@
     void run_void_tests();
     void run_is_lable_testers();
     void run_input_testers();
-    void run_is_scope_ins_testers();
+    void run_is_external_or_entry_ins_testers();
     void run_is_extern_ins_testers(); 
     void run_empty_line_testers();
     void run_comment_line_testers(); 
@@ -80,18 +80,20 @@
     void run_tests_is_valid_lable();
 
     void run_first_pass_tests();
-    void run_handle_functions();
     void run_tests_handle_label();
 
 
     /*utils testers*/
-    int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b);
     int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b);
     int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b);
     int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
     int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b);
     int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
 
+void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number);
+
+void print_Ins_Node(Ins_Node* ins);
+void print_file_config(File_Config* file_config);
 
 
 #endif

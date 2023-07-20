@@ -43,32 +43,32 @@ void run_input_testers()
 {
     
     START_TEST("input_testers");
-    run_is_scope_ins_testers();
+    run_is_external_or_entry_ins_testers();
     run_is_extern_ins_testers();
     run_empty_line_testers();
     run_comment_line_testers();
     END_TEST("input_testers");
 }
 
-void run_is_scope_ins_testers() 
+void run_is_external_or_entry_ins_testers() 
 {
     int i;
     i = 0;
-    START_TEST("is_scope_ins");
-    tester_O_int_I_charP(is_scope_ins, "example input", 0, i++);
-    tester_O_int_I_charP(is_scope_ins, "extern input", 0, i++);
-    tester_O_int_I_charP(is_scope_ins, ". extern input", 0,i++);
-    tester_O_int_I_charP(is_scope_ins, ".data input", 0, i++);
-    tester_O_int_I_charP(is_scope_ins, "entry input", 0, i++);
+    START_TEST("is_external_or_entry_ins");
+    tester_O_int_I_charP(is_external_or_entry_ins, "example input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "extern input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ". extern input", 0,i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".data input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "entry input", 0, i++);
 
 
-    tester_O_int_I_charP(is_scope_ins, ".entry input", 1, i++);
-    tester_O_int_I_charP(is_scope_ins, "LOOP: .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_scope_ins, ".extern", 1, i++);
-    tester_O_int_I_charP(is_scope_ins, ".extern LOOP, JH", 1, i++);
-    tester_O_int_I_charP(is_scope_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_scope_ins, "\t.extern          ", 1, i++);
-    tester_O_int_I_charP(is_scope_ins, ".extern \t LOOP, JH", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".entry input", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP: .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern LOOP, JH", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, "\t.extern          ", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern \t LOOP, JH", 1, i++);
     END_TEST("");
 }
 
@@ -187,8 +187,11 @@ void run_labels_tests() {
     run_labels_new_tests();
     run_labels_set_tests();
     run_labels_get_tests();
+    /*
     run_tests_is_symbol_already_exist();
     run_tests_is_valid_lable();
+    
+    */
 }
 
 void run_labels_set_tests() {
@@ -349,14 +352,14 @@ void run_tests_is_valid_lable() {
 */
 
 
-void run_first_pass_tests(){
-    run_handle_functions();
+void run_first_pass_tests(){ 
+    /*
+    run_tests_handle_label();
+    
+    */
 }
 
-void run_handle_functions() {
-    run_tests_handle_label();
-    /*TODO: the other ones*/
-}
+
 
 /*
 void run_tests_handle_label() {
