@@ -90,10 +90,10 @@
     int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b);
     int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
 
-void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number);
+    void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number);
 
-void print_Ins_Node(Ins_Node* ins);
-void print_file_config(File_Config* file_config);
+    void print_Ins_Node(Ins_Node* ins);
+    void print_file_config(File_Config* file_config);
 
 
 #endif
