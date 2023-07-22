@@ -33,6 +33,19 @@ void tester_get_next_word(char * str) {
     }
 }
 
+
+void test_remove_colon_at_end(char* word, int test_number, const char* expected_result) {
+    char copy_word[strlen(word) + 1];
+    strcpy(copy_word, word); 
+
+    remove_colon_at_end(word);
+    if (strcmp(word, expected_result) == 0) {
+        printf("V - PASS: Expected result (%s) matches the actual result.\n", expected_result);
+    } else {
+        printf("X - FAIL: test_num (%d), Expected (%s) - Actual result (%s)\n",test_number, expected_result, word);
+    }
+}
+
 /*print func*/
 
 void print_file_config(File_Config* file_config) {
@@ -218,7 +231,6 @@ void tester_label_get_label_name(Lable_Node* label, char* word, int expected_res
     }
 }
 
-void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number) {
 
 void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number) {
     Lable_Node* search_result;
@@ -239,7 +251,6 @@ void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, 
 }
 
 void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number){ 
-void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number){ 
     int result;
     result = is_valid_lable(lable_head, word);
     result = is_valid_lable(lable_head, word);
@@ -254,18 +265,14 @@ void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_res
 
 
 /*first pass*/
-/*
-void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* word, Symbol_Type symbol_type, Ins_Node* expted_node, Symbol_Table* expted_symbol_table, int test_number) {
+
+void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type, Lable_Node* expted_lable_list, int test_number) {
     int result;
     result = 1;
-    handle_label(file_config, node, word, symbol_type);
-
-
-    if(is_Ins_Node_err_equals(node, expted_node) == 0) {
-        result = 1;
-    }
     
-    if(is_symbol_table_equals(file_config->symbol_table, expted_symbol_table) == 0) {
+    handle_label(file_config, word, symbol_type);
+
+    if(compare_Lable_Node(file_config->label_head, expted_lable_list) == 0) {
         result = 1;
     }
 
@@ -273,12 +280,10 @@ void tester_handle_label(File_Config* file_config, struct Ins_Node* node, char* 
         PASS_PRINT(1);
     } else {
         FAIL_PRINT(test_number, 1, result);
-        print_Symbol_table(file_config->symbol_table);
-        print_Ins_Node(node);
     }
 
 }
-*/
+
 
 
 /*utils */
@@ -306,8 +311,25 @@ int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b
 }
 */
 
+/* Function to compare two Lable_Node */
+int compare_Lable_Node(const Lable_Node* node1, const Lable_Node* node2) {
+    if (node1 == NULL && node2 == NULL) {
+        return 1; 
+    } else if (node1 == NULL || node2 == NULL) {
+        return 0; 
+    }
+
+    if (strcmp(node1->name, node2->name) == 0
+        /* Add comparisons for other fields as needed */
+        && compare_Lable_Node(node1->next, node2->next)) {
+        return 1; 
+    }
+
+    return 0; 
+}
+
 /*
-int is_symbol_table_equals(Symbol_Table* symbol_table_a, Symbol_Table* symbol_table_b) {
+int is_symbol_table_equals(Lable_Node* symbol_table_a, Symbol_Table* symbol_table_b) {
     Lable_Node* curr_node_a, *curr_node_b;
 
     curr_node_a = symbol_table_a->head;

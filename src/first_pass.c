@@ -162,13 +162,12 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     if (!(is_valid_lable(file_config->label_head, word))) {
         /*TODO: print the error & line num*/
         /*MAYBE: we need to continou?*/
-        printf("!(is_valid_lable\n");
         return;
     }
-    /*add to symbol table*/
+    /*add to symbol table - get the counter and remove colon*/
     counter_value = get_counter_by_type(file_config, symbol_type);
-    printf("counter_value: %d\n", counter_value);
-    /*TODO: delete the :*/
+    remove_colon_at_end(word);
+
     insert_to_symbol_table(&(file_config->label_head), word, counter_value, symbol_type);
 }
 

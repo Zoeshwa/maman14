@@ -26,7 +26,7 @@
     int is_lable(char* word);
     int is_type_storge_string_ins(char * input);
 
-
+    void remove_colon_at_end(char* word);
 
 #endif
 

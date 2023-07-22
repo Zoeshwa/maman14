@@ -19,8 +19,6 @@
         struct Lable_Node* next;
     } Lable_Node;
 
-
-
     void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type);
     int is_valid_lable(Lable_Node* head, char* word);
     

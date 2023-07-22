@@ -97,10 +97,12 @@ int main() {
 
         File_Config* file_config;
         Symbol_Type symbol_type;
+        char * word;
         run_tester();
 
         file_config = intialiez_file_config();
-        char * word = "LOOP:";
+        word = (char*)malloc(10*sizeof(char));
+        strcpy(word, "LOOP:");
         symbol_type = DATA;
 
         handle_label(file_config, word, symbol_type);

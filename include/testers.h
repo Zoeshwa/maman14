@@ -44,6 +44,7 @@
     void tester_file_get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type, int expected_result, int test_number);
     void tester_file_set_int_fileds(File_Config* file_config, void (*set_func)(File_Config*, int),int (*get_func)(File_Config*), int expected_result, int test_number);
     
+    void test_remove_colon_at_end(char* word, int test_number, const char* expected_result);
     void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number);
     void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number);
     void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number);
@@ -65,8 +66,8 @@
     void run_is_external_or_entry_ins_testers();
     void run_is_extern_ins_testers(); 
     void run_empty_line_testers();
-    void run_comment_line_testers(); 
-
+    void run_comment_line_testers();
+    void run_remove_colon_at_end();
     void tests_get_next_word();
 
     void run_file_config_tests();
@@ -103,5 +104,9 @@
 
     void print_Lable_Node(Lable_Node* label_node);
     void print_Ins_Node(Ins_Node* ins);
+
+    int compare_Lable_Node(const Lable_Node* node1, const Lable_Node* node2);
+
+    void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type, Lable_Node* expted_lable_list, int test_number);
 #endif
 

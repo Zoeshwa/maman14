@@ -5,22 +5,41 @@
 
 void run_tester() 
 {
+    run_first_pass_tests(); 
     run_labels_tests();
+    run_file_config_print();
     /*
     run_return_tests();
     run_file_config_tests();
-    run_first_pass_tests(); 
     tests_get_next_word();
     */
-    run_file_config_print();
   
 }
 
 void run_return_tests() {
     run_input_testers();
+    run_remove_colon_at_end();
 }
 
 /*strings*/
+
+void run_remove_colon_at_end() {
+    char word1[] = "Hello:";
+    char word2[] = "NoColon";
+    char word3[] = "Multiple::";
+    char word4[] = ":";
+    char word5[] = "LOOP:";
+    
+    START_TEST("run_remove_colon_at_end");
+    test_remove_colon_at_end(word1, 1, "Hello");
+    test_remove_colon_at_end(word2, 2, "NoColon");
+    test_remove_colon_at_end(word3, 3, "Multiple:");
+    test_remove_colon_at_end(word4, 4, "");
+    test_remove_colon_at_end(word5, 5, "LOOP");
+
+    END_TEST("run_remove_colon_at_end");
+  
+}
 
 void run_is_lable_testers() 
 {
@@ -42,6 +61,7 @@ void run_input_testers()
     run_is_extern_ins_testers();
     run_empty_line_testers();
     run_comment_line_testers();
+    run_remove_colon_at_end();
     END_TEST("input_testers");
 }
 
@@ -97,7 +117,7 @@ void run_is_extern_ins_testers()
     tester_O_int_I_charP(is_extern_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
     tester_O_int_I_charP(is_extern_ins, "\t.extern          ", 1, i++);
     tester_O_int_I_charP(is_extern_ins, ".extern \t LOOP, JH", 1, i++);
-    END_TEST("");
+    END_TEST("is_extern_ins");
 
 }
 
@@ -197,10 +217,7 @@ void run_labels_tests() {
     run_labels_get_tests();
     run_is_lable_testers();
     run_tests_is_valid_lable();
-    /*
     run_tests_is_symbol_already_exist();
-
-    */
 }
 
 void run_labels_set_tests() {
@@ -265,62 +282,62 @@ void run_labels_get_tests() {
     END_TEST("labels_get_tests");
 }
 
-/*
+
 void run_tests_is_symbol_already_exist() {
-    Symbol_Table* table;
+    Lable_Node* head;
     int test_number;
     Symbol_Type symbol_type;
     
     START_TEST("run_tests_is_symbol_already_exist");
 
     test_number = 0;
-    table = intialiez_symbol_table();
+    head = NULL;
     
-    tester_is_symbol_already_exist(table, "hi:", 0, test_number++);
-    tester_is_symbol_already_exist(table, "hi", 0, test_number++);
-    tester_is_symbol_already_exist(table, "5i", 0, test_number++);
-    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
-    tester_is_symbol_already_exist(table, "A555ADMSasjd555:", 0, test_number++);
-    tester_is_symbol_already_exist(table, "i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0, test_number++);
-    tester_is_symbol_already_exist(table, "#5i:", 0, test_number++);
-    tester_is_symbol_already_exist(table, "a5$i:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "hi:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "hi", 0, test_number++);
+    tester_is_symbol_already_exist(head, "5i", 0, test_number++);
+    tester_is_symbol_already_exist(head, "i555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "A555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "#5i:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "a5$i:", 0, test_number++);
 
 
     symbol_type = DATA;
-    insert_to_symbol_table(table, "hi:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi:", test_number, symbol_type);
 
-    tester_is_symbol_already_exist(table, "hi:", 1, test_number++);
-    tester_is_symbol_already_exist(table, "hi", 0, test_number++); 
-    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "hi:", 1, test_number++);
+    tester_is_symbol_already_exist(head, "hi", 0, test_number++); 
+    tester_is_symbol_already_exist(head, "i555ADMSasjd555:", 0, test_number++);
 
-    insert_to_symbol_table(table, "hi2:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi2:", test_number, symbol_type);
 
-    tester_is_symbol_already_exist(table, "hi:", 1, test_number++); 
-    tester_is_symbol_already_exist(table, "hi2:", 1, test_number++);
-    tester_is_symbol_already_exist(table, "hi", 0, test_number++);
-    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "hi:", 1, test_number++); 
+    tester_is_symbol_already_exist(head, "hi2:", 1, test_number++);
+    tester_is_symbol_already_exist(head, "hi", 0, test_number++);
+    tester_is_symbol_already_exist(head, "i555ADMSasjd555:", 0, test_number++);
 
     symbol_type = CODE;
-    insert_to_symbol_table(table, "hi3:", test_number, symbol_type);
-    insert_to_symbol_table(table, "hi4:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi3:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi4:", test_number, symbol_type);
     symbol_type = EXTERNALT;
-    insert_to_symbol_table(table, "hi5:", test_number, symbol_type);
-    insert_to_symbol_table(table, "hi6:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi5:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi6:", test_number, symbol_type);
 
-    tester_is_symbol_already_exist(table, "hi:", 1, test_number++); 
-    tester_is_symbol_already_exist(table, "hi2:", 1, test_number++);
-    tester_is_symbol_already_exist(table, "hi3:", 1, test_number++); 
-    tester_is_symbol_already_exist(table, "hi4:", 1, test_number++);
-    tester_is_symbol_already_exist(table, "hi5:", 1, test_number++); 
-    tester_is_symbol_already_exist(table, "hi6:", 1, test_number++);
+    tester_is_symbol_already_exist(head, "hi:", 1, test_number++); 
+    tester_is_symbol_already_exist(head, "hi2:", 1, test_number++);
+    tester_is_symbol_already_exist(head, "hi3:", 1, test_number++); 
+    tester_is_symbol_already_exist(head, "hi4:", 1, test_number++);
+    tester_is_symbol_already_exist(head, "hi5:", 1, test_number++); 
+    tester_is_symbol_already_exist(head, "hi6:", 1, test_number++);
     
-    tester_is_symbol_already_exist(table, "hi", 0, test_number++);
-    tester_is_symbol_already_exist(table, "i555ADMSasjd555:", 0, test_number++);
+    tester_is_symbol_already_exist(head, "hi", 0, test_number++);
+    tester_is_symbol_already_exist(head, "i555ADMSasjd555:", 0, test_number++);
 
-    free_symbol_table(table);
-    END_TEST(" ");
+    free_lable_list(&head);
+    END_TEST("run_tests_is_symbol_already_exist");
 }
-*/
+
 
 void run_tests_is_valid_lable() {
     Lable_Node* head;
@@ -360,100 +377,61 @@ void run_tests_is_valid_lable() {
 }
 
 
-
 void run_first_pass_tests(){ 
-    /*
-void run_first_pass_tests(){ 
-    /*
     run_tests_handle_label();
-    
-    */
 }
 
-
-
-
-
-/*
 void run_tests_handle_label() {
     File_Config* file_config;
-    Ins_Node *expted_node_good, *node;
-    Symbol_Table* expted_symbol_table;
-
+    Lable_Node* expted_lable_head;
     int test_num;
     char good_word1[MAX_LEN], bad_word1[MAX_LEN];
     Symbol_Type symbol_type;
-    
-    START_TEST("tests_handle_label");
 
+    START_TEST("tests_handle_label");
     test_num = 0;
+
     file_config = intialiez_file_config();
-    expted_symbol_table = intialiez_symbol_table();
-    node = intialiez_ins_head();
-    expted_node_good = intialiez_ins_head();
-  
+    expted_lable_head = NULL;
+
   
     symbol_type = DATA;
     strcpy(good_word1, "hi:");
+    strcpy(bad_word1, "hi");
 
-    set_error_ins(expted_node_good, 0, "");
-    set_IC_ins(expted_node_good, file_config->IC_counter);
-    set_line_number_ins(expted_node_good, 0);
-    expted_node_good->next = NULL;
+    /*bad word should not exist*/
+    tester_handle_label(file_config, bad_word1, symbol_type, expted_lable_head, test_num++);
     
-    set_error_ins(node, 0, "");
-    set_IC_ins(node, file_config->IC_counter);
-    set_line_number_ins(node, 0);
-    node->next = NULL;
+    /*good word - should be added*/
+    insert_to_symbol_table(&(expted_lable_head), "hi", file_config->DC_counter, symbol_type);
+    tester_handle_label(file_config, good_word1, symbol_type, expted_lable_head, test_num++);
+    /*should not add twice*/
+    tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
 
-    expted_symbol_table = intialiez_symbol_table();
-
-    insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
-    tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-    set_error_ins(expted_node_good, 1, ERROR_NOT_VALID_LABEL);
-    set_error_ins(node, 0, "");
-    tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-*/
-    /*every kind*/
-    /*
-    set_error_ins(expted_node_good, 0, "");
-    set_error_ins(node, 0, "");
     symbol_type = CODE;
-    strcpy(good_word1, "hi:");
-    insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
-    tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-    
-    set_error_ins(expted_node_good, 0, "");
-    set_error_ins(node, 0, "");
+    strcpy(good_word1, "LOOP:");
+    insert_to_symbol_table(&(expted_lable_head), "LOOP", file_config->DC_counter, symbol_type);
+    tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
+    /*should not add twice*/
+    tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
+
+
     symbol_type = EXTERNALT;
-    strcpy(good_word1, "hi:");
-    insert_to_symbol_table(expted_symbol_table, good_word1, file_config->DC_counter, symbol_type);
-    tester_handle_label(file_config, node, good_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-*/
-    /*bad label*/
-    /*
+    strcpy(good_word1, "sdjkU:");
+    insert_to_symbol_table(&(expted_lable_head), "sdjkU", file_config->DC_counter, symbol_type);
+    tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
+
     symbol_type = CODE;
     strcpy(bad_word1, good_word1);
-    set_error_ins(node, 0, "");
-    tester_handle_label(file_config, node, bad_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
-    */ /*not legal label*/ /*
+    tester_handle_label(file_config, bad_word1, symbol_type,expted_lable_head, test_num++);
     strcpy(bad_word1, "ssss");
-    set_error_ins(node, 0, "");
-    tester_handle_label(file_config, node, bad_word1, symbol_type, expted_node_good, expted_symbol_table, test_num);
+    tester_handle_label(file_config, bad_word1, symbol_type,expted_lable_head, test_num++);
+    strcpy(bad_word1, "33:");
+    tester_handle_label(file_config, bad_word1, symbol_type,expted_lable_head, test_num++);
+    
+    free_lable_list(&expted_lable_head);
+    free_file_config(file_config);
 
-    if(node!=NULL) {
-        free_ins_node(node);
-    }
-    if(expted_node_good!=NULL) {
-        free_ins_node(expted_node_good);
-    }
-    if(expted_symbol_table!=NULL) {
-        free_symbol_table(expted_symbol_table);
-    }
-    if(file_config!=NULL) {
-        free_file_config(file_config);
-    }
-    END_TEST(" ");
+    END_TEST("tests_handle_label");
 }
 
-*/
