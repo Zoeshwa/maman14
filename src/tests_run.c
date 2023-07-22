@@ -38,6 +38,7 @@ void run_input_testers()
     
     START_TEST("input_testers");
     run_is_external_or_entry_ins_testers();
+    run_is_external_or_entry_ins_testers();
     run_is_extern_ins_testers();
     run_empty_line_testers();
     run_comment_line_testers();
@@ -54,8 +55,21 @@ void run_is_external_or_entry_ins_testers()
     tester_O_int_I_charP(is_external_or_entry_ins, ". extern input", 0,i++);
     tester_O_int_I_charP(is_external_or_entry_ins, ".data input", 0, i++);
     tester_O_int_I_charP(is_external_or_entry_ins, "entry input", 0, i++);
+    START_TEST("is_external_or_entry_ins");
+    tester_O_int_I_charP(is_external_or_entry_ins, "example input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "extern input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ". extern input", 0,i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".data input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "entry input", 0, i++);
 
 
+    tester_O_int_I_charP(is_external_or_entry_ins, ".entry input", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP: .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern LOOP, JH", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, "\t.extern          ", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern \t LOOP, JH", 1, i++);
     tester_O_int_I_charP(is_external_or_entry_ins, ".entry input", 1, i++);
     tester_O_int_I_charP(is_external_or_entry_ins, "LOOP: .extern", 1, i++); /*FAIL*/
     tester_O_int_I_charP(is_external_or_entry_ins, ".extern", 1, i++);
@@ -349,10 +363,14 @@ void run_tests_is_valid_lable() {
 
 void run_first_pass_tests(){ 
     /*
+void run_first_pass_tests(){ 
+    /*
     run_tests_handle_label();
     
     */
 }
+
+
 
 
 

@@ -219,8 +219,11 @@ void tester_label_get_label_name(Lable_Node* label, char* word, int expected_res
 }
 
 void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number) {
+
+void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number) {
     Lable_Node* search_result;
     int result;
+    search_result = is_symbol_already_exist(lable_head, symbol_name);
     search_result = is_symbol_already_exist(lable_head, symbol_name);
 
     if(search_result == NULL) {
@@ -236,7 +239,9 @@ void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, 
 }
 
 void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number){ 
+void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number){ 
     int result;
+    result = is_valid_lable(lable_head, word);
     result = is_valid_lable(lable_head, word);
 
     if (result == expected_result) {

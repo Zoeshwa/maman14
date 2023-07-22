@@ -62,6 +62,7 @@
     void run_is_lable_testers();
     void run_input_testers();
     void run_is_external_or_entry_ins_testers();
+    void run_is_external_or_entry_ins_testers();
     void run_is_extern_ins_testers(); 
     void run_empty_line_testers();
     void run_comment_line_testers(); 
@@ -91,6 +92,10 @@
     int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b);
     int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b);
 
+    void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number);
+
+    void print_Ins_Node(Ins_Node* ins);
+    void print_file_config(File_Config* file_config);
     void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number);
 
     void print_Ins_Node(Ins_Node* ins);
