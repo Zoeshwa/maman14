@@ -95,11 +95,11 @@ int main_original(int argc, char* argv[]) {
 
 int main() {
 
+        run_tester();
+    /*
         File_Config* file_config;
         Symbol_Type symbol_type;
         char * word;
-        run_tester();
-
         file_config = intialiez_file_config();
         word = (char*)malloc(10*sizeof(char));
         strcpy(word, "LOOP:");
@@ -107,6 +107,8 @@ int main() {
 
         handle_label(file_config, word, symbol_type);
         print_file_config(file_config);
+
+    */
     
 
     return 0;

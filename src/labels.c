@@ -4,16 +4,6 @@
 #include "labels.h"
 
 
-
-/* Function to insert a new Lable_Node at the beginning of the list*/
-Lable_Node* s(Lable_Node* head, char* word, int counter_value, Symbol_Type symbol_type) {
-    /* Create a new Lable_Node*/
-    Lable_Node* new_lable;
-    new_lable = new_label_node(word,counter_value,symbol_type);
-    set_label_next(new_lable, head);
-    return new_lable;
-}
-
 void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
     Lable_Node* new_node = new_label_node(word,counter_value,symbol_type);
@@ -60,7 +50,6 @@ Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
 
-/*MAYBE: is needed?*/
 void set_label_name(Lable_Node* new_lable, char * word) {
     /* Allocate memory for the name and copy the string*/
     /*TODO: delete the : char in the end*/
@@ -78,18 +67,17 @@ void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type) {
         new_lable->counter_type = IC;
     }
 }
- 
-void set_label_next(Lable_Node* new_lable, Lable_Node* head) {
-    new_lable->next = head;
-}
 
-Lable_Node* is_symbol_already_exist(Lable_Node* head, char * symbol_name) {
+/*Description: search if a given word is in the lable list*/
+/*Input: head of the lable list to search, word to search in the list*/
+/*Output: pointer to the founded lable node or a NULL if not founded*/
+Lable_Node* find_lable(Lable_Node* head, char * symbol_name) {
     Lable_Node* ptr;
 
-    ptr = head;
-
+    ptr = head; /*start with ptr to head of the list*/
     while (ptr != NULL)
     {
+        /*check if the word is a knowen label*/
         if(strcmp(get_label_name(ptr), symbol_name) == 0) {
             return ptr;
         }
@@ -109,46 +97,52 @@ int is_valid_lable(Lable_Node* head, char* word){
 
     /*starts with A-Z/a-z*/
     if(!IS_UPPERCASE_LETTERS(*ptr) && !IS_LOWERCASE_LETTERS(*ptr)) {
-        return 0; /*return false*/
+        printf(ERROR_NOT_VALID_LABEL_CHAR);
+        return FALSE; 
     }
 
-    /*have only max len for labels and end with : and no spaces before ":"*/
+    /*have only max len for labels and end with ":" and no spaces before ":"*/
     if(strlen(word) > MAX_LABEL_LEN || !is_lable(word)) {
-        return 0; /*return false*/
+        printf(ERROR_NOT_VALID_LABEL);
+        return FALSE; 
     }
 
     /*all othe chars is valid*/
     for(i = 0; i < strlen(word) - 1; i++) {
         if(!is_valid_char(*ptr)){
-            return 0; /*return false*/
+            printf(ERROR_NOT_VALID_LABEL_CHAR);
+            return FALSE;
         }
         ptr++;
     }
 
-
     /*there is no other label like this*/
-    if(is_symbol_already_exist(head, word) != NULL) {
-        return 0; /*return false*/
+    if(find_lable(head, word) != NULL) {
+        printf(ERROR_LABEL_ALREADY_EXISTS);
+        return FALSE;
     }
 
-    /*TODO: its not a save word*/
-
-    return 1; /*return true*/
+    remove_colon_at_end(word);
+    if(is_saved_word(word)) {
+        printf(ERROR_LABEL_IS_SAVED_WORD);
+        return FALSE;
+    }
+   
+    return TRUE;
 }
 
-/* Function to free a single Lable_Node and set the pointer to NULL */
+/*Description: Function to free a single Lable_Node and set the pointer to NULL*/
+/*Input: a pointer to a pointer of the node to free*/
 void free_label_node(Lable_Node** node) {
     if (*node != NULL) {
-        /* Free the dynamically allocated name */
-        free((*node)->name);
-        /* Free the Lable_Node itself */
-        free(*node);
-        /* Set the pointer to NULL after freeing */
-        *node = NULL;
+        free((*node)->name); /* Free the dynamically allocated name */
+        free(*node);  /* Free the Lable_Node itself */
+        *node = NULL; /* Set the pointer to NULL after freeing */
     }
 }
 
-/* Function to free the entire linked list of Lable_Nodes and set the head pointer to NULL */
+/*Description: Function to free the entire linked list of Lable_Nodes and set the head pointer to NULL*/
+/*Input: a pointer to a pointer of the head of the list to free*/
 void free_lable_list(Lable_Node** head) {
     Lable_Node* current = *head;
     Lable_Node* next_node;
@@ -156,10 +150,8 @@ void free_lable_list(Lable_Node** head) {
     while (current != NULL) {
         /* Save the reference to the next node */
         next_node = current->next;
-        /* Free the current node */
-        free_label_node(&current);
-        /* Move to the next node */
-        current = next_node;
+        free_label_node(&current);  /* Free the current node */
+        current = next_node; /* Move to the next node */
     }
     /* Set the head pointer to NULL after freeing the entire list */
     *head = NULL;

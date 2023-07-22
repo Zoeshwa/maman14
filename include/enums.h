@@ -17,12 +17,17 @@
     #define TRUE 1
     #define FALSE 0
 
+    #define PRINT_NUM_LINE_ERROR(line_num) printf("The Error in line %d\n", line_num)
+
     /*ERROR STR*/
-    #define ERROR_NOT_VALID_LABEL "not a valid lable\n"
+    #define ERROR_NOT_VALID_LABEL "ERROR - not a valid lable\n"
+    #define ERROR_NOT_VALID_LABEL_CHAR "ERROR - not a valid lable - There is an invalid character\n"
+    #define ERROR_LABEL_ALREADY_EXISTS "ERROR - not a valid lable - The label already exists\n"
+    #define ERROR_LABEL_IS_SAVED_WORD "ERROR - not a valid lable - Using a reserved word as a label\n"
+
 
     /*Warnning STR*/
-    #define WARNING_LABEL_NOT_USE "This label is not use\n"
-
+    #define WARNING_LABEL_NOT_USE "WARNING - This label is not use\n"
 
     typedef enum Counter_Type {
         DC,

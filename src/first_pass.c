@@ -160,8 +160,8 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
 
     /*validate the starting label*/
     if (!(is_valid_lable(file_config->label_head, word))) {
-        /*TODO: print the error & line num*/
-        /*MAYBE: we need to continou?*/
+        PRINT_NUM_LINE_ERROR(file_config->curr_line_num);
+        /*ASK: we need to continou?*/
         return;
     }
     /*add to symbol table - get the counter and remove colon*/

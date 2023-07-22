@@ -17,6 +17,17 @@ void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_resu
     }
 }
 
+
+void tester_is_saved_word(char* input, int expected_result, int test_number) {
+    int result;
+    result = is_saved_word(input);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
+
 void tester_get_next_word(char * str) {
     char * ptr;
     char cur_word[MAX_LEN];
@@ -32,7 +43,6 @@ void tester_get_next_word(char * str) {
         printf("cur_word:|%s|\n", cur_word);
     }
 }
-
 
 void test_remove_colon_at_end(char* word, int test_number, const char* expected_result) {
     char copy_word[strlen(word) + 1];
@@ -140,7 +150,6 @@ void tester_file_set_int_fileds(File_Config* file_config, void (*set_func)(File_
     }
 }
 
-/*TODO: rest of get and set files*/
 
 /*Labels testers*/
 void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number) {
@@ -235,8 +244,7 @@ void tester_label_get_label_name(Lable_Node* label, char* word, int expected_res
 void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, int expected_result, int test_number) {
     Lable_Node* search_result;
     int result;
-    search_result = is_symbol_already_exist(lable_head, symbol_name);
-    search_result = is_symbol_already_exist(lable_head, symbol_name);
+    search_result = find_lable(lable_head, symbol_name);
 
     if(search_result == NULL) {
         result = 0;
@@ -252,17 +260,20 @@ void tester_is_symbol_already_exist(Lable_Node* lable_head, char * symbol_name, 
 
 void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number){ 
     int result;
-    result = is_valid_lable(lable_head, word);
-    result = is_valid_lable(lable_head, word);
+    char *tmp;
+    tmp = (char*)malloc((strlen(word)+1)*sizeof(char));
+    strcpy(tmp, word);
+    
+    result = is_valid_lable(lable_head, tmp);
 
     if (result == expected_result) {
         PASS_PRINT(expected_result);
     } else {
         FAIL_PRINT(test_number,expected_result, result);
     }
+
+    free(tmp);
 }
-
-
 
 /*first pass*/
 
@@ -283,7 +294,6 @@ void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbo
     }
 
 }
-
 
 
 /*utils */
@@ -328,29 +338,6 @@ int compare_Lable_Node(const Lable_Node* node1, const Lable_Node* node2) {
     return 0; 
 }
 
-/*
-int is_symbol_table_equals(Lable_Node* symbol_table_a, Symbol_Table* symbol_table_b) {
-    Lable_Node* curr_node_a, *curr_node_b;
-
-    curr_node_a = symbol_table_a->head;
-    curr_node_b = symbol_table_b->head;
-
-    while (curr_node_a != NULL && curr_node_b != NULL)
-    {
-        if(is_Lable_Node_equals(curr_node_a, curr_node_b) == 0) {
-            return 0;
-        }
-        curr_node_a = curr_node_a->next;
-        curr_node_b = curr_node_b->next;
-    }
-    if(curr_node_a == NULL && curr_node_b == NULL) {
-        return 1;
-    } 
-
-    return 0;
-}
-*/
-
 int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
     Ins_Node* curr_node_a, *curr_node_b;
 
@@ -370,27 +357,6 @@ int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
     } 
 
     return 0;
-}
-
-
-int is_Lable_Node_equals(Lable_Node* curr_node_a, Lable_Node* curr_node_b) {
-    
-    if(get_label_counter_value(curr_node_a) != get_label_counter_value(curr_node_b)) {
-        return 0;
-    }
-    
-    if(strcmp(get_label_name(curr_node_a),get_label_name(curr_node_b)) != 0) {
-        return 0;
-    }
-    if(get_label_counter_type(curr_node_a) != get_label_counter_type(curr_node_b)) {
-        return 0;
-    }
-
-    if(get_label_symbol_type(curr_node_a) != get_label_symbol_type(curr_node_b)) {
-        return 0;
-    }
-    /*TODO: more filds*/
-    return 1;
 }
 
 int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {

@@ -5,6 +5,7 @@
 
 void run_tester() 
 {
+    run_is_saved_word();
     run_first_pass_tests(); 
     run_labels_tests();
     run_file_config_print();
@@ -22,6 +23,18 @@ void run_return_tests() {
 }
 
 /*strings*/
+void run_is_saved_word(){
+    START_TEST("run_is_saved_word");
+    tester_is_saved_word("mov", 1, 1);
+    tester_is_saved_word("while", 0, 2);
+    tester_is_saved_word("jmp", 1, 3);
+    tester_is_saved_word("r0", 1, 4);
+    tester_is_saved_word("data", 1, 5);
+    tester_is_saved_word("Mov", 0, 6);
+    tester_is_saved_word("move", 0, 7);
+    END_TEST("run_is_saved_word");
+
+}
 
 void run_remove_colon_at_end() {
     char word1[] = "Hello:";
@@ -282,7 +295,6 @@ void run_labels_get_tests() {
     END_TEST("labels_get_tests");
 }
 
-
 void run_tests_is_symbol_already_exist() {
     Lable_Node* head;
     int test_number;
@@ -301,7 +313,6 @@ void run_tests_is_symbol_already_exist() {
     tester_is_symbol_already_exist(head, "i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0, test_number++);
     tester_is_symbol_already_exist(head, "#5i:", 0, test_number++);
     tester_is_symbol_already_exist(head, "a5$i:", 0, test_number++);
-
 
     symbol_type = DATA;
     insert_to_symbol_table(&head, "hi:", test_number, symbol_type);
@@ -338,7 +349,6 @@ void run_tests_is_symbol_already_exist() {
     END_TEST("run_tests_is_symbol_already_exist");
 }
 
-
 void run_tests_is_valid_lable() {
     Lable_Node* head;
     int test_number;
@@ -363,8 +373,8 @@ void run_tests_is_valid_lable() {
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
     tester_is_valid_lable(head, "hi", 0, test_number++);
-    tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
 
+    tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
     insert_to_symbol_table(&head, "hi2:", test_number, symbol_type);
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
@@ -375,7 +385,6 @@ void run_tests_is_valid_lable() {
     free_lable_list(&head);
     END_TEST("run_tests_is_valid_lable");
 }
-
 
 void run_first_pass_tests(){ 
     run_tests_handle_label();
@@ -413,6 +422,9 @@ void run_tests_handle_label() {
     insert_to_symbol_table(&(expted_lable_head), "LOOP", file_config->DC_counter, symbol_type);
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
     /*should not add twice*/
+    tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
+    /*should not add twice even if have diffrent type*/
+    symbol_type = EXTERNALT;
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
 
 

@@ -27,6 +27,8 @@
     int is_type_storge_string_ins(char * input);
 
     void remove_colon_at_end(char* word);
+    void get_saved_words(const char*** saved_words, int* num_saved_words);
+    int is_saved_word(const char* word);
 
 #endif
 

@@ -52,7 +52,6 @@ int is_extern_word(char* cur_word) {
     }
 }
 
-
 int is_data_storage_ins(char * input) {
     return (is_type_ins(is_data_word, input) || is_type_ins(is_string_word, input));
 }
@@ -110,4 +109,67 @@ int is_string_word(char* cur_word) {
     } else {
         return FALSE;
     }
+}
+
+
+/* Function to get the array of saved words and the number of elements in the array */
+void get_saved_words(const char*** saved_words, int* num_saved_words) {
+    /* Simulated implementation - replace this with the actual implementation to get saved words */
+    static const char* saved_words_array[] = {
+        /*storage commands*/
+        ".data",
+        ".string",
+        ".entry",
+        ".extern",
+        /*commands*/
+        "mov",
+        "cmp",
+        "add",
+        "sub",
+        "not",
+        "clr",
+        "lea",
+        "inc",
+        "dec",
+        "jmp",
+        "bne",
+        "red",
+        "prn",
+        "jsr",
+        "rts",
+        "stop",
+        /*registers*/
+        "r0",
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7",
+        /*TODO: check if really save word*/
+        "PSW",
+        "PC",
+        "data",
+        "string",
+    };
+    *saved_words = saved_words_array;
+    *num_saved_words = sizeof(saved_words_array) / sizeof(saved_words_array[0]);
+}
+
+/* Function to check if a word is a saved word */
+int is_saved_word(const char* word) {
+    const char** saved_words;
+    int num_saved_words, i;
+
+    /* Get the array of saved words and the number of elements */
+    get_saved_words(&saved_words, &num_saved_words);
+
+    for (i = 0; i < num_saved_words; i++) {
+        if (strcmp(word, saved_words[i]) == 0) {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }

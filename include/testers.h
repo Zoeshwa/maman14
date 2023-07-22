@@ -68,6 +68,9 @@
     void run_empty_line_testers();
     void run_comment_line_testers();
     void run_remove_colon_at_end();
+
+    void run_is_saved_word();
+
     void tests_get_next_word();
 
     void run_file_config_tests();
@@ -107,6 +110,7 @@
 
     int compare_Lable_Node(const Lable_Node* node1, const Lable_Node* node2);
 
+    void tester_is_saved_word(char* input, int expected_result, int test_number);
     void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type, Lable_Node* expted_lable_list, int test_number);
 #endif
 
