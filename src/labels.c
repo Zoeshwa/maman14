@@ -5,9 +5,6 @@
 
 
 
-
-
-/*MAYBE: no need of table struct*/
 /* Function to insert a new Lable_Node at the beginning of the list*/
 Lable_Node* s(Lable_Node* head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new Lable_Node*/
@@ -63,7 +60,7 @@ Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
 
-/*TODO: is needed?*/
+/*MAYBE: is needed?*/
 void set_label_name(Lable_Node* new_lable, char * word) {
     /* Allocate memory for the name and copy the string*/
     /*TODO: delete the : char in the end*/
@@ -83,23 +80,9 @@ void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type) {
 }
  
 void set_label_next(Lable_Node* new_lable, Lable_Node* head) {
-
-    /* If the list is empty, make the new Lable_Node the head of the list*/
-    /*
-    if (head == NULL)
-    {
-        head = new_lable;
-        head->next = NULL;
-
-    } else {
-    
-    */
-        /* Otherwise, insert the new Lable_Node at the beginning*/
-        new_lable->next = head;
-    /*}*/
+    new_lable->next = head;
 }
 
-/*TODO and add to valid label*/
 Lable_Node* is_symbol_already_exist(Lable_Node* head, char * symbol_name) {
     Lable_Node* ptr;
 
@@ -152,22 +135,6 @@ int is_valid_lable(Lable_Node* head, char* word){
 
     return 1; /*return true*/
 }
-
-/*
-
-void free_label_node(Lable_Node* lable_node) {
-    printf("free");
-    if(lable_node != NULL) {
-        free_label_node(get_label_next(lable_node));
-        free(lable_node);
-        lable_node = NULL;
-    }
-    if(get_label_next(lable_node) != NULL) {
-        free_label_node(get_label_next(lable_node));
-    }
-    free(lable_node);
-}
-*/
 
 /* Function to free a single Lable_Node and set the pointer to NULL */
 void free_label_node(Lable_Node** node) {
