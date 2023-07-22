@@ -42,11 +42,12 @@
     } Scope_Type;
     */
 
-    /*MAYBE page 19 in symbol table*/
+    /*MAYBE: is entry should be here? page 19 in symbol table*/
     typedef enum Symbol_Type {
         DATA,
         CODE,
-        EXTERNALT
+        EXTERNALT, 
+        ENTRY
     }Symbol_Type;
 
 #endif
