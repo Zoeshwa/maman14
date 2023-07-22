@@ -93,23 +93,9 @@ int main_original(int argc, char* argv[]) {
     return 0;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
-        run_tester();
-    /*
-        File_Config* file_config;
-        Symbol_Type symbol_type;
-        char * word;
-        file_config = intialiez_file_config();
-        word = (char*)malloc(10*sizeof(char));
-        strcpy(word, "LOOP:");
-        symbol_type = DATA;
-
-        handle_label(file_config, word, symbol_type);
-        print_file_config(file_config);
-
-    */
-    
+    run_tester();
 
     return 0;
 }

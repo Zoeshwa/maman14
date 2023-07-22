@@ -111,5 +111,8 @@
 
     void tester_is_saved_word(char* input, int expected_result, int test_number);
     void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type, Lable_Node* expted_lable_list, int test_number);
+    void tester_is_legal_params(char* input, int expected_result, int test_number);
+    void run_is_legal_params();
+    void run_get_words();
 #endif
 

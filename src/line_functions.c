@@ -4,6 +4,7 @@
 #include "line_functions.h"
 
 #define MAX_LENGTH 80
+#define MAX_WORDS 80
 
 
 /*Description: check if a given line is empty*/
@@ -12,11 +13,11 @@
 int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
-    if (*pointer == '\n' || *pointer == '\0'){ /*TODO/ASK: add EOF?*/
-        return 1; /*return true*/
+    if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
+        return TRUE; 
     }
     else{
-        return 0; /*return false*/
+        return FALSE; 
     }
 }
 
@@ -36,7 +37,7 @@ int comment_line(char* line){
 
 /* gets a pointer and moves it forward untill reaches non white char */
 char* skip_spaces(char* p){
-	while (*p == ' ' || *p == '	'){
+	while (*p == ' ' || *p == '\t'){
 		p++;
 	}
 	return p;
@@ -58,70 +59,94 @@ char* get_next_word(char* word, char* line){
 }
 
 
-/*TODO: ido parse*/
+/*Try 2*/
 
-char** parsing(char* p){
-    char tmp_element[MAX_LENGTH], **splited, *element;
-    int comma_flag, s_index, tmp_index;
-    comma_flag=0, s_index=0, tmp_index=0;
-
-    splited = (char**)malloc(MAX_LENGTH * sizeof(char*)); /*alocating for ellements array */
-    p = skip_spaces(p);
-    if (*p == ',') { /* first comma in illegal*/
-        printf("illegal comma\n");
-        comma_flag=1;
-        p++;
+char* get_next_word2(char* word, char* line){
+    int i=0;
+    char * ptr;
+    ptr = line; 
+    ptr = skip_spaces(ptr);
+    while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t' && *ptr != ','){
+        word[i] = *ptr;
+        i++;
+        ptr++;
     }
-    p = skip_spaces(p);
-    while (*p != '\n' && *p != '\0'){ /*till end of line*/
-        printf("cur is:%c\n", *p);
-        if (*p == ',' && comma_flag){ /*second or more commas in a row*/
-            printf("more than one consecutive commas\n");
-        }
-        else if (*p == ','){ /*comma after element, save the element in the array*/
-            tmp_element[tmp_index] = '\0';
-            comma_flag=1;
-            char* element = (char*)malloc((strlen(tmp_element)+1) * sizeof(char));
-            strcpy(element, tmp_element);
-            splited[s_index++] = element; 
-            tmp_index=0;
-            printf("splited[%d] is: %s\n", s_index-1, splited[s_index-1]);
-        }
-        else{
-            tmp_element[tmp_index++] = *p; /*middle of an element read*/
-        }
-        p=skip_spaces(p);
-        p++;
-    }
-    splited[s_index] = NULL;
-    return splited;
-
+    word[i] = '\0';
+    return word;
 }
 
-int ido_main_for_pars(int argc, char* argv[]) {
-
-    FILE* src_file;
-    char** parsed;
-    char  input[MAX_LENGTH], *file_name;
+char** get_words(char *line) {
+    char copy_line[MAX_LEN], *p, **words, curr_word[MAX_LEN], *tmp;
     int i;
-    file_name = argv[1];
-    src_file = fopen(file_name, "r");
-    while (fgets(input, MAX_LENGTH, src_file) != NULL) {
-        printf("input is: %s", input);
-        parsed = parsing(input);
-        for(i=0; parsed[i] != NULL;i++){
-            printf("next word is: %s\n", parsed[i]);
+    i = 0;
+    strcpy(copy_line, line);
+    words = (char**)malloc(MAX_LENGTH * sizeof(char*));
+    p = copy_line;
+    while (*p != '\0' && *p != EOF && *p != '\n')
+    {
+        p = get_next_word2(curr_word, p);
+        if(curr_word != NULL && strlen(curr_word) > 0) {
+            tmp = (char*)malloc((strlen(curr_word)+1) * sizeof(char));
+            strcpy(tmp, curr_word);
+            words[i++] = tmp;
+            p++;
+        } else {
+            break;
         }
-
     }
-
-
-
-
-
-
-
-
-
-    return 0;
+    
+    return words;
 }
+
+int is_legal_params(char *line) {
+    char copy_line[MAX_LEN], *p;
+    int comma_flag;
+    strcpy(copy_line, line);
+
+    p = copy_line;
+    comma_flag = FALSE;
+    p = skip_spaces(p);
+
+    /*first not space char is comma*/
+    if(*p == ',') {
+        printf(ERROR_ILLEGAL_COMMA);
+        return FALSE;
+    }
+    /*start of the first word*/
+    comma_flag = TRUE;
+    while (*p != '\0' && *p != EOF && *p != '\n')
+    {
+        if(*p == ',') {
+            if(comma_flag == TRUE) { /*there is more then one comma in a row*/
+                printf(ERROR_MULTIPLE_COMMAS);
+                return FALSE;
+            } else {
+                if(comma_flag == FALSE) {
+                    comma_flag = TRUE;
+                    p++;
+                }
+            }
+        } else if( *p != '\0' && *p != EOF && *p != '\n') {
+            if(comma_flag == FALSE) { /*missing a comma*/
+                printf(ERROR_MISSING_COMMA);
+                return FALSE;
+            }
+            comma_flag = FALSE;
+            while (*p != ',' && *p != '\0' && *p != EOF && *p != '\n' && *p != ' ' && *p != '\t')
+            {
+                p++;
+            }
+        }
+        p = skip_spaces(p);
+    }
+    if(*p == '\0' || *p == EOF || *p == '\n') {
+        /*the final word?*/
+        if(comma_flag == TRUE) {
+            printf(ERROR_ILLEGAL_COMMA);
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+

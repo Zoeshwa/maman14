@@ -109,7 +109,6 @@ void print_Data_Node(Data_Node* data_node) {
     }
     printf("\tThis is Data_Node print:{\n");
     printf("\tvalue: %d, ",data_node->value);
-    printf("\tis_char: %d, \n",data_node->is_char);
     printf("\tDC_counter: %d, \n",data_node->DC_counter);
     printf("\tnext: \n\t", data_node->next->value);
     print_Data_Node(data_node->next);
@@ -382,12 +381,8 @@ int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
 }
 
 int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
-    if(get_data_node_value(curr_node_a) != get_data_node_value(curr_node_b)) {
-        return 0;
-    }
-    if(get_data_node_is_char(curr_node_a) != get_data_node_is_char(curr_node_b)) {
-        return 0;
-    }
+    
+
 
     if(get_data_node_DC_counter(curr_node_a) != get_data_node_DC_counter(curr_node_b)) {
         return 0;
@@ -396,6 +391,16 @@ int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
     return 1;
 }
 
+
+void tester_is_legal_params(char* input, int expected_result, int test_number) {
+    int result;
+    result = is_legal_params(input);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
 
 
 

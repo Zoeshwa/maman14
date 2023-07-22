@@ -1,14 +1,3 @@
-/*
-#if !defined(_ENUMS_HEADER_)
-    #define _ENUMS_HEADER_
-    typedef enum {
-        FASLE = 0,
-        TRUE
-    }Boolean;
-#endif
-*/
-
-
 #ifndef _ENUMS_HEADER_
 #define _ENUMS_HEADER_
 
@@ -25,6 +14,9 @@
     #define ERROR_LABEL_ALREADY_EXISTS "ERROR - not a valid lable - The label already exists\n"
     #define ERROR_LABEL_IS_SAVED_WORD "ERROR - not a valid lable - Using a reserved word as a label\n"
 
+    #define ERROR_ILLEGAL_COMMA "ERROR - Comma in illegal place\n"
+    #define ERROR_MISSING_COMMA "ERROR - missing a comma\n"
+    #define ERROR_MULTIPLE_COMMAS "ERROR - There are too many commas\n"
 
     /*Warnning STR*/
     #define WARNING_LABEL_NOT_USE "WARNING - This label is not use\n"
@@ -41,5 +33,10 @@
         CODE,
         EXTERNAL
     }Symbol_Type;
+
+    typedef enum Data_Type {
+        NUM,
+        STRING
+    } Data_Type;
 
 #endif

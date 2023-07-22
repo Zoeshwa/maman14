@@ -1,3 +1,6 @@
+#ifndef _ENUMS_HEADER_
+    #include "enums.h"
+#endif
 
 #ifndef _Data_HEADER_
 #define _Data_HEADER_
@@ -5,16 +8,14 @@
     /*TODO: think about*/
     /*MAYBE:is valid?*/
     typedef struct Data_Node {
-        int value; /*ascii code or int*/
-        int is_char; /*MAYBE: ?*/
-        int DC_counter; /*MAYBE?*/
+        int *value; /*array of ascii code or int for storage*/
+        int num_of_elements; 
+        Data_Type data_type; /*MAYBE: ?*/
+        int DC_counter; /*MAYBE? good if there is no lable before*/
         struct Data_Node* next;
     } Data_Node;
 
-
-    
     int get_data_node_value(Data_Node* node);
-    int get_data_node_is_char(Data_Node* node);
     int get_data_node_DC_counter(Data_Node* node);
     Data_Node* get_data_node_next(Data_Node* node);
 

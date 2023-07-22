@@ -6,13 +6,12 @@
     #include "Instructions_struct.h"
 #endif
 
+#ifndef _ENUMS_HEADER_
+    #include "enums.h"
+#endif
 
 #ifndef _Data_HEADER_
     #include "Data_struct.h"
-#endif
-
-#ifndef _ENUMS_HEADER_
-    #include "enums.h"
 #endif
 
 #ifndef _FILES_FUNCTIONS_HEADER_

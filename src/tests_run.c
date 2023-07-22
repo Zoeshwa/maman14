@@ -5,13 +5,17 @@
 
 void run_tester() 
 {
+    run_get_words();
+    
+    run_is_legal_params();
+    
+    /*
     run_is_saved_word();
     run_first_pass_tests(); 
     run_labels_tests();
     run_file_config_print();
     run_input_testers();
 
-    /*
     run_file_config_tests();
     tests_get_next_word();
     */
@@ -443,3 +447,123 @@ void run_tests_handle_label() {
     END_TEST("tests_handle_label");
 }
 
+/*
+
+void run_parsing() {
+    char** parsed;
+    int i;
+
+    parsed = (char**)malloc(MAX_LEN * sizeof(char*)); 
+
+    parsing(parsed, "LOOP: jmp L1, skj , sss");
+    printf("results:\n");
+    for(i = 0; parsed[i] != NULL ;i++){
+        printf("|%s| \n", parsed[i]);
+    }
+    
+
+    for(i = 0; parsed[i] != NULL ;i++) {
+        free(parsed[i]);
+        parsed[i] = NULL;
+    }
+
+    free(parsed);
+
+       
+       
+       char** parsed;
+        int i, len;
+        parsed = (char**)malloc(MAX_LEN * sizeof(char*)); 
+
+        parsing(parsed, &len , "LOOP: jmp L1, skj , sss");
+        printf("results:\n");
+        for(i = 0; i < len ;i++){
+            printf("|%s| \n", parsed[i]);
+        }
+
+    
+}
+*/
+
+
+void run_tests_handle_extern(){
+    /*
+    File_Config * file_config;
+    file_config = intialiez_file_config();
+
+    char line1[MAX_LEN], line2[MAX_LEN], line3[MAX_LEN];
+    strcpy(line1, ".extern HI, BEY, YES");
+    strcpy(line2, ".extern YOSSI");
+    strcpy(line3, ".extern ZOE, , IDO, YES");
+
+    handle_extren_line(file_config, line1, line1+7);
+    handle_extren_line(file_config, line2, line2+7);
+    handle_extren_line(file_config, line3, line2+7);
+
+    print_file_config(file_config);
+*/
+}
+
+void run_get_words() {
+    char** words;
+    int i;
+    char* line = "hello, world ,this, is ,a ,test, 1234\n";
+    /*
+    char* line1 = "hello, world this, is a test, 1234  , \n";
+    char* line2 = "  , hello, world this, is a test, 1234\n";
+    char* line3 = "hello, world , , this, is a test, 1234\n";
+    char* line4 = "hello, world , ,  , his, is a test, 1234\n";
+    char* line5 = "hello, world   his, is a test, 1234\n";
+    char* line6 = "hello\n";
+    
+    */
+    START_TEST("run_get_words");
+
+ 
+    words = get_words(line);
+    if (words) {
+        for (i = 0; words[i] != NULL; i++) {
+            if (words[i] != NULL) {
+                printf("|%s|\n", words[i]);
+                free(words[i]);
+            }
+        }
+        free(words);
+    } else {
+        printf("Array is not valid.\n");
+    }
+
+    END_TEST("run_get_words");
+
+}
+
+void run_is_legal_params() {
+    char* line = "hello, world ,this, is ,a ,test, 1234\n";
+    char* line1 = "hello, world this, is a test, 1234  , \n";
+    char* line2 = "  , hello, world this, is a test, 1234\n";
+    char* line3 = "hello, world , , this, is a test, 1234\n";
+    char* line4 = "hello, world , ,  , his, is a test, 1234\n";
+    char* line5 = "hello, world   his, is a test, 1234\n";
+    char* line6 = "hello\n";
+    int test_num;
+    test_num = 0;
+    START_TEST("run_is_legal_params");
+    tester_is_legal_params(line, 1, test_num++);
+    tester_is_legal_params(line6, 1, test_num++);
+    tester_is_legal_params(line1, 0, test_num++);
+    tester_is_legal_params(line2, 0, test_num++);
+    tester_is_legal_params(line3, 0, test_num++);
+    tester_is_legal_params(line4, 0, test_num++);
+    tester_is_legal_params(line5, 0, test_num++);
+    
+
+
+    free(line);
+    free(line1);
+    free(line2);
+    free(line3);
+    free(line4);
+    free(line5);
+    free(line6);
+    END_TEST("run_is_legal_params");
+}
