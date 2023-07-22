@@ -20,12 +20,17 @@ void make_am_name(char* file, char* name){
 File_Config* intialiez_file_config() {
     File_Config* file_config;
     file_config = (File_Config*)malloc(sizeof(File_Config));
+    /*
     file_config->label_head = (Lable_Node*)malloc(sizeof(Lable_Node));
+    
+    */
+
+    file_config->label_head = NULL;
     file_config->ins_head = NULL;
     file_config->ins_tail = file_config->ins_head;
     file_config->data_head = NULL;
     file_config->data_tail = file_config->data_head;
-    file_config->line_num = 1;
+    file_config->curr_line_num = 1;
     file_config->is_valid = 1;
     file_config->DC_counter = 0;
     file_config->IC_counter = 100; 

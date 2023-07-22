@@ -17,7 +17,7 @@ File_Config* first_pass(FILE* am_file) {
 
         if (empty_line(input) || comment_line(input)){continue;}
         handle_new_line(file_config, input);
-        file_config->line_num++;
+        file_config->curr_line_num++;
     }
 
     /*checks if needs to continue process since it might have an error*/
@@ -153,6 +153,8 @@ void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
         set_file_config_DC(file_config, counter);
 }
 
+/*Description: givien a word - check if its legal lable and insert to the lable list if needed*/
+/*Input: file_config for the current file, word to handle, type of the lable*/
 void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type) { 
     int counter_value;
 
@@ -160,17 +162,18 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     if (!(is_valid_lable(file_config->label_head, word))) {
         /*TODO: print the error & line num*/
         /*MAYBE: we need to continou?*/
-
+        printf("!(is_valid_lable\n");
         return;
     }
     /*add to symbol table*/
     counter_value = get_counter_by_type(file_config, symbol_type);
-
-    insert_to_symbol_table(file_config->label_head, word, counter_value, symbol_type);
+    printf("counter_value: %d\n", counter_value);
+    /*TODO: delete the :*/
+    insert_to_symbol_table(&(file_config->label_head), word, counter_value, symbol_type);
 }
 
 
-
+/*TODO: */
 void update_symbol_table_by_IC(File_Config * file_config) {
 
 }

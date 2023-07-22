@@ -5,25 +5,19 @@
 
 void run_tester() 
 {
-    run_return_tests();
-    run_file_config_tests();/*FIX: memory?*/
-    run_first_pass_tests(); /*FIX: memory?*/
-    run_labels_tests();/*FIX: memory?*/
+    run_labels_tests();
     /*
-    run_void_tests();
+    run_return_tests();
+    run_file_config_tests();
+    run_first_pass_tests(); 
+    tests_get_next_word();
     */
+    run_file_config_print();
+  
 }
 
 void run_return_tests() {
-    run_is_lable_testers();
     run_input_testers();
-}
-
-void run_void_tests() {
-    /*
-        tests_get_next_word();
-        run_file_config_print();
-    */
 }
 
 /*strings*/
@@ -149,7 +143,7 @@ void run_file_config_print() {
     START_TEST("print_file_config");
 
     print_file_config(file_config);
-    END_TEST(" ");
+    END_TEST("print_file_config");
 }
 
 void run_file_config_tests() {
@@ -187,10 +181,11 @@ void run_labels_tests() {
     run_labels_new_tests();
     run_labels_set_tests();
     run_labels_get_tests();
+    run_is_lable_testers();
+    run_tests_is_valid_lable();
     /*
     run_tests_is_symbol_already_exist();
-    run_tests_is_valid_lable();
-    
+
     */
 }
 
@@ -212,8 +207,8 @@ void run_labels_set_tests() {
     tester_set_label_types(label_node, symbol_type, test_number++);
     symbol_type = EXTERNALT;
     tester_set_label_types(label_node, symbol_type, test_number++);
-    free_label_node(label_node);
-    END_TEST(" ");
+    free_label_node(&label_node);
+    END_TEST("labels_set_tests");
 }
 
 void run_labels_new_tests() {
@@ -232,7 +227,7 @@ void run_labels_new_tests() {
 
     symbol_type = EXTERNALT;
     tester_new_label_node("hiEXTERNALT", 5, symbol_type, test_number++);
-    END_TEST(" ");
+    END_TEST("labels_new_tests");
 }
 
 void run_labels_get_tests() {
@@ -252,8 +247,8 @@ void run_labels_get_tests() {
     /* TODO:
         tester_label_get_int_fileds(label_node, get_label_is_entry, ,test_number)
     */
-    free_label_node(label_node);
-    END_TEST(" ");
+    free_label_node(&label_node);
+    END_TEST("labels_get_tests");
 }
 
 /*
@@ -312,44 +307,44 @@ void run_tests_is_symbol_already_exist() {
     END_TEST(" ");
 }
 */
-/*
+
 void run_tests_is_valid_lable() {
-    Symbol_Table* table;
+    Lable_Node* head;
     int test_number;
     Symbol_Type symbol_type;
     
     START_TEST("run_tests_is_valid_lable");
 
     test_number = 0;
-    table = intialiez_symbol_table();
-    
-    tester_is_valid_lable(table, "hi:", 1, test_number++);
-    tester_is_valid_lable(table, "hi", 0, test_number++);
-    tester_is_valid_lable(table, "5i", 0, test_number++);
-    tester_is_valid_lable(table, "i555ADMSasjd555:", 1, test_number++);
-    tester_is_valid_lable(table, "A555ADMSasjd555:", 1, test_number++); 
-    tester_is_valid_lable(table, "i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0, test_number++);
-    tester_is_valid_lable(table, "#5i:", 0, test_number++);
-    tester_is_valid_lable(table, "a5$i:", 0, test_number++);
-
+    head = NULL;
+    /*when list empty and only word check*/
+    tester_is_valid_lable(head, "hi:", 1, test_number++);
+    tester_is_valid_lable(head, "hi", 0, test_number++);
+    tester_is_valid_lable(head, "5i", 0, test_number++);
+    tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
+    tester_is_valid_lable(head, "A555ADMSasjd555:", 1, test_number++); 
+    tester_is_valid_lable(head, "i555ADMSasjd555i555ADMSasjd555i555ADMSasjd555:", 0, test_number++);
+    tester_is_valid_lable(head, "#5i:", 0, test_number++);
+    tester_is_valid_lable(head, "a5$i:", 0, test_number++);
 
     symbol_type = DATA;
-    insert_to_symbol_table(table, "hi:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi:", test_number, symbol_type);
 
-    tester_is_valid_lable(table, "hi:", 0, test_number++);
-    tester_is_valid_lable(table, "hi", 0, test_number++);
-    tester_is_valid_lable(table, "i555ADMSasjd555:", 1, test_number++);
+    tester_is_valid_lable(head, "hi:", 0, test_number++);
+    tester_is_valid_lable(head, "hi", 0, test_number++);
+    tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
 
-    insert_to_symbol_table(table, "hi2:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi2:", test_number, symbol_type);
 
-    tester_is_valid_lable(table, "hi:", 0, test_number++);
-    tester_is_valid_lable(table, "hi", 0, test_number++);
-    tester_is_valid_lable(table, "i555ADMSasjd555:", 1, test_number++);
-    tester_is_valid_lable(table, "hi2:", 0, test_number++);
-    free_symbol_table(table);
-    END_TEST(" ");
+    tester_is_valid_lable(head, "hi:", 0, test_number++);
+    tester_is_valid_lable(head, "hi", 0, test_number++);
+    tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
+    tester_is_valid_lable(head, "hi2:", 0, test_number++);
+    
+    free_lable_list(&head);
+    END_TEST("run_tests_is_valid_lable");
 }
-*/
+
 
 
 void run_first_pass_tests(){ 

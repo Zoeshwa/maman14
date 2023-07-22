@@ -41,17 +41,18 @@ void print_file_config(File_Config* file_config) {
         return;
     }
     printf("This is file config print: {\n");
-    printf("\tCounters - DC: %d, IC: %d\n\t", get_DC_counter(file_config), get_IC_counter(file_config));
+    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n\t", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
     printf("\t");
     print_Ins_Node(get_file_ins_head(file_config));
     printf("\t");
+    print_Lable_Node(file_config->label_head);
     printf("}\n");
 
 }
 
 void print_Ins_Node(Ins_Node* ins) {
     if(ins == NULL) {
-        printf("ins is NULL\n");
+        printf("ins=NULL\n");
         return;
     }
     printf("This is Ins_Node print: {\n");
@@ -72,7 +73,8 @@ void print_Lable_Node(Lable_Node* label_node) {
     printf("\tsymbol_type: %d,",label_node->symbol_type);
     printf("\tis_entry: %d,",label_node->is_entry);
     if(label_node->next  != NULL) {
-        printf("\tnext: %s\n", label_node->next->name);
+        printf("\tnext: \n");
+        print_Lable_Node(label_node->next);
     }else {
         printf("\tnext: NULL\n");
     }
@@ -87,7 +89,8 @@ void print_Data_Node(Data_Node* data_node) {
     printf("\tvalue: %d, ",data_node->value);
     printf("\tis_char: %d, \n",data_node->is_char);
     printf("\tDC_counter: %d, \n",data_node->DC_counter);
-    printf("\tnext: %s\n\t", data_node->next->value);
+    printf("\tnext: \n\t", data_node->next->value);
+    print_Data_Node(data_node->next);
     printf("}\n");
 
 } 
@@ -153,7 +156,7 @@ void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
     } else {
         FAIL_PRINT(test_number,1, result);
     }
-    free_label_node(node_result);
+    free_label_node(&node_result);
 }
 
 void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) {

@@ -60,13 +60,6 @@ char* get_next_word(char* word, char* line){
 
 /*TODO: ido parse*/
 
-char* skip_spaces(char* p){
-	while (*p == ' ' || *p == '	'){
-		p++;
-	}
-	return p;
-}
-
 char** parsing(char* p){
     char tmp_element[MAX_LENGTH], **splited, *element;
     int comma_flag, s_index, tmp_index;

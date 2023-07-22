@@ -7,7 +7,7 @@
 
 /*TODO free functions*/
 
-int main(int argc, char* argv[]) {
+int main_original(int argc, char* argv[]) {
 
     int ctr;
 
@@ -80,16 +80,33 @@ int main(int argc, char* argv[]) {
 
         }
 
-    file_config = first_pass(am_file);
-    if (!file_config->is_valid){
-        continue;
-    }
+        file_config = first_pass(am_file);
+        if (!file_config->is_valid){
+            continue;
+        }
 
-     /*TODO: run secound pass*/
+        /*TODO: run secound pass*/
 
     }
     
     
+    return 0;
+}
+
+int main() {
+
+        File_Config* file_config;
+        Symbol_Type symbol_type;
+        run_tester();
+
+        file_config = intialiez_file_config();
+        char * word = "LOOP:";
+        symbol_type = DATA;
+
+        handle_label(file_config, word, symbol_type);
+        print_file_config(file_config);
+    
+
     return 0;
 }
 
