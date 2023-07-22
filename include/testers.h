@@ -59,7 +59,6 @@
 */
     /*tests - run tests*/
     void run_tester();
-    void run_return_tests();
     void run_is_lable_testers();
     void run_input_testers();
     void run_is_external_or_entry_ins_testers();

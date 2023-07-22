@@ -9,17 +9,13 @@ void run_tester()
     run_first_pass_tests(); 
     run_labels_tests();
     run_file_config_print();
+    run_input_testers();
+
     /*
-    run_return_tests();
     run_file_config_tests();
     tests_get_next_word();
     */
   
-}
-
-void run_return_tests() {
-    run_input_testers();
-    run_remove_colon_at_end();
 }
 
 /*strings*/
@@ -249,7 +245,7 @@ void run_labels_set_tests() {
     tester_set_label_types(label_node, symbol_type, test_number++);
     symbol_type = CODE;
     tester_set_label_types(label_node, symbol_type, test_number++);
-    symbol_type = EXTERNALT;
+    symbol_type = EXTERNAL;
     tester_set_label_types(label_node, symbol_type, test_number++);
     free_label_node(&label_node);
     END_TEST("labels_set_tests");
@@ -269,7 +265,7 @@ void run_labels_new_tests() {
     symbol_type = CODE;
     tester_new_label_node("hicode", 7, symbol_type, test_number++);
 
-    symbol_type = EXTERNALT;
+    symbol_type = EXTERNAL;
     tester_new_label_node("hiEXTERNALT", 5, symbol_type, test_number++);
     END_TEST("labels_new_tests");
 }
@@ -331,7 +327,7 @@ void run_tests_is_symbol_already_exist() {
     symbol_type = CODE;
     insert_to_symbol_table(&head, "hi3:", test_number, symbol_type);
     insert_to_symbol_table(&head, "hi4:", test_number, symbol_type);
-    symbol_type = EXTERNALT;
+    symbol_type = EXTERNAL;
     insert_to_symbol_table(&head, "hi5:", test_number, symbol_type);
     insert_to_symbol_table(&head, "hi6:", test_number, symbol_type);
 
@@ -424,11 +420,11 @@ void run_tests_handle_label() {
     /*should not add twice*/
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
     /*should not add twice even if have diffrent type*/
-    symbol_type = EXTERNALT;
+    symbol_type = EXTERNAL;
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
 
 
-    symbol_type = EXTERNALT;
+    symbol_type = EXTERNAL;
     strcpy(good_word1, "sdjkU:");
     insert_to_symbol_table(&(expted_lable_head), "sdjkU", file_config->DC_counter, symbol_type);
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);

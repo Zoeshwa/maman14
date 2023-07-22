@@ -12,10 +12,9 @@
     
     typedef struct Lable_Node {
         char* name;
-        Counter_Type counter_type; /*MAYBE: we dont need?*/
-        int counter_value; /*value of the counter*/
+        int counter_value;
         Symbol_Type symbol_type;
-        int is_entry;  /*MAYBE: TODO*/
+        int is_entry; 
         struct Lable_Node* next;
     } Lable_Node;
 
@@ -25,7 +24,6 @@
     int get_label_counter_value(Lable_Node* new_lable);
     int get_label_is_entry(Lable_Node* new_lable);
     char* get_label_name(Lable_Node* new_lable);
-    Counter_Type get_label_counter_type(Lable_Node* new_lable);
     Symbol_Type get_label_symbol_type(Lable_Node* new_lable);
     Lable_Node* get_label_next(Lable_Node* new_lable);
     

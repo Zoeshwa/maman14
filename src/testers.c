@@ -91,7 +91,6 @@ void print_Lable_Node(Lable_Node* label_node) {
     }
     printf("Lable_Node: ");
     printf("\tname: %s, ",label_node->name);
-    printf("\tcounter_type: %d,",label_node->counter_type);
     printf("\tcounter_value: %d,",label_node->counter_value);
     printf("\tsymbol_type: %d,",label_node->symbol_type);
     printf("\tis_entry: %d,",label_node->is_entry);
@@ -194,17 +193,11 @@ void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) 
 
 void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number) {
     int result;
-    Counter_Type counter_type;
     result = 0;
     set_label_types(new_lable, symbol_type);
 
-    if(symbol_type == DATA) {
-        counter_type = DC;
-    } else {
-        counter_type = IC;
-    }
 
-    if(symbol_type == new_lable->symbol_type && counter_type == new_lable->counter_type) {
+    if(symbol_type == new_lable->symbol_type) {
         result = 1;
     } 
 

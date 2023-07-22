@@ -28,26 +28,18 @@
 
     /*Warnning STR*/
     #define WARNING_LABEL_NOT_USE "WARNING - This label is not use\n"
-
-    typedef enum Counter_Type {
-        DC,
-        IC
-    } Counter_Type;
 /*
     typedef enum Scope_Type {
-        NONE, 
-        ENTRY,
-        EXTERNAL,
-        UNKNOWEN
+        RELOCATABLE,
+        EXTERNAL 
     } Scope_Type;
-    */
 
-    /*MAYBE: is entry should be here? page 19 in symbol table*/
+*/
+
     typedef enum Symbol_Type {
         DATA,
         CODE,
-        EXTERNALT, 
-        ENTRY
+        EXTERNAL
     }Symbol_Type;
 
 #endif

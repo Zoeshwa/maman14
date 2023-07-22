@@ -96,7 +96,7 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
         ptr= skip_spaces(ptr);
         ptr =  ptr + strlen(cur_word);
         /*add the label to the symbol_table*/
-        handle_label(file_config, cur_word, EXTERNALT);
+        handle_label(file_config, cur_word, EXTERNAL);
         number_of_oprends++;
     }
     /*update the cur_ins*/

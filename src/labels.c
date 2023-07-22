@@ -3,7 +3,6 @@
 #include <string.h>
 #include "labels.h"
 
-
 void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
     Lable_Node* new_node = new_label_node(word,counter_value,symbol_type);
@@ -22,6 +21,7 @@ Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
     set_label_name(new_lable, word);
     set_label_types(new_lable, symbol_type);
     new_lable->counter_value = counter_value;
+    new_lable->is_entry = FALSE;
     new_lable->next = NULL;
     return new_lable;
 }
@@ -38,10 +38,6 @@ char* get_label_name(Lable_Node* new_lable) {
     return new_lable->name;
 }
 
-Counter_Type get_label_counter_type(Lable_Node* new_lable) {
-    return new_lable->counter_type;
-}
-
 Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
     return new_lable->symbol_type;
 }
@@ -52,20 +48,16 @@ Lable_Node* get_label_next(Lable_Node* new_lable) {
 
 void set_label_name(Lable_Node* new_lable, char * word) {
     /* Allocate memory for the name and copy the string*/
-    /*TODO: delete the : char in the end*/
     new_lable->name = (char*)malloc((strlen(word) + 1) * sizeof(char));
     strcpy(new_lable->name, word);
 }
 
 void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type) {
     new_lable->symbol_type = symbol_type;
+}
 
-    if(symbol_type == DATA) {
-        new_lable->counter_type = DC;
-    }
-    if(symbol_type == CODE) {
-        new_lable->counter_type = IC;
-    }
+void set_lable_is_entry(Lable_Node* new_lable, int is_entry) {
+    new_lable->is_entry = is_entry;
 }
 
 /*Description: search if a given word is in the lable list*/
