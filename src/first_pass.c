@@ -84,13 +84,11 @@ void handle_new_line(File_Config* file_config, char* line) {
 /*Input: file_config for the current file, line to handle, pointer to the line in the params location*/
 void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     char *ptr, **words;
-    char cur_word[MAX_LEN];
     int  i;
 
     ptr = curr_ptr;
     ptr = skip_spaces(ptr);
 
-    printf("this is curr_ptr: |%s|\n", ptr);
     /*get the params as words array and validate*/
     words = get_words(ptr);
     if(!is_legal_params(ptr)) { /*print error - line num*/
