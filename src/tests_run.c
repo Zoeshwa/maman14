@@ -507,7 +507,9 @@ void run_tests_handle_extern(){
 void run_get_words() {
     char** words;
     int i;
-    char* line = "hello, world ,this, is ,a ,test, 1234\n";
+    char* line;
+    line = (char*)calloc(MAX_LEN, sizeof(char));
+    strcpy(line, "hello, world , , this, is a test, 1234\n");
     /*
     char* line1 = "hello, world this, is a test, 1234  , \n";
     char* line2 = "  , hello, world this, is a test, 1234\n";

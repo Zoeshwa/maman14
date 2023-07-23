@@ -12,6 +12,7 @@
     void parsing(char** results, int* len, char* p);
     int is_legal_params(char *line);
     char** get_words(char *line);
+    char* get_next_word_no_comma(char* word, char* line);
 
 #endif
 

@@ -61,7 +61,7 @@ char* get_next_word(char* word, char* line){
 
 /*Try 2*/
 
-char* get_next_word2(char* word, char* line){
+char* get_next_word_no_comma(char* word, char* line){
     int i=0;
     char * ptr;
     ptr = line; 
@@ -72,7 +72,7 @@ char* get_next_word2(char* word, char* line){
         ptr++;
     }
     word[i] = '\0';
-    return word;
+    return ptr;
 }
 
 char** get_words(char *line) {
@@ -82,19 +82,20 @@ char** get_words(char *line) {
     strcpy(copy_line, line);
     words = (char**)malloc(MAX_LENGTH * sizeof(char*));
     p = copy_line;
+    p = skip_spaces(p);
+
     while (*p != '\0' && *p != EOF && *p != '\n')
     {
-        p = get_next_word2(curr_word, p);
+        p = get_next_word_no_comma(curr_word, p);
         if(curr_word != NULL && strlen(curr_word) > 0) {
             tmp = (char*)malloc((strlen(curr_word)+1) * sizeof(char));
             strcpy(tmp, curr_word);
             words[i++] = tmp;
-            p++;
-        } else {
-            break;
         }
+        p++;
+        p = skip_spaces(p);
     }
-    
+    words[i] = NULL;
     return words;
 }
 
@@ -148,5 +149,3 @@ int is_legal_params(char *line) {
     }
     return TRUE;
 }
-
-
