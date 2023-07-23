@@ -5,11 +5,13 @@
 
 void run_tester() 
 {
+    
+    run_tests_handle_extern();
+    
+    /*
     run_get_words();
     
     run_is_legal_params();
-    
-    /*
     run_is_saved_word();
     run_first_pass_tests(); 
     run_labels_tests();
@@ -487,21 +489,30 @@ void run_parsing() {
 
 
 void run_tests_handle_extern(){
-    /*
+
     File_Config * file_config;
+    char line1[MAX_LEN], line2[MAX_LEN], line3[MAX_LEN];
     file_config = intialiez_file_config();
 
-    char line1[MAX_LEN], line2[MAX_LEN], line3[MAX_LEN];
-    strcpy(line1, ".extern HI, BEY, YES");
-    strcpy(line2, ".extern YOSSI");
-    strcpy(line3, ".extern ZOE, , IDO, YES");
-
+    strcpy(line1, ".extern HI, BEY, YES\n");
+    strcpy(line2, ".extern YOSSI\n");
+    strcpy(line3, ".extern ZOE, , IDO, YES\n");
+    
+    file_config->curr_line_num++;
+    printf("TEST: line1+7= %s\n", line1+7);
     handle_extren_line(file_config, line1, line1+7);
+/*
+    file_config->curr_line_num++;
+    printf("line2+7= %s\n", line2+7);
     handle_extren_line(file_config, line2, line2+7);
+    file_config->curr_line_num++;
+    printf("line3+7= %s\n", line3+7);
     handle_extren_line(file_config, line3, line2+7);
 
-    print_file_config(file_config);
 */
+
+    print_file_config(file_config);
+    free_file_config(file_config);
 }
 
 void run_get_words() {
@@ -547,6 +558,7 @@ void run_is_legal_params() {
     char* line4 = "hello, world , ,  , his, is a test, 1234\n";
     char* line5 = "hello, world   his, is a test, 1234\n";
     char* line6 = "hello\n";
+    char* line7 = " HI, BEY, YES\n";
     int test_num;
     test_num = 0;
     START_TEST("run_is_legal_params");
@@ -557,6 +569,8 @@ void run_is_legal_params() {
     tester_is_legal_params(line3, 0, test_num++);
     tester_is_legal_params(line4, 0, test_num++);
     tester_is_legal_params(line5, 0, test_num++);
+    tester_is_legal_params(line7, 0, test_num++);
+
     
 
 

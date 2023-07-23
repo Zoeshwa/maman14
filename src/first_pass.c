@@ -80,6 +80,8 @@ void handle_new_line(File_Config* file_config, char* line) {
     }
 }
 
+/*Description: Given a command line of type extern - handles the line. That is, it performs validation and, if necessary, enters the symbol table with the appropriate values*/
+/*Input: file_config for the current file, line to handle, pointer to the line in the params location*/
 void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     char *ptr, **words;
     char cur_word[MAX_LEN];
@@ -88,19 +90,19 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     ptr = curr_ptr;
     ptr = skip_spaces(ptr);
 
+    printf("this is curr_ptr: |%s|\n", ptr);
     /*get the params as words array and validate*/
-    words = get_words(line);
-    if(!is_legal_params(line)) {
+    words = get_words(ptr);
+    if(!is_legal_params(ptr)) { /*print error - line num*/
         PRINT_NUM_LINE_ERROR(file_config->curr_line_num);
         file_config->is_valid = FALSE;
     }
 
     /*add to symbol table each label*/
     for(i = 0; words[i] != NULL; i++) {
-        handle_label(file_config, cur_word, EXTERNAL);
+        handle_label(file_config, words[i], EXTERNAL);
     }
 }
-
 
 void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
     /* 

@@ -25,9 +25,9 @@ int is_lable(char* word) {
     ptr = word + strlen(word) - 1; /*go to last char*/
     /*end with : and no spaces before :*/
     if(*ptr != COLON) {
-        return 0; /*return false*/
+        return FALSE;
     }
-    return 1; /*return true*/
+    return TRUE;
 }
 
 void remove_colon_at_end(char* word) {

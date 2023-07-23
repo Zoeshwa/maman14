@@ -114,5 +114,6 @@
     void tester_is_legal_params(char* input, int expected_result, int test_number);
     void run_is_legal_params();
     void run_get_words();
+    void run_tests_handle_extern();
 #endif
 

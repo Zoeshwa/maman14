@@ -93,9 +93,10 @@ int is_valid_lable(Lable_Node* head, char* word){
         return FALSE; 
     }
 
+    /*TODO: this only if the lable is in the first word !is_lable(word)*/
     /*have only max len for labels and end with ":" and no spaces before ":"*/
-    if(strlen(word) > MAX_LABEL_LEN || !is_lable(word)) {
-        printf(ERROR_NOT_VALID_LABEL);
+    if(strlen(word) > MAX_LABEL_LEN) {
+        printf(ERROR_NOT_VALID_LABEL_LEN);
         return FALSE; 
     }
 
