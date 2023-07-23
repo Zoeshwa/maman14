@@ -23,9 +23,8 @@
 #define _FIRST_PASS_HEADER_
 
     File_Config* first_pass(FILE* file);
-    /*hi*/
     void handle_extren_line(File_Config* file_config,  char* line, char* curr_ptr);
-    void handle_code_line(File_Config* file_config,  char* line, char* curr_ptr);
+    void handle_code_line(File_Config* file_config, char* ptr);
     void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr);
     void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type);
     void update_symbol_table_by_IC(File_Config * file_config);

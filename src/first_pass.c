@@ -76,7 +76,7 @@ void handle_new_line(File_Config* file_config, char* line) {
             ptr = skip_spaces(ptr);
         }
 
-        handle_code_line(file_config, line, ptr);
+        handle_code_line(file_config, ptr);
         return ;
     }
 }
@@ -107,11 +107,12 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     /*TODO: add the params also to the ins?*/
 }
 
-void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
-    /* 
-    add_ins_to_list(file_config->ins_head,file_config->IC_counter);
-*/
-        /* TODO*/
+void handle_code_line(File_Config* file_config char *ptr) {
+
+    char* com;
+
+    com = get_next_word(ptr);
+    if ()
         
 }
 

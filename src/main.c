@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
             head_ptr = search_macro_list(head, cur_word);
             if (head_ptr != NULL){
                 printf("found in macro list, writing content to file\n");
-                fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file);
+                if (fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file)<0) {printf("errorr writing to file\n");}
             }
             /* beginning of macro def*/
             else if(strcmp(cur_word,"mcro") == 0){
@@ -76,7 +76,9 @@ int main(int argc, char* argv[]) {
             /* regular line*/
             else{
                 printf("regular line\n");
-                fwrite(input, 1, strlen(input), am_file);
+                if (fwrite(input, 1, strlen(input), am_file)<0){
+                    printf("errorr writing to file\n");
+                    }
             }
 
         }
