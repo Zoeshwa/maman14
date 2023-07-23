@@ -35,7 +35,9 @@ int comment_line(char* line){
     }
 }
 
-/* gets a pointer and moves it forward untill reaches non white char */
+/*Description: gets a pointer and moves it forward untill reaches non white char.*/
+/*Input: pointer to string*/
+/*Output: Returns a pointer to the first non-white character*/
 char* skip_spaces(char* p){
 	while (*p == ' ' || *p == '\t'){
 		p++;
@@ -58,23 +60,30 @@ char* get_next_word(char* word, char* line){
     return word;
 }
 
-
-/*Try 2*/
-
+/*Description: The function extracts from a line the next word in the line and puts it in the word variable.*/
+/*Input: word - the varbiale to store the next word, line - pointer to position in line*/
+/*Output: Returns the pointer to the line at the position after the word*/
 char* get_next_word_no_comma(char* word, char* line){
-    int i=0;
+    int i = 0;
     char * ptr;
-    ptr = line; 
+
+    ptr = line;
+    /*go to the next not space char*/
     ptr = skip_spaces(ptr);
+
+    /*as long the pointer is to a char of a word - store the char in the word*/
     while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t' && *ptr != ','){
         word[i] = *ptr;
         i++;
         ptr++;
     }
-    word[i] = '\0';
-    return ptr;
+    word[i] = '\0'; /*mark the end of the word*/
+    return ptr; /*return the current position in line*/
 }
 
+/*Description: The function extracts the words from the line and returns an array of words. The words are without spaces and without commas.*/
+/*Input: line - pointer to position in line*/
+/*Output: An array of the extracted words*/
 char** get_words(char *line) {
     char copy_line[MAX_LEN], *p, **words, curr_word[MAX_LEN], *tmp;
     int i;
