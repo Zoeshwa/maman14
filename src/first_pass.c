@@ -113,38 +113,33 @@ void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
 void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
      
         /* TODO: 7 in page 18 - handle data ins*/
-        int counter;
-        char cur_word[MAX_LEN];
-        /*
-        char **params;
-        
+        int i, binary_words_counter;
+        char **words, *cur_word;
         Data_Type data_type;
-        */
 
-        counter = get_DC_counter(file_config);
+        binary_words_counter = 0, i = 0;
+        words = get_words(line);
 
-        /*get the the first word*/
-        /*which type of data
+        /*get the the first word (after the lable if if there is one)*/
+        cur_word = words[i];
+        if(is_lable(cur_word)) {
+            cur_word = words[++i];
+        }
+
+        /*check which kind of data type it is*/
         if(is_data_word(cur_word)) {
             data_type = DATA;
         } else {
             data_type = STRING;
         }
-*/
-        /*get the params
-        parsing_ido(params, curr_ptr);
 
-*/
+
         /*TODO: update data table*/
         while (strlen(curr_ptr) > 0)
         {
-            /*TODO: get params from the ins - with comma*/
 
             /*next word*/
-            get_next_word(cur_word, curr_ptr);
-            curr_ptr= skip_spaces(curr_ptr);
-            curr_ptr =  curr_ptr + strlen(cur_word);
-            
+
             /*TODO: validate data*/
 
             /*TODO: convert to int*/
@@ -161,7 +156,7 @@ void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
         /*TODO: update ins*/
 
         /*update DC_counter*/
-        set_file_config_DC(file_config, counter);
+        set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
 }
 
 /*Description: givien a word - check if its legal lable and insert to the lable list if needed*/
