@@ -88,17 +88,17 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     ptr = curr_ptr;
     ptr = skip_spaces(ptr);
 
+    /*get the params as words array and validate*/
+    words = get_words(line);
+    if(!is_legal_params(line)) {
+        PRINT_NUM_LINE_ERROR(file_config->curr_line_num);
+        file_config->is_valid = FALSE;
+    }
+
     /*add to symbol table each label*/
-    /*get the params as words array*/
-    words = (char**)malloc(MAX_LEN * sizeof(char*));
-    
-    /*TODO
-    parsing_ido(words, &len, curr_ptr);
-*/
     for(i = 0; words[i] != NULL; i++) {
         handle_label(file_config, cur_word, EXTERNAL);
     }
-
 }
 
 
@@ -181,7 +181,6 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
 
     insert_to_symbol_table(&(file_config->label_head), word, counter_value, symbol_type);
 }
-
 
 /*TODO: */
 void update_symbol_table_by_IC(File_Config * file_config) {
