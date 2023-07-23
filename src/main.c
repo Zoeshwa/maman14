@@ -73,9 +73,7 @@ int main_original(int argc, char* argv[]) {
             /* regular line*/
             else{
                 printf("regular line\n");
-                if (fwrite(input, 1, strlen(input), am_file)<0){
-                    printf("errorr writing to file\n");
-                }
+                fwrite(input, 1, strlen(input), am_file);
             }
 
         }
