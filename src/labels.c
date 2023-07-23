@@ -81,7 +81,7 @@ Lable_Node* find_lable(Lable_Node* head, char * symbol_name) {
 /*Description: check if a given word is a valid lable*/
 /*Input: a string word (pointer to array of chars)*/
 /*Output: 1 - true, 0- false*/
-int is_valid_lable(Lable_Node* head, char* word){
+int is_valid_lable(Lable_Node* head, char* word, int line_num){
     char * ptr;
     int i;
 
@@ -89,21 +89,21 @@ int is_valid_lable(Lable_Node* head, char* word){
 
     /*starts with A-Z/a-z*/
     if(!IS_UPPERCASE_LETTERS(*ptr) && !IS_LOWERCASE_LETTERS(*ptr)) {
-        printf(ERROR_NOT_VALID_LABEL_CHAR);
+        ERROR_NOT_VALID_LABEL_CHAR(line_num);
         return FALSE; 
     }
 
     /*TODO: this only if the lable is in the first word !is_lable(word)*/
     /*have only max len for labels and end with ":" and no spaces before ":"*/
     if(strlen(word) > MAX_LABEL_LEN) {
-        printf(ERROR_NOT_VALID_LABEL_LEN);
+        ERROR_NOT_VALID_LABEL_LEN(line_num);
         return FALSE; 
     }
 
     /*all othe chars is valid*/
     for(i = 0; i < strlen(word) - 1; i++) {
         if(!is_valid_char(*ptr)){
-            printf(ERROR_NOT_VALID_LABEL_CHAR);
+            ERROR_NOT_VALID_LABEL_CHAR(line_num);
             return FALSE;
         }
         ptr++;
@@ -111,13 +111,13 @@ int is_valid_lable(Lable_Node* head, char* word){
 
     /*there is no other label like this*/
     if(find_lable(head, word) != NULL) {
-        printf(ERROR_LABEL_ALREADY_EXISTS);
+        ERROR_LABEL_ALREADY_EXISTS(line_num);
         return FALSE;
     }
 
     remove_colon_at_end(word);
     if(is_saved_word(word)) {
-        printf(ERROR_LABEL_IS_SAVED_WORD);
+        ERROR_LABEL_IS_SAVED_WORD(line_num);
         return FALSE;
     }
    

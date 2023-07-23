@@ -108,7 +108,7 @@ char** get_words(char *line) {
     return words;
 }
 
-int is_legal_params(char *line) {
+int is_legal_params(char *line, int line_num) {
     char copy_line[MAX_LEN], *p;
     int comma_flag;
     strcpy(copy_line, line);
@@ -119,7 +119,7 @@ int is_legal_params(char *line) {
 
     /*first not space char is comma*/
     if(*p == ',') {
-        printf(ERROR_ILLEGAL_COMMA);
+        ERROR_ILLEGAL_COMMA(line_num);
         return FALSE;
     }
     /*start of the first word*/
@@ -128,7 +128,7 @@ int is_legal_params(char *line) {
     {
         if(*p == ',') {
             if(comma_flag == TRUE) { /*there is more then one comma in a row*/
-                printf(ERROR_MULTIPLE_COMMAS);
+                ERROR_MULTIPLE_COMMAS(line_num);
                 return FALSE;
             } else {
                 if(comma_flag == FALSE) {
@@ -138,7 +138,7 @@ int is_legal_params(char *line) {
             }
         } else if( *p != '\0' && *p != EOF && *p != '\n') {
             if(comma_flag == FALSE) { /*missing a comma*/
-                printf(ERROR_MISSING_COMMA);
+                ERROR_MISSING_COMMA(line_num);
                 return FALSE;
             }
             comma_flag = FALSE;
@@ -152,9 +152,47 @@ int is_legal_params(char *line) {
     if(*p == '\0' || *p == EOF || *p == '\n') {
         /*the final word?*/
         if(comma_flag == TRUE) {
-            printf(ERROR_ILLEGAL_COMMA);
+            ERROR_ILLEGAL_COMMA(line_num);
             return FALSE;
         }
     }
     return TRUE;
+}
+
+
+void free_words(char** words) {
+    int i, num_words;
+    if (words == NULL) {
+        return; /*Nothing to free*/
+    }
+
+    /*Find the number of words by iterating until a NULL pointer is encountered*/
+    num_words = 0;
+    while (words[num_words] != NULL) {
+        num_words++;
+    }
+
+    for (i = 0; i < num_words; i++) {
+        if (words[i] != NULL) {
+            free(words[i]); /* Free each individual string */
+            words[i] = NULL;
+        }
+    }
+
+    free(words); /* Free the array of char pointers*/
+    words = NULL;
+}
+
+int get_len_words_array(char ** words) {
+    int num_words;
+    if (words == NULL) {
+        return 0 ;
+    }
+
+    num_words = 0;
+    while (words[num_words] != NULL) {
+        num_words++;
+    }
+
+    return num_words;
 }

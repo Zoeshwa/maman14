@@ -256,7 +256,7 @@ void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_res
     tmp = (char*)malloc((strlen(word)+1)*sizeof(char));
     strcpy(tmp, word);
     
-    result = is_valid_lable(lable_head, tmp);
+    result = is_valid_lable(lable_head, tmp, test_number);
 
     if (result == expected_result) {
         PASS_PRINT(expected_result);
@@ -394,7 +394,7 @@ int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
 
 void tester_is_legal_params(char* input, int expected_result, int test_number) {
     int result;
-    result = is_legal_params(input);
+    result = is_legal_params(input, test_number);
     if (result == expected_result) {
         PASS_PRINT(expected_result);
     } else {

@@ -91,8 +91,7 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
 
     /*get the params as words array and validate*/
     words = get_words(ptr);
-    if(!is_legal_params(ptr)) { /*print error - line num*/
-        PRINT_NUM_LINE_ERROR(file_config->curr_line_num);
+    if(!is_legal_params(ptr, file_config->curr_line_num)) {
         file_config->is_valid = FALSE;
     }
 
@@ -100,6 +99,8 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     for(i = 0; words[i] != NULL; i++) {
         handle_label(file_config, words[i], EXTERNAL);
     }
+
+    free_words(words);
 }
 
 void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
@@ -111,19 +112,27 @@ void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
 }
 
 void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
-     
-        /* TODO: 7 in page 18 - handle data ins*/
-        int i, binary_words_counter;
+        int i, binary_words_counter, len;
         char **words, *cur_word;
         Data_Type data_type;
 
         binary_words_counter = 0, i = 0;
         words = get_words(line);
+        len = get_len_words_array(words);
+        
+        if(len < 1) {
+            ERROR_GENERAL(file_config->curr_line_num);
+            return;
+        }
 
         /*get the the first word (after the lable if if there is one)*/
         cur_word = words[i];
         if(is_lable(cur_word)) {
             cur_word = words[++i];
+            if(i == len) {
+                ERROR_GENERAL(file_config->curr_line_num);
+                return;
+            }
         }
 
         /*check which kind of data type it is*/
@@ -131,13 +140,22 @@ void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
             data_type = DATA;
         } else {
             data_type = STRING;
+
         }
 
-
-        /*TODO: update data table*/
-        while (strlen(curr_ptr) > 0)
+        if (data_type == STRING)
         {
+            if(i + 1  < len ) {
+                /*error too many params*/
+            }
 
+        } else {
+
+        }
+        
+
+
+      
             /*next word*/
 
             /*TODO: validate data*/
@@ -150,14 +168,14 @@ void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
             number_of_oprends++;
             
             */
-        }
         
 
-        /*TODO: update ins*/
 
         /*update DC_counter*/
         set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
 }
+
+
 
 /*Description: givien a word - check if its legal lable and insert to the lable list if needed*/
 /*Input: file_config for the current file, word to handle, type of the lable*/
@@ -165,8 +183,7 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     int counter_value;
 
     /*validate the starting label*/
-    if (!(is_valid_lable(file_config->label_head, word))) {
-        PRINT_NUM_LINE_ERROR(file_config->curr_line_num);
+    if (!(is_valid_lable(file_config->label_head, word, file_config->curr_line_num))) {
         /*ASK: we need to continou?*/
         return;
     }

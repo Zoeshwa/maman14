@@ -30,7 +30,7 @@
     void set_label_name(Lable_Node* new_lable, char* word);
     void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type);
 
-    int is_valid_lable(Lable_Node* head, char* word);
+    int is_valid_lable(Lable_Node* head, char* word, int line_num);
     Lable_Node* find_lable(Lable_Node* head, char * symbol_name);
 
     void free_lable_list(Lable_Node** head);
