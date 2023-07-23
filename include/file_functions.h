@@ -6,13 +6,12 @@
     #include "Instructions_struct.h"
 #endif
 
+#ifndef _ENUMS_HEADER_
+    #include "enums.h"
+#endif
 
 #ifndef _Data_HEADER_
     #include "Data_struct.h"
-#endif
-
-#ifndef _ENUMS_HEADER_
-    #include "enums.h"
 #endif
 
 #ifndef _FILES_FUNCTIONS_HEADER_
@@ -20,7 +19,7 @@
     void make_am_name(char* file, char* name);
 
     typedef struct File_Config {
-        int line_num;
+        int curr_line_num;
         int is_valid;
         int DC_counter;
         int IC_counter;

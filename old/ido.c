@@ -199,3 +199,134 @@ void insertLable_Node(struct Lable_Node** head, char* name, int counter_value, c
 struct Ins_Node* update_Ins_list(struct Ins_Node* cur_line, char * p, char * input, int IC){
     return NULL;
 }
+
+
+/**/
+
+
+/*TODO: ido parse*/
+
+/*My version*/
+int params_parsing(char** results, int* len, char* p){
+    char curr_word[MAX_LENGTH], *tmp;
+    int results_index, curr_word_index;
+    results_index = 0, curr_word_index = 0;
+
+
+    while (*p != '\n' && *p != '\0' && *p != EOF) { /*till end of line*/
+       /*if its between words - save the space between as a word*/
+       if(*p == ',' || *p == ' ' || *p == '\t') {
+            p = skip_spaces(p);
+            while (*p == ',' || *p == ' ' || *p == '\t')
+            {
+                curr_word[curr_word_index++] = *p;
+                p++;
+                p = skip_spaces(p);
+
+            }
+            if(curr_word_index > 0) {
+                curr_word[curr_word_index] = '\0';
+                tmp = (char*)malloc((strlen(curr_word)+1) * sizeof(char));
+                strcpy(tmp, curr_word);
+                results[results_index++] = tmp; 
+            }
+            curr_word_index = 0;
+            
+       } else { /*there is word - save the the whole word*/
+            while (*p != ',' && *p != ' ' && *p != '\t')
+            {
+                curr_word[curr_word_index++] = *p;
+                p++;
+            }
+            curr_word[curr_word_index] = '\0';
+            tmp = (char*)malloc((strlen(curr_word)+1) * sizeof(char));
+            strcpy(tmp, curr_word);
+            results[results_index++] = tmp; 
+            curr_word_index = 0;
+       }
+    }
+    *len = results_index;
+    results[results_index] = NULL;
+
+    return is_valid_commas_for_params(**results, len);
+}
+
+int is_valid_commas_for_params(char** results, int * len) {
+    char curr_word[MAX_LENGTH], last_word, *p;
+    /*every 2 words have one comma*/
+    
+    /*the final word dont have comma*/
+    p = results[*len-1];
+/*TODO*/
+return 1;
+}
+
+char** parsing_ido(char* p){
+    char tmp_word[MAX_LENGTH], **splited, *element;
+    int comma_flag, s_index, tmp_index;
+    comma_flag=0, s_index=0, tmp_index=0;
+
+    splited = (char**)malloc(MAX_LENGTH * sizeof(char*)); /*alocating for ellements array */
+
+    p = skip_spaces(p);
+    if (*p == ',') { /*if the first char is comma in illegal*/
+        printf("illegal comma\n");
+        comma_flag=1;
+        p++;
+        p = skip_spaces(p);
+    }
+
+    while (*p != '\n' && *p != '\0') { /*till end of line*/
+       
+        printf("cur is:%c\n", *p);
+
+
+        if (*p == ',' && comma_flag){ /*second or more commas in a row*/
+            printf("more than one consecutive commas\n");
+        }
+
+        else if (*p == ',' && !comma_flag){  /*comma after element, save the element in the array*/
+            tmp_word[tmp_index] = '\0';
+            comma_flag=1;
+            element = (char*)malloc((strlen(tmp_word)+1) * sizeof(char));
+            strcpy(element, tmp_word);
+            splited[s_index++] = element; 
+            tmp_index=0;
+            
+            
+            printf("splited[%d] is: |%s|\n", s_index-1, splited[s_index-1]);
+            
+        }
+        else{
+            tmp_word[tmp_index++] = *p; /*middle of an element read*/
+        }
+        p=skip_spaces(p);
+        p++;
+    }
+    splited[s_index] = NULL;
+    return splited;
+
+}
+
+
+int ido_main_for_pars(int argc, char* argv[]) {
+
+    FILE* src_file;
+    char** parsed;
+    char  input[MAX_LENGTH], *file_name;
+    int i;
+    file_name = argv[1];
+    src_file = fopen(file_name, "r");
+    while (fgets(input, MAX_LENGTH, src_file) != NULL) {
+        printf("input is: %s", input);
+        parsed = parsing_ido(input);
+        for(i=0; parsed[i] != NULL;i++){
+            printf("next word is: %s\n", parsed[i]);
+        }
+
+    }
+
+
+    return 0;
+}
+

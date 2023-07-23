@@ -17,7 +17,7 @@ File_Config* first_pass(FILE* am_file) {
 
         if (empty_line(input) || comment_line(input)){continue;}
         handle_new_line(file_config, input);
-        file_config->line_num++;
+        file_config->curr_line_num++;
     }
 
     /*checks if needs to continue process since it might have an error*/
@@ -70,7 +70,6 @@ void handle_new_line(File_Config* file_config, char* line) {
     } else{ /* is instruction*/
         if (is_line_have_symbol) {
             handle_label(file_config, cur_word, CODE);
-
             ptr += strlen(cur_word);
             get_next_word(cur_word, ptr);
             ptr = skip_spaces(ptr);
@@ -81,30 +80,26 @@ void handle_new_line(File_Config* file_config, char* line) {
     }
 }
 
+/*Description: Given a command line of type extern - handles the line. That is, it performs validation and, if necessary, enters the symbol table with the appropriate values*/
+/*Input: file_config for the current file, line to handle, pointer to the line in the params location*/
 void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
-    char * ptr;
-    char cur_word[MAX_LEN];
-    int number_of_oprends;
+    char *ptr, **words;
+    int  i;
 
     ptr = curr_ptr;
-    number_of_oprends = 0;
+    ptr = skip_spaces(ptr);
+
+    /*get the params as words array and validate*/
+    words = get_words(ptr);
+    if(!is_legal_params(ptr)) { /*print error - line num*/
+        PRINT_NUM_LINE_ERROR(file_config->curr_line_num);
+        file_config->is_valid = FALSE;
+    }
 
     /*add to symbol table each label*/
-    while (strlen(ptr) > 0) 
-    {
-        /*TODO: get params from the ins - with comma*/
-        get_next_word(cur_word, ptr);
-        ptr= skip_spaces(ptr);
-        ptr =  ptr + strlen(cur_word);
-        /*add the label to the symbol_table*/
-        handle_label(file_config, cur_word, EXTERNALT);
-        number_of_oprends++;
+    for(i = 0; words[i] != NULL; i++) {
+        handle_label(file_config, words[i], EXTERNAL);
     }
-    /*update the cur_ins*/
-    /* TODO:
-    update_extern_ins(curr_ins, number_of_oprends);
-    */
-    /*TODO: add the params also to the ins?*/
 }
 
 void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
@@ -118,23 +113,33 @@ void handle_code_line(File_Config* file_config, char* line, char* curr_ptr) {
 void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
      
         /* TODO: 7 in page 18 - handle data ins*/
-        int counter;
-        char cur_word[MAX_LEN];
+        int i, binary_words_counter;
+        char **words, *cur_word;
+        Data_Type data_type;
 
-        counter = get_DC_counter(file_config);
+        binary_words_counter = 0, i = 0;
+        words = get_words(line);
 
-       /*which type of data*/
+        /*get the the first word (after the lable if if there is one)*/
+        cur_word = words[i];
+        if(is_lable(cur_word)) {
+            cur_word = words[++i];
+        }
+
+        /*check which kind of data type it is*/
+        if(is_data_word(cur_word)) {
+            data_type = DATA;
+        } else {
+            data_type = STRING;
+        }
+
 
         /*TODO: update data table*/
         while (strlen(curr_ptr) > 0)
         {
-            /*TODO: get params from the ins - with comma*/
 
             /*next word*/
-            get_next_word(cur_word, curr_ptr);
-            curr_ptr= skip_spaces(curr_ptr);
-            curr_ptr =  curr_ptr + strlen(cur_word);
-            
+
             /*TODO: validate data*/
 
             /*TODO: convert to int*/
@@ -151,27 +156,28 @@ void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
         /*TODO: update ins*/
 
         /*update DC_counter*/
-        set_file_config_DC(file_config, counter);
+        set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
 }
 
+/*Description: givien a word - check if its legal lable and insert to the lable list if needed*/
+/*Input: file_config for the current file, word to handle, type of the lable*/
 void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type) { 
     int counter_value;
 
     /*validate the starting label*/
     if (!(is_valid_lable(file_config->label_head, word))) {
-        /*TODO: print the error & line num*/
-        /*MAYBE: we need to continou?*/
-
+        PRINT_NUM_LINE_ERROR(file_config->curr_line_num);
+        /*ASK: we need to continou?*/
         return;
     }
-    /*add to symbol table*/
+    /*add to symbol table - get the counter and remove colon*/
     counter_value = get_counter_by_type(file_config, symbol_type);
+    remove_colon_at_end(word);
 
-    insert_to_symbol_table(file_config->label_head, word, counter_value, symbol_type);
+    insert_to_symbol_table(&(file_config->label_head), word, counter_value, symbol_type);
 }
 
-
-
+/*TODO: */
 void update_symbol_table_by_IC(File_Config * file_config) {
 
 }

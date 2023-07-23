@@ -104,6 +104,8 @@ void set_next_ins(Ins_Node* ins_to_update, Ins_Node* next) {
     ins_to_update->next = next;
 }
 
+
+/*TODO: delete? if the storage lines dont have a node then its not nesseccery*/
 void update_extern_ins(Ins_Node* curr_ins, int num_of_lines) {
     set_encoding_type_ins(curr_ins, 1);
     set_ins_num_of_extra_lines(curr_ins, num_of_lines);
