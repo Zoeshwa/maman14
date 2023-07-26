@@ -2,123 +2,65 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Instructions_struct.h"
+#include "file_functions.h"
 
 
 
 /*List functions*/
 
-/*MAYBE: delete*/
-Ins_Node* intialiez_ins_head() {
+Ins_Node* insert_ins_head() {
     Ins_Node* ins_head;
     ins_head = (Ins_Node*)malloc(sizeof(Ins_Node));
+    ins_head->line_number =0;
+    ins_head->next = NULL;
     return ins_head;
 }
 
 
-/* Function to insert a new Ins_Node at the beginning of the list*/
-void insertIns_Node(struct Ins_Node** head, int IC, int line_num) {
+/* Function to insert a new Ins_Node at the end of the list*/
+Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf) {
     /* Create a new Ins_Node*/
-    struct Ins_Node* newIns_Node = (struct Ins_Node*)malloc(sizeof(struct Ins_Node));
-    /* Allocate memory for the name and copy the string*/
-    newIns_Node->IC_count = IC;
-    newIns_Node->line_number = line_num;
-    newIns_Node->next = NULL;
+    Ins_Node* newIns_Node;
+    newIns_Node = (Ins_Node*)malloc(sizeof(Ins_Node));
 
-    /* If the list is empty, make the new Ins_Node the head of the list*/
-    if (*head == NULL) {
-        *head = newIns_Node;
-    } else {
-        /* Otherwise, insert the new Ins_Node at the beginning*/
-        newIns_Node->next = *head;
-        *head = newIns_Node;
-    }
-}
+    newIns_Node->type = 0;
+    newIns_Node->IC_count = file_conf->IC_counter;
+    (*head)->line_number = file_conf->curr_line_num;
 
-/*TODO:*/
-void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int IC,int line_num) {
-    if (ins_head == NULL) { /*first ins*/
-        insertIns_Node(&ins_head, IC, line_num);
-        curr_ins = ins_head;
-    }
-    else { /* any other ins*/
-        IC += 1;
-        insertIns_Node(&curr_ins, IC, line_num);
-    }
-}
-
-/*Node functions*/
-
-int get_Ins_Node_IC_count(Ins_Node* node) {
-    return node->IC_count;
-}
-
-int get_Ins_Node_line_number(Ins_Node* node) {
-    return node->line_number;
-}
-
-int get_Ins_Node_encoding_type(Ins_Node* node) {
-    return node->encoding_type;
+    (*head)->next = newIns_Node;
+    *head = newIns_Node;
+    return head;
 }
 
 
-int get_Ins_Node_num_of_lines(Ins_Node* node) {
-    return node->num_of_extra_lines;
+void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
+
+    /*TODO: (*head)->ARE*/
+    (*head)->opcode = com.en;
+    (*head)->operrands[0] = param_type[0];
+    (*head)->operrands[1] = param_type[1];
+    (*head)->next = NULL;
 }
 
 
-
-Ins_Node* get_Ins_Node_next(Ins_Node* node) {
-    return node->next;
-}
+/*
 
 
-void set_IC_ins(Ins_Node* ins_to_update, int IC_count) {
-    ins_to_update->IC_count = IC_count;
-}
-
-void set_line_number_ins(Ins_Node* ins_to_update, int line_number) {
-    ins_to_update->line_number = line_number;
-}
-
-void set_encoding_type_ins(Ins_Node* ins_to_update, int encoding_type) {
-    ins_to_update->encoding_type = encoding_type;
-}
-
-void set_opcode_ins(Ins_Node* ins_to_update, int opcode) {
-    ins_to_update->opcode = opcode;
-}
-
-/*TODO: set params*/
-void set_ins_params() {
-
-}
-
-void set_ins_num_of_extra_lines(Ins_Node* ins_to_update, int num_of_extra_lines) {
-    ins_to_update->num_of_extra_lines = num_of_extra_lines;
-}
-
-
-
-
-void set_next_ins(Ins_Node* ins_to_update, Ins_Node* next) {
-    ins_to_update->next = next;
-}
-
-
-/*TODO: delete? if the storage lines dont have a node then its not nesseccery*/
+TODO: delete? if the storage lines dont have a node then its not nesseccery
 void update_extern_ins(Ins_Node* curr_ins, int num_of_lines) {
     set_encoding_type_ins(curr_ins, 1);
     set_ins_num_of_extra_lines(curr_ins, num_of_lines);
-    /*TODO: what else to update? opcode? params?*/
+    TODO: what else to update? opcode? params?
 
 }
 
 
 void free_ins_node(Ins_Node* node) {
-    /*TODO: FIX*/
+    TODO: FIX
     if(get_Ins_Node_next(node) != NULL) {
         free_ins_node(get_Ins_Node_next(node));
     }
     free(node);
 }
 
+*/

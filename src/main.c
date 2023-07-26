@@ -93,10 +93,41 @@ int main_original(int argc, char* argv[]) {
     return 0;
 }
 
-int main(int argc, char* argv[]) {
-
-    run_tester();
-
-    return 0;
+void print_ins_node(Ins_Node* head){
+    printf("type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
 }
 
+   int type;
+        int IC_count; 
+        int line_number; 
+        int ARE;
+        int opcode; 
+        int operrands[2];
+        char lable[MAX_LABLE_LEN]; /*for when adding extra ins line representing a lable param */
+        struct Ins_Node* next;
+
+
+int main(){
+    File_Config* file_conf;
+    FILE* am_file;
+    Ins_Node* test_ptr;
+    char input[MAX_LEN];
+
+    am_file = fopen("assembly.am","r");
+    file_conf = intialiez_file_config();
+
+    while (fgets(input, MAX_LEN, am_file) != NULL){  
+        printf("input is: %s\n", input)  ;
+        handle_code_line(file_conf, input);
+        print_ins_node(file_conf->ins_tail);
+
+    }
+
+    test_ptr = file_conf->ins_head;
+    while (test_ptr != NULL){
+        print_ins_node(test_ptr);
+        test_ptr = test_ptr->next;
+    }
+    return 0;
+
+}
