@@ -16,7 +16,7 @@ File_Config* intialiez_file_config() {
     file_config->ins_head = insert_ins_head();
     file_config->ins_tail = file_config->ins_head;
 
-    file_config->data_head = insert_data_head();
+    file_config->data_head = NULL;
     file_config->data_tail = file_config->data_head;
 
     file_config->curr_line_num = 1;

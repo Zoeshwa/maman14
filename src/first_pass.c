@@ -358,6 +358,7 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
     if(len < 1) {
         /*TODO: more spacipic*/
         ERROR_GENERAL(curr_line_num);
+        update_validity_file_config(&file_config, FALSE);
         return;
     }
 
@@ -366,18 +367,21 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
     if(is_lable(cur_word)) {
         cur_word = words[++i];
         if(i == len) {
-            /*TODO: more spacipic*/
+            /*TODO: more spacipic - there is none params - is it an error?*/
             ERROR_GENERAL(curr_line_num);
+            update_validity_file_config(&file_config, FALSE);
             return;
         }
     }
-
+    
     /*check the commas between params and update validity of the file*/
     update_validity_file_config(&file_config, is_legal_params(ptr, curr_line_num));
 
+    ++i; /*index of current words is the first param*/
+
     /*check which kind of data type it is*/
     if(is_data_word(cur_word)) {
-        /*TODO: handle int_store*/
+        binary_words_counter = handle_data_int_store(file_config, words, len, i);
     } else {
         binary_words_counter = handle_data_string_store(file_config, words, len, i);
     }
@@ -389,6 +393,30 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
 
 }
 
+
+int handle_data_int_store(File_Config* file_config, char **words, int len, int curr_index) {
+    char *curr_word;
+    int curr_line_num, num_of_params, curr_number;
+    num_of_params = 0;
+
+    curr_line_num = get_curr_line_number(file_config);
+
+    /*for each param - validate and insert to the data list*/
+    for(; curr_index < len; curr_index++) {
+        curr_word = words[curr_index];
+        if(!is_valid_int_param(curr_word, curr_line_num)) {
+            update_validity_file_config(&file_config, FALSE);
+            continue;
+        }
+        /*add to data list as a node*/
+        curr_number = get_number(curr_word);
+        add_data_node(&(file_config->data_head) ,&(file_config->data_tail), curr_number, DATA);
+        num_of_params++;
+    }
+
+    return num_of_params;
+}
+
 int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index) {
     char *curr_word, *curr_char;
     int curr_line_num, num_of_chars, i;
@@ -396,14 +424,14 @@ int handle_data_string_store(File_Config* file_config, char **words, int len, in
 
     curr_line_num = get_curr_line_number(file_config);
 
-    if(curr_index + 1  < len ) { /*if there is more then one param its not valid*/
+    if(curr_index + 1 > len ) { /*if there is more then one param its not valid*/
         ERROR_MULTIPLE_ARGUMENTS(curr_line_num);
         update_validity_file_config(&file_config, FALSE);
         /*ASK - do i continue?*/
     }
 
     curr_word = words[curr_index];
-
+    
     if(!is_valid_string_param(curr_word, curr_line_num)){
         update_validity_file_config(&file_config, FALSE);
         /*ASK - do i continue?*/
@@ -411,8 +439,9 @@ int handle_data_string_store(File_Config* file_config, char **words, int len, in
     
     /*insert each char to the data list*/
     curr_char = curr_word;
-    for(i = 0; i < strlen(curr_word); i++) {
-        if((i == 0 || i == strlen(curr_word) - 1) && *curr_char == ":") {
+    for(i = 0; i < strlen(curr_word); i++, curr_char++) {
+        /*skip the quotes in the sides of the word*/
+        if((i == 0 || i == (strlen(curr_word) - 1)) && (*curr_char == '\"')) {
             continue;
         }
         add_data_node(&(file_config->data_head) ,&(file_config->data_tail),*curr_char, STRING);

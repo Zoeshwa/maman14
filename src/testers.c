@@ -107,13 +107,17 @@ void print_Data_Node(Data_Node* data_node) {
         printf("Data_Node is NULL\n");
         return;
     }
-    printf("\tThis is Data_Node print:{\n");
-    printf("\tvalue: %d, ",data_node->value);
-    printf("\tDC_counter: %d, \n",data_node->DC_counter);
-    printf("\tnext: \n\t", data_node->next->value);
-    print_Data_Node(data_node->next);
-    printf("}\n");
 
+    printf("DATA NODE:");
+    if(get_data_node_type(data_node) == STRING) {
+        printf("\tvalue: %c, ", get_data_node_value(data_node));
+        printf("\ttype: STRING, ");
+    } else {
+        printf("\tvalue: %d, ", get_data_node_value(data_node));
+        printf("\ttype: DATA, ");
+    }
+    printf("\tDC_counter: %d \n",get_data_node_DC_counter(data_node));
+    print_Data_Node(get_data_node_next(data_node));
 } 
 
 /*files testers*/

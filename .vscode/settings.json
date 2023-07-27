@@ -15,6 +15,7 @@
         "enums.h": "c",
         "compare": "c",
         "limits": "c",
-        "new": "c"
+        "new": "c",
+        "ctype.h": "c"
     }
 }

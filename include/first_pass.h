@@ -28,5 +28,8 @@
     void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type);
     void update_symbol_table_by_IC(File_Config * file_config);
     void handle_new_line(File_Config* file_config, char* line);
+
+    int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index);
+    int handle_data_int_store(File_Config* file_config, char **words, int len, int curr_index);
 #endif
 

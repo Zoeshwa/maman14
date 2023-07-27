@@ -6,9 +6,9 @@
 void run_tester() 
 {
     
-    run_tests_handle_extern();
-    
+    run_is_valid_quotes();
     /*
+    run_tests_handle_extern();
     run_get_words();
     
     run_is_legal_params();
@@ -586,4 +586,37 @@ void run_is_visible_chars_only() {
     tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
     tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
 
+}
+
+/*TODO*/
+void run_handle_string_store() {
+    File_Config* file_conf;
+    char input[MAX_LEN] = "LABEL: .string \"zoe\" ";
+    /*
+    char input[MAX_LEN] = ".string \"zoe\" ";
+    char input[MAX_LEN] = "LABEL: .string \"zoe\", \"hi\" ";
+    char input[MAX_LEN] = "LABEL: .string zoe ";
+    */
+
+    file_conf = intialiez_file_config();
+
+    printf("input is: %s\n", input)  ;
+    handle_data_ins(file_conf, input, input+14);
+    
+    printf("Validity of file: %d\n", file_conf->is_valid);
+    print_Data_Node(file_conf->data_head);
+}
+
+void run_is_valid_quotes() 
+{
+    int i;
+    i = 0;
+    START_TEST("run_is_valid_quotes");
+    tester_O_int_I_charP(is_valid_quotes, "\"zoe\"", 1, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"zoe shwartz\"", 1, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"5i", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "5i\"", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "5\"i", 0, i++);
+
+    END_TEST("run_is_valid_quotes");
 }

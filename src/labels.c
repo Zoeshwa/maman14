@@ -102,7 +102,7 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
 
     /*all othe chars is valid*/
     for(i = 0; i < strlen(word) - 1; i++) {
-        if(!is_valid_char(*ptr)){
+        if(!is_letter_or_num_char(*ptr)){
             ERROR_NOT_VALID_LABEL_CHAR(line_num);
             return FALSE;
         }

@@ -123,9 +123,12 @@ int is_legal_params(char *line, int line_num) {
     if (empty_line(line)){
         return 1;
     }
+    printf("copy_line|%s|\n", copy_line);
+    printf("|%s|\n", p);
     
     /*first not space char is comma*/
     if(*p == ',') {
+        printf("1\n");
         ERROR_ILLEGAL_COMMA(line_num);
         return FALSE;
     }
@@ -159,6 +162,7 @@ int is_legal_params(char *line, int line_num) {
     if(*p == '\0' || *p == EOF || *p == '\n') {
         /*the final word?*/
         if(comma_flag == TRUE) {
+            printf("2\n");
             ERROR_ILLEGAL_COMMA(line_num);
             return FALSE;
         }
@@ -191,6 +195,9 @@ void free_words(char** words) {
     words = NULL;
 }
 
+/*Description: The function returns how many words there are in an array of words*/
+/*Input: an array of words*/
+/*Output: number of words in the array*/
 int get_len_words_array(char ** words) {
     int num_words;
     if (words == NULL) {
@@ -201,6 +208,5 @@ int get_len_words_array(char ** words) {
     while (words[num_words] != NULL) {
         num_words++;
     }
-
     return num_words;
 }

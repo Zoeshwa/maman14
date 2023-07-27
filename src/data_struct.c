@@ -54,6 +54,10 @@ void add_data_node(Data_Node** head, Data_Node** tail, int value, Data_Type data
 }
 
 
+int get_data_node_type(Data_Node* node) {
+    return node->data_type;
+}
+
 int get_data_node_value(Data_Node* node) {
     return node->value;
 }

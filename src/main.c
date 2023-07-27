@@ -62,26 +62,16 @@ int main_original(int argc, char* argv[]) {
 
 int main(){
     File_Config* file_conf;
-    FILE* am_file;
-    Ins_Node* test_ptr;
-    char input[MAX_LEN];
+    char input[MAX_LEN] = "LABEL: .data 1, 25, -8, +78, 0, -100 ";
 
-    am_file = fopen("assembly.am","r");
     file_conf = intialiez_file_config();
 
-    while (fgets(input, MAX_LEN, am_file) != NULL){  
-        printf("input is: %s\n", input)  ;
-        handle_code_line(file_conf, input);
-        file_conf->curr_line_num += 1;
-        print_ins_node(file_conf->ins_tail);
+    printf("input is: %s\n", input)  ;
+    handle_data_ins(file_conf, input, input+12);
+    
+    printf("Validity of file: %d\n", file_conf->is_valid);
+    print_Data_Node(file_conf->data_head);
 
-    }
-
-    test_ptr = file_conf->ins_head;
-    while (test_ptr != NULL){
-        print_ins_node(test_ptr);
-        test_ptr = test_ptr->next;
-    }
     return 0;
 
 }

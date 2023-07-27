@@ -48,6 +48,7 @@
     int get_IC_counter(File_Config* file_config);
     Ins_Node* get_file_ins_head(File_Config* file_config);
     Data_Node* get_data_node_tail(File_Config* file_config);
+    int get_curr_line_number(File_Config* file_config);
 
     void set_file_config_DC(File_Config* file_config,int DC_counter);
     void set_file_config_IC(File_Config* file_config,int IC_counter);

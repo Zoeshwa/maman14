@@ -51,12 +51,17 @@
     void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number);
     void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number);
     void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number);
-/*
+
+
+    /*print functions*/
+    /*
+    print functions
     void print_Ins_Node(Ins_Node* ins);
     void print_Lable_Node(Lable_Node* label_node);
+    */
     void print_Data_Node(Data_Node* data_node);
 
-*/
+
     /*tests - run tests*/
     void run_tester();
     void run_is_lable_testers();
@@ -115,5 +120,6 @@
     void run_is_legal_params();
     void run_get_words();
     void run_tests_handle_extern();
+    void run_is_valid_quotes();
 #endif
 
