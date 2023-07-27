@@ -3,18 +3,8 @@
 #include <string.h>
 #include "file_functions.h"
 
-void make_am_name(char* file, char* name){
-    int i =0;
-    while (*file != '.'){
-         name[i] = *file;
-         i++;
-         file++;
-    }
-    name[i++] = '.';
-    name[i++] = 'a';
-    name[i++] = 'm';
-    name[i] = '\0';
-}
+
+
 
 
 File_Config* intialiez_file_config() {
@@ -22,15 +12,22 @@ File_Config* intialiez_file_config() {
     printf("in intialiez_file_config()\n");
     file_config = (File_Config*)malloc(sizeof(File_Config));
     file_config->label_head = NULL;
+
     file_config->ins_head = insert_ins_head();
     file_config->ins_tail = file_config->ins_head;
-    file_config->data_head = NULL;
+
+    file_config->data_head = insert_data_head();
     file_config->data_tail = file_config->data_head;
+
     file_config->curr_line_num = 1;
     file_config->is_valid = 1;
     file_config->DC_counter = 0;
     file_config->IC_counter = 100; 
     return file_config;
+}
+
+int get_curr_line_number(File_Config* file_config){
+    return file_config->curr_line_num;
 }
 
 int get_counter_by_type(File_Config* file_config, Symbol_Type symbol_type) {
@@ -68,6 +65,10 @@ Ins_Node* get_file_ins_head(File_Config* file_config) {
     return file_config->ins_head;
 }
 
+Data_Node* get_data_node_tail(File_Config* file_config) {
+    return file_config->data_tail;
+}
+
 /*MAYBE: pass only how many to add?*/
 void set_file_config_DC(File_Config* file_config,int DC_counter) {
     file_config->DC_counter = DC_counter; 
@@ -78,6 +79,11 @@ void set_file_config_IC(File_Config* file_config,int IC_counter) {
     file_config->IC_counter = IC_counter; 
 }
 
+void update_validity_file_config(File_Config** file_config, int validity) {
+    if(validity == FALSE) {
+        (*file_config)->is_valid = FALSE;
+    }
+}
 
 /*TODO: update */
 void free_file_config(File_Config* file_config) {
@@ -88,3 +94,20 @@ void free_file_config(File_Config* file_config) {
 
     free(file_config);
 }
+
+
+
+void make_am_name(char* file, char* name){
+    int i =0;
+    while (*file != '.'){
+         name[i] = *file;
+         i++;
+         file++;
+    }
+    name[i++] = '.';
+    name[i++] = 'a';
+    name[i++] = 'm';
+    name[i] = '\0';
+}
+
+

@@ -27,6 +27,8 @@
 
     /*data errors*/
     #define ERROR_MULTIPLE_ARGUMENTS(curr_line_num) printf("ERROR in line %d: Too many arguments\n", curr_line_num)
+    #define ERROR_INVALID_CHARS(curr_line_num) printf("ERROR in line %d: The string contains invalid characters\n", curr_line_num)
+    #define ERROR_INVALID_QUOTES(curr_line_num) printf("ERROR in line %d: The string must be enclosed in double quotes\n", curr_line_num)
 
     /*Warnning STR*/
     #define WARNING_LABEL_NOT_USE(curr_line_num) printf("WARNING in line %d: This label is not use\n", curr_line_num)

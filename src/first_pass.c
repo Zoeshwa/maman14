@@ -5,9 +5,8 @@
 #include "first_pass.h"
 #define NUM_OF_COM 16
 
-
 /*MAYBE*/
-enum{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP,SKIP};
+enum{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP};
 enum{NONE, IMM, DIR, REG_DIR, ERR};
 
 /*MAYBE: ido need to ask in the forum*/
@@ -345,67 +344,86 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
 }
 
-void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
-        int i, binary_words_counter, len;
-        char **words, *cur_word;
-        Data_Type data_type;
+void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
+    int i, binary_words_counter, len, curr_line_num;
+    char **words, *cur_word;
 
-        binary_words_counter = 0, i = 0;
-        words = get_words(line);
-        len = get_len_words_array(words);
-        
-        if(len < 1) {
-            ERROR_GENERAL(file_config->curr_line_num);
+    curr_line_num = get_curr_line_number(file_config);
+
+    binary_words_counter = 0, i = 0;
+    /*get array of the words in the line*/
+    words = get_words(line);
+    len = get_len_words_array(words);
+
+    if(len < 1) {
+        /*TODO: more spacipic*/
+        ERROR_GENERAL(curr_line_num);
+        return;
+    }
+
+    /*get the the first word (after the lable ifthere is one)*/
+    cur_word = words[i];
+    if(is_lable(cur_word)) {
+        cur_word = words[++i];
+        if(i == len) {
+            /*TODO: more spacipic*/
+            ERROR_GENERAL(curr_line_num);
             return;
         }
+    }
 
-        /*get the the first word (after the lable if if there is one)*/
-        cur_word = words[i];
-        if(is_lable(cur_word)) {
-            cur_word = words[++i];
-            if(i == len) {
-                ERROR_GENERAL(file_config->curr_line_num);
-                return;
-            }
+    /*check the commas between params and update validity of the file*/
+    update_validity_file_config(&file_config, is_legal_params(ptr, curr_line_num));
+
+    /*check which kind of data type it is*/
+    if(is_data_word(cur_word)) {
+        /*TODO: handle int_store*/
+    } else {
+        binary_words_counter = handle_data_string_store(file_config, words, len, i);
+    }
+
+    /*update DC_counter
+    set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
+    */
+   /*TODO: free the words array*/
+
+}
+
+int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index) {
+    char *curr_word, *curr_char;
+    int curr_line_num, num_of_chars, i;
+    num_of_chars = 0;
+
+    curr_line_num = get_curr_line_number(file_config);
+
+    if(curr_index + 1  < len ) { /*if there is more then one param its not valid*/
+        ERROR_MULTIPLE_ARGUMENTS(curr_line_num);
+        update_validity_file_config(&file_config, FALSE);
+        /*ASK - do i continue?*/
+    }
+
+    curr_word = words[curr_index];
+
+    if(!is_valid_string_param(curr_word, curr_line_num)){
+        update_validity_file_config(&file_config, FALSE);
+        /*ASK - do i continue?*/
+    }
+    
+    /*insert each char to the data list*/
+    curr_char = curr_word;
+    for(i = 0; i < strlen(curr_word); i++) {
+        if((i == 0 || i == strlen(curr_word) - 1) && *curr_char == ":") {
+            continue;
         }
+        add_data_node(&(file_config->data_head) ,&(file_config->data_tail),*curr_char, STRING);
+        num_of_chars++;
+    }
 
-        /*check which kind of data type it is*/
-        if(is_data_word(cur_word)) {
-            data_type = DATA;
-        } else {
-            data_type = STRING;
-        }
+    /*insert the end of the string char*/
+    add_data_node(&(file_config->data_head) ,&(file_config->data_tail),'\0', STRING);
+    num_of_chars++;
 
-        if (data_type == STRING)
-        {
-            if(i + 1  < len ) {
-                ERROR_MULTIPLE_ARGUMENTS(file_config->curr_line_num);
-            }
-
-        } else {
-
-        }
-        
-
-
-      
-            /*next word*/
-
-            /*TODO: validate data*/
-
-            /*TODO: convert to int*/
-
-            /*add to DATA table TODO: value set
-            counter += number_of_oprends;
-            add_data_node_to_table(file_config->data_table, value, is_char, counter);
-            number_of_oprends++;
-            
-            */
-        
-
-
-        /*update DC_counter*/
-        set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
+    return num_of_chars;
 }
 
 /*Description: givien a word - check if its legal lable and insert to the lable list if needed*/

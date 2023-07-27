@@ -33,7 +33,7 @@
         Data_Node* data_tail;
 
     }File_Config;
-
+    
     void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]);
     Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf);
     Ins_Node* insert_ins_head();
@@ -47,9 +47,11 @@
     int get_DC_counter(File_Config* file_config);
     int get_IC_counter(File_Config* file_config);
     Ins_Node* get_file_ins_head(File_Config* file_config);
+    Data_Node* get_data_node_tail(File_Config* file_config);
 
     void set_file_config_DC(File_Config* file_config,int DC_counter);
     void set_file_config_IC(File_Config* file_config,int IC_counter);
+    void update_validity_file_config(File_Config** file_config, int validity);
 
     void free_file_config(File_Config* file_config);
 #endif

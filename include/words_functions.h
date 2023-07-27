@@ -21,7 +21,7 @@
     int is_type_ins(int (*function)(char*), char* input);
     int is_extern_word(char* cur_word);
     int is_entry_word(char* cur_word);
-    int is_string_word(char* cur_word);
+    int is_word_equals_string(char* cur_word);
     int is_data_word(char* cur_word);
     int is_lable(char* word);
     int is_type_storge_string_ins(char * input);
@@ -34,6 +34,7 @@
     int is_space(char c);
     int is_number_char(char c);
     int get_number(char* p);
+    int is_valid_string_param(char * word, int line_number);
 
 #endif
 

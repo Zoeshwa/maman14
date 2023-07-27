@@ -26,9 +26,47 @@ int is_visible_chars_only(char * input) {
         if(*curr_char < 33 || *curr_char > 126) { /*if current char is not visible char*/
             return FALSE;
         }
-        *curr_char++;
+        curr_char++;
     }
     return TRUE; 
+}
+
+int is_valid_quotes(char * word) {
+    char * curr_char;
+
+    curr_char = word;
+
+    if(*curr_char != ':') {
+        return FALSE;
+    }
+
+    curr_char++;
+
+    while(*curr_char != EOF && *curr_char != '\0'){
+        curr_char++;
+    }
+
+    if(*(curr_char - 1) != ':') {
+        return FALSE;
+    }
+    return TRUE; 
+}
+
+int is_valid_string_param(char * word, int line_number) {
+    int is_valid;
+    is_valid = TRUE;
+
+    if(!is_visible_chars_only(word)){
+        ERROR_INVALID_CHARS(line_number);
+        is_valid = FALSE;
+    }
+
+    if(!is_valid_quotes(word)) {
+        ERROR_INVALID_CHARS(line_number);
+        is_valid = FALSE;
+    }
+
+    return is_valid;
 }
 
 /*Description: check if a given word is a lable - end with ":"*/
@@ -68,11 +106,11 @@ int is_extern_word(char* cur_word) {
 }
 
 int is_data_storage_ins(char * input) {
-    return (is_type_ins(is_data_word, input) || is_type_ins(is_string_word, input));
+    return (is_type_ins(is_data_word, input) || is_type_ins(is_word_equals_string, input));
 }
 
 int is_type_storge_string_ins(char * input) {
-    return is_type_ins(is_string_word, input);
+    return is_type_ins(is_word_equals_string, input);
 }
 
 int is_extern_ins(char* input) {
@@ -118,7 +156,7 @@ int is_data_word(char* cur_word) {
     }
 }
 
-int is_string_word(char* cur_word) {
+int is_word_equals_string(char* cur_word) {
     if(strcmp(cur_word, ".string") == 0) {
         return TRUE;
     } else {
@@ -201,7 +239,6 @@ int is_number_char(char c){
 		return 1;
 	return 0;
 }
-
 
 /* gets a pointer to a number or a '-' and reads the next chars to from the number as a double */
 int get_number(char* p){
