@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "words_functions.h"
 
 int is_Ins(char* word){
@@ -15,6 +16,20 @@ int is_valid_char(char c){
     return 0;
 }
 
+int is_visible_chars_only(char * input) {
+    char * curr_char;
+
+    curr_char = input;
+
+    while(*curr_char != EOF && *curr_char != '\0'){
+        /*TODO: need to fix and understand which is not visible chars*/
+        if(*curr_char < 33 || *curr_char > 126) { /*if current char is not visible char*/
+            return FALSE;
+        }
+        *curr_char++;
+    }
+    return TRUE; 
+}
 
 /*Description: check if a given word is a lable - end with ":"*/
 /*Input: a string word (pointer to array of chars)*/
@@ -110,7 +125,6 @@ int is_string_word(char* cur_word) {
         return FALSE;
     }
 }
-
 
 /* Function to get the array of saved words and the number of elements in the array */
 void get_saved_words(const char*** saved_words, int* num_saved_words) {

@@ -6,20 +6,25 @@
     #define TRUE 1
     #define FALSE 0
 
-    #define PRINT_NUM_LINE_ERROR(line_num) printf("The Error in line %d\n", line_num)
-
     /*ERROR STR*/
-    #define ERROR_NOT_VALID_LABEL_LEN "ERROR - not a valid lable - Exceeds size limit\n"
-    #define ERROR_NOT_VALID_LABEL_CHAR "ERROR - not a valid lable - There is an invalid character\n"
-    #define ERROR_LABEL_ALREADY_EXISTS "ERROR - not a valid lable - The label already exists\n"
-    #define ERROR_LABEL_IS_SAVED_WORD "ERROR - not a valid lable - Using a reserved word as a label\n"
+    #define ERROR_GENERAL(curr_line_num) printf("ERROR in line %d: Something went worng\n", curr_line_num)
 
-    #define ERROR_ILLEGAL_COMMA "ERROR - Comma in illegal place\n"
-    #define ERROR_MISSING_COMMA "ERROR - missing a comma\n"
-    #define ERROR_MULTIPLE_COMMAS "ERROR - There are too many commas\n"
+    /*labels errors*/
+    #define ERROR_NOT_VALID_LABEL_CHAR(curr_line_num) printf("ERROR in line %d: not a valid lable - There is an invalid character\n", curr_line_num)
+    #define ERROR_LABEL_ALREADY_EXISTS(curr_line_num) printf("ERROR in line %d: not a valid lable - The label already exists\n", curr_line_num)
+    #define ERROR_LABEL_IS_SAVED_WORD(curr_line_num) printf("ERROR in line %d: not a valid lable - Using a reserved word as a label\n", curr_line_num)
+    #define ERROR_NOT_VALID_LABEL_LEN(curr_line_num) printf("ERROR in line %d: Invalid label length\n", curr_line_num)
+
+    /*commas errors*/
+    #define ERROR_ILLEGAL_COMMA(curr_line_num) printf("ERROR in line %d: Comma in illegal place\n", curr_line_num)
+    #define ERROR_MISSING_COMMA(curr_line_num) printf("ERROR in line %d: missing a comma\n", curr_line_num)
+    #define ERROR_MULTIPLE_COMMAS(curr_line_num) printf("ERROR in line %d: There are too many commas\n", curr_line_num)
+
+    /*data errors*/
+    #define ERROR_MULTIPLE_ARGUMENTS(curr_line_num) printf("ERROR in line %d: Too many arguments\n", curr_line_num)
 
     /*Warnning STR*/
-    #define WARNING_LABEL_NOT_USE "WARNING - This label is not use\n"
+    #define WARNING_LABEL_NOT_USE(curr_line_num) printf("WARNING in line %d: This label is not use\n", curr_line_num)
 /*
     typedef enum Scope_Type {
         RELOCATABLE,

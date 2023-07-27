@@ -9,10 +9,11 @@
     char* skip_spaces(char* p);
     char* get_next_word(char* word, char* line);
 
-    void parsing(char** results, int* len, char* p);
-    int is_legal_params(char *line);
+    int is_legal_params(char *line, int line_num);
     char** get_words(char *line);
     char* get_next_word_no_comma(char* word, char* line);
+    void free_words(char** words);
+    int get_len_words_array(char ** words);
 
 #endif
 

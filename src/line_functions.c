@@ -35,7 +35,9 @@ int comment_line(char* line){
     }
 }
 
-/* gets a pointer and moves it forward untill reaches non white char */
+/*Description: gets a pointer and moves it forward untill reaches non white char.*/
+/*Input: pointer to string*/
+/*Output: Returns a pointer to the first non-white character*/
 char* skip_spaces(char* p){
 	while (*p == ' ' || *p == '\t'){
 		p++;
@@ -58,23 +60,28 @@ char* get_next_word(char* word, char* line){
     return word;
 }
 
-
-/*Try 2*/
-
+/*Description: The function extracts from a line the next word in the line and puts it in the word variable.*/
+/*Input: word - the varbiale to store the next word, line - pointer to position in line*/
+/*Output: Returns the pointer to the line at the position after the word*/
 char* get_next_word_no_comma(char* word, char* line){
-    int i=0;
+    int i = 0;
     char * ptr;
-    ptr = line; 
+
+    ptr = line;
+    /*go to the next not space char*/
     ptr = skip_spaces(ptr);
     while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t' && *ptr != ',' && *ptr != '\0'){
         word[i] = *ptr;
         i++;
         ptr++;
     }
-    word[i] = '\0';
-    return ptr;
+    word[i] = '\0'; /*mark the end of the word*/
+    return ptr; /*return the current position in line*/
 }
 
+/*Description: The function extracts the words from the line and returns an array of words. The words are without spaces and without commas.*/
+/*Input: line - pointer to position in line*/
+/*Output: An array of the extracted words*/
 char** get_words(char *line) {
     char copy_line[MAX_LENGTH], *p, **words, curr_word[MAX_LENGTH], *tmp;
     int i;
@@ -103,7 +110,7 @@ char** get_words(char *line) {
     return words;
 }
 
-int is_legal_params(char *line) {
+int is_legal_params(char *line, int line_num) {
     char copy_line[MAX_LEN], *p;
     int comma_flag;
     strcpy(copy_line, line);
@@ -114,7 +121,7 @@ int is_legal_params(char *line) {
 
     /*first not space char is comma*/
     if(*p == ',') {
-        printf(ERROR_ILLEGAL_COMMA);
+        ERROR_ILLEGAL_COMMA(line_num);
         return FALSE;
     }
     /*start of the first word*/
@@ -123,7 +130,7 @@ int is_legal_params(char *line) {
     {
         if(*p == ',') {
             if(comma_flag == TRUE) { /*there is more then one comma in a row*/
-                printf(ERROR_MULTIPLE_COMMAS);
+                ERROR_MULTIPLE_COMMAS(line_num);
                 return FALSE;
             } else {
                 if(comma_flag == FALSE) {
@@ -133,7 +140,7 @@ int is_legal_params(char *line) {
             }
         } else if( *p != '\0' && *p != EOF && *p != '\n') {
             if(comma_flag == FALSE) { /*missing a comma*/
-                printf(ERROR_MISSING_COMMA);
+                ERROR_MISSING_COMMA(line_num);
                 return FALSE;
             }
             comma_flag = FALSE;
@@ -147,10 +154,48 @@ int is_legal_params(char *line) {
     if(*p == '\0' || *p == EOF || *p == '\n') {
         /*the final word?*/
         if(comma_flag == TRUE) {
-            printf(ERROR_ILLEGAL_COMMA);
+            ERROR_ILLEGAL_COMMA(line_num);
             return FALSE;
         }
     }
     return TRUE;
 }
 
+
+
+void free_words(char** words) {
+    int i, num_words;
+    if (words == NULL) {
+        return; /*Nothing to free*/
+    }
+
+    /*Find the number of words by iterating until a NULL pointer is encountered*/
+    num_words = 0;
+    while (words[num_words] != NULL) {
+        num_words++;
+    }
+
+    for (i = 0; i < num_words; i++) {
+        if (words[i] != NULL) {
+            free(words[i]); /* Free each individual string */
+            words[i] = NULL;
+        }
+    }
+
+    free(words); /* Free the array of char pointers*/
+    words = NULL;
+}
+
+int get_len_words_array(char ** words) {
+    int num_words;
+    if (words == NULL) {
+        return 0 ;
+    }
+
+    num_words = 0;
+    while (words[num_words] != NULL) {
+        num_words++;
+    }
+
+    return num_words;
+}
