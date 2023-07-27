@@ -14,6 +14,7 @@ int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
+        printf("emply_line()\n");
         return TRUE; 
     }
     else{
@@ -28,6 +29,7 @@ int comment_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
+            printf("comment_line()\n");
         return 1; /*true*/
     }
     else{
@@ -118,7 +120,10 @@ int is_legal_params(char *line, int line_num) {
     p = copy_line;
     comma_flag = FALSE;
     p = skip_spaces(p);
-
+    if (empty_line(line)){
+        return 1;
+    }
+    
     /*first not space char is comma*/
     if(*p == ',') {
         ERROR_ILLEGAL_COMMA(line_num);

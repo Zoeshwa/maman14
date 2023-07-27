@@ -15,6 +15,11 @@
     #define ERROR_LABEL_IS_SAVED_WORD(curr_line_num) printf("ERROR in line %d: not a valid lable - Using a reserved word as a label\n", curr_line_num)
     #define ERROR_NOT_VALID_LABEL_LEN(curr_line_num) printf("ERROR in line %d: Invalid label length\n", curr_line_num)
 
+    /*labels errors*/
+    #define ERROR_NOT_VALID_COMMAND_NAME(curr_line_num) printf("ERROR in line %d: not a valid command\n", curr_line_num)
+    #define ERROR_NOT_COMPATIBLE_PARAMS(curr_line_num) printf("ERROR in line %d: not compatible num of params between enterd and command parameters\n", curr_line_num)
+
+
     /*commas errors*/
     #define ERROR_ILLEGAL_COMMA(curr_line_num) printf("ERROR in line %d: Comma in illegal place\n", curr_line_num)
     #define ERROR_MISSING_COMMA(curr_line_num) printf("ERROR in line %d: missing a comma\n", curr_line_num)

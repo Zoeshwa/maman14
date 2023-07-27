@@ -9,6 +9,7 @@
 
 Ins_Node* insert_ins_head() {
     Ins_Node* ins_head;
+    printf("in insert_ins_head()\n");
     ins_head = (Ins_Node*)malloc(sizeof(Ins_Node));
     ins_head->line_number = -1;
     ins_head->IC_count = 100;
@@ -90,16 +91,15 @@ int is_compatible_types(int acual_type, int* expected_type){
     return 0;
 }
 
-int is_valid_com(command com,char** params, int param_types[2]){
+int is_valid_com(command com,char** params, int param_types[2], int line_num){
     int num_of_params,i;
     num_of_params=0;
 
     for (i=0; params[i] != NULL ; i++){    /*count num of params in array*/
         num_of_params+=1;
     }
-    printf("num of params is:%d\n", num_of_params);
     if (num_of_params != com.num_of_params){
-        printf("not compatible num of params\n");
+        ERROR_NOT_COMPATIBLE_PARAMS(line_num);
         return 0;
     }
     else if(!is_valid_param_types(com.en, params, num_of_params, param_types)){
@@ -113,5 +113,5 @@ int is_valid_com(command com,char** params, int param_types[2]){
 
 
 int get_reg_num(char* reg){
-    return (int)reg[2];
+    return (int)reg[2]-48;
 }

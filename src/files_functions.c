@@ -18,6 +18,7 @@ void make_am_name(char* file, char* name){
 
 
 File_Config* intialiez_file_config() {
+    printf("in intialiez_file_config()\n");
     File_Config* file_config;
     file_config = (File_Config*)malloc(sizeof(File_Config));
     file_config->label_head = NULL;

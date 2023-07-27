@@ -11,7 +11,7 @@ enum{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, 
 enum{NONE, IMM, DIR, REG_DIR, ERR};
 
 /*MAYBE: ido need to ask in the forum*/
-const command com_conf[] = {
+command com_conf[] = {
             {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
             {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
             {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
@@ -66,19 +66,23 @@ File_Config* first_pass(FILE* am_file) {
 
     file_config = intialiez_file_config();
 
+    printf("int first_pass\n");
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
+        printf("input is: %s", input);
 
         if (empty_line(input) || comment_line(input)){continue;}
+        printf("input is: %s", input);
         handle_new_line(file_config, input);
         file_config->curr_line_num++;
+        printf("input is: %s", input);
     }
 
-    /*checks if needs to continue process since it might have an error*/
+    /*checks if needs to continue process since it might have an error
     if (file_config->is_valid){
-        /*TODO:*/
+        TODO:
         update_symbol_table_by_IC(file_config);
-    }
+    } */
     return file_config;
 }
 
@@ -87,6 +91,8 @@ void handle_new_line(File_Config* file_config, char* line) {
     char cur_word[MAX_LEN];
     int is_line_have_symbol; 
     ptr = line;
+
+    printf("int handle_new_line\n");
     /*get the first word*/
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr);
@@ -122,6 +128,7 @@ void handle_new_line(File_Config* file_config, char* line) {
         return ;
 
     } else{ /* is instruction*/
+        printf("in instruction pass\n");
         if (is_line_have_symbol) {
             handle_label(file_config, cur_word, CODE);
             ptr += strlen(cur_word);
@@ -250,9 +257,11 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
     return 1;
 }
 
-int set_operand_value(char* param, int type){
+int set_operand_value(char* param, Ins_Node** head){
     printf("set param value, param is: %s\n", param);
-    if (type == REG_DIR){
+    if ((*head)->type == DIR) /*if parameter is lable - copy it to node*/
+        strcpy((*head)->lable,param);
+    if ((*head)->type == REG_DIR){
         return get_reg_num(param);
     }
     else{
@@ -262,43 +271,30 @@ int set_operand_value(char* param, int type){
 }
 
 Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int param_type[2], char** params){
-    int i;
-    if (param_type[0] == NONE && param_type[1] == NONE){ /*case of command without params*/
-        return head;
-    }
-    else if (param_type[0] == REG_DIR && param_type[1] == REG_DIR){ /*case of two parameters, both registers*/
+    int i,j;
+    j=0;
+
+    if (param_type[0] == REG_DIR && param_type[1] == REG_DIR){ /*case of two parameters, both registers*/
         file_config->IC_counter += 1;
         head = insert_ins_node(head, file_config); 
         (*head)->type = REG_DIR;
         (*head)->operrands[0] = get_reg_num(params[0]);
         (*head)->operrands[1] = get_reg_num(params[1]);
     }
-    else if(param_type[0] == NONE){/*case of command with only one parameter*/
-        file_config->IC_counter += 1;
-        head = insert_ins_node(head, file_config);
-        (*head)->type = get_param_type(params[0]);
-
-        if ((*head)->type == DIR){ /*if parameter is lable - copy it to node*/
-            strcpy((*head)->lable,params[0]);
-        }
-        else{ /* otherwise update dest operrand*/
-            (*head)->operrands[1] = set_operand_value(params[0], (*head)->type);
-            printf("num is: %d",(*head)->operrands[1] );
-        }
-    }
-    else{/*case of command with two parameters*/
+    else{    
         for (i=0; i< 2; i++){
-            file_config->IC_counter += 1;
-            head = insert_ins_node(head, file_config); 
-            (*head)->type = get_param_type(params[i]);
+            if(param_type[i] == NONE){ /* if no params or 1 param set the src and dest accordinly with 0*/
+                (*head)->operrands[i] = 0;
+            }
+            else{/*otherwise another node should be added with values of params*/
+                file_config->IC_counter += 1;
+                head = insert_ins_node(head, file_config); 
+                (*head)->type = get_param_type(params[j]);
+                (*head)->operrands[i] = set_operand_value(params[j++], head); /*accodring to type set the value in suitable src/dest*/
+            }
 
-            if ((*head)->type == DIR){ /*if parameter is lable - copy it to node*/
-                strcpy((*head)->lable,params[0]);
-            }
-            else{ /* otherwise update dest operrand*/
-                (*head)->operrands[i] = set_operand_value(params[0], (*head)->type);
-            }
         }
+    
     }
     return head;
 }
@@ -309,49 +305,44 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     command com;
     int param_type[2];
     Ins_Node** cur_node;
-/*test vars */
-    int i;
-    i=0;
 
+    printf("in handle code line\n");
     ptr = skip_spaces(ptr);
     com = get_action(ptr, com_conf); /*gets first word and checks if valid*/
-    printf("action is: %s\n", com.act);
     if (com.en == SKIP){
-        printf("not a valid command\n");
+        ERROR_NOT_VALID_COMMAND_NAME(file_config->curr_line_num);
         return;
     }
     else{
         ptr += strlen(com.act);
-        if (!is_legal_params(ptr, file_config->curr_line_num)){
+        if (!is_legal_params(ptr, file_config->curr_line_num)){ /*checks the syntax and correctness of the parameters*/
             com.en = SKIP;
         }
         params = get_words(ptr);     /*get all parameters in an array*/
         
-        if (!is_valid_com(com,params, param_type)){/*checks if valid and updates the params_type if it does*/
+        if (!is_valid_com(com,params, param_type, file_config->curr_line_num)){/*checks if the entered params are compatible with the command's requirements*/
             com.en = SKIP;
         }
     }
-    if (com.en != SKIP){printf("is a vilid com\n");}
-    else{
-        printf("is *not* a valid com\n");
+    if (com.en == SKIP){
         return;
     }
 
     /*get last node of list*/
     cur_node = &(file_config->ins_tail);
-    print_ins_node(*cur_node);
-    if ((*cur_node)->line_number == -1){/*case of first node*/
-        printf("inside first line\n");
+
+    /*initialize first node*/
+    if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type); 
         print_ins_node(*cur_node);
 
     }
-    else{/*case of any other node*/
+    else{/*initialize any other node*/
         file_config->IC_counter += 1;
         cur_node = insert_ins_node(cur_node, file_config); 
         intialiez_ins_node(cur_node, com, param_type); 
     }
-    cur_node = add_extra_ins_words(cur_node, file_config, param_type, params);
+    cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
 }
 
 void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
