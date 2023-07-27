@@ -1,31 +1,11 @@
 
-
 #ifndef _INSTRUCTIONS_HEADER_
 #define _INSTRUCTIONS_HEADER_
+#define MAX_LABLE_LEN 31
 
-/*TODO: param type?, change names*/
-    typedef union u{
-        char* c;
-        int d;
-        }u;
 
-    typedef struct Ins_Node {
-        int IC_count; /*what about extren or data commands?*/
-        int line_number; /*num of line in the file after macro*/
-        /*Symbol_Type type of command*/
-        /*int is there symbol for command*/
-        int encoding_type; /*Absolute, External, Relocatable*/
-        int opcode; /*MAYBE need other for binary */
-        u param1;
-        u param2;
-        int num_of_extra_lines; /*ASK: number or the lines? - how many we need*/
-        struct Ins_Node* next;
-    } Ins_Node;
 
-    Ins_Node* intialiez_ins_head();
-    void insertIns_Node(struct Ins_Node** head, int IC, int line_num);
-    void add_ins_to_list(struct Ins_Node *ins_head, struct Ins_Node *curr_ins, int IC,int line_num);
-    
+/*
     int get_Ins_Node_IC_count(Ins_Node* node);
     int get_Ins_Node_line_number(Ins_Node* node);
     int get_Ins_Node_encoding_type(Ins_Node* node);
@@ -42,12 +22,13 @@
     void set_ins_num_of_extra_lines(Ins_Node* ins_to_update, int num_of_extra_lines);
     void set_error_ins(struct Ins_Node* ins_to_update, int is_error, char* error_msg);    
     void set_next_ins(Ins_Node* ins_to_update, Ins_Node* next);
-    
+ 
     void update_error(struct Ins_Node** head, char* line);
     void update_extern_ins(Ins_Node* curr_ins, int num_of_lines);
 
     void free_ins_node(Ins_Node* node);
-#endif
+    */
+   #endif
 
 #ifndef _ENUMS_HEADER_
 #define _INSTRUCTIONS_ENUMS_HEADER_

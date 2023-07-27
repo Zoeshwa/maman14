@@ -70,9 +70,7 @@ char* get_next_word_no_comma(char* word, char* line){
     ptr = line;
     /*go to the next not space char*/
     ptr = skip_spaces(ptr);
-
-    /*as long the pointer is to a char of a word - store the char in the word*/
-    while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t' && *ptr != ','){
+    while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t' && *ptr != ',' && *ptr != '\0'){
         word[i] = *ptr;
         i++;
         ptr++;
@@ -85,23 +83,27 @@ char* get_next_word_no_comma(char* word, char* line){
 /*Input: line - pointer to position in line*/
 /*Output: An array of the extracted words*/
 char** get_words(char *line) {
-    char copy_line[MAX_LEN], *p, **words, curr_word[MAX_LEN], *tmp;
+    char copy_line[MAX_LENGTH], *p, **words, curr_word[MAX_LENGTH], *tmp;
     int i;
     i = 0;
     strcpy(copy_line, line);
     words = (char**)malloc(MAX_LENGTH * sizeof(char*));
     p = copy_line;
     p = skip_spaces(p);
+    if (*p == '\0' && *p == EOF && *p == '\n'){
+        words[i] = NULL;
+        return words;
+    }
 
     while (*p != '\0' && *p != EOF && *p != '\n')
     {
+        if (*p == ','){p++;}
         p = get_next_word_no_comma(curr_word, p);
-        if(curr_word != NULL && strlen(curr_word) > 0) {
+        if(curr_word[0] != '\0' ) {
             tmp = (char*)malloc((strlen(curr_word)+1) * sizeof(char));
             strcpy(tmp, curr_word);
             words[i++] = tmp;
         }
-        p++;
         p = skip_spaces(p);
     }
     words[i] = NULL;
@@ -158,6 +160,7 @@ int is_legal_params(char *line, int line_num) {
     }
     return TRUE;
 }
+
 
 
 void free_words(char** words) {

@@ -1,9 +1,6 @@
+
 #ifndef _LABELS_HEADER_
     #include "labels.h"
-#endif
-
-#ifndef _INSTRUCTIONS_HEADER_
-    #include "Instructions_struct.h"
 #endif
 
 #ifndef _ENUMS_HEADER_
@@ -14,9 +11,31 @@
     #include "Data_struct.h"
 #endif
 
+
 #ifndef _FILES_FUNCTIONS_HEADER_
 #define _FILES_FUNCTIONS_HEADER_
-    void make_am_name(char* file, char* name);
+#define MAX_LABLE_LEN 31
+
+
+typedef struct command {
+	char* act;
+    int num_of_params;
+	int en;
+    int operands[2][4];
+
+} command;
+
+
+    typedef struct Ins_Node {
+        int type;
+        int IC_count; 
+        int line_number; 
+        int ARE;
+        int opcode; 
+        int operrands[2];
+        char lable[MAX_LABLE_LEN]; /*for when adding extra ins line representing a lable param */
+        struct Ins_Node* next;
+    } Ins_Node;
 
     typedef struct File_Config {
         int curr_line_num;
@@ -30,6 +49,14 @@
         Data_Node* data_tail;
 
     }File_Config;
+
+    void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]);
+    void make_am_name(char* file, char* name);
+    Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf);
+    Ins_Node* insert_ins_head();
+    void print_ins_node(Ins_Node* head);
+
+
 
     File_Config* intialiez_file_config();
 
