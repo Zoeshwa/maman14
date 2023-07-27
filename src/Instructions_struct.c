@@ -11,7 +11,9 @@
 Ins_Node* insert_ins_head() {
     Ins_Node* ins_head;
     ins_head = (Ins_Node*)malloc(sizeof(Ins_Node));
-    ins_head->line_number =0;
+    ins_head->line_number = -1;
+    ins_head->IC_count = 100;
+    ins_head->type = 0;
     ins_head->next = NULL;
     return ins_head;
 }
@@ -32,6 +34,9 @@ Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf) {
     return head;
 }
 
+void print_ins_node(Ins_Node* head){
+    printf("type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
+}
 
 void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
 

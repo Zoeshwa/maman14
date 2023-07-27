@@ -174,7 +174,7 @@ int is_number_char(char c){
 
 /* gets a pointer to a number or a '-' and reads the next chars to from the number as a double */
 int get_number(char* p){
-	double d=0;
+	int d=0;
 	int neg = 1;
 	
 	if (*p == '-'){
@@ -187,7 +187,7 @@ int get_number(char* p){
 	}
 	if (*p == '\0'){ /*end of number */
 		d = neg*d;
-        return IMM;
+        return d;
 	}
 	else {
         printf("not a valid number"); /*sarts as a number but gets somthing that is not a number in the middle*/
@@ -326,11 +326,13 @@ int get_reg_num(char* reg){
 }
 
 int set_operand_value(char* param, int type){
+    printf("set param value, param is: %s\n", param);
     if (type == REG_DIR){
         return get_reg_num(param);
     }
     else{
         return get_number(param);
+
     }
 }
 
@@ -356,6 +358,7 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
         }
         else{ /* otherwise update dest operrand*/
             (*head)->operrands[1] = set_operand_value(params[0], (*head)->type);
+            printf("num is: %d",(*head)->operrands[1] );
         }
     }
     else{/*case of command with two parameters*/
@@ -394,23 +397,29 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     }
     else{
         ptr += strlen(com.act);
+        if (!is_legal_params(ptr)){
+            com.en = SKIP;
+        }
         params = get_words(ptr);     /*get all parameters in an array*/
         
-        /*test: print words*/
-        while(params[i] != NULL){
-            i++;
-        }
         if (!is_valid_com(com,params, param_type)){/*checks if valid and updates the params_type if it does*/
             com.en = SKIP;
         }
     }
     if (com.en != SKIP){printf("is a vilid com\n");}
-    else{printf("is *not* a valid com\n");}
+    else{
+        printf("is *not* a valid com\n");
+        return;
+    }
 
     /*get last node of list*/
     cur_node = &(file_config->ins_tail);
-    if ((*cur_node)->line_number == 0){/*case of first node*/
+    print_ins_node(*cur_node);
+    if ((*cur_node)->line_number == -1){/*case of first node*/
+        printf("inside first line\n");
         intialiez_ins_node(cur_node, com, param_type); 
+        print_ins_node(*cur_node);
+
     }
     else{/*case of any other node*/
         file_config->IC_counter += 1;
@@ -419,11 +428,6 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     }
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params);
 }
-
-
-
-
-
 
 void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
      

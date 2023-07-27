@@ -93,9 +93,7 @@ int main_original(int argc, char* argv[]) {
     return 0;
 }
 
-void print_ins_node(Ins_Node* head){
-    printf("type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
-}
+
 
    int type;
         int IC_count; 
@@ -119,6 +117,7 @@ int main(){
     while (fgets(input, MAX_LEN, am_file) != NULL){  
         printf("input is: %s\n", input)  ;
         handle_code_line(file_conf, input);
+        file_conf->curr_line_num += 1;
         print_ins_node(file_conf->ins_tail);
 
     }
