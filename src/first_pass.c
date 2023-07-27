@@ -398,7 +398,7 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     }
     else{
         ptr += strlen(com.act);
-        if (!is_legal_params(ptr)){
+        if (!is_legal_params(ptr, file_config->curr_line_num)){
             com.en = SKIP;
         }
         params = get_words(ptr);     /*get all parameters in an array*/

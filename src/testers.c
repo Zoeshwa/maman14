@@ -352,23 +352,6 @@ int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
 }
 
 int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
-            
-    if(get_Ins_Node_IC_count(curr_node_a) != get_Ins_Node_IC_count(curr_node_b)) {
-        return 0;
-    }
-    if(get_Ins_Node_line_number(curr_node_a) != get_Ins_Node_line_number(curr_node_b)) {
-        return 0;
-    }
-
-    if(get_Ins_Node_encoding_type(curr_node_a) != get_Ins_Node_encoding_type(curr_node_b)) {
-        return 0;
-    }
-    
-
-    
-    if(get_Ins_Node_num_of_lines(curr_node_a) != get_Ins_Node_num_of_lines(curr_node_b)) {
-        return 0;
-    }
 
 
     /*TODO: more filds*/

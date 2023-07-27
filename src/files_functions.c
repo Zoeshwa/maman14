@@ -78,7 +78,7 @@ void set_file_config_IC(File_Config* file_config,int IC_counter) {
 }
 
 
-/*TODO: update
+/*TODO: update */
 void free_file_config(File_Config* file_config) {
 
     if(get_file_ins_head(file_config) != NULL){
@@ -87,5 +87,3 @@ void free_file_config(File_Config* file_config) {
 
     free(file_config);
 }
-
-*/
