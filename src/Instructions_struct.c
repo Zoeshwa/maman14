@@ -58,7 +58,7 @@ void free_ins_node(Ins_Node* node) {
 
 
 /* checks if the beggining of the input line is a valid command line */
-int is_legal_com_name(char* input, int i, command* commands_list){
+int is_legal_com_name(char* input, int i, const command* commands_list){
 	int j;
 	for ( j=0; j < strlen(commands_list[i].act); j++)  /* check if its one of the commands */
 	{

@@ -18,8 +18,8 @@ void make_am_name(char* file, char* name){
 
 
 File_Config* intialiez_file_config() {
-    printf("in intialiez_file_config()\n");
     File_Config* file_config;
+    printf("in intialiez_file_config()\n");
     file_config = (File_Config*)malloc(sizeof(File_Config));
     file_config->label_head = NULL;
     file_config->ins_head = insert_ins_head();
@@ -83,7 +83,7 @@ void set_file_config_IC(File_Config* file_config,int IC_counter) {
 void free_file_config(File_Config* file_config) {
 
     if(get_file_ins_head(file_config) != NULL){
-        free_ins_node(get_file_ins_head(file_config));
+        /*free_ins_node(get_file_ins_head(file_config));*/
     }
 
     free(file_config);
