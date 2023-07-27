@@ -20,13 +20,8 @@ void make_am_name(char* file, char* name){
 File_Config* intialiez_file_config() {
     File_Config* file_config;
     file_config = (File_Config*)malloc(sizeof(File_Config));
-    /*
-    file_config->label_head = (Lable_Node*)malloc(sizeof(Lable_Node));
-    
-    */
-
     file_config->label_head = NULL;
-    file_config->ins_head = NULL;
+    file_config->ins_head = insert_ins_head();
     file_config->ins_tail = file_config->ins_head;
     file_config->data_head = NULL;
     file_config->data_tail = file_config->data_head;
@@ -83,7 +78,7 @@ void set_file_config_IC(File_Config* file_config,int IC_counter) {
 }
 
 
-/*TODO: update*/
+/*TODO: update
 void free_file_config(File_Config* file_config) {
 
     if(get_file_ins_head(file_config) != NULL){
@@ -93,3 +88,4 @@ void free_file_config(File_Config* file_config) {
     free(file_config);
 }
 
+*/

@@ -12,6 +12,9 @@
         "testers.h": "c",
         "string.h": "c",
         "labels.h": "c",
-        "enums.h": "c"
+        "enums.h": "c",
+        "compare": "c",
+        "limits": "c",
+        "new": "c"
     }
 }

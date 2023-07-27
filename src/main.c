@@ -75,7 +75,7 @@ int main_original(int argc, char* argv[]) {
                 printf("regular line\n");
                 if (fwrite(input, 1, strlen(input), am_file)<0){
                     printf("errorr writing to file\n");
-                }
+                    }
             }
 
         }
@@ -93,10 +93,40 @@ int main_original(int argc, char* argv[]) {
     return 0;
 }
 
-int main(int argc, char* argv[]) {
 
-    run_tester();
 
+   int type;
+        int IC_count; 
+        int line_number; 
+        int ARE;
+        int opcode; 
+        int operrands[2];
+        char lable[MAX_LABLE_LEN]; /*for when adding extra ins line representing a lable param */
+        struct Ins_Node* next;
+
+
+int main(){
+    File_Config* file_conf;
+    FILE* am_file;
+    Ins_Node* test_ptr;
+    char input[MAX_LEN];
+
+    am_file = fopen("assembly.am","r");
+    file_conf = intialiez_file_config();
+
+    while (fgets(input, MAX_LEN, am_file) != NULL){  
+        printf("input is: %s\n", input)  ;
+        handle_code_line(file_conf, input);
+        file_conf->curr_line_num += 1;
+        print_ins_node(file_conf->ins_tail);
+
+    }
+
+    test_ptr = file_conf->ins_head;
+    while (test_ptr != NULL){
+        print_ins_node(test_ptr);
+        test_ptr = test_ptr->next;
+    }
     return 0;
-}
 
+}
