@@ -570,7 +570,7 @@ void run_is_legal_params() {
     tester_is_legal_params(line4, 0, test_num++);
     tester_is_legal_params(line5, 0, test_num++);
     tester_is_legal_params(line7, 0, test_num++);
-
+/*
     free(line);
     free(line1);
     free(line2);
@@ -578,6 +578,7 @@ void run_is_legal_params() {
     free(line4);
     free(line5);
     free(line6);
+    */
     END_TEST("run_is_legal_params");
 }
 /*TODO*/

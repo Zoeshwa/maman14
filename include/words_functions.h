@@ -31,6 +31,10 @@
     int is_saved_word(const char* word);
     int is_visible_chars_only(char * input);
 
+    int is_space(char c);
+    int is_number_char(char c);
+    int get_number(char* p);
+
 #endif
 
 #ifndef _LINES_HEADER_

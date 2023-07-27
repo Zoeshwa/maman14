@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Instructions_struct.h"
-#include "file_functions.h"
 
 
 
@@ -17,7 +16,6 @@ Ins_Node* insert_ins_head() {
     ins_head->next = NULL;
     return ins_head;
 }
-
 
 /* Function to insert a new Ins_Node at the end of the list*/
 Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf) {
@@ -48,24 +46,72 @@ void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
 }
 
 
-/*
-
-
-TODO: delete? if the storage lines dont have a node then its not nesseccery
-void update_extern_ins(Ins_Node* curr_ins, int num_of_lines) {
-    set_encoding_type_ins(curr_ins, 1);
-    set_ins_num_of_extra_lines(curr_ins, num_of_lines);
-    TODO: what else to update? opcode? params?
-
-}
-
-
 void free_ins_node(Ins_Node* node) {
-    TODO: FIX
+    /*TODO: FIX
     if(get_Ins_Node_next(node) != NULL) {
         free_ins_node(get_Ins_Node_next(node));
     }
     free(node);
+    */
 }
 
-*/
+
+/* checks if the beggining of the input line is a valid command line */
+int is_legal_com_name(char* input, int i, command* commands_list){
+	int j;
+	for ( j=0; j < strlen(commands_list[i].act); j++)  /* check if its one of the commands */
+	{
+		if (input[j] != commands_list[i].act[j] || is_space(input[j])){
+			return 0;}
+	}	
+	return 1;
+}
+
+int is_valid_number_param(char *param){
+    if(*param == '-'){
+        param++;
+    }
+    while (*param != '\0'){
+        if (!is_number_char(*param)){
+            return 0;
+        }
+        param++;
+    }
+    return 1;
+}
+
+int is_compatible_types(int acual_type, int* expected_type){
+    int i;
+    for (i=0; expected_type[i] != -1; i++){
+        if (expected_type[i] == acual_type){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int is_valid_com(command com,char** params, int param_types[2]){
+    int num_of_params,i;
+    num_of_params=0;
+
+    for (i=0; params[i] != NULL ; i++){    /*count num of params in array*/
+        num_of_params+=1;
+    }
+    printf("num of params is:%d\n", num_of_params);
+    if (num_of_params != com.num_of_params){
+        printf("not compatible num of params\n");
+        return 0;
+    }
+    else if(!is_valid_param_types(com.en, params, num_of_params, param_types)){
+        /*error - type of params is not compatible (printed inside)*/
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
+
+int get_reg_num(char* reg){
+    return (int)reg[2];
+}
