@@ -29,6 +29,7 @@
     void remove_colon_at_end(char* word);
     void get_saved_words(const char*** saved_words, int* num_saved_words);
     int is_saved_word(const char* word);
+    int is_visible_chars_only(char * input);
 
 #endif
 

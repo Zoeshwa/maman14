@@ -140,13 +140,12 @@ void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
             data_type = DATA;
         } else {
             data_type = STRING;
-
         }
 
         if (data_type == STRING)
         {
             if(i + 1  < len ) {
-                /*error too many params*/
+                ERROR_MULTIPLE_ARGUMENTS(file_config->curr_line_num);
             }
 
         } else {

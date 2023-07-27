@@ -571,9 +571,6 @@ void run_is_legal_params() {
     tester_is_legal_params(line5, 0, test_num++);
     tester_is_legal_params(line7, 0, test_num++);
 
-    
-
-
     free(line);
     free(line1);
     free(line2);
@@ -582,4 +579,10 @@ void run_is_legal_params() {
     free(line5);
     free(line6);
     END_TEST("run_is_legal_params");
+}
+/*TODO*/
+void run_is_visible_chars_only() {
+    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
+    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
+
 }
