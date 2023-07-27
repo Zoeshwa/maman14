@@ -12,30 +12,14 @@
 #endif
 
 
+#ifndef _INSTRUCTIONS_HEADER_
+    #include "Instructions_struct.h"
+#endif
+
+
 #ifndef _FILES_FUNCTIONS_HEADER_
 #define _FILES_FUNCTIONS_HEADER_
 #define MAX_LABLE_LEN 31
-
-
-typedef struct command {
-	char* act;
-    int num_of_params;
-	int en;
-    int operands[2][4];
-
-} command;
-
-
-    typedef struct Ins_Node {
-        int type;
-        int IC_count; 
-        int line_number; 
-        int ARE;
-        int opcode; 
-        int operrands[2];
-        char lable[MAX_LABLE_LEN]; /*for when adding extra ins line representing a lable param */
-        struct Ins_Node* next;
-    } Ins_Node;
 
     typedef struct File_Config {
         int curr_line_num;

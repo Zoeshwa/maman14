@@ -6,30 +6,56 @@
 #define NUM_OF_COM 16
 
 
-
+/*MAYBE*/
 enum{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP,SKIP};
 enum{NONE, IMM, DIR, REG_DIR, ERR};
-command com_conf[] = {
-		{"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-		{"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
-		{"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-		{"sub",2, SUB,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-		{"not",1, NOT, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-		{"clr",1, CLR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-		{"lea",2, LEA, {{DIR,-1}, {DIR, REG_DIR,-1}}},
-		{"inc",1, INC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-		{"dec",1, DEC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-		{"jmp",1, JMP, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-        {"bne",1, BNE, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-        {"red",1, RED, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-        {"prn",1, PRN, {{NONE,-1}, {IMM, DIR, REG_DIR,-1}}},
-        {"jsr",1, JSR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-        {"rts",0, RTS, {{NONE,-1}, {NONE,-1}}},
-        {"stop",0, STOP, {{NONE,-1}, {NONE,-1}}},
-        {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
-	};
 
+/*MAYBE: ido need to ask in the forum*/
+const command com_conf[] = {
+            {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
+            {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"sub",2, SUB,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"not",1, NOT, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"clr",1, CLR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"lea",2, LEA, {{DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"inc",1, INC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"dec",1, DEC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"jmp",1, JMP, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"bne",1, BNE, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"red",1, RED, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"prn",1, PRN, {{NONE,-1}, {IMM, DIR, REG_DIR,-1}}},
+            {"jsr",1, JSR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"rts",0, RTS, {{NONE,-1}, {NONE,-1}}},
+            {"stop",0, STOP, {{NONE,-1}, {NONE,-1}}},
+            {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
+};
 
+/* Function to get the array of saved words and the number of elements in the array
+void get_saved_words(const char*** saved_words, int* num_saved_words) {
+    static const command com_conf[] = {
+            {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
+            {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"sub",2, SUB,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"not",1, NOT, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"clr",1, CLR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"lea",2, LEA, {{DIR,-1}, {DIR, REG_DIR,-1}}},
+            {"inc",1, INC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"dec",1, DEC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"jmp",1, JMP, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"bne",1, BNE, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"red",1, RED, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"prn",1, PRN, {{NONE,-1}, {IMM, DIR, REG_DIR,-1}}},
+            {"jsr",1, JSR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+            {"rts",0, RTS, {{NONE,-1}, {NONE,-1}}},
+            {"stop",0, STOP, {{NONE,-1}, {NONE,-1}}},
+            {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
+    };
+    *saved_words = saved_words_array;
+    *num_saved_words = sizeof(saved_words_array) / sizeof(saved_words_array[0]);
+}
+*/
 
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
@@ -131,86 +157,6 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     free_words(words);
 }
 
-int is_space(char c)
-{
- if( c== ' ' || c == '	')
- 	return 1;
- return 0;
-}
-
-/* checks if the beggining of the input line is a valid command line */
-int is_legal_com(char* input,int i, command* commands_list){
-	int j;
-	for ( j=0; j < strlen(commands_list[i].act); j++)  /* check if its one of the commands */
-	{
-		if (input[j] != commands_list[i].act[j] || is_space(input[j])){
-			return 0;}
-	}	
-	return 1;
-}
-
-/* desc: gets the action from the command read */
-command get_action(char* input, command* commands_list)
-{
-	command com;
-	int i;
-	for (i=0; i < NUM_OF_COM; i++)
-	{
-		if (is_legal_com(input,i, commands_list)){
-			com = commands_list[i];
-			return com;
-		}
-	}
-	printf("Undifined command name\n");
-	com = commands_list[SKIP];
-	return com;
-}
-
-/* checks if a char read is a number */
-int is_number_char(char c){
-	if (c>47 && c<58)
-		return 1;
-	return 0;
-}
-
-/* gets a pointer to a number or a '-' and reads the next chars to from the number as a double */
-int get_number(char* p){
-	int d=0;
-	int neg = 1;
-	
-	if (*p == '-'){
-		neg = -1;
-		p++;
-	}
-	while (is_number_char(*p)){
-		d = d*10 + ((*p)-48);
-		p++;
-	}
-	if (*p == '\0'){ /*end of number */
-		d = neg*d;
-        return d;
-	}
-	else {
-        printf("not a valid number"); /*sarts as a number but gets somthing that is not a number in the middle*/
-
-    }
-	
-	return d;
-}
-
-int is_valid_number_param(char *param){
-    if(*param == '-'){
-        param++;
-    }
-    while (*param != '\0'){
-        if (!is_number_char(*param)){
-            return 0;
-        }
-        param++;
-    }
-    return 1;
-}
-
 int is_valid_lable_param(char *param) {
     int i;
 
@@ -229,6 +175,24 @@ int is_valid_lable_param(char *param) {
     }
 
     return 1;
+}
+
+/*MAYBE: ido*/
+/* desc: gets the action from the command read */
+command get_action(char* input, const command* commands_list)
+{
+	command com;
+	int i;
+	for (i=0; i < NUM_OF_COM; i++)
+	{
+		if (is_legal_com_name(input,i, commands_list)){
+			com = commands_list[i];
+			return com;
+		}
+	}
+	printf("Undifined command name\n");
+	com = commands_list[SKIP];
+	return com;
 }
 
 int get_param_type(char* param){
@@ -255,17 +219,6 @@ int get_param_type(char* param){
         return DIR;
     }
     return ERR;
-}
-
-
-int is_compatible_types(int acual_type, int* expected_type){
-    int i;
-    for (i=0; expected_type[i] != -1; i++){
-        if (expected_type[i] == acual_type){
-            return 1;
-        }
-    }
-    return 0;
 }
 
 int is_valid_param_types(int com, char** params, int num_of_params, int param_type[2]){
@@ -295,35 +248,6 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
         printf("param %d is compatible of type %d\n", i, param_type[i]);  
     } 
     return 1;
-}
-
-
-
-
-int is_valid_com(command com,char** params, int param_types[2]){
-    int num_of_params,i;
-    num_of_params=0;
-
-    for (i=0; params[i] != NULL ; i++){    /*count num of params in array*/
-        num_of_params+=1;
-    }
-    printf("num of params is:%d\n", num_of_params);
-    if (num_of_params != com.num_of_params){
-        printf("not compatible num of params\n");
-        return 0;
-    }
-    else if(!is_valid_param_types(com.en, params, num_of_params, param_types)){
-        /*error - type of params is not compatible (printed inside)*/
-        return 0;
-    }
-    else{
-        return 1;
-    }
-
-}
-
-int get_reg_num(char* reg){
-    return (int)reg[2];
 }
 
 int set_operand_value(char* param, int type){
@@ -492,8 +416,6 @@ void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
         /*update DC_counter*/
         set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
 }
-
-
 
 /*Description: givien a word - check if its legal lable and insert to the lable list if needed*/
 /*Input: file_config for the current file, word to handle, type of the lable*/

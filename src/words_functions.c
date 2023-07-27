@@ -187,3 +187,43 @@ int is_saved_word(const char* word) {
 
     return FALSE;
 }
+
+int is_space(char c)
+{
+ if( c== ' ' || c == '	')
+ 	return 1;
+ return 0;
+}
+
+/* checks if a char read is a number */
+int is_number_char(char c){
+	if (c>47 && c<58)
+		return 1;
+	return 0;
+}
+
+
+/* gets a pointer to a number or a '-' and reads the next chars to from the number as a double */
+int get_number(char* p){
+	int d=0;
+	int neg = 1;
+	
+	if (*p == '-'){
+		neg = -1;
+		p++;
+	}
+	while (is_number_char(*p)){
+		d = d*10 + ((*p)-48);
+		p++;
+	}
+	if (*p == '\0'){ /*end of number */
+		d = neg*d;
+        return d;
+	}
+	else {
+        printf("not a valid number"); /*sarts as a number but gets somthing that is not a number in the middle*/
+
+    }
+	
+	return d;
+}
