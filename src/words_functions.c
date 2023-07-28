@@ -44,7 +44,7 @@ int is_visible_chars_only(char * input) {
 
     while(*curr_char != EOF && *curr_char != '\0'){
         /*TODO: need to fix and understand which is not visible chars*/
-        if(*curr_char < 33 || *curr_char > 126) { /*if current char is not visible char*/
+        if(!isprint(*curr_char)) { /*if current char is not visible char*/
             return FALSE;
         }
         curr_char++;
