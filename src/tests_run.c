@@ -24,7 +24,7 @@ void run_tester()
 }
 
 /*utils*/
-char** get_lines(int* len) {
+char** get_lines_valid(int* len) {
     char** lines;
 
     lines = (char**) calloc(4, sizeof(char*));
@@ -56,6 +56,38 @@ char** get_lines(int* len) {
     */
 
    *len = 4;
+   return lines;
+}
+
+char** get_lines_invalid(int* len) {
+    char** lines;
+
+    lines = (char**) calloc(4, sizeof(char*));
+
+    char line1[] = "HI: .string \"yossi\n"; /*not close ""*/
+    char line2[] = ".data 1, 25.25, -8, +78, 0, -100   \n"; /*point*/
+    char line3[] = ".data 9yt9\n"; /*chars in data*/
+    char line4[] = "LABEL: .string \"zo﻿e\" \n"; /*invisible chars*/
+    char line5[] = ".string yossi\n"; /*no ""*/
+    char line6[] = "HI: .string \"yossi\"\n"; /*the same lable*/
+
+
+    lines[0] = malloc(strlen(line1) + 1);
+    lines[1] = malloc(strlen(line2) + 1);
+    lines[2] = malloc(strlen(line3) + 1);
+    lines[3] = malloc(strlen(line4) + 1);
+    lines[4] = malloc(strlen(line5) + 1);
+    lines[5] = malloc(strlen(line6) + 1);
+
+
+    strcpy(lines[0], line1);
+    strcpy(lines[1], line2);
+    strcpy(lines[2], line3);
+    strcpy(lines[3], line4);
+    strcpy(lines[4], line5);
+    strcpy(lines[5], line6);
+
+   *len = 6;
    return lines;
 }
 
@@ -658,7 +690,7 @@ void run_handle_data_ins() {
     char **lines;
     int len, i;
 
-    lines = get_lines(&len);
+    lines = get_lines_invalid(&len);
 
     file_config = intialiez_file_config();
     for(i = 0; i < len; i++){
@@ -666,10 +698,11 @@ void run_handle_data_ins() {
         handle_new_line(file_config, lines[i]);
     }
     
-    printf("Validity of file: %d\n", file_config->is_valid);
-    print_Data_Node(file_config->data_head);
+    print_file_config(file_config);
 
     free_file_config(&file_config);
+
+    printf("d\n");
     for (i = 0; i < len; i++) {
         free(lines[i]);
     }

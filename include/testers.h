@@ -80,7 +80,6 @@
     void run_file_config_tests();
     void run_file_get_tests();
     void run_file_set_tests();
-    void run_file_config_print();
 
     void run_labels_tests();
     void run_labels_set_tests();
@@ -124,6 +123,8 @@
     void run_handle_int_store();
     void run_handle_string_store();
     void run_handle_data_ins();
-    char** get_lines(int* len);
+    char** get_lines_valid(int* len);
+    char** get_lines_invalid(int* len);
+    void tests_get_number();
 #endif
 

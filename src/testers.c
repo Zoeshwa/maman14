@@ -63,13 +63,15 @@ void print_file_config(File_Config* file_config) {
         printf("file_config is NULL\n");
         return;
     }
-    printf("This is file config print: {\n");
-    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n\t", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
-    printf("\t");
+    printf("FILE_CONFIG:\n");
+    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
+    printf("\n");
     print_Ins_Node(get_file_ins_head(file_config));
-    printf("\t");
+    printf("\n");
     print_Lable_Node(file_config->label_head);
-    printf("}\n");
+    printf("\n");
+    print_Data_Node(file_config->data_head);
+    printf("\n");
 
 }
 
@@ -78,10 +80,8 @@ void print_Ins_Node(Ins_Node* ins) {
         printf("ins=NULL\n");
         return;
     }
-    printf("This is Ins_Node print: {\n");
-    printf("\tline_number: %d, IC_count: %d\n\t",ins->line_number, ins->IC_count);
-    printf("}\n");
-
+    printf("INS_NODE: \t");
+    printf("line_number: %d,\t IC_count: %d\n",ins->line_number, ins->IC_count);
 } 
 
 void print_Lable_Node(Lable_Node* label_node) {
