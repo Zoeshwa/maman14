@@ -14,7 +14,7 @@ int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
-        printf("emply_line()\n");
+        printf("p is: %c ,emply_line()\n", *line);
         return TRUE; 
     }
     else{
