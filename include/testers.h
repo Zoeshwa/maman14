@@ -121,5 +121,7 @@
     void run_get_words();
     void run_tests_handle_extern();
     void run_is_valid_quotes();
+    void run_handle_int_store();
+    void run_handle_string_store();
 #endif
 

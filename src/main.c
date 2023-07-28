@@ -61,17 +61,19 @@ int main_original(int argc, char* argv[]) {
 }*/
 
 int main(){
-    File_Config* file_conf;
+    File_Config* file_config;
     char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";
 
-    file_conf = intialiez_file_config();
+    file_config = intialiez_file_config();
 
     printf("input is: %s\n", input)  ;
-    handle_data_ins(file_conf, input, input+12);
+    handle_data_ins(file_config, input, input+12);
     
-    printf("Validity of file: %d\n", file_conf->is_valid);
-    print_Data_Node(file_conf->data_head);
+    printf("Validity of file: %d\n", file_config->is_valid);
+    print_Data_Node(file_config->data_head);
 
+    free_file_config(&file_config);
+    
     return 0;
 
 }

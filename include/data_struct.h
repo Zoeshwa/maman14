@@ -18,8 +18,7 @@
     void set_data_node_DC_counter(Data_Node* Data_node, int DC_counter);
     void set_data_node_next(Data_Node* Data_node, Data_Node* next);
 
-    void free_data_node(Data_Node* node);
-
+    void free_data_list(Data_Node** head);
 #endif
 
 

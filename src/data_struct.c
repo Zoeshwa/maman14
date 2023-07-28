@@ -88,9 +88,18 @@ void set_data_node_next(Data_Node* data_node, Data_Node* next) {
 }
 
 
-void free_data_node(Data_Node* node) {
-    if(get_data_node_next(node) != NULL) {
-        free_data_node(get_data_node_next(node));
+
+/*Description: Function to free the entire linked list of Data_Nodes and set the head pointer to NULL*/
+/*Input: a pointer to a pointer of the head of the list to free*/
+void free_data_list(Data_Node** head) {
+    Data_Node* current = *head;
+    Data_Node* next_node;
+
+    while (current != NULL) {
+        next_node = get_data_node_next(current);
+        free(current);
+        current = next_node;
     }
-    free(node);
+    /* Set the head pointer to NULL after freeing the entire list */
+    *head = NULL;
 }

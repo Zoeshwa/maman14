@@ -211,7 +211,7 @@ void run_file_get_tests() {
     tester_file_get_counter_by_type(file_config, symbol_type, 0, 3);
     symbol_type = CODE;
     tester_file_get_counter_by_type(file_config, symbol_type, 100, 4);
-    free_file_config(file_config);
+    free_file_config(&file_config);
     END_TEST(" ");
 }
 
@@ -221,7 +221,7 @@ void run_file_set_tests() {
     START_TEST("file_set_tests");
     tester_file_set_int_fileds(file_config, set_file_config_DC,get_DC_counter, 1, 1);
     tester_file_set_int_fileds(file_config, set_file_config_IC, get_IC_counter, 101, 2);
-    free_file_config(file_config);
+    free_file_config(&file_config);
     END_TEST(" ");
 }
 
@@ -444,7 +444,7 @@ void run_tests_handle_label() {
     tester_handle_label(file_config, bad_word1, symbol_type,expted_lable_head, test_num++);
     
     free_lable_list(&expted_lable_head);
-    free_file_config(file_config);
+    free_file_config(&file_config);
 
     END_TEST("tests_handle_label");
 }
@@ -512,7 +512,7 @@ void run_tests_handle_extern(){
 */
 
     print_file_config(file_config);
-    free_file_config(file_config);
+    free_file_config(&file_config);
 }
 
 void run_get_words() {

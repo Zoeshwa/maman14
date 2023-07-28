@@ -386,10 +386,10 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
         binary_words_counter = handle_data_string_store(file_config, words, len, i);
     }
 
-    /*update DC_counter
-    set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
-    */
-   /*TODO: free the words array*/
+    /*update DC_counter*/
+    update_DC_counter(&file_config, binary_words_counter);
+
+   free_words(words);
 
 }
 
