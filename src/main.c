@@ -5,28 +5,28 @@
 
 #define MAX_LEN 80
 
-/*TODO free functions*/
+/*
 
 
 
-int main(int argc, char* argv[]) {
+int orig_main(int argc, char* argv[]) {
 
     int ctr;
-    /*for every file read from terminal*/ 
+    /*for every file read from terminal
     for (ctr=1; ctr < argc; ctr++){
         FILE* am_file;
         File_Config * file_config;
 
-        /*creating an am file*/
+        /*creating an am file
         am_file = make_am_file(argv[ctr]); 
 
-        /*first_pass*/
+        /*first_pass
         file_config = first_pass(am_file);
         if (!file_config->is_valid){
             continue;
         }
 
-        /*TODO: run secound pass*/
+        /*TODO: run secound pass
 
     }
     
@@ -34,9 +34,9 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+*/
 
-
-/*int main(){
+int main(){
     File_Config* file_conf;
     FILE* am_file;
     Ins_Node* test_ptr;
@@ -60,4 +60,4 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 
-}*/
+}

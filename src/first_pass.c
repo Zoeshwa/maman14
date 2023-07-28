@@ -71,11 +71,11 @@ File_Config* first_pass(FILE* am_file) {
     while (fgets(input, MAX_LEN, am_file) != NULL){    
         printf("input is: %s", input);
 
-        if (empty_line(input) || comment_line(input)){continue;}
-        printf("input is: %s", input);
+        if (empty_line(input) || comment_line(input)){
+            
+        }
         handle_new_line(file_config, input);
         file_config->curr_line_num++;
-        printf("input is: %s", input);
     }
 
     /*checks if needs to continue process since it might have an error
@@ -259,14 +259,14 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
 
 int set_operand_value(char* param, Ins_Node** head){
     printf("set param value, param is: %s\n", param);
-    if ((*head)->type == DIR) /*if parameter is lable - copy it to node*/
+    if ((*head)->type == DIR){ /*if parameter is lable - copy it to node*/
         strcpy((*head)->lable,param);
-    if ((*head)->type == REG_DIR){
+        return 0;
+    }else if ((*head)->type == REG_DIR){
         return get_reg_num(param);
     }
     else{
         return get_number(param);
-
     }
 }
 
@@ -333,7 +333,8 @@ void handle_code_line(File_Config* file_config, char *ptr) {
 
     /*initialize first node*/
     if ((*cur_node)->line_number == -1){
-        intialiez_ins_node(cur_node, com, param_type); 
+        intialiez_ins_node(cur_node, com, param_type);
+        make_bin_ins_word((*cur_node)->bin_rep, com.en, param_type); 
         print_ins_node(*cur_node);
 
     }
@@ -341,6 +342,8 @@ void handle_code_line(File_Config* file_config, char *ptr) {
         file_config->IC_counter += 1;
         cur_node = insert_ins_node(cur_node, file_config); 
         intialiez_ins_node(cur_node, com, param_type); 
+        make_bin_ins_word((*cur_node)->bin_rep, com.en, param_type); 
+
     }
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
 }
