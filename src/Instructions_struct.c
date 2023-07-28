@@ -4,8 +4,7 @@
 #include "Instructions_struct.h"
 
 
-
-/*List functions*/
+/*Ins_Node struct functions*/
 
 Ins_Node* insert_ins_head() {
     Ins_Node* ins_head;
@@ -33,10 +32,6 @@ Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf) {
     return head;
 }
 
-void print_ins_node(Ins_Node* head){
-    printf("type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
-}
-
 void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
 
     /*TODO: (*head)->ARE*/
@@ -46,16 +41,50 @@ void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
     (*head)->next = NULL;
 }
 
-
-void free_ins_node(Ins_Node* node) {
-    /*TODO: FIX
-    if(get_Ins_Node_next(node) != NULL) {
-        free_ins_node(get_Ins_Node_next(node));
-    }
-    free(node);
-    */
+void print_ins_node(Ins_Node* head){
+    printf("type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
 }
 
+/*Description: Function to free a single Ins_Node and set the pointer to NULL*/
+/*Input: a pointer to a pointer of the node to free*/
+void free_ins_node(Ins_Node** node) {
+    Ins_Node* current;
+
+    current = *node;
+    if (current != NULL) {
+        if(current->lable != NULL )
+            free(current->lable);
+        if(current->operrands != NULL){
+            free((current->operrands)[0]);
+            free((current->operrands)[1]);
+        }
+        free(*node);  /* Free the Ins_Node itself */
+        *node = NULL; /* Set the pointer to NULL after freeing */
+    }   
+}
+
+/*Description: Function to free the entire linked list of Ins_Node and set the head pointer to NULL*/
+/*Input: a pointer to a pointer of the head of the list to free*/
+void free_ins_list(Ins_Node** head_ptr) {
+    Ins_Node* current;
+    Ins_Node* next_node;
+    
+    if (head_ptr == NULL || *head_ptr == NULL) {
+        return;
+    }
+
+    current = *head_ptr;
+    while (current != NULL) {
+        next_node = current->next;
+        free_ins_node(&current);  /* Free the current node */
+        current = next_node; /* Move to the next node */
+    }
+
+    /* Set the head pointer to NULL to avoid accessing freed memory */
+    *head_ptr = NULL;
+}
+
+/*utils functions*/
 
 /* checks if the beggining of the input line is a valid command line */
 int is_legal_com_name(char* input, int i, const command* commands_list){

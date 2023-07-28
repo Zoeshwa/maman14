@@ -104,8 +104,7 @@ void free_file_config(File_Config** file_config_ptr) {
     File_Config* file_config = *file_config_ptr;
 
     free_lable_list(&(file_config->label_head));
-    /*TODO*/
-    /*free_ins_list(file_config->ins_head);*/
+    free_ins_list(&(file_config->ins_head));
     free_data_list(&(file_config->data_head));
 
     free(file_config);

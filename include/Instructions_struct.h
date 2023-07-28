@@ -36,6 +36,8 @@ typedef struct command {
    int get_reg_num(char* reg);
    int is_valid_param_types(int com, char** params, int num_of_params, int param_types[2]);
    int is_legal_com_name(char* input, int i, const command* commands_list);
+
+   void free_ins_list(Ins_Node** head_ptr);
    #endif
 
 
