@@ -607,6 +607,22 @@ void run_handle_string_store() {
     print_Data_Node(file_conf->data_head);
 }
 
+void run_handle_int_store() {
+    File_Config* file_conf;
+    char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";
+    /*    
+    char input[MAX_LEN] = "LABEL: .data 1, 25, -8, +78, 0, -100 ";
+    */
+    file_conf = intialiez_file_config();
+
+    printf("input is: %s\n", input)  ;
+    handle_data_ins(file_conf, input, input+12);
+    
+    printf("Validity of file: %d\n", file_conf->is_valid);
+    print_Data_Node(file_conf->data_head);
+
+}
+
 void run_is_valid_quotes() 
 {
     int i;
