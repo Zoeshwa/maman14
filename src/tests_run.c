@@ -525,7 +525,7 @@ void run_tests_is_valid_lable() {
     head = NULL;
     /*when list empty and only word check*/
     tester_is_valid_lable(head, "hi:", 1, test_number++);
-    tester_is_valid_lable(head, "hi", 0, test_number++);
+    tester_is_valid_lable(head, "hi", 1, test_number++);
     tester_is_valid_lable(head, "5i", 0, test_number++);
     tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
     tester_is_valid_lable(head, "A555ADMSasjd555:", 1, test_number++); 
@@ -534,16 +534,16 @@ void run_tests_is_valid_lable() {
     tester_is_valid_lable(head, "a5$i:", 0, test_number++);
 
     symbol_type = DATA;
-    insert_to_symbol_table(&head, "hi:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi", test_number, symbol_type);
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
     tester_is_valid_lable(head, "hi", 0, test_number++);
 
     tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
-    insert_to_symbol_table(&head, "hi2:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi2", test_number, symbol_type);
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
-    tester_is_valid_lable(head, "hi", 0, test_number++);
+    tester_is_valid_lable(head, "hi", 0, test_number++); 
     tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
     tester_is_valid_lable(head, "hi2:", 0, test_number++);
     

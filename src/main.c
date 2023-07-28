@@ -77,7 +77,7 @@ int main(){
     
    run_handle_data_ins();
     */
-    run_handle_data_ins();
+    run_labels_tests();
 
     return 0;
 
