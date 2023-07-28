@@ -345,6 +345,10 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
 }
 
+/*Description: The function handles the command line that stores arguments in memory.
+It performs validation on the line according to the command type and calls the functions that insert the arguments into the data list*/
+/*Input: file_config for the current file, A line in which there is a prompt for memory allocation (string/data),
+ a pointer to the current position in the line (after the label if its have and after the command word)*/
 void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
     int i, binary_words_counter, len, curr_line_num;
     char **words, *cur_word;
@@ -356,20 +360,18 @@ void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
     words = get_words(line);
     len = get_len_words_array(words);
     
-    if(len < 2) {
-        /*TODO: more spacipic*/
-        ERROR_GENERAL(curr_line_num);
+    if(len < 2) { 
+        ERROR_MISSING_ARGUMENTS(curr_line_num);
         update_validity_file_config(&file_config, FALSE);
         return;
     }
 
-    /*get the the first word (after the lable ifthere is one)*/
+    /*get the the first word*/
     cur_word = words[i];
-    if(is_lable(cur_word)) {
-        cur_word = words[++i];
+    if(is_lable(cur_word)) { /*if the first word is a label*/
+        cur_word = words[++i]; /*get the command word*/
         if(2 >= len) { /*only 2 words include the label - not good*/
-            /*TODO: more spacipic - there is none params - is it an error?*/
-            ERROR_GENERAL(curr_line_num);
+            ERROR_MISSING_ARGUMENTS(curr_line_num);
             update_validity_file_config(&file_config, FALSE);
             return;
         }
@@ -389,26 +391,28 @@ void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
 
     /*update DC_counter*/
     update_DC_counter(&file_config, binary_words_counter);
-
     free_words(words);
 }
 
-
+/*Description: The function validates the arguments of the data command and inserts them, if they are valid, into the data list*/
+/*Input: file_config for the current file, words - An array of the words in the current line, len - the array length, curr_index - index to the first parameter*/
+/*Output: number of the parmaters that added to the list*/
 int handle_data_int_store(File_Config* file_config, char **words, int len, int curr_index) {
     char *curr_word;
     int curr_line_num, num_of_params, curr_number;
+    
     num_of_params = 0;
-
     curr_line_num = get_curr_line_number(file_config);
 
-    /*for each param - validate and insert to the data list*/
+    /*for each param*/
     for(; curr_index < len; curr_index++) {
         curr_word = words[curr_index];
+        /*validate the param*/
         if(!is_valid_int_param(curr_word, curr_line_num)) {
             update_validity_file_config(&file_config, FALSE);
             continue;
         }
-        /*add to data list as a node*/
+        /*add to data list as a node if its valid*/
         curr_number = get_number(curr_word);
         add_data_node(&(file_config->data_head) ,&(file_config->data_tail), curr_number, DATA);
         num_of_params++;
@@ -417,6 +421,9 @@ int handle_data_int_store(File_Config* file_config, char **words, int len, int c
     return num_of_params;
 }
 
+/*Description: The function validates the argument of the string command and inserts it, if its valid, into the data list*/
+/*Input: file_config for the current file, words - An array of the words in the current line, len - the array length, curr_index - index to the first parameter*/
+/*Output: number of the chars that added to the list*/
 int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index) {
     char *curr_word, *curr_char;
     int curr_line_num, num_of_chars, i;
@@ -427,17 +434,17 @@ int handle_data_string_store(File_Config* file_config, char **words, int len, in
     if(curr_index + 1 > len ) { /*if there is more then one param its not valid*/
         ERROR_MULTIPLE_ARGUMENTS(curr_line_num);
         update_validity_file_config(&file_config, FALSE);
-        /*ASK - do i continue?*/
     }
 
-    curr_word = words[curr_index];
+    curr_word = words[curr_index]; /*get the param to handle*/
     
+    /*if the param is not valid - not added to the data list*/
     if(!is_valid_string_param(curr_word, curr_line_num)){
         update_validity_file_config(&file_config, FALSE);
-        /*ASK - do i continue?*/
+        return num_of_chars;
     }
     
-    /*insert each char to the data list*/
+    /*insert each char of the word to the data list exsept the '"'*/
     curr_char = curr_word;
     for(i = 0; i < strlen(curr_word); i++, curr_char++) {
         /*skip the quotes in the sides of the word*/

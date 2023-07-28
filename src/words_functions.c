@@ -26,24 +26,22 @@ int is_end_line(char c)
  return FALSE;
 }
 
-
 /*Description: check if a given char is a number or a letter*/
 /*Input: a char to check*/
 /*Output: true if the char is a number or a letter, else - false*/
 int is_letter_or_num_char(char c){
-    if (IS_NUMBER(c) || IS_UPPERCASE_LETTERS(c) || IS_LOWERCASE_LETTERS(c))
+    /*TODO: use isalpha for a-z, A-Z*/
+    if (isdigit(c) || IS_UPPERCASE_LETTERS(c) || IS_LOWERCASE_LETTERS(c))
         return TRUE;
     return FALSE;
 }
 
-/*TODO: check what is visible chars*/
 int is_visible_chars_only(char * input) {
     char * curr_char;
 
     curr_char = input;
-
+    /*Check all characters in a string*/
     while(*curr_char != EOF && *curr_char != '\0'){
-        /*TODO: need to fix and understand which is not visible chars*/
         if(!isprint(*curr_char)) { /*if current char is not visible char*/
             return FALSE;
         }
@@ -72,7 +70,6 @@ int is_valid_quotes(char* word) {
     }
     return TRUE; 
 }
-
 
 int is_valid_string_param(char * word, int line_number) {
     int is_valid;
@@ -260,11 +257,13 @@ int get_sign_value(char curr_char) {
     return 0;
 }
 
+/*TODO: DELETE delete this and use isdigit instade*/
 /* checks if a char read is a number */
 int is_number_char(char c){
-	if (c>47 && c<58)
-		return 1;
-	return 0;
+    if(isdigit(c)) {
+    	return TRUE;
+    }
+	return FALSE;
 }
 
 /* gets a pointer to a number or a '-' and reads the next chars to from the number as a double */
@@ -274,13 +273,15 @@ int get_number(char* p){
 	sign = 1;
     is_valid = TRUE;
 
-    /*TODO - maybe use get_sign_value*/
 	if(!is_number_char(*p)) {
-        if (*p == '-'){
-            sign = -1;
-        } else if(*p != '+') {
-            is_valid = FALSE;
-        }
+        sign = get_sign_value(*p);
+        /* DELETE
+            if (*p == '-'){
+                sign = -1;
+            } else if(*p != '+') {
+                is_valid = FALSE;
+            }
+        */
         p++;
     }
 
@@ -289,7 +290,7 @@ int get_number(char* p){
 		p++;
 	}
 
-	if (*p == '\0'){ /*end of number */
+	if (is_end_line(*p)){ /*end of number */
 		num = sign * num;
 	} else {
         printf("not a valid number"); /*sarts as a number but gets somthing that is not a number in the middle*/
@@ -305,16 +306,16 @@ int is_valid_int_param(char *curr_word,int curr_line_num) {
     p = curr_word;
     sign = 1;
 
-    if(!is_number_char(*p)) {
+    if(!isdigit(*p)) {
         sign = get_sign_value(*p);
         p++;
     }
 
-    while (is_number_char(*p) && sign != 0){
+    while (isdigit(*p) && sign != 0){
 		p++;
 	}
 
-    if (*p == '\0'){ /*end of number */
+    if (is_end_line(*p)){ /*end of number */
         return TRUE;
 	} else {
         ERROR_INVALID_NUM(curr_line_num);

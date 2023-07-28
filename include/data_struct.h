@@ -13,11 +13,7 @@
     int get_data_node_type(Data_Node* node);
     int get_data_node_DC_counter(Data_Node* node);
     Data_Node* get_data_node_next(Data_Node* node);
-
-    void set_data_node_value(Data_Node* Data_node, int is_char, int value);
-    void set_data_node_DC_counter(Data_Node* Data_node, int DC_counter);
-    void set_data_node_next(Data_Node* Data_node, Data_Node* next);
-
+    
     void free_data_list(Data_Node** head);
 #endif
 
