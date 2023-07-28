@@ -5,10 +5,8 @@
 
 #define MAX_LEN 80
 
-/*TODO free functions*/
-
-int main_original(int argc, char* argv[]) {
-
+int main(int argc, char* argv[]) {
+    char input[MAX_LEN];
     int ctr;
     /*for every file read from terminal*/ 
     for (ctr=1; ctr < argc; ctr++){
@@ -19,6 +17,9 @@ int main_original(int argc, char* argv[]) {
         am_file = make_am_file(argv[ctr]); 
 
         /*first_pass*/
+        while (fgets(input, MAX_LEN, am_file) != NULL){    
+                printf("input is: %s\n", input);
+        }
         file_config = first_pass(am_file);
         if (!file_config->is_valid){
             continue;
@@ -60,7 +61,7 @@ int main_original(int argc, char* argv[]) {
 
 }*/
 
-int main(){
+int main_test(){
     /*
     File_Config* file_config;
     char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";

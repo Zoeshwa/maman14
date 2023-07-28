@@ -60,7 +60,7 @@ FILE* make_am_file(char* orig_name){
             }
             /* regular line*/
             else{
-                printf("regular line\n");
+                printf("regular line: |%s|\n", input);
                 if (fwrite(input, 1, strlen(input), am_file)<0){
                     printf("errorr writing to file\n");
                 }
