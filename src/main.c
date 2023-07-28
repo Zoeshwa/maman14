@@ -78,8 +78,6 @@ int main(){
     */
    run_handle_data_ins();
 
-   printf("D");
-
     return 0;
 
 }

@@ -345,21 +345,17 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
 }
 
-void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
+void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
     int i, binary_words_counter, len, curr_line_num;
     char **words, *cur_word;
 
     curr_line_num = get_curr_line_number(file_config);
-
     binary_words_counter = 0, i = 0;
+
     /*get array of the words in the line*/
     words = get_words(line);
     len = get_len_words_array(words);
     
-    /*DELETE
-    print_words(words, len);*/
-    printf("ptr in handle:|%s|\n", ptr);
-
     if(len < 2) {
         /*TODO: more spacipic*/
         ERROR_GENERAL(curr_line_num);
@@ -371,7 +367,7 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
     cur_word = words[i];
     if(is_lable(cur_word)) {
         cur_word = words[++i];
-        if(3 > len) {
+        if(2 >= len) { /*only 2 words include the label - not good*/
             /*TODO: more spacipic - there is none params - is it an error?*/
             ERROR_GENERAL(curr_line_num);
             update_validity_file_config(&file_config, FALSE);
@@ -380,7 +376,7 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
     }
     
     /*check the commas between params and update validity of the file*/
-    update_validity_file_config(&file_config, is_legal_params(ptr, curr_line_num));
+    update_validity_file_config(&file_config, is_legal_params(curr_ptr, curr_line_num));
 
     ++i; /*index of current words is the first param*/
 

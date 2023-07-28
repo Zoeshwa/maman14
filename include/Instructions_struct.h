@@ -16,8 +16,6 @@ typedef struct command {
 
 } command;
 
-
-
     typedef struct Ins_Node {
         int type;
         int IC_count; 
@@ -39,8 +37,6 @@ typedef struct command {
 
    void free_ins_list(Ins_Node** head_ptr);
    #endif
-
-
 
 #ifndef _LABELS_HEADER_
 #define _INSTRUCTIONS_LABELS_HANDLER_HEADER_
