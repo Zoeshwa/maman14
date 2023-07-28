@@ -50,6 +50,9 @@ int is_visible_chars_only(char * input) {
     return TRUE; 
 }
 
+/*Description: The function checks if the string is surrounded by quotation marks*/
+/*Input: a string to check*/
+/*Output: true  = 1,  false = 0*/
 int is_valid_quotes(char* word) {
     char* curr_char;
 

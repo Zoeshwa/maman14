@@ -78,12 +78,6 @@ int main(){
    run_handle_data_ins();
     */
 
-    printf("%d\n", isalpha('c'));
-    printf("%d\n", isalpha('R'));
-    printf("%d\n", isalpha('3'));
-
-
-
 
     return 0;
 
