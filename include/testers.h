@@ -123,5 +123,7 @@
     void run_is_valid_quotes();
     void run_handle_int_store();
     void run_handle_string_store();
+    void run_handle_data_ins();
+    char** get_lines(int* len);
 #endif
 

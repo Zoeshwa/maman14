@@ -97,11 +97,12 @@ void update_DC_counter(File_Config** file_config, int num_to_add) {
 /*Description: Function to free the memory of the File_Config data structure */
 /*Input: a pointer to a pointer of the file config to free*/
 void free_file_config(File_Config** file_config_ptr) {
+    File_Config* file_config;
     if (file_config_ptr == NULL || *file_config_ptr == NULL) {
         return;
     }
 
-    File_Config* file_config = *file_config_ptr;
+    file_config = *file_config_ptr;
 
     free_lable_list(&(file_config->label_head));
     free_ins_list(&(file_config->ins_head));

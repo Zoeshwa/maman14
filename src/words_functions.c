@@ -14,7 +14,14 @@ int is_Ins(char* word){
 
 int is_space(char c)
 {
- if( c== ' ' || c == '	')
+ if( c== ' ' || c == '\t')
+ 	return TRUE;
+ return FALSE;
+}
+
+int is_end_line(char c)
+{
+ if( c== '\n' || c == EOF || c == '\0')
  	return TRUE;
  return FALSE;
 }
@@ -241,7 +248,6 @@ int is_saved_word(const char* word) {
 
     return FALSE;
 }
-
 
 int get_sign_value(char curr_char) {
 

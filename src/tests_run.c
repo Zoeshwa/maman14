@@ -590,7 +590,7 @@ void run_is_visible_chars_only() {
 
 /*TODO*/
 void run_handle_string_store() {
-    File_Config* file_conf;
+    File_Config* file_config;
     char input[MAX_LEN] = "LABEL: .string \"zoe\" ";
     /*
     char input[MAX_LEN] = ".string \"zoe\" ";
@@ -598,29 +598,55 @@ void run_handle_string_store() {
     char input[MAX_LEN] = "LABEL: .string zoe ";
     */
 
-    file_conf = intialiez_file_config();
+    file_config = intialiez_file_config();
 
     printf("input is: %s\n", input)  ;
-    handle_data_ins(file_conf, input, input+14);
+    handle_data_ins(file_config, input, input+14);
     
-    printf("Validity of file: %d\n", file_conf->is_valid);
-    print_Data_Node(file_conf->data_head);
+    printf("Validity of file: %d\n", file_config->is_valid);
+    print_Data_Node(file_config->data_head);
+
+    free_file_config(&file_config);
+
 }
 
 void run_handle_int_store() {
-    File_Config* file_conf;
+    File_Config* file_config;
     char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";
     /*    
     char input[MAX_LEN] = "LABEL: .data 1, 25, -8, +78, 0, -100 ";
     */
-    file_conf = intialiez_file_config();
+    file_config = intialiez_file_config();
 
     printf("input is: %s\n", input)  ;
-    handle_data_ins(file_conf, input, input+12);
+    handle_data_ins(file_config, input, input+12);
     
-    printf("Validity of file: %d\n", file_conf->is_valid);
-    print_Data_Node(file_conf->data_head);
+    printf("Validity of file: %d\n", file_config->is_valid);
+    print_Data_Node(file_config->data_head);
 
+    free_file_config(&file_config);
+}
+
+void run_handle_data_ins() {
+    File_Config* file_config;
+    char **lines;
+    int len, i;
+
+    lines = get_lines(&len);
+
+    file_config = intialiez_file_config();
+    for(i = 0; i < len; i++){
+        printf("line=%s\n", lines[i])  ;
+        handle_new_line(file_config, lines[i]);
+    }
+    
+    printf("Validity of file: %d\n", file_config->is_valid);
+    print_Data_Node(file_config->data_head);
+
+    free_file_config(&file_config);
+    for (i = 0; i < len; i++) {
+        free(lines[i]);
+    }
 }
 
 void run_is_valid_quotes() 
@@ -635,4 +661,39 @@ void run_is_valid_quotes()
     tester_O_int_I_charP(is_valid_quotes, "5\"i", 0, i++);
 
     END_TEST("run_is_valid_quotes");
+}
+
+char** get_lines(int* len) {
+    char** lines;
+
+    lines = (char**) calloc(4, sizeof(char*));
+
+    char line1[] = "HI: .string \"yossi\"\n";
+    char line2[] = ".data 1, 25, -8, +78, 0, -100   \n";
+    char line3[] = ".data 99\n";
+    char line4[] = "LABEL: .string \"zoe\" \n";
+
+    lines[0] = malloc(strlen(line1) + 1);
+    lines[1] = malloc(strlen(line2) + 1);
+    lines[2] = malloc(strlen(line3) + 1);
+    lines[3] = malloc(strlen(line4) + 1);
+
+    strcpy(lines[0],  line1);
+    strcpy(lines[1], line2);
+    strcpy(lines[2], line3);
+    strcpy(lines[3], line4);
+
+    /*
+        for (int i = 0; i < 4; i++) {
+            printf("Line %d: %s\n", i + 1, lines[i]);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            free(lines[i]);
+        }
+
+    */
+
+   *len = 4;
+   return lines;
 }

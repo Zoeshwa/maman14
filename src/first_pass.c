@@ -100,14 +100,15 @@ void handle_new_line(File_Config* file_config, char* line) {
     
     if(is_data_storage_ins(line)) { /*ins: .data or .string*/
         if(is_line_have_symbol) {
+            /*skip the label word*/
+            ptr = skip_next_word(line, ptr);
+            
             /*handle insert data symbol for the command*/
             handle_label(file_config, cur_word, DATA);
-            
-            /*get next words*/
-            ptr += strlen(cur_word);
-            get_next_word(cur_word, line);
-            ptr = skip_spaces(ptr);
         }
+
+        /*skip the string/data word*/
+        ptr = skip_next_word(line, ptr);
 
         handle_data_ins(file_config, line, ptr);
         return;
@@ -354,8 +355,12 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
     /*get array of the words in the line*/
     words = get_words(line);
     len = get_len_words_array(words);
+    
+    /*DELETE
+    print_words(words, len);*/
+    printf("ptr in handle:|%s|\n", ptr);
 
-    if(len < 1) {
+    if(len < 2) {
         /*TODO: more spacipic*/
         ERROR_GENERAL(curr_line_num);
         update_validity_file_config(&file_config, FALSE);
@@ -366,7 +371,7 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
     cur_word = words[i];
     if(is_lable(cur_word)) {
         cur_word = words[++i];
-        if(i == len) {
+        if(3 > len) {
             /*TODO: more spacipic - there is none params - is it an error?*/
             ERROR_GENERAL(curr_line_num);
             update_validity_file_config(&file_config, FALSE);
@@ -389,8 +394,7 @@ void handle_data_ins(File_Config* file_config, char* line, char *ptr) {
     /*update DC_counter*/
     update_DC_counter(&file_config, binary_words_counter);
 
-   free_words(words);
-
+    free_words(words);
 }
 
 

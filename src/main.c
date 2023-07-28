@@ -61,6 +61,7 @@ int main_original(int argc, char* argv[]) {
 }*/
 
 int main(){
+    /*
     File_Config* file_config;
     char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";
 
@@ -74,6 +75,11 @@ int main(){
 
     free_file_config(&file_config);
     
+    */
+   run_handle_data_ins();
+
+   printf("D");
+
     return 0;
 
 }

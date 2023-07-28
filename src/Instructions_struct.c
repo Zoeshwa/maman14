@@ -55,8 +55,8 @@ void free_ins_node(Ins_Node** node) {
         if(current->lable != NULL )
             free(current->lable);
         if(current->operrands != NULL){
-            free((current->operrands)[0]);
-            free((current->operrands)[1]);
+            free(current->operrands);
+            free(current->operrands);
         }
         free(*node);  /* Free the Ins_Node itself */
         *node = NULL; /* Set the pointer to NULL after freeing */

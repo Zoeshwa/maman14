@@ -41,6 +41,7 @@
     int is_number_char(char c);
     int get_number(char* p);
     int is_valid_string_param(char * word, int line_number);
+    int is_end_line(char c);
 
 #endif
 

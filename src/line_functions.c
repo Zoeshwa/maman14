@@ -123,8 +123,6 @@ int is_legal_params(char *line, int line_num) {
     if (empty_line(line)){
         return 1;
     }
-    printf("copy_line|%s|\n", copy_line);
-    printf("|%s|\n", p);
     
     /*first not space char is comma*/
     if(*p == ',') {
@@ -209,4 +207,32 @@ int get_len_words_array(char ** words) {
         num_words++;
     }
     return num_words;
+}
+
+
+char* skip_next_word(char* line, char *curr_ptr) {
+    char* p;
+
+    p = curr_ptr;
+
+    p = skip_spaces(p);
+    while (!is_space(*p) && !is_end_line(*p))
+    {
+        p++;
+    }
+    p = skip_spaces(p);
+
+	return p;
+}
+
+/*DELETE*/
+void print_words(char** words, int len) {
+    int i;
+
+    printf("print_words:\n");
+    for(i = 0; i< len; i++) {
+        printf("words[%d]=|%s|\n", i, words[i]);
+    }
+    printf("END print_words\n");
+
 }
