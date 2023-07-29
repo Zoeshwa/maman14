@@ -45,7 +45,8 @@ void tester_get_next_word(char * str) {
 }
 
 void test_remove_colon_at_end(char* word, int test_number, const char* expected_result) {
-    char copy_word[strlen(word) + 1];
+    char *copy_word;
+    copy_word = (char*)malloc(strlen(word) + 1);
     strcpy(copy_word, word); 
 
     remove_colon_at_end(word);

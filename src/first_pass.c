@@ -63,12 +63,12 @@ File_Config* first_pass(FILE* am_file) {
     File_Config* file_config;
     char input[MAX_LEN];
 
-    printf("\n---------START FIRST PASS-----------\n");
+    printf("\t---------START FIRST PASS-----------\n");
     file_config = intialiez_file_config();
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        printf("line %d: %s\n", get_curr_line_number(file_config), input);
+        printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
 
         if (empty_line(input) || comment_line(input)){continue;}
         
@@ -81,7 +81,7 @@ File_Config* first_pass(FILE* am_file) {
         TODO:
         update_symbol_table_by_IC(file_config);
     } */
-    printf("\n---------END FIRST PASS-----------\n");
+    printf("\t---------END FIRST PASS-----------\n");
 
     return file_config;
 }
@@ -92,7 +92,7 @@ void handle_new_line(File_Config* file_config, char* line) {
     int is_line_have_symbol; 
     ptr = line;
 
-    printf("int handle_new_line\n");
+    printf("\tint handle_new_line\n");
     /*get the first word*/
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr);
@@ -129,7 +129,7 @@ void handle_new_line(File_Config* file_config, char* line) {
         return ;
 
     } else{ /* is instruction*/
-        printf("in instruction pass\n");
+        printf("\tin instruction pass\n");
         if (is_line_have_symbol) {
             handle_label(file_config, cur_word, CODE);
             ptr += strlen(cur_word);
@@ -198,7 +198,7 @@ command get_action(char* input, const command* commands_list)
 			return com;
 		}
 	}
-	printf("Undifined command name\n");
+	printf("\tUndifined command name\n");
 	com = commands_list[SKIP];
 	return com;
 }
@@ -253,13 +253,14 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
         if (!is_compatible_types(param_type[i], com_conf[com].operands[i])){
             printf("param %d is not compatible of type %d\n", i, param_type[i]);            return 0;
             }
-        printf("param %d is compatible of type %d\n", i, param_type[i]);  
+        printf("\tparam %d is compatible of type %d\n", i, param_type[i]);  
     } 
     return 1;
 }
 
 int set_operand_value(char* param, Ins_Node** head){
-    printf("set param value, param is: %s\n", param);
+    printf("\tset param value, param is: %s\n", param);
+    /*TODO: fix this - not working....*/
     if ((*head)->type == DIR) /*if parameter is lable - copy it to node*/
         strcpy((*head)->lable,param);
     if ((*head)->type == REG_DIR){
@@ -269,6 +270,7 @@ int set_operand_value(char* param, Ins_Node** head){
         return get_number(param);
 
     }
+
 }
 
 Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int param_type[2], char** params){
@@ -307,7 +309,7 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     int param_type[2];
     Ins_Node** cur_node;
 
-    printf("in handle code line\n");
+    printf("\tin handle code line\n");
     ptr = skip_spaces(ptr);
     com = get_action(ptr, com_conf); /*gets first word and checks if valid*/
     if (com.en == SKIP){

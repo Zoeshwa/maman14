@@ -15,9 +15,11 @@ int main(int argc, char* argv[]) {
     /*for every file read from terminal*/ 
     for (ctr = 1; ctr < argc; ctr++){
         /*creating an am file*/
+        printf("\t----------START:file \"%s\"\n", argv[ctr]);
         am_file = make_am_file(argv[ctr]); 
 
         make_am_name(argv[ctr], am_file_name);
+
         am_file = fopen(am_file_name, "r");
 
         /*first_pass*/
@@ -32,17 +34,12 @@ int main(int argc, char* argv[]) {
         }
 
         /*TODO: run secound pass*/
-        printf("\nTHE END\n");
         fclose(am_file);
-        printf("\nfcloseV\n");
-
         free_file_config(&file_config);
-        printf("\nfree_file_config V\n");
-
+        printf("\t----------END:file \"%s\"\n", argv[ctr]);
     }
-    printf("\nTHE FINAL END\n");
+    printf("\tTHE FINAL END\n");
 
-    ERROR_GENERAL(3);
     return 0;
 }
 

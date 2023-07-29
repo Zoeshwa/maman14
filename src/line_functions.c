@@ -14,7 +14,7 @@ int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
-        printf("emply_line()\n");
+        printf("\temply_line()\n");
         return TRUE; 
     }
     else{
@@ -29,7 +29,7 @@ int comment_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
-            printf("comment_line()\n");
+            printf("\tcomment_line()\n");
         return 1; /*true*/
     }
     else{
@@ -229,10 +229,10 @@ char* skip_next_word(char* line, char *curr_ptr) {
 void print_words(char** words, int len) {
     int i;
 
-    printf("print_words:\n");
+    printf("\tprint_words:\n");
     for(i = 0; i< len; i++) {
-        printf("words[%d]=|%s|\n", i, words[i]);
+        printf("\twords[%d]=|%s|\n", i, words[i]);
     }
-    printf("END print_words\n");
+    printf("\tEND print_words\n");
 
 }
