@@ -16,6 +16,7 @@
         "compare": "c",
         "limits": "c",
         "new": "c",
-        "ctype.h": "c"
+        "ctype.h": "c",
+        "main.h": "c"
     }
 }

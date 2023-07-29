@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
     char input[MAX_LEN];
     int ctr;
     /*for every file read from terminal*/ 
-    for (ctr=1; ctr < argc; ctr++){
+    for (ctr = 1; ctr < argc; ctr++){
         FILE* am_file;
         File_Config * file_config;
 

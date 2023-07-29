@@ -1,15 +1,8 @@
 #ifndef _MACROS_STRUCT_HEADER_
 #define _MACROS_STRUCT_HEADER_
 
+    typedef struct Macro_Node Macro_Node;
 
-    /* Macro_Node in macro linked list*/
-    struct Macro_Node {
-        char* name;
-        char* content;
-        int lines;
-        struct Macro_Node* next;
-    };
-    
     FILE* make_am_file(char* orig_name);
     void make_am_name(char* file, char* name);
     void insertMacro_Node(struct Macro_Node** head, char* name);

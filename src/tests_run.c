@@ -25,14 +25,14 @@ void run_tester()
 
 /*utils*/
 char** get_lines_valid(int* len) {
-    char** lines;
+    char** lines, *line1, *line2, *line3, *line4;
 
     lines = (char**) calloc(4, sizeof(char*));
 
-    char line1[] = "HI: .string \"yossi\"\n";
-    char line2[] = ".data 1, 25, -8, +78, 0, -100   \n";
-    char line3[] = ".data 99\n";
-    char line4[] = "LABEL: .string \"zoe\" \n";
+    line1 = "HI: .string \"yossi\"\n";
+    line2 = ".data 1, 25, -8, +78, 0, -100   \n";
+    line3 = ".data 99\n";
+    line4 = "LABEL: .string \"zoe\" \n";
 
     lines[0] = malloc(strlen(line1) + 1);
     lines[1] = malloc(strlen(line2) + 1);
@@ -60,16 +60,16 @@ char** get_lines_valid(int* len) {
 }
 
 char** get_lines_invalid(int* len) {
-    char** lines;
+    char** lines, *line1, *line2, *line3, *line4, *line5, *line6;
 
     lines = (char**) calloc(4, sizeof(char*));
 
-    char line1[] = "HI: .string \"yossi\n"; /*not close ""*/
-    char line2[] = ".data 1, 25.25, -8, +78, 0, -100   \n"; /*point*/
-    char line3[] = ".data 9yt9\n"; /*chars in data*/
-    char line4[] = "LABEL: .string \"zo﻿e\" \n"; /*invisible chars*/
-    char line5[] = ".string yossi\n"; /*no ""*/
-    char line6[] = "HI: .string \"yossi\"\n"; /*the same lable*/
+    line1= "HI: .string \"yossi\n"; /*not close ""*/
+    line2= ".data 1, 25.25, -8, +78, 0, -100   \n"; /*point*/
+    line3= ".data 9yt9\n"; /*chars in data*/
+    line4= "LABEL: .string \"zo﻿e\" \n"; /*invisible chars*/
+    line5= ".string yossi\n"; /*no ""*/
+    line6= "HI: .string \"yossi\"\n"; /*the same lable*/
 
 
     lines[0] = malloc(strlen(line1) + 1);
