@@ -76,13 +76,19 @@ void print_file_config(File_Config* file_config) {
 
 }
 
-void print_Ins_Node(Ins_Node* ins) {
-    if(ins == NULL) {
-        printf("ins=NULL\n");
+void print_Ins_Node(Ins_Node* head) {
+    if(head == NULL) {
+        printf("node = NULL\n");
         return;
     }
     printf("INS_NODE: \t");
-    printf("line_number: %d,\t IC_count: %d\n",ins->line_number, ins->IC_count);
+    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,\t is_lable: %s", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
+    if(head->next  != NULL) {
+        printf("\tnext: \n");
+        print_Ins_Node(head->next);
+    }else {
+        printf("\tnext: NULL\n");
+    }
 } 
 
 void print_Lable_Node(Lable_Node* label_node) {
