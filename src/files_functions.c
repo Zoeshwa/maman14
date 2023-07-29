@@ -114,18 +114,20 @@ void free_file_config(File_Config** file_config_ptr) {
     *file_config_ptr = NULL;
 }
 
-
-void make_am_name(char* file, char* name){
-    int i =0;
-    while (*file != '.'){
-         name[i] = *file;
+/*ASK: is it allways work?*/
+void make_am_name(char* file_original_name, char* am_name){
+    int i;
+    
+    i = 0;
+    while (*file_original_name != '.'){
+         am_name[i] = *file_original_name;
          i++;
-         file++;
+         file_original_name++;
     }
-    name[i++] = '.';
-    name[i++] = 'a';
-    name[i++] = 'm';
-    name[i] = '\0';
+    am_name[i++] = '.';
+    am_name[i++] = 'a';
+    am_name[i++] = 'm';
+    am_name[i] = '\0';
 }
 
 

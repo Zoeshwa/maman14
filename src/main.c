@@ -6,30 +6,43 @@
 #define MAX_LEN 80
 
 int main(int argc, char* argv[]) {
-    char input[MAX_LEN];
+    /*char input[MAX_LEN];*/
     int ctr;
+    FILE* am_file;
+    File_Config * file_config;
+    char am_file_name[MAX_LEN];
+
     /*for every file read from terminal*/ 
     for (ctr = 1; ctr < argc; ctr++){
-        FILE* am_file;
-        File_Config * file_config;
-
         /*creating an am file*/
         am_file = make_am_file(argv[ctr]); 
 
+        make_am_name(argv[ctr], am_file_name);
+        am_file = fopen(am_file_name, "r");
+
         /*first_pass*/
-        while (fgets(input, MAX_LEN, am_file) != NULL){    
-                printf("input is: %s\n", input);
-        }
         file_config = first_pass(am_file);
+        
+        printf("\n");
+        print_file_config(file_config);
+
         if (!file_config->is_valid){
+            printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
 
         /*TODO: run secound pass*/
+        printf("\nTHE END\n");
+        fclose(am_file);
+        printf("\nfcloseV\n");
+
+        free_file_config(&file_config);
+        printf("\nfree_file_config V\n");
 
     }
-    
-    
+    printf("\nTHE FINAL END\n");
+
+    ERROR_GENERAL(3);
     return 0;
 }
 

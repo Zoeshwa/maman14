@@ -7,7 +7,11 @@
     #define FALSE 0
 
     /*ERROR STR*/
-    #define ERROR_GENERAL(curr_line_num) printf("ERROR in line %d: Something went worng\n", curr_line_num)
+    /*
+    #define ERROR_GENERAL(curr_line_num) fprintf(stdout,"ERROR in line %d: Something went worng\n", curr_line_num)
+    
+    */
+   #define ERROR_GENERAL(curr_line_num) print_error("Something went worng", curr_line_num)
 
     /*labels errors*/
     #define ERROR_NOT_VALID_LABEL_CHAR(curr_line_num) printf("ERROR in line %d: not a valid lable - There is an invalid character\n", curr_line_num)
@@ -36,13 +40,6 @@
 
     /*Warnning STR*/
     #define WARNING_LABEL_NOT_USE(curr_line_num) printf("WARNING in line %d: This label is not use\n", curr_line_num)
-/*
-    typedef enum Scope_Type {
-        RELOCATABLE,
-        EXTERNAL 
-    } Scope_Type;
-
-*/
 
     typedef enum Symbol_Type {
         DATA,
@@ -54,5 +51,8 @@
         NUM,
         STRING
     } Data_Type;
+
+    void print_error(char* error_msg, int line_num);
+
 
 #endif

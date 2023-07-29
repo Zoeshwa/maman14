@@ -63,18 +63,17 @@ File_Config* first_pass(FILE* am_file) {
     File_Config* file_config;
     char input[MAX_LEN];
 
+    printf("\n---------START FIRST PASS-----------\n");
     file_config = intialiez_file_config();
 
-    printf("int first_pass\n");
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        printf("input is: %s", input);
+        printf("line %d: %s\n", get_curr_line_number(file_config), input);
 
         if (empty_line(input) || comment_line(input)){continue;}
-        printf("input is: %s", input);
+        
         handle_new_line(file_config, input);
         file_config->curr_line_num++;
-        printf("input is: %s", input);
     }
 
     /*checks if needs to continue process since it might have an error
@@ -82,6 +81,8 @@ File_Config* first_pass(FILE* am_file) {
         TODO:
         update_symbol_table_by_IC(file_config);
     } */
+    printf("\n---------END FIRST PASS-----------\n");
+
     return file_config;
 }
 
