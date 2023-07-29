@@ -18,8 +18,8 @@ int main(int argc, char* argv[]) {
         printf("\t----------START:file \"%s\"\n", argv[ctr]);
         am_file = make_am_file(argv[ctr]); 
 
+        /*open the am file to read*/
         make_am_name(argv[ctr], am_file_name);
-
         am_file = fopen(am_file_name, "r");
 
         /*first_pass*/
@@ -42,6 +42,7 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
 
 
 
