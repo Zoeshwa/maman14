@@ -50,23 +50,41 @@ char* int_to_binary_string(unsigned int number, int num_bits) {
     return result;
     }
 
-
-void make_bin_ins_word(char bin_word[12], int opcode, int param_type[2]){
+void make_bin_ins_word(Ins_Node** head){
     char *bin_src, *bin_opcode, *bin_dest, *bin_are;
-    bin_src = int_to_binary_string(param_type[0], 3);
-    bin_dest = int_to_binary_string(param_type[1], 3);
-    bin_opcode = int_to_binary_string(opcode, 4);
+    bin_src = int_to_binary_string((*head)->operrands[0], 3);
+    bin_dest = int_to_binary_string((*head)->operrands[1], 3);
+    bin_opcode = int_to_binary_string((*head)->opcode, 4);
     bin_are = int_to_binary_string(0, 2);
-    printf("src:%d , %s dest:  %d, %s opcode  %d, %s\n", param_type[0], bin_src, param_type[1], bin_dest, opcode, bin_opcode);
-    strcat(bin_word, bin_src);
-    strcat(bin_word, bin_opcode);
-    strcat(bin_word, bin_dest);
-    strcat(bin_word, bin_are);
-    printf("bin_word is: %s\n", bin_word);
-    bin_word[12] = '\0';
+    printf("src:%d , %s dest:  %d, %s opcode  %d, %s\n", (*head)->operrands[0], bin_src, (*head)->operrands[1], bin_dest, (*head)->opcode, bin_opcode);
+    strcat((*head)->bin_rep, bin_src);
+    strcat((*head)->bin_rep, bin_opcode);
+    strcat((*head)->bin_rep, bin_dest);
+    strcat((*head)->bin_rep, bin_are);
+    printf("bin_word is: %s\n", (*head)->bin_rep);
+    (*head)->bin_rep[12] = '\0';
 
     return;
 }
+
+
+void make_bin_word(Ins_Node** head){
+    int type;
+    type = (*head)->type;
+
+    if (type == 0){ /* refers to NONE in enum, represents ins word (not an extra param line)*/ 
+        make_bin_ins_word(head);
+    }
+    else if (type == 1){ /* refers to IMM*/
+        make_bin_IMM_word(head);
+    }    else if (type == 2){ /* refers to IMM*/
+        make_bin_REG_word(head);
+    }    else if (type == 3){ /* refers to IMM*/
+        make_bin_DIR_word(head);
+    }
+}
+
+
 
 void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
 

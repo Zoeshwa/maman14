@@ -30,7 +30,7 @@ typedef struct command {
         struct Ins_Node* next;
     } Ins_Node;
 
-    void make_bin_ins_word(char bin_word[12], int opcode, int param_type[2]);
+    void make_bin_ins_word(Ins_Node** head);
    int is_valid_number_param(char *param);
    int is_compatible_types(int acual_type, int* expected_type);
    int is_valid_com(command com,char** params, int param_types[2], int line_num);
