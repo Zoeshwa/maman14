@@ -123,7 +123,7 @@ void make_bin_DIR_word(Ins_Node** head, Lable_Node* lable_list){
 }
 
 
-void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_config){
+void make_bin_extra_word(Ins_Node** head, int param, Lable_Node* lable_head){
     int type;
     type = (*head)->type;
      if (type == IMM){ 
@@ -131,7 +131,7 @@ void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_config){
     }    else if (type == REG_DIR){ 
         make_bin_REG_word(head,(*head)->operrands[param]);
     }    else if (type == DIR){ 
-        make_bin_DIR_word(head, file_config->label_head);
+        make_bin_DIR_word(head, lable_head);
     }
 }
 
