@@ -17,7 +17,6 @@ void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_resu
     }
 }
 
-
 void tester_is_saved_word(char* input, int expected_result, int test_number) {
     int result;
     result = is_saved_word(input);
@@ -158,7 +157,6 @@ void tester_file_set_int_fileds(File_Config* file_config, void (*set_func)(File_
         FAIL_PRINT(test_number, expected_result, result);
     }
 }
-
 
 /*Labels testers*/
 void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number) {
