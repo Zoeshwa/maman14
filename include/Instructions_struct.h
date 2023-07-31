@@ -2,6 +2,10 @@
 #ifndef _ENUMS_HEADER_
     #include "enums.h"
 #endif
+#ifndef _FILES_FUNCTIONS_HEADER_
+    #include "file_functions.h"
+#endif
+
 
 #ifndef _INSTRUCTIONS_HEADER_
 #define _INSTRUCTIONS_HEADER_
@@ -27,8 +31,10 @@ typedef struct command {
         char bin_rep[12];
         struct Ins_Node* next;
     } Ins_Node;
-
-    void make_bin_ins_word(Ins_Node** head);
+    
+   void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_cinfig);
+   void make_bin_word(Ins_Node** head);
+   void make_bin_ins_word(Ins_Node** head);
    int is_valid_number_param(char *param);
    int is_compatible_types(int acual_type, int* expected_type);
    int is_valid_com(command com,char** params, int param_types[2], int line_num);
@@ -45,8 +51,6 @@ typedef struct command {
 #endif
 
 
-#ifndef _FILES_FUNCTIONS_HEADER_
-    #include "file_functions.h"
-#endif
+
 
 

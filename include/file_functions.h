@@ -12,9 +12,6 @@
 #endif
 
 
-#ifndef _INSTRUCTIONS_HEADER_
-    #include "Instructions_struct.h"
-#endif
 
 
 #ifndef _FILES_FUNCTIONS_HEADER_
