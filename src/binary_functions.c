@@ -77,11 +77,11 @@ void make_bin_REG_word(Ins_Node** head, int i){
     free(bin_dest);
 }
 
-void make_bin_DIR_word(Ins_Node** head, Lable_Node* lable_list){
+void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
     Lable_Node* lable;
     char* bin_adress, *bin_are;
 
-    lable = find_lable(lable_list, (*head)->lable);
+    lable = find_lable(file_conf->label_head, (*head)->lable);
     bin_adress = int_to_binary_string(lable->counter_value, 10);
 
     if (get_label_symbol_type(lable) == EXTERNAL){
@@ -96,7 +96,7 @@ void make_bin_DIR_word(Ins_Node** head, Lable_Node* lable_list){
 }
 
 
-void make_bin_extra_word(Ins_Node** head, int param, Lable_Node* lable_head){
+void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_conf){
     int type;
     type = (*head)->type;
      if (type == IMM){ 
@@ -104,7 +104,7 @@ void make_bin_extra_word(Ins_Node** head, int param, Lable_Node* lable_head){
     }    else if (type == REG_DIR){ 
         make_bin_REG_word(head,(*head)->operrands[param]);
     }    else if (type == DIR){ 
-        make_bin_DIR_word(head, lable_head);
+        make_bin_DIR_word(head, file_conf);
     }
 }
 
