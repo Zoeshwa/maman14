@@ -3,6 +3,8 @@
     #include "enums.h"
 #endif
 
+
+
 #ifndef _INSTRUCTIONS_HEADER_
 #define _INSTRUCTIONS_HEADER_
 #define MAX_LABLE_LEN 31
@@ -27,8 +29,12 @@ typedef struct command {
         char bin_rep[12];
         struct Ins_Node* next;
     } Ins_Node;
+    
+    Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num);
+    void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]);
+    Ins_Node* insert_ins_head();
+    void print_ins_node(Ins_Node* head);
 
-    void make_bin_ins_word(char bin_word[12], int opcode, int param_type[2]);
    int is_valid_number_param(char *param);
    int is_compatible_types(int acual_type, int* expected_type);
    int is_valid_com(command com,char** params, int param_types[2], int line_num);
@@ -45,8 +51,6 @@ typedef struct command {
 #endif
 
 
-#ifndef _FILES_FUNCTIONS_HEADER_
-    #include "file_functions.h"
-#endif
+
 
 
