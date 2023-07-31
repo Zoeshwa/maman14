@@ -5,23 +5,90 @@
 
 void run_tester() 
 {
-    
-    run_tests_handle_extern();
-    
+    tests_get_number();
+    run_is_valid_quotes();
     /*
+    run_tests_handle_extern();
     run_get_words();
     
     run_is_legal_params();
     run_is_saved_word();
     run_first_pass_tests(); 
     run_labels_tests();
-    run_file_config_print();
     run_input_testers();
 
     run_file_config_tests();
     tests_get_next_word();
     */
   
+}
+
+/*utils*/
+char** get_lines_valid(int* len) {
+    char** lines, *line1, *line2, *line3, *line4;
+
+    lines = (char**) calloc(4, sizeof(char*));
+
+    line1 = "HI: .string \"yossi\"\n";
+    line2 = ".data 1, 25, -8, +78, 0, -100   \n";
+    line3 = ".data 99\n";
+    line4 = "LABEL: .string \"zoe\" \n";
+
+    lines[0] = malloc(strlen(line1) + 1);
+    lines[1] = malloc(strlen(line2) + 1);
+    lines[2] = malloc(strlen(line3) + 1);
+    lines[3] = malloc(strlen(line4) + 1);
+
+    strcpy(lines[0],  line1);
+    strcpy(lines[1], line2);
+    strcpy(lines[2], line3);
+    strcpy(lines[3], line4);
+
+    /*
+        for (int i = 0; i < 4; i++) {
+            printf("Line %d: %s\n", i + 1, lines[i]);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            free(lines[i]);
+        }
+
+    */
+
+   *len = 4;
+   return lines;
+}
+
+char** get_lines_invalid(int* len) {
+    char** lines, *line1, *line2, *line3, *line4, *line5, *line6;
+
+    lines = (char**) calloc(4, sizeof(char*));
+
+    line1= "HI: .string \"yossi\n"; /*not close ""*/
+    line2= ".data 1, 25.25, -8, +78, 0, -100   \n"; /*point*/
+    line3= ".data 9yt9\n"; /*chars in data*/
+    line4= "LABEL: .string \"zo﻿e\" \n"; /*invisible chars*/
+    line5= ".string yossi\n"; /*no ""*/
+    line6= "HI: .string \"yossi\"\n"; /*the same lable*/
+
+
+    lines[0] = malloc(strlen(line1) + 1);
+    lines[1] = malloc(strlen(line2) + 1);
+    lines[2] = malloc(strlen(line3) + 1);
+    lines[3] = malloc(strlen(line4) + 1);
+    lines[4] = malloc(strlen(line5) + 1);
+    lines[5] = malloc(strlen(line6) + 1);
+
+
+    strcpy(lines[0], line1);
+    strcpy(lines[1], line2);
+    strcpy(lines[2], line3);
+    strcpy(lines[3], line4);
+    strcpy(lines[4], line5);
+    strcpy(lines[5], line6);
+
+   *len = 6;
+   return lines;
 }
 
 /*strings*/
@@ -77,6 +144,8 @@ void run_input_testers()
     run_empty_line_testers();
     run_comment_line_testers();
     run_remove_colon_at_end();
+    tests_get_number();
+    run_is_valid_quotes();
     END_TEST("input_testers");
 }
 
@@ -185,16 +254,36 @@ void tests_get_next_word() {
     END_TEST(" ");
 }
 
-/*file config*/
-void run_file_config_print() {
-    File_Config* file_config;
-    file_config = intialiez_file_config();
-    START_TEST("print_file_config");
+void run_is_valid_quotes() 
+{
+    int i;
+    i = 0;
+    START_TEST("run_is_valid_quotes");
+    tester_O_int_I_charP(is_valid_quotes, "\"zoe\"", 1, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"zoe shwartz\"", 1, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"5i", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "5i\"", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "5\"i", 0, i++);
 
-    print_file_config(file_config);
-    END_TEST("print_file_config");
+    END_TEST("run_is_valid_quotes");
 }
 
+void tests_get_number(){
+
+    int i;
+    i = 0;
+    START_TEST("tests_get_number");
+    tester_O_int_I_charP(get_number, "5", 5, i++);
+    tester_O_int_I_charP(get_number, "+5", 5, i++);
+    tester_O_int_I_charP(get_number, "0", 0, i++);
+    tester_O_int_I_charP(get_number, "100", 100, i++);
+    tester_O_int_I_charP(get_number, "9", 9, i++);
+    tester_O_int_I_charP(get_number, "-100", -100, i++);
+    END_TEST("tests_get_number");
+}
+
+
+/*file config*/
 void run_file_config_tests() {
     run_file_get_tests();
     run_file_set_tests();
@@ -211,7 +300,7 @@ void run_file_get_tests() {
     tester_file_get_counter_by_type(file_config, symbol_type, 0, 3);
     symbol_type = CODE;
     tester_file_get_counter_by_type(file_config, symbol_type, 100, 4);
-    free_file_config(file_config);
+    free_file_config(&file_config);
     END_TEST(" ");
 }
 
@@ -221,8 +310,82 @@ void run_file_set_tests() {
     START_TEST("file_set_tests");
     tester_file_set_int_fileds(file_config, set_file_config_DC,get_DC_counter, 1, 1);
     tester_file_set_int_fileds(file_config, set_file_config_IC, get_IC_counter, 101, 2);
-    free_file_config(file_config);
+    free_file_config(&file_config);
     END_TEST(" ");
+}
+
+void run_get_words() {
+    char** words;
+    int i;
+    char* line;
+    line = (char*)calloc(MAX_LEN, sizeof(char));
+    strcpy(line, "hello, world , , this, is a test, 1234\n");
+    /*
+    char* line1 = "hello, world this, is a test, 1234  , \n";
+    char* line2 = "  , hello, world this, is a test, 1234\n";
+    char* line3 = "hello, world , , this, is a test, 1234\n";
+    char* line4 = "hello, world , ,  , his, is a test, 1234\n";
+    char* line5 = "hello, world   his, is a test, 1234\n";
+    char* line6 = "hello\n";
+    
+    */
+    START_TEST("run_get_words");
+
+ 
+    words = get_words(line);
+    if (words) {
+        for (i = 0; words[i] != NULL; i++) {
+            if (words[i] != NULL) {
+                printf("|%s|\n", words[i]);
+                free(words[i]);
+            }
+        }
+        free(words);
+    } else {
+        printf("Array is not valid.\n");
+    }
+
+    END_TEST("run_get_words");
+
+}
+
+void run_is_legal_params() {
+    char* line = "hello, world ,this, is ,a ,test, 1234\n";
+    char* line1 = "hello, world this, is a test, 1234  , \n";
+    char* line2 = "  , hello, world this, is a test, 1234\n";
+    char* line3 = "hello, world , , this, is a test, 1234\n";
+    char* line4 = "hello, world , ,  , his, is a test, 1234\n";
+    char* line5 = "hello, world   his, is a test, 1234\n";
+    char* line6 = "hello\n";
+    char* line7 = " HI, BEY, YES\n";
+    int test_num;
+    test_num = 0;
+    START_TEST("run_is_legal_params");
+    tester_is_legal_params(line, 1, test_num++);
+    tester_is_legal_params(line6, 1, test_num++);
+    tester_is_legal_params(line1, 0, test_num++);
+    tester_is_legal_params(line2, 0, test_num++);
+    tester_is_legal_params(line3, 0, test_num++);
+    tester_is_legal_params(line4, 0, test_num++);
+    tester_is_legal_params(line5, 0, test_num++);
+    tester_is_legal_params(line7, 0, test_num++);
+/*
+    free(line);
+    free(line1);
+    free(line2);
+    free(line3);
+    free(line4);
+    free(line5);
+    free(line6);
+    */
+    END_TEST("run_is_legal_params");
+}
+
+/*TODO*/
+void run_is_visible_chars_only() {
+    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
+    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
+
 }
 
 /*labels*/
@@ -362,7 +525,7 @@ void run_tests_is_valid_lable() {
     head = NULL;
     /*when list empty and only word check*/
     tester_is_valid_lable(head, "hi:", 1, test_number++);
-    tester_is_valid_lable(head, "hi", 0, test_number++);
+    tester_is_valid_lable(head, "hi", 1, test_number++);
     tester_is_valid_lable(head, "5i", 0, test_number++);
     tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
     tester_is_valid_lable(head, "A555ADMSasjd555:", 1, test_number++); 
@@ -371,16 +534,16 @@ void run_tests_is_valid_lable() {
     tester_is_valid_lable(head, "a5$i:", 0, test_number++);
 
     symbol_type = DATA;
-    insert_to_symbol_table(&head, "hi:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi", test_number, symbol_type);
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
     tester_is_valid_lable(head, "hi", 0, test_number++);
 
     tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
-    insert_to_symbol_table(&head, "hi2:", test_number, symbol_type);
+    insert_to_symbol_table(&head, "hi2", test_number, symbol_type);
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
-    tester_is_valid_lable(head, "hi", 0, test_number++);
+    tester_is_valid_lable(head, "hi", 0, test_number++); 
     tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
     tester_is_valid_lable(head, "hi2:", 0, test_number++);
     
@@ -388,8 +551,14 @@ void run_tests_is_valid_lable() {
     END_TEST("run_tests_is_valid_lable");
 }
 
+
+/*first pass and handles*/
 void run_first_pass_tests(){ 
     run_tests_handle_label();
+    run_tests_handle_extern();
+    run_handle_string_store();
+    run_handle_int_store();
+    run_handle_data_ins();
 }
 
 void run_tests_handle_label() {
@@ -444,50 +613,12 @@ void run_tests_handle_label() {
     tester_handle_label(file_config, bad_word1, symbol_type,expted_lable_head, test_num++);
     
     free_lable_list(&expted_lable_head);
-    free_file_config(file_config);
+    free_file_config(&file_config);
 
     END_TEST("tests_handle_label");
 }
 
-/*
-
-void run_parsing() {
-    char** parsed;
-    int i;
-
-    parsed = (char**)malloc(MAX_LEN * sizeof(char*)); 
-
-    parsing(parsed, "LOOP: jmp L1, skj , sss");
-    printf("results:\n");
-    for(i = 0; parsed[i] != NULL ;i++){
-        printf("|%s| \n", parsed[i]);
-    }
-    
-
-    for(i = 0; parsed[i] != NULL ;i++) {
-        free(parsed[i]);
-        parsed[i] = NULL;
-    }
-
-    free(parsed);
-
-       
-       
-       char** parsed;
-        int i, len;
-        parsed = (char**)malloc(MAX_LEN * sizeof(char*)); 
-
-        parsing(parsed, &len , "LOOP: jmp L1, skj , sss");
-        printf("results:\n");
-        for(i = 0; i < len ;i++){
-            printf("|%s| \n", parsed[i]);
-        }
-
-    
-}
-*/
-
-
+/*TODO*/
 void run_tests_handle_extern(){
 
     File_Config * file_config;
@@ -512,78 +643,67 @@ void run_tests_handle_extern(){
 */
 
     print_file_config(file_config);
-    free_file_config(file_config);
+    free_file_config(&file_config);
 }
 
-void run_get_words() {
-    char** words;
-    int i;
-    char* line;
-    line = (char*)calloc(MAX_LEN, sizeof(char));
-    strcpy(line, "hello, world , , this, is a test, 1234\n");
-    /*
-    char* line1 = "hello, world this, is a test, 1234  , \n";
-    char* line2 = "  , hello, world this, is a test, 1234\n";
-    char* line3 = "hello, world , , this, is a test, 1234\n";
-    char* line4 = "hello, world , ,  , his, is a test, 1234\n";
-    char* line5 = "hello, world   his, is a test, 1234\n";
-    char* line6 = "hello\n";
-    
-    */
-    START_TEST("run_get_words");
-
- 
-    words = get_words(line);
-    if (words) {
-        for (i = 0; words[i] != NULL; i++) {
-            if (words[i] != NULL) {
-                printf("|%s|\n", words[i]);
-                free(words[i]);
-            }
-        }
-        free(words);
-    } else {
-        printf("Array is not valid.\n");
-    }
-
-    END_TEST("run_get_words");
-
-}
-
-void run_is_legal_params() {
-    char* line = "hello, world ,this, is ,a ,test, 1234\n";
-    char* line1 = "hello, world this, is a test, 1234  , \n";
-    char* line2 = "  , hello, world this, is a test, 1234\n";
-    char* line3 = "hello, world , , this, is a test, 1234\n";
-    char* line4 = "hello, world , ,  , his, is a test, 1234\n";
-    char* line5 = "hello, world   his, is a test, 1234\n";
-    char* line6 = "hello\n";
-    char* line7 = " HI, BEY, YES\n";
-    int test_num;
-    test_num = 0;
-    START_TEST("run_is_legal_params");
-    tester_is_legal_params(line, 1, test_num++);
-    tester_is_legal_params(line6, 1, test_num++);
-    tester_is_legal_params(line1, 0, test_num++);
-    tester_is_legal_params(line2, 0, test_num++);
-    tester_is_legal_params(line3, 0, test_num++);
-    tester_is_legal_params(line4, 0, test_num++);
-    tester_is_legal_params(line5, 0, test_num++);
-    tester_is_legal_params(line7, 0, test_num++);
-/*
-    free(line);
-    free(line1);
-    free(line2);
-    free(line3);
-    free(line4);
-    free(line5);
-    free(line6);
-    */
-    END_TEST("run_is_legal_params");
-}
 /*TODO*/
-void run_is_visible_chars_only() {
-    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
-    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
+void run_handle_string_store() {
+    File_Config* file_config;
+    char input[MAX_LEN] = "LABEL: .string \"zoe\" ";
+    /*
+    char input[MAX_LEN] = ".string \"zoe\" ";
+    char input[MAX_LEN] = "LABEL: .string \"zoe\", \"hi\" ";
+    char input[MAX_LEN] = "LABEL: .string zoe ";
+    */
 
+    file_config = intialiez_file_config();
+
+    printf("input is: %s\n", input)  ;
+    handle_data_ins(file_config, input, input+14);
+    
+    printf("Validity of file: %d\n", file_config->is_valid);
+    print_Data_Node(file_config->data_head);
+
+    free_file_config(&file_config);
+
+}
+
+void run_handle_int_store() {
+    File_Config* file_config;
+    char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";
+    /*    
+    char input[MAX_LEN] = "LABEL: .data 1, 25, -8, +78, 0, -100 ";
+    */
+    file_config = intialiez_file_config();
+
+    printf("input is: %s\n", input)  ;
+    handle_data_ins(file_config, input, input+12);
+    
+    printf("Validity of file: %d\n", file_config->is_valid);
+    print_Data_Node(file_config->data_head);
+
+    free_file_config(&file_config);
+}
+
+void run_handle_data_ins() {
+    File_Config* file_config;
+    char **lines;
+    int len, i;
+
+    lines = get_lines_invalid(&len);
+
+    file_config = intialiez_file_config();
+    for(i = 0; i < len; i++){
+        printf("line=%s\n", lines[i]);
+        handle_new_line(file_config, lines[i]);
+    }
+    
+    print_file_config(file_config);
+
+    free_file_config(&file_config);
+
+    printf("d\n");
+    for (i = 0; i < len; i++) {
+        free(lines[i]);
+    }
 }

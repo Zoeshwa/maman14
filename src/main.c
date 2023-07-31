@@ -5,38 +5,48 @@
 
 #define MAX_LEN 80
 
-/*TODO free functions*/
-
-
-
 int main(int argc, char* argv[]) {
-
+    /*char input[MAX_LEN];*/
     int ctr;
-    /*for every file read from terminal*/ 
-    for (ctr=1; ctr < argc; ctr++){
-        FILE* am_file;
-        File_Config * file_config;
+    FILE* am_file;
+    File_Config * file_config;
+    char am_file_name[MAX_LEN];
 
+    /*for every file read from terminal*/ 
+    for (ctr = 1; ctr < argc; ctr++){
         /*creating an am file*/
+        printf("\t----------START:file \"%s\"\n", argv[ctr]);
         am_file = make_am_file(argv[ctr]); 
+
+        /*open the am file to read*/
+        make_am_name(argv[ctr], am_file_name);
+        am_file = fopen(am_file_name, "r");
 
         /*first_pass*/
         file_config = first_pass(am_file);
+        
+        printf("\n");
+        print_file_config(file_config);
+
         if (!file_config->is_valid){
+            printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
 
         /*TODO: run secound pass*/
-
+        fclose(am_file);
+        free_file_config(&file_config);
+        printf("\t----------END:file \"%s\"\n", argv[ctr]);
     }
-    
-    
+    printf("\tTHE FINAL END\n");
+
     return 0;
 }
 
 
 
-/*int main(){
+
+/*int main_ido(){
     File_Config* file_conf;
     FILE* am_file;
     Ins_Node* test_ptr;
@@ -61,3 +71,26 @@ int main(int argc, char* argv[]) {
     return 0;
 
 }*/
+
+int main_test(){
+    /*
+    File_Config* file_config;
+    char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";
+
+    file_config = intialiez_file_config();
+
+    printf("input is: %s\n", input)  ;
+    handle_data_ins(file_config, input, input+12);
+    
+    printf("Validity of file: %d\n", file_config->is_valid);
+    print_Data_Node(file_config->data_head);
+
+    free_file_config(&file_config);
+    
+   run_handle_data_ins();
+    */
+    run_labels_tests();
+
+    return 0;
+
+}

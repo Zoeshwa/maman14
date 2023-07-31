@@ -14,7 +14,7 @@ int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
-        printf("emply_line()\n");
+        printf("\temply_line()\n");
         return TRUE; 
     }
     else{
@@ -29,7 +29,7 @@ int comment_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
-            printf("comment_line()\n");
+            printf("\tcomment_line()\n");
         return 1; /*true*/
     }
     else{
@@ -126,6 +126,7 @@ int is_legal_params(char *line, int line_num) {
     
     /*first not space char is comma*/
     if(*p == ',') {
+        printf("1\n");
         ERROR_ILLEGAL_COMMA(line_num);
         return FALSE;
     }
@@ -159,6 +160,7 @@ int is_legal_params(char *line, int line_num) {
     if(*p == '\0' || *p == EOF || *p == '\n') {
         /*the final word?*/
         if(comma_flag == TRUE) {
+            printf("2\n");
             ERROR_ILLEGAL_COMMA(line_num);
             return FALSE;
         }
@@ -191,6 +193,9 @@ void free_words(char** words) {
     words = NULL;
 }
 
+/*Description: The function returns how many words there are in an array of words*/
+/*Input: an array of words*/
+/*Output: number of words in the array*/
 int get_len_words_array(char ** words) {
     int num_words;
     if (words == NULL) {
@@ -201,6 +206,33 @@ int get_len_words_array(char ** words) {
     while (words[num_words] != NULL) {
         num_words++;
     }
-
     return num_words;
+}
+
+
+char* skip_next_word(char* line, char *curr_ptr) {
+    char* p;
+
+    p = curr_ptr;
+
+    p = skip_spaces(p);
+    while (!is_space(*p) && !is_end_line(*p))
+    {
+        p++;
+    }
+    p = skip_spaces(p);
+
+	return p;
+}
+
+/*DELETE*/
+void print_words(char** words, int len) {
+    int i;
+
+    printf("\tprint_words:\n");
+    for(i = 0; i< len; i++) {
+        printf("\twords[%d]=|%s|\n", i, words[i]);
+    }
+    printf("\tEND print_words\n");
+
 }
