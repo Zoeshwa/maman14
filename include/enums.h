@@ -48,6 +48,16 @@
         STRING
     } Data_Type;
 
+    typedef enum Param_Type {
+        NONE = 0, 
+        IMM = 1, 
+        DIR = 3, 
+        REG_DIR = 5, 
+        ERR = 6
+    } Param_Type;
+    
+    typedef enum Coms{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP} Coms;
+
     void print_error(char* error_msg, int line_num);
 
 

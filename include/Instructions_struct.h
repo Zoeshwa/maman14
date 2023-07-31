@@ -3,6 +3,8 @@
     #include "enums.h"
 #endif
 
+
+
 #ifndef _INSTRUCTIONS_HEADER_
 #define _INSTRUCTIONS_HEADER_
 #define MAX_LABLE_LEN 31
@@ -27,8 +29,10 @@ typedef struct command {
         char bin_rep[12];
         struct Ins_Node* next;
     } Ins_Node;
-
-    void make_bin_ins_word(Ins_Node** head);
+    
+   void make_bin_extra_word(Ins_Node** head, int param, Lable_Node* lalbe_head);
+   void make_bin_word(Ins_Node** head);
+   void make_bin_ins_word(Ins_Node** head);
     void make_bin_word(Ins_Node** head);
 
     char* int_to_binary_string(unsigned int number, int num_bits);
@@ -48,8 +52,6 @@ typedef struct command {
 #endif
 
 
-#ifndef _FILES_FUNCTIONS_HEADER_
-    #include "file_functions.h"
-#endif
+
 
 
