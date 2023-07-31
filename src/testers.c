@@ -45,7 +45,8 @@ void tester_get_next_word(char * str) {
 }
 
 void test_remove_colon_at_end(char* word, int test_number, const char* expected_result) {
-    char copy_word[strlen(word) + 1];
+    char *copy_word;
+    copy_word = (char*)malloc(strlen(word) + 1);
     strcpy(copy_word, word); 
 
     remove_colon_at_end(word);
@@ -63,25 +64,31 @@ void print_file_config(File_Config* file_config) {
         printf("file_config is NULL\n");
         return;
     }
-    printf("This is file config print: {\n");
-    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n\t", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
-    printf("\t");
+    printf("FILE_CONFIG:\n");
+    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
+    printf("\n");
     print_Ins_Node(get_file_ins_head(file_config));
-    printf("\t");
+    printf("\n");
     print_Lable_Node(file_config->label_head);
-    printf("}\n");
+    printf("\n");
+    print_Data_Node(file_config->data_head);
+    printf("\n");
 
 }
 
-void print_Ins_Node(Ins_Node* ins) {
-    if(ins == NULL) {
-        printf("ins=NULL\n");
+void print_Ins_Node(Ins_Node* head) {
+    if(head == NULL) {
+        printf("node = NULL\n");
         return;
     }
-    printf("This is Ins_Node print: {\n");
-    printf("\tline_number: %d, IC_count: %d\n\t",ins->line_number, ins->IC_count);
-    printf("}\n");
-
+    printf("INS_NODE: \t");
+    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,\t is_lable: %s", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
+    if(head->next  != NULL) {
+        printf("\tnext: \n");
+        print_Ins_Node(head->next);
+    }else {
+        printf("\tnext: NULL\n");
+    }
 } 
 
 void print_Lable_Node(Lable_Node* label_node) {
@@ -107,13 +114,17 @@ void print_Data_Node(Data_Node* data_node) {
         printf("Data_Node is NULL\n");
         return;
     }
-    printf("\tThis is Data_Node print:{\n");
-    printf("\tvalue: %d, ",data_node->value);
-    printf("\tDC_counter: %d, \n",data_node->DC_counter);
-    printf("\tnext: \n\t", data_node->next->value);
-    print_Data_Node(data_node->next);
-    printf("}\n");
 
+    printf("DATA NODE:");
+    if(get_data_node_type(data_node) == STRING) {
+        printf("\tvalue: %c, ", get_data_node_value(data_node));
+        printf("\ttype: STRING, ");
+    } else {
+        printf("\tvalue: %d, ", get_data_node_value(data_node));
+        printf("\ttype: DATA, ");
+    }
+    printf("\tDC_counter: %d \n",get_data_node_DC_counter(data_node));
+    print_Data_Node(get_data_node_next(data_node));
 } 
 
 /*files testers*/
@@ -384,6 +395,10 @@ void tester_is_legal_params(char* input, int expected_result, int test_number) {
         FAIL_PRINT(test_number, expected_result, result);
     }
 }
+
+
+
+/*words testers*/
 
 
 

@@ -65,7 +65,6 @@ void set_lable_is_entry(Lable_Node* new_lable, int is_entry) {
 /*Output: pointer to the founded lable node or a NULL if not founded*/
 Lable_Node* find_lable(Lable_Node* head, char * symbol_name) {
     Lable_Node* ptr;
-
     ptr = head; /*start with ptr to head of the list*/
     while (ptr != NULL)
     {
@@ -102,12 +101,13 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
 
     /*all othe chars is valid*/
     for(i = 0; i < strlen(word) - 1; i++) {
-        if(!is_valid_char(*ptr)){
+        if(!is_letter_or_num_char(*ptr)){
             ERROR_NOT_VALID_LABEL_CHAR(line_num);
             return FALSE;
         }
         ptr++;
     }
+    remove_colon_at_end(word);
 
     /*there is no other label like this*/
     if(find_lable(head, word) != NULL) {
@@ -115,7 +115,6 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
         return FALSE;
     }
 
-    remove_colon_at_end(word);
     if(is_saved_word(word)) {
         ERROR_LABEL_IS_SAVED_WORD(line_num);
         return FALSE;

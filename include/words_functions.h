@@ -5,15 +5,21 @@
     #define IS_NUMBER(c) (47< c && c<58)
     #define IS_UPPERCASE_LETTERS(c) (64< c && c<91)
     #define IS_LOWERCASE_LETTERS(c) (96< c && c<123)
-
-
-    int is_Ins(char* word);
-    int is_valid_char(char c);
-
+    
+    #define QUOTES '\"'
 
     /*TODO: maybe move to Labels*/
     #define MAX_LABEL_LEN 31
     #define COLON 58
+
+    int is_Ins(char* word);
+    int is_valid_quotes(char* word);
+    int is_valid_int_param(char *curr_word,int curr_line_num);
+
+
+    /*chars func*/
+    int is_letter_or_num_char(char c);
+
 
     int is_external_or_entry_ins(char* input);
     int is_extern_ins(char* input);
@@ -21,7 +27,7 @@
     int is_type_ins(int (*function)(char*), char* input);
     int is_extern_word(char* cur_word);
     int is_entry_word(char* cur_word);
-    int is_string_word(char* cur_word);
+    int is_word_equals_string(char* cur_word);
     int is_data_word(char* cur_word);
     int is_lable(char* word);
     int is_type_storge_string_ins(char * input);
@@ -34,6 +40,8 @@
     int is_space(char c);
     int is_number_char(char c);
     int get_number(char* p);
+    int is_valid_string_param(char * word, int line_number);
+    int is_end_line(char c);
 
 #endif
 

@@ -5,9 +5,8 @@
 #include "first_pass.h"
 #define NUM_OF_COM 16
 
-
 /*MAYBE*/
-enum{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP,SKIP};
+enum{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP};
 enum{NONE, IMM, DIR, REG_DIR, ERR};
 
 /*MAYBE: ido need to ask in the forum*/
@@ -64,16 +63,15 @@ File_Config* first_pass(FILE* am_file) {
     File_Config* file_config;
     char input[MAX_LEN];
 
+    printf("\t---------START FIRST PASS-----------\n");
     file_config = intialiez_file_config();
 
-    printf("int first_pass\n");
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        printf("input is: %s", input);
+        printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
 
-        if (empty_line(input) || comment_line(input)){
-            
-        }
+        if (empty_line(input) || comment_line(input)){continue;}
+        
         handle_new_line(file_config, input);
         file_config->curr_line_num++;
     }
@@ -83,6 +81,8 @@ File_Config* first_pass(FILE* am_file) {
         TODO:
         update_symbol_table_by_IC(file_config);
     } */
+    printf("\t---------END FIRST PASS-----------\n");
+
     return file_config;
 }
 
@@ -92,7 +92,7 @@ void handle_new_line(File_Config* file_config, char* line) {
     int is_line_have_symbol; 
     ptr = line;
 
-    printf("int handle_new_line\n");
+    printf("\tint handle_new_line\n");
     /*get the first word*/
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr);
@@ -101,14 +101,15 @@ void handle_new_line(File_Config* file_config, char* line) {
     
     if(is_data_storage_ins(line)) { /*ins: .data or .string*/
         if(is_line_have_symbol) {
+            /*skip the label word*/
+            ptr = skip_next_word(line, ptr);
+            
             /*handle insert data symbol for the command*/
             handle_label(file_config, cur_word, DATA);
-            
-            /*get next words*/
-            ptr += strlen(cur_word);
-            get_next_word(cur_word, line);
-            ptr = skip_spaces(ptr);
         }
+
+        /*skip the string/data word*/
+        ptr = skip_next_word(line, ptr);
 
         handle_data_ins(file_config, line, ptr);
         return;
@@ -128,7 +129,7 @@ void handle_new_line(File_Config* file_config, char* line) {
         return ;
 
     } else{ /* is instruction*/
-        printf("in instruction pass\n");
+        printf("\tin instruction pass\n");
         if (is_line_have_symbol) {
             handle_label(file_config, cur_word, CODE);
             ptr += strlen(cur_word);
@@ -197,7 +198,7 @@ command get_action(char* input, const command* commands_list)
 			return com;
 		}
 	}
-	printf("Undifined command name\n");
+	printf("\tUndifined command name\n");
 	com = commands_list[SKIP];
 	return com;
 }
@@ -252,22 +253,23 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
         if (!is_compatible_types(param_type[i], com_conf[com].operands[i])){
             printf("param %d is not compatible of type %d\n", i, param_type[i]);            return 0;
             }
-        printf("param %d is compatible of type %d\n", i, param_type[i]);  
+        printf("\tparam %d is compatible of type %d\n", i, param_type[i]);  
     } 
     return 1;
 }
 
 int set_operand_value(char* param, Ins_Node** head){
-    printf("set param value, param is: %s\n", param);
-    if ((*head)->type == DIR){ /*if parameter is lable - copy it to node*/
+    printf("\tset param value, param is: %s\n", param);
+    if ((*head)->type == DIR) { /*if parameter is lable - copy it to node*/
         strcpy((*head)->lable,param);
         return 0;
-    }else if ((*head)->type == REG_DIR){
+    } else if ((*head)->type == REG_DIR){
         return get_reg_num(param);
     }
     else{
         return get_number(param);
     }
+
 }
 
 Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int param_type[2], char** params){
@@ -308,7 +310,7 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     int param_type[2];
     Ins_Node** cur_node;
 
-    printf("in handle code line\n");
+    printf("\tin handle code line\n");
     ptr = skip_spaces(ptr);
     com = get_action(ptr, com_conf); /*gets first word and checks if valid*/
     if (com.en == SKIP){
@@ -350,67 +352,121 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
 }
 
-void handle_data_ins(File_Config* file_config, char* line, char* curr_ptr) {
-        int i, binary_words_counter, len;
-        char **words, *cur_word;
-        Data_Type data_type;
+/*Description: The function handles the command line that stores arguments in memory.
+It performs validation on the line according to the command type and calls the functions that insert the arguments into the data list*/
+/*Input: file_config for the current file, A line in which there is a prompt for memory allocation (string/data),
+ a pointer to the current position in the line (after the label if its have and after the command word)*/
+void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
+    int i, binary_words_counter, len, curr_line_num;
+    char **words, *cur_word;
 
-        binary_words_counter = 0, i = 0;
-        words = get_words(line);
-        len = get_len_words_array(words);
-        
-        if(len < 1) {
-            ERROR_GENERAL(file_config->curr_line_num);
+    curr_line_num = get_curr_line_number(file_config);
+    binary_words_counter = 0, i = 0;
+
+    /*get array of the words in the line*/
+    words = get_words(line);
+    len = get_len_words_array(words);
+    
+    if(len < 2) { 
+        ERROR_MISSING_ARGUMENTS(curr_line_num);
+        update_validity_file_config(&file_config, FALSE);
+        return;
+    }
+
+    /*get the the first word*/
+    cur_word = words[i];
+    if(is_lable(cur_word)) { /*if the first word is a label*/
+        cur_word = words[++i]; /*get the command word*/
+        if(2 >= len) { /*only 2 words include the label - not good*/
+            ERROR_MISSING_ARGUMENTS(curr_line_num);
+            update_validity_file_config(&file_config, FALSE);
             return;
         }
+    }
+    
+    /*check the commas between params and update validity of the file*/
+    update_validity_file_config(&file_config, is_legal_params(curr_ptr, curr_line_num));
 
-        /*get the the first word (after the lable if if there is one)*/
-        cur_word = words[i];
-        if(is_lable(cur_word)) {
-            cur_word = words[++i];
-            if(i == len) {
-                ERROR_GENERAL(file_config->curr_line_num);
-                return;
-            }
+    ++i; /*index of current words is the first param*/
+
+    /*check which kind of data type it is*/
+    if(is_data_word(cur_word)) {
+        binary_words_counter = handle_data_int_store(file_config, words, len, i);
+    } else {
+        binary_words_counter = handle_data_string_store(file_config, words, len, i);
+    }
+
+    /*update DC_counter*/
+    update_DC_counter(&file_config, binary_words_counter);
+    free_words(words);
+}
+
+/*Description: The function validates the arguments of the data command and inserts them, if they are valid, into the data list*/
+/*Input: file_config for the current file, words - An array of the words in the current line, len - the array length, curr_index - index to the first parameter*/
+/*Output: number of the parmaters that added to the list*/
+int handle_data_int_store(File_Config* file_config, char **words, int len, int curr_index) {
+    char *curr_word;
+    int curr_line_num, num_of_params, curr_number;
+    
+    num_of_params = 0;
+    curr_line_num = get_curr_line_number(file_config);
+
+    /*for each param*/
+    for(; curr_index < len; curr_index++) {
+        curr_word = words[curr_index];
+        /*validate the param*/
+        if(!is_valid_int_param(curr_word, curr_line_num)) {
+            update_validity_file_config(&file_config, FALSE);
+            continue;
         }
+        /*add to data list as a node if its valid*/
+        curr_number = get_number(curr_word);
+        add_data_node(&(file_config->data_head) ,&(file_config->data_tail), curr_number, DATA);
+        num_of_params++;
+    }
 
-        /*check which kind of data type it is*/
-        if(is_data_word(cur_word)) {
-            data_type = DATA;
-        } else {
-            data_type = STRING;
+    return num_of_params;
+}
+
+/*Description: The function validates the argument of the string command and inserts it, if its valid, into the data list*/
+/*Input: file_config for the current file, words - An array of the words in the current line, len - the array length, curr_index - index to the first parameter*/
+/*Output: number of the chars that added to the list*/
+int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index) {
+    char *curr_word, *curr_char;
+    int curr_line_num, num_of_chars, i;
+    num_of_chars = 0;
+
+    curr_line_num = get_curr_line_number(file_config);
+
+    if(curr_index + 1 > len ) { /*if there is more then one param its not valid*/
+        ERROR_MULTIPLE_ARGUMENTS(curr_line_num);
+        update_validity_file_config(&file_config, FALSE);
+    }
+
+    curr_word = words[curr_index]; /*get the param to handle*/
+    
+    /*if the param is not valid - not added to the data list*/
+    if(!is_valid_string_param(curr_word, curr_line_num)){
+        update_validity_file_config(&file_config, FALSE);
+        return num_of_chars;
+    }
+    
+    /*insert each char of the word to the data list exsept the '"'*/
+    curr_char = curr_word;
+    for(i = 0; i < strlen(curr_word); i++, curr_char++) {
+        /*skip the quotes in the sides of the word*/
+        if((i == 0 || i == (strlen(curr_word) - 1)) && (*curr_char == '\"')) {
+            continue;
         }
+        add_data_node(&(file_config->data_head) ,&(file_config->data_tail),*curr_char, STRING);
+        num_of_chars++;
+    }
 
-        if (data_type == STRING)
-        {
-            if(i + 1  < len ) {
-                ERROR_MULTIPLE_ARGUMENTS(file_config->curr_line_num);
-            }
+    /*insert the end of the string char*/
+    add_data_node(&(file_config->data_head) ,&(file_config->data_tail),'\0', STRING);
+    num_of_chars++;
 
-        } else {
-
-        }
-        
-
-
-      
-            /*next word*/
-
-            /*TODO: validate data*/
-
-            /*TODO: convert to int*/
-
-            /*add to DATA table TODO: value set
-            counter += number_of_oprends;
-            add_data_node_to_table(file_config->data_table, value, is_char, counter);
-            number_of_oprends++;
-            
-            */
-        
-
-
-        /*update DC_counter*/
-        set_file_config_DC(file_config, file_config->DC_counter + binary_words_counter);
+    return num_of_chars;
 }
 
 /*Description: givien a word - check if its legal lable and insert to the lable list if needed*/
