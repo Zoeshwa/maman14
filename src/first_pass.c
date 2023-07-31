@@ -6,8 +6,7 @@
 #define NUM_OF_COM 16
 
 /*MAYBE*/
-enum{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP};
-enum{NONE, IMM, DIR, REG_DIR, ERR};
+
 
 /*MAYBE: ido need to ask in the forum*/
 command com_conf[] = {
@@ -278,10 +277,12 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
 
     if (param_type[0] == REG_DIR && param_type[1] == REG_DIR){ /*case of two parameters, both registers*/
         file_config->IC_counter += 1;
-        head = insert_ins_node(head, file_config); 
+        head = insert_ins_node(head,  file_config->IC_counter, file_config->curr_line_num); 
         (*head)->type = REG_DIR;
         (*head)->operrands[0] = get_reg_num(params[0]);
         (*head)->operrands[1] = get_reg_num(params[1]);
+        make_bin_REG_word(head, 0); 
+
     }
     else{    
         for (i=0; i< 2; i++){
@@ -290,11 +291,11 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
             }
             else{/*otherwise another node should be added with values of params*/
                 file_config->IC_counter += 1;
-                head = insert_ins_node(head, file_config); 
+                head = insert_ins_node(head,  file_config->IC_counter, file_config->curr_line_num); 
                 (*head)->type = get_param_type(params[j]);
                 (*head)->operrands[i] = set_operand_value(params[j++], head); /*accodring to type set the value in suitable src/dest*/
+                make_bin_extra_word(head,i, file_config);
             }
-
         }
     
     }
@@ -336,15 +337,15 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     /*initialize first node*/
     if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type);
-        make_bin_ins_word((*cur_node)->bin_rep, com.en, param_type); 
+        make_bin_ins_word(cur_node); 
         print_ins_node(*cur_node);
 
     }
     else{/*initialize any other node*/
         file_config->IC_counter += 1;
-        cur_node = insert_ins_node(cur_node, file_config); 
+        cur_node = insert_ins_node(cur_node, file_config->IC_counter, file_config->curr_line_num); 
         intialiez_ins_node(cur_node, com, param_type); 
-        make_bin_ins_word((*cur_node)->bin_rep, com.en, param_type); 
+        make_bin_ins_word(cur_node); 
 
     }
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
