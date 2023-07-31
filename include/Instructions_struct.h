@@ -30,12 +30,11 @@ typedef struct command {
         struct Ins_Node* next;
     } Ins_Node;
     
-   void make_bin_extra_word(Ins_Node** head, int param, Lable_Node* lalbe_head);
-   void make_bin_word(Ins_Node** head);
-   void make_bin_ins_word(Ins_Node** head);
-    void make_bin_word(Ins_Node** head);
+    Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num);
+    void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]);
+    Ins_Node* insert_ins_head();
+    void print_ins_node(Ins_Node* head);
 
-    char* int_to_binary_string(unsigned int number, int num_bits);
    int is_valid_number_param(char *param);
    int is_compatible_types(int acual_type, int* expected_type);
    int is_valid_com(command com,char** params, int param_types[2], int line_num);

@@ -33,10 +33,7 @@
         Data_Node* data_tail;
     }File_Config;
     
-    void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]);
-    Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf);
-    Ins_Node* insert_ins_head();
-    void print_ins_node(Ins_Node* head);
+
 
 
 
