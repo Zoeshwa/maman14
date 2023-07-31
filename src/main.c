@@ -88,8 +88,8 @@ int main_test(){
     free_file_config(&file_config);
     
    run_handle_data_ins();
-    */
     run_labels_tests();
+    */
 
     return 0;
 
