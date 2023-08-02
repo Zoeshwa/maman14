@@ -48,11 +48,11 @@ File_Config* first_pass(FILE* am_file) {
         file_config->curr_line_num++;
     }
 
-    /*checks if needs to continue process since it might have an error
+    /*checks if needs to continue process since it might have an error*/
     if (file_config->is_valid){
-        TODO:
+        /*TODO ZOE only what is type dataq string?*/
         update_symbol_table_by_IC(file_config);
-    } */
+    }
     printf("\t---------END FIRST PASS-----------\n");
 
     return file_config;
