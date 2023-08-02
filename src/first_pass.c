@@ -29,33 +29,6 @@ command com_conf[] = {
             {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
 };
 
-/* Function to get the array of saved words and the number of elements in the array
-void get_saved_words(const char*** saved_words, int* num_saved_words) {
-    static const command com_conf[] = {
-            {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
-            {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"sub",2, SUB,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"not",1, NOT, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"clr",1, CLR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"lea",2, LEA, {{DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"inc",1, INC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"dec",1, DEC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"jmp",1, JMP, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"bne",1, BNE, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"red",1, RED, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"prn",1, PRN, {{NONE,-1}, {IMM, DIR, REG_DIR,-1}}},
-            {"jsr",1, JSR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"rts",0, RTS, {{NONE,-1}, {NONE,-1}}},
-            {"stop",0, STOP, {{NONE,-1}, {NONE,-1}}},
-            {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
-    };
-    *saved_words = saved_words_array;
-    *num_saved_words = sizeof(saved_words_array) / sizeof(saved_words_array[0]);
-}
-*/
-
-/*ddd*/
 
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
