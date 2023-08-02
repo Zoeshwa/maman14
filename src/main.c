@@ -28,19 +28,20 @@ int main(int argc, char* argv[]) {
         printf("\n");
         print_file_config(file_config);
 
+        free_ins_list(&(file_config->ins_head));
         if (!file_config->is_valid){
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
 
         /*TODO: run secound pass*/
-        second_pass(&file_config, am_file);
+/*      second_pass(&file_config, am_file);
 
         if (!file_config->is_valid){
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
-
+*/
         /*TODO IDO: make files*/
 
         fclose(am_file);
@@ -81,7 +82,33 @@ int main(int argc, char* argv[]) {
 
 }*/
 
-int main_test(){
+/*void test_init_ins_node(Ins_Node** head, int type, int src, int dest, int opcode){
+       (*head)->type = type;
+       (*head)->operrands[0] = src; 
+       (*head)->operrands[1] =  dest;
+       (*head)->opcode = opcode; 
+}
+*/
+int main_tester(){
+   
+
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
     /*
     File_Config* file_config;
     char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";

@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include "first_pass.h"
 
-void second_pass(File_Config **file_config, File* am_file) {
+void second_pass(File_Config **file_config, FILE* am_file) {
 
     /*initilazed varabels*/
     char input[MAX_LEN];
