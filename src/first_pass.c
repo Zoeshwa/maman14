@@ -55,6 +55,8 @@ void get_saved_words(const char*** saved_words, int* num_saved_words) {
 }
 */
 
+/*ddd*/
+
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
 File_Config* first_pass(FILE* am_file) {
