@@ -1,8 +1,4 @@
 
-#ifndef _LABELS_HEADER_
-    #include "labels.h"
-#endif
-
 #ifndef _INSTRUCTIONS_HEADER_
     #include "Instructions_struct.h"
 #endif
@@ -23,5 +19,4 @@
 
 #endif
 
-/*ido*/
 

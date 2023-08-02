@@ -37,16 +37,13 @@ FILE* make_am_file(char* orig_name){
         p = input;
         p = skip_spaces(p);
         get_next_word(cur_word, p);
-        printf("cur_word is: %s\n", cur_word);   
         if (mcro == 1){
             /*checking end of macro def*/
             if (strcmp(cur_word,"endmcro") ==0){
-                printf("end of macro def\n");
                 mcro=0;
             }
             /* if we are inside a macro, insert the lines to macro content*/
             else{
-                printf("updating macro contect\n");
                 update_macro_contect(&head, input);
             }
             continue;
@@ -54,23 +51,19 @@ FILE* make_am_file(char* orig_name){
 
         head_ptr = search_macro_list(head, cur_word);
         if (head_ptr != NULL){
-            printf("found in macro list, writing content to file\n");
             if (fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file)<0) {printf("errorr writing to file\n");}
         }
 
         /* beginning of macro def*/
         else if(strcmp(cur_word,"mcro") == 0){
-            printf("its a macro def\n");
             p += strlen(cur_word);
             p = skip_spaces(p);
             get_next_word(cur_word,p);
-            printf("macro name is: %s\n", cur_word);
             insertMacro_Node(&head, cur_word);
             mcro=1;
         }
         /* regular line*/
         else{
-            printf("regular line: |%s|\n", input);
             if (fwrite(input, 1, strlen(input), am_file)<0){
                 printf("errorr writing to file\n");
             }
@@ -116,7 +109,6 @@ void update_macro_contect(struct Macro_Node** head, char* line){
     }
     line = skip_spaces(line);
     strcat( (*head)->content, line);
-    printf("macro contect is: %s\n", (*head)->content);
 }
 
 struct Macro_Node* search_macro_list(struct Macro_Node* head, char* name) {
@@ -125,12 +117,10 @@ struct Macro_Node* search_macro_list(struct Macro_Node* head, char* name) {
     /* Traverse the list and search for the target value*/
     while (current != NULL) {
         if (strcmp(current->name,name) == 0) {
-            printf("found in macro list. macro %s\n", current->name);
             return current;  /* Found the value, return the Macro_Node*/
         }
         current = current->next;
     }
-    printf("not in macro list\n");
     return NULL;  /* Value not found, return NULL*/
 }
 

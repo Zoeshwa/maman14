@@ -3,8 +3,6 @@
 #include <string.h>
 #include "binary_functions.h"
 
-
-
 char* int_to_binary_string(int number, int num_bits) {
     int i;
     char* result = (char*)malloc((num_bits + 1) * sizeof(char));
@@ -33,29 +31,47 @@ void make_bin_ins_word(Ins_Node** head){
     bin_opcode = int_to_binary_string((*head)->opcode, 4);
     bin_are = "00";
 
+    printf("55555\n");
     /*make the bin ins word*/
+    (*head)->bin_rep = (char*)calloc(13,sizeof(char));
     strcat((*head)->bin_rep, bin_src);
+    printf("bin_rep: %s\n",(*head)->bin_rep);
+
     strcat((*head)->bin_rep, bin_opcode);
+    printf("bin_rep: %s\n",(*head)->bin_rep);
+
     strcat((*head)->bin_rep, bin_dest);
+    printf("bin_rep: %s\n",(*head)->bin_rep);
+
     strcat((*head)->bin_rep, bin_are);
     (*head)->bin_rep[13] = '\0';
 
-    free(bin_src);
-    free(bin_dest);
-    free(bin_opcode);
+    printf("666\n");
+    printf("bin_rep: %s\n",(*head)->bin_rep);
 
-    return;
+
+    if(bin_src != NULL)
+        free(bin_src);
+    if(bin_dest != NULL)
+        free(bin_dest);
+    if(bin_opcode != NULL)
+        free(bin_opcode);
+
+
 }
 
 void make_bin_IMM_word(Ins_Node** head, int i){
     char* bin_are, *bin_imm;
     bin_are = "00";
     bin_imm = int_to_binary_string(i, 10);
+
     printf("oprerand is: %d, bin_imm is: %s, bin_are: %s\n", i, bin_imm, bin_are);
 
     strcat((*head)->bin_rep, bin_imm);
     strcat((*head)->bin_rep, bin_are);
     (*head)->bin_rep[13] = '\0';
+
+    printf("bin_rep: %s\n",(*head)->bin_rep);
 
     free(bin_imm);
 
@@ -111,6 +127,8 @@ void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
 
 void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_conf){
     int type;
+    (*head)->bin_rep = (char*)calloc(13,sizeof(char));
+    
     type = (*head)->type;
     if (type == IMM){ 
         make_bin_IMM_word(head, (*head)->operrands[param]);

@@ -27,6 +27,17 @@ void tester_is_saved_word(char* input, int expected_result, int test_number) {
     }
 }
 
+void tester_bin_word(char* input, char* expected_input, int test_number) {
+    int result, test_result;
+    result = is_saved_word(input);
+    test_result = strcmp(result, expected_input);
+    if (test_result == 0) {
+        PASS_PRINT(test_result);
+    } else {
+        FAIL_PRINT(test_number, test_result, result);
+    }
+}
+
 void tester_get_next_word(char * str) {
     char * ptr;
     char cur_word[MAX_LEN];
@@ -81,7 +92,7 @@ void print_Ins_Node(Ins_Node* head) {
         return;
     }
     printf("INS_NODE: \t");
-    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,\t is_lable: %s", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
+    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,\t is_lable: %s,\t bin:%s", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable, head->bin_rep);
     if(head->next  != NULL) {
         printf("\tnext: \n");
         print_Ins_Node(head->next);

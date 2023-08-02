@@ -4,8 +4,8 @@
 #include <ctype.h>
 #include "first_pass.h"
 #define NUM_OF_COM 16
+#define MAX_LEN 80 /*TODO: maybe in the header?*/
 
-/*MAYBE*/
 
 
 /*MAYBE: ido need to ask in the forum*/
@@ -29,34 +29,6 @@ command com_conf[] = {
             {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
 };
 
-/* Function to get the array of saved words and the number of elements in the array
-void get_saved_words(const char*** saved_words, int* num_saved_words) {
-    static const command com_conf[] = {
-            {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
-            {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"sub",2, SUB,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"not",1, NOT, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"clr",1, CLR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"lea",2, LEA, {{DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"inc",1, INC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"dec",1, DEC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"jmp",1, JMP, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"bne",1, BNE, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"red",1, RED, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"prn",1, PRN, {{NONE,-1}, {IMM, DIR, REG_DIR,-1}}},
-            {"jsr",1, JSR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"rts",0, RTS, {{NONE,-1}, {NONE,-1}}},
-            {"stop",0, STOP, {{NONE,-1}, {NONE,-1}}},
-            {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
-    };
-    *saved_words = saved_words_array;
-    *num_saved_words = sizeof(saved_words_array) / sizeof(saved_words_array[0]);
-}
-*/
-
-#define MAX_LEN 80 /*TODO: maybe in the header?*/
-
 File_Config* first_pass(FILE* am_file) {
     /*initilazed varabels*/
     File_Config* file_config;
@@ -68,6 +40,7 @@ File_Config* first_pass(FILE* am_file) {
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
         printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
+        file_config->curr_line_num++;
 
         if (empty_line(input) || comment_line(input)){continue;}
         
@@ -277,6 +250,7 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
         (*head)->type = REG_DIR;
         (*head)->operrands[0] = get_reg_num(params[0]);
         (*head)->operrands[1] = get_reg_num(params[1]);
+        (*head)->bin_rep = (char*)calloc(13,sizeof(char));
         make_bin_REG_word(head, 0); 
                 /*test*/
         printf("reg_extra_word is: ");
@@ -313,30 +287,40 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     com = get_action(ptr, com_conf); /*gets first word and checks if valid*/
     if (com.en == SKIP){
         ERROR_NOT_VALID_COMMAND_NAME(file_config->curr_line_num);
+        update_validity_file_config(&file_config, FALSE);
         return;
     }
-    else{
-        ptr += strlen(com.act);
-        if (!is_legal_params(ptr, file_config->curr_line_num)){ /*checks the syntax and correctness of the parameters*/
-            com.en = SKIP;
-        }
-        params = get_words(ptr);     /*get all parameters in an array*/
-        
-        if (!is_valid_com(com,params, param_type, file_config->curr_line_num)){/*checks if the entered params are compatible with the command's requirements*/
-            com.en = SKIP;
-        }
+
+    ptr += strlen(com.act);
+    if (!is_legal_params(ptr, file_config->curr_line_num)){ /*checks the syntax and correctness of the parameters*/
+        com.en = SKIP;
     }
+    printf("before params\n");
+
+    params = get_words(ptr);     /*get all parameters in an array*/
+    
+    printf("after params\n");
+
+
+    if (!is_valid_com(com, params, param_type, file_config->curr_line_num)){/*checks if the entered params are compatible with the command's requirements*/
+        com.en = SKIP;
+    }
+
     if (com.en == SKIP){
+        update_validity_file_config(&file_config, FALSE);
         return;
     }
 
     /*get last node of list*/
     cur_node = &(file_config->ins_tail);
 
+    printf("11111\n");
+
     /*initialize first node*/
     if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type);
         make_bin_ins_word(cur_node); 
+        
         /*test*/
         printf("first ins word is: ");
         print_ins_node(*cur_node);
@@ -344,16 +328,20 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     }
     else{/*initialize any other node*/
         file_config->IC_counter += 1;
+
         cur_node = insert_ins_node(cur_node, file_config->IC_counter, file_config->curr_line_num); 
+
         intialiez_ins_node(cur_node, com, param_type); 
         make_bin_ins_word(cur_node); 
+
+        
         /*test*/
         printf("ins word is: ");
         print_ins_node(*cur_node);
-
-
     }
+
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
+    free_words(params);
 }
 
 /*Description: The function handles the command line that stores arguments in memory.
