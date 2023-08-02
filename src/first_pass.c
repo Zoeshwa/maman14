@@ -91,7 +91,6 @@ void handle_new_line(File_Config* file_config, char* line) {
     int is_line_have_symbol; 
     ptr = line;
 
-    printf("\tint handle_new_line\n");
     /*get the first word*/
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr);
@@ -128,7 +127,6 @@ void handle_new_line(File_Config* file_config, char* line) {
         return ;
 
     } else{ /* is instruction*/
-        printf("\tin instruction pass\n");
         if (is_line_have_symbol) {
             handle_label(file_config, cur_word, CODE);
             ptr += strlen(cur_word);
@@ -250,15 +248,13 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
     }
     for (i=0; i<2;i++){/*comparing between acual read types to possible action types*/
         if (!is_compatible_types(param_type[i], com_conf[com].operands[i])){
-            printf("param %d is not compatible of type %d\n", i, param_type[i]);            return 0;
+            return 0;
             }
-        printf("\tparam %d is compatible of type %d\n", i, param_type[i]);  
     } 
     return 1;
 }
 
 int set_operand_value(char* param, Ins_Node** head){
-    printf("\tset param value, param is: %s\n", param);
     if ((*head)->type == DIR) { /*if parameter is lable - copy it to node*/
         strcpy((*head)->lable,param);
         return 0;
@@ -282,6 +278,9 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
         (*head)->operrands[0] = get_reg_num(params[0]);
         (*head)->operrands[1] = get_reg_num(params[1]);
         make_bin_REG_word(head, 0); 
+                /*test*/
+        printf("reg_extra_word is: ");
+        print_ins_node(*head);
 
     }
     else{    
@@ -295,6 +294,7 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
                 (*head)->type = get_param_type(params[j]);
                 (*head)->operrands[i] = set_operand_value(params[j++], head); /*accodring to type set the value in suitable src/dest*/
                 make_bin_extra_word(head,i, file_config);
+              
             }
         }
     
@@ -309,7 +309,6 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     int param_type[2];
     Ins_Node** cur_node;
 
-    printf("\tin handle code line\n");
     ptr = skip_spaces(ptr);
     com = get_action(ptr, com_conf); /*gets first word and checks if valid*/
     if (com.en == SKIP){
@@ -338,6 +337,8 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type);
         make_bin_ins_word(cur_node); 
+        /*test*/
+        printf("first ins word is: ");
         print_ins_node(*cur_node);
 
     }
@@ -346,6 +347,10 @@ void handle_code_line(File_Config* file_config, char *ptr) {
         cur_node = insert_ins_node(cur_node, file_config->IC_counter, file_config->curr_line_num); 
         intialiez_ins_node(cur_node, com, param_type); 
         make_bin_ins_word(cur_node); 
+        /*test*/
+        printf("ins word is: ");
+        print_ins_node(*cur_node);
+
 
     }
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
