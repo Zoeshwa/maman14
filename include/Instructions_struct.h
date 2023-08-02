@@ -26,7 +26,7 @@ typedef struct command {
         int opcode; 
         int operrands[2];
         char lable[MAX_LABLE_LEN]; /*for when adding extra ins line representing a lable param */
-        char bin_rep[12];
+        char *bin_rep;
         struct Ins_Node* next;
     } Ins_Node;
     

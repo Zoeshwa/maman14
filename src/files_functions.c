@@ -6,7 +6,6 @@
 
 File_Config* intialiez_file_config() {
     File_Config* file_config;
-    printf("in intialiez_file_config()\n");
     file_config = (File_Config*)malloc(sizeof(File_Config));
     file_config->label_head = NULL;
 

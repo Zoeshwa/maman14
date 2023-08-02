@@ -102,7 +102,6 @@ void run_is_saved_word(){
     tester_is_saved_word("Mov", 0, 6);
     tester_is_saved_word("move", 0, 7);
     END_TEST("run_is_saved_word");
-
 }
 
 void run_remove_colon_at_end() {
@@ -706,4 +705,11 @@ void run_handle_data_ins() {
     for (i = 0; i < len; i++) {
         free(lines[i]);
     }
+}
+
+
+void run_tests_bin_word(){
+    START_TEST("run_tests_bin_word");
+    /*tester_bin_word("mov", 1, 1);*/
+    END_TEST("run_tests_bin_word");
 }

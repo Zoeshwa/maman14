@@ -3,7 +3,7 @@
 #include <string.h>
 #include "data_struct.h"
 
-#define INITIAL_DC_VALUE 0
+#define INITIAL_DC_VALUE 1
 
 /**/
 typedef struct Data_Node{
