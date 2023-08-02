@@ -3,7 +3,7 @@
 #include <string.h>
 #include "data_struct.h"
 
-#define INITIAL_DC_VALUE 0
+#define INITIAL_DC_VALUE 1
 
 /**/
 typedef struct Data_Node{
@@ -12,6 +12,7 @@ typedef struct Data_Node{
     int DC_counter;
     struct Data_Node* next;
 } Data_Node;
+
 
 /*Description: The function creates a new data node, allocates space in memory and initializes the data*/
 /*Input: value - value to save in the node, data_type - type of the value (string or data)*/
