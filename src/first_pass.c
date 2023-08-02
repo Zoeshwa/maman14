@@ -7,7 +7,6 @@
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
 
-
 /*MAYBE: ido need to ask in the forum*/
 command com_conf[] = {
             {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
