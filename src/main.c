@@ -29,13 +29,13 @@ void make_files(File_Config *file_config, char* file_name){
 
     while (ins_head != NULL){     /*go over ins nodes*/
 
-        make_ob_word(ob_word, ins_head->bin_rep);
+        bin_to_base64(ob_word, ins_head->bin_rep);
         fprintf("%s\n", ob_word);
         ins_head = ins_head->next;
     }
     while (data_head != NULL){     /*go over data nodes*/
 
-        make_ob_word(ob_word, data_head->bin_rep); /*TODO: bin rep? ask Zoe*/
+        bin_to_base64(ob_word, get_bin_rep_data(data_head)); /*TODO: bin rep? ask Zoe*/
         fprintf("%s\n", ob_word);
         data_head = get_data_node_next(data_head);
     }

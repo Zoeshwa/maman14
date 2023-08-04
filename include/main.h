@@ -10,6 +10,3 @@
 
 #include "testers.h"
 
-
-
-void second_pass(File_Config **file_config, FILE* am_file);
