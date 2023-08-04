@@ -47,7 +47,6 @@ File_Config* first_pass(char* am_file_name) {
         if (empty_line(input) || comment_line(input)){continue;}
         
         handle_new_line(file_config, input);
-        file_config->curr_line_num++;
     }
 
     /*checks if needs to continue process since it might have an error*/
