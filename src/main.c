@@ -91,24 +91,6 @@ int main(int argc, char* argv[]) {
 */
 int main_tester(){
    
-
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
     /*
     File_Config* file_config;
     char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";

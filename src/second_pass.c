@@ -55,13 +55,15 @@ void second_pass(File_Config **file_config, FILE* am_file) {
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        
+        printf("line: |%s| is entry\n", input);
+
         if (empty_line(input) || comment_line(input)){continue;}
 
         if (is_type_storge_string_ins(input) || is_extern_ins(input)){continue;}
 
         /*if the line is entry*/
         if(is_type_ins(is_entry_word, input) == TRUE) { 
+            printf("line: |%s| is entry\n", input);
             handle_entry(*file_config, input);
         } else {
 
