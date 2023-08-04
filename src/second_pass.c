@@ -46,7 +46,6 @@ void handle_entry(File_Config *file_config, char* line) {
 
 void second_pass(File_Config *file_config, char* am_file_name) {
     /*initilazed varabels*/
-    FILE* ob_file, *ext_file, *ent_file;
     char input[MAX_LEN];
     FILE* am_file;
     printf("\t---------START 2 PASS-----------\n");

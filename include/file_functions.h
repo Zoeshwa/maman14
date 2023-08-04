@@ -55,5 +55,7 @@
 
 
     void bin_to_base64(char arr[2], const char* binary_word);
+    int is_entry_file_needed(Lable_Node *lable_head);
+    int is_ext_file_needed(Lable_Node *lable_head);
 #endif
 
