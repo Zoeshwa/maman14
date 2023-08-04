@@ -13,7 +13,7 @@
     int get_data_node_type(Data_Node* node);
     int get_data_node_DC_counter(Data_Node* node);
     Data_Node* get_data_node_next(Data_Node* node);
-    
+    char* get_bin_rep_data(Data_Node* node);    
     void free_data_list(Data_Node** head);
 #endif
 
