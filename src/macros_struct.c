@@ -13,7 +13,7 @@ typedef struct Macro_Node {
     struct Macro_Node* next;
 } Macro_Node;
 
-FILE* make_am_file(char* orig_name){
+void make_am_file(char* orig_name){
     FILE* am_file, *src_file;
     char *p;
     char cur_word[MAX_LEN], input[MAX_LEN], file_name[MAX_LEN];
@@ -73,7 +73,6 @@ FILE* make_am_file(char* orig_name){
 
     print_macro_list(head);
     free_macro_list(&head);
-    return am_file;
 }
 
 /* Function to insert a new Macro_Node at the beginning of the list*/
