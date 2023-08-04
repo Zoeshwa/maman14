@@ -2,6 +2,10 @@
     #include "enums.h"
 #endif
 
+#ifndef _BINARY_HEADER_
+    #include "binary_functions.h"
+#endif
+
 #ifndef _Data_HEADER_
 #define _Data_HEADER_
     

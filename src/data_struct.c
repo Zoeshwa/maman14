@@ -27,7 +27,7 @@ Data_Node* create_data_node(int value, Data_Type data_type) {
 
     new_node->value = value;
     new_node->data_type = data_type;
-    new_node->bin_rep = NULL;    
+    new_node->bin_rep = int_to_binary_string(value, WORD_LEN_BINARY);    
     new_node->next = NULL;
 
     return new_node;
