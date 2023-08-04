@@ -3,7 +3,7 @@
 #include <string.h>
 #include "main.h"
 
-#define MAX_LEN 80
+#define MAX_LEN 80 /*ASK: not include the \0*/
 
 
 
@@ -81,6 +81,7 @@ int main(int argc, char* argv[]) {
          /*open the am file to read*/
         add_extention(argv[ctr], am_file_name, "am");
 
+
         /*first_pass*/
         file_config = first_pass(am_file_name);
         
@@ -100,12 +101,12 @@ int main(int argc, char* argv[]) {
         }
       
         print_file_config(file_config); 
+        make_files(file_config, argv[ctr]);
+
+        free_file_config(&file_config);
 
         printf("\t----------END:file \"%s\"\n", argv[ctr]);
     }
-    make_files(file_config, argv[ctr]);
-
-    free_file_config(&file_config);
 
     printf("\tTHE FINAL END\n");
 
@@ -148,25 +149,35 @@ int main(int argc, char* argv[]) {
        (*head)->opcode = opcode; 
 }
 */
-int main_tester(){
-   
-    /*
-    File_Config* file_config;
-    char input[MAX_LEN] = "LABEL: .data 1, 25.25, +s15, -8, +78, 0, -100 ";
+int main_test(int argc, char* argv[]){
+    File_Config * file_config;
 
-    file_config = intialiez_file_config();
 
-    printf("input is: %s\n", input)  ;
-    handle_data_ins(file_config, input, input+12);
+    /*first_pass*/
+    file_config = first_pass("data_valid_file.am");
     
-    printf("Validity of file: %d\n", file_config->is_valid);
-    print_Data_Node(file_config->data_head);
+    printf("\n");
+
+    if (!file_config->is_valid){
+        printf("NOT GOOD - file  have errors.\n");
+    } else {
+
+        /*run secound pass*/
+        second_pass(file_config, "data_valid_file.am");
+        if (!file_config->is_valid){
+            printf("NOT GOOD - file  have errors.\n");
+        }
+
+    }
+
+
+    print_file_config(file_config); 
 
     free_file_config(&file_config);
-    
-   run_handle_data_ins();
-    run_labels_tests();
-    */
+
+
+    printf("\tTHE FINAL END\n");
+
     return 0;
 
 }

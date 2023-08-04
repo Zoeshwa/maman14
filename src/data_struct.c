@@ -27,7 +27,7 @@ Data_Node* create_data_node(int value, Data_Type data_type) {
 
     new_node->value = value;
     new_node->data_type = data_type;
-    new_node->bin_rep = NULL;    
+    new_node->bin_rep = int_to_binary_string(value, WORD_LEN_BINARY);    
     new_node->next = NULL;
 
     return new_node;
@@ -92,4 +92,15 @@ void free_data_list(Data_Node** head) {
     }
     /* Set the head pointer to NULL after freeing the entire list */
     *head = NULL;
+}
+
+
+void update_counters_data_list(Data_Node* head, int IC) {
+    Data_Node* ptr;
+    ptr = head; /*start with ptr to head of the list*/
+    while (ptr != NULL)
+    {
+        ptr->DC_counter = ptr->DC_counter + IC;
+        ptr = get_data_node_next(ptr);
+    }
 }

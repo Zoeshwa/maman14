@@ -92,7 +92,19 @@ void print_Ins_Node(Ins_Node* head) {
         return;
     }
     printf("INS_NODE: \t");
-    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,\t is_lable: %s,\t bin:%s", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable, head->bin_rep);
+    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1]);
+    if(head->lable != NULL) {
+        printf("\tis_lable: %s,", head->lable);
+    } else {
+        printf("\tis_lable: NULL,");
+    }
+
+    if( head->bin_rep != NULL) {
+        printf("\tbin: %s",  head->bin_rep);
+    } else {
+        printf("\tbin: NULL");
+    }
+
     if(head->next  != NULL) {
         printf("\tnext: \n");
         print_Ins_Node(head->next);
@@ -133,7 +145,7 @@ void print_Data_Node(Data_Node* data_node) {
         printf("\tvalue: %d, ", get_data_node_value(data_node));
         printf("\ttype: DATA, ");
     }
-    printf("\tDC_counter: %d \n",get_data_node_DC_counter(data_node));
+    printf("\tbin: %s,\tDC_counter: %d \n", get_bin_rep_data(data_node), get_data_node_DC_counter(data_node));
     print_Data_Node(get_data_node_next(data_node));
 } 
 
