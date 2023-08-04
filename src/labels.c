@@ -3,6 +3,15 @@
 #include <string.h>
 #include "labels.h"
 
+
+ struct Lable_Node {
+        char* name;
+        int counter_value;
+        Symbol_Type symbol_type;
+        int is_entry; 
+        struct Lable_Node* next;
+    };
+
 void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
     Lable_Node* new_node = new_label_node(word, counter_value, symbol_type);

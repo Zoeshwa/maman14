@@ -108,7 +108,6 @@ void free_file_config(File_Config** file_config_ptr) {
     free_data_list(&(file_config->data_head));
 
     free(file_config);
-    printf("sss\n");
     /* Set the file_config pointer to NULL to avoid accessing freed memory */
     *file_config_ptr = NULL;
 }
@@ -169,7 +168,7 @@ int is_entry_file_needed(Lable_Node *lable_head){
     Lable_Node *head;
     head = lable_head;
     while (head != NULL){
-        if (head->is_entry == 1){
+        if (get_label_is_entry(head) == 1){
             return 1;
         }
     }
@@ -180,7 +179,7 @@ int is_ext_file_needed(Lable_Node *lable_head){
     Lable_Node *head;
     head = lable_head;
     while (head != NULL){
-        if (head->symbol_type == EXTERNAL){
+        if (get_label_symbol_type(head) == EXTERNAL){
             return 1;
         }
     }

@@ -43,10 +43,10 @@ void make_files(File_Config *file_config, char* file_name){
     if (is_entry_file_needed(lable_head)){
         ent_file = fopen(ent_file_name, "w+");
         while (lable_head != NULL){
-            if (lable_head->is_entry == 1){
-                fprintf(ent_file, "%s %d\n", lable_head->name, lable_head->counter_value);
+            if (get_label_is_entry(lable_head) == TRUE){
+                fprintf(ent_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
             }
-            lable_head = lable_head->next;
+            lable_head = get_label_next(lable_head);
         }
     }
 
@@ -54,10 +54,10 @@ void make_files(File_Config *file_config, char* file_name){
     if (is_ext_file_needed(lable_head)){
         ext_file = fopen(ext_file_name, "w+");
         while (lable_head != NULL){
-            if (lable_head->symbol_type == EXTERNAL){
-                fprintf(ext_file, "%s %d\n", lable_head->name, lable_head->counter_value);
+            if (get_label_symbol_type(lable_head) == EXTERNAL){
+                fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
             }
-            lable_head = lable_head->next;
+            lable_head = get_label_next(lable_head);
         }
     }
 

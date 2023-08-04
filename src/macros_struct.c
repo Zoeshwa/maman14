@@ -6,12 +6,12 @@
 #define MAX_LEN 80
 
 /* Macro_Node in macro linked list*/
-typedef struct Macro_Node {
+struct Macro_Node {
     char* name;
     char* content;
     int lines;
     struct Macro_Node* next;
-} Macro_Node;
+};
 
 void make_am_file(char* orig_name){
     FILE* am_file, *src_file;

@@ -119,13 +119,13 @@ void print_Lable_Node(Lable_Node* label_node) {
         return;
     }
     printf("Lable_Node: ");
-    printf("\tname: %s, ",label_node->name);
-    printf("\tcounter_value: %d,",label_node->counter_value);
-    printf("\tsymbol_type: %d,",label_node->symbol_type);
-    printf("\tis_entry: %d,",label_node->is_entry);
-    if(label_node->next  != NULL) {
+    printf("\tname: %s, ",get_label_name(label_node));
+    printf("\tcounter_value: %d,",get_label_counter_value(label_node));
+    printf("\tsymbol_type: %d,",get_label_symbol_type(label_node));
+    printf("\tis_entry: %d,",get_label_is_entry(label_node));
+    if(get_label_next(label_node) != NULL) {
         printf("\tnext: \n");
-        print_Lable_Node(label_node->next);
+        print_Lable_Node(get_label_next(label_node));
     }else {
         printf("\tnext: NULL\n");
     }
@@ -214,7 +214,7 @@ void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
 void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) {
     int result;
     set_label_name(new_lable, word);
-    result = strcmp(new_lable->name, word);
+    result = strcmp(get_label_name(new_lable), word);
     if (result == 0) {
         PASS_PRINT(0);
     } else {
@@ -228,7 +228,7 @@ void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int 
     set_label_types(new_lable, symbol_type);
 
 
-    if(symbol_type == new_lable->symbol_type) {
+    if(symbol_type == get_label_symbol_type(new_lable)) {
         result = 1;
     } 
 
@@ -346,16 +346,16 @@ int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b
 */
 
 /* Function to compare two Lable_Node */
-int compare_Lable_Node(const Lable_Node* node1, const Lable_Node* node2) {
+int compare_Lable_Node(Lable_Node* node1, Lable_Node* node2) {
     if (node1 == NULL && node2 == NULL) {
-        return 1; 
+        return TRUE; 
     } else if (node1 == NULL || node2 == NULL) {
-        return 0; 
+        return FALSE; 
     }
 
-    if (strcmp(node1->name, node2->name) == 0
+    if (strcmp(get_label_name(node1), get_label_name(node2)) == 0
         /* Add comparisons for other fields as needed */
-        && compare_Lable_Node(node1->next, node2->next)) {
+        && compare_Lable_Node(get_label_next(node1), get_label_next(node2))) {
         return 1; 
     }
 
@@ -390,10 +390,6 @@ int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
     return 1;
 }
 
-int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
-    /*TODO: more filds*/
-    return 1;
-}
 
 int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
     

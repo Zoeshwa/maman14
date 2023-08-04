@@ -10,13 +10,7 @@
 #ifndef _LABELS_HEADER_
 #define _LABELS_HEADER_
     
-    typedef struct Lable_Node {
-        char* name;
-        int counter_value;
-        Symbol_Type symbol_type;
-        int is_entry; 
-        struct Lable_Node* next;
-    } Lable_Node;
+    typedef struct Lable_Node Lable_Node;
 
     Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type);
     void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type);
