@@ -52,5 +52,8 @@
     void update_DC_counter(File_Config** file_config, int num_to_add);
 
     void free_file_config(File_Config** file_config_ptr);
+
+
+    void bin_to_base64(char arr[2], const char* binary_word);
 #endif
 

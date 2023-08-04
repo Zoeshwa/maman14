@@ -27,6 +27,7 @@ Data_Node* create_data_node(int value, Data_Type data_type) {
 
     new_node->value = value;
     new_node->data_type = data_type;
+    new_node->bin_rep = NULL;    
     new_node->next = NULL;
 
     return new_node;
@@ -70,6 +71,10 @@ Data_Node* get_data_node_next(Data_Node* node) {
     return node->next;
 }
 
+char* get_bin_rep_data(Data_Node* node) {
+    return node->bin_rep;
+}
+
 /*Description: Function to free the entire linked list of Data_Nodes and set the head pointer to NULL*/
 /*Input: a pointer to a pointer of the head of the list to free*/
 void free_data_list(Data_Node** head) {
@@ -77,6 +82,10 @@ void free_data_list(Data_Node** head) {
     Data_Node* next_node;
 
     while (current != NULL) {
+        if(current->bin_rep != NULL) {
+            free(current->bin_rep);
+            current->bin_rep = NULL;
+        }
         next_node = get_data_node_next(current);
         free(current);
         current = next_node;
