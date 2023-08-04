@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
         printf("\n");
         print_file_config(file_config);
 
-        free_ins_list(&(file_config->ins_head));
+        /* DELETE: free_ins_list(&(file_config->ins_head));*/
         if (!file_config->is_valid){
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
