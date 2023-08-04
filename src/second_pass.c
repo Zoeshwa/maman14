@@ -4,8 +4,6 @@
 #include <ctype.h>
 #include "first_pass.h"
 
-
-
 void handle_entry(File_Config *file_config, char* line) {
     char *ptr, **words;
     int  i, curr_line_num, len;
@@ -45,7 +43,6 @@ void handle_entry(File_Config *file_config, char* line) {
 
     free_words(words);
 }
-
 
 void second_pass(File_Config *file_config, char* am_file_name) {
     /*initilazed varabels*/
