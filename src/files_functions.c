@@ -114,6 +114,24 @@ void free_file_config(File_Config** file_config_ptr) {
 }
 
 /*ASK: is it allways work?*/
+void add_extention(char* file_original_name, char* with_ext_name, char* ext){
+    int i;
+    
+    i = 0;
+    while (*file_original_name != '\0'){
+         with_ext_name[i] = *file_original_name;
+         i++;
+         file_original_name++;
+    }
+    with_ext_name[i++] = '.';
+    while (*ext != '\0'){
+        with_ext_name[i++] = *ext;
+        ext++;
+    }
+    with_ext_name[i] = '\0';
+}
+
+/*
 void make_am_name(char* file_original_name, char* am_name){
     int i;
     
@@ -125,8 +143,49 @@ void make_am_name(char* file_original_name, char* am_name){
     }
     am_name[i++] = '.';
     am_name[i++] = 'a';
-    am_name[i++] = 'm';
+    am_name[i++] = 's';
     am_name[i] = '\0';
 }
+*/
+
+
+const char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+void bin_to_base64(char arr[2], const char* binary_word) {
+    int bin_value = 0;
+    for (int i = 0; i < 12; i++) {
+        bin_value <<= 1;
+        if (binary_word[i] == '1') {
+            bin_value |= 1;
+        }
+    }
+
+    arr[0] = base64_table[(bin_value >> 6) & 0x3F];
+    arr[1] = base64_table[bin_value & 0x3F];
+}
+
+int is_entry_file_needed(Lable_Node *lable_head){
+    Lable_Node *head;
+    head = lable_head;
+    while (head != NULL){
+        if (head->is_entry == 1){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int is_ext_file_needed(Lable_Node *lable_head){
+    Lable_Node *head;
+    head = lable_head;
+    while (head != NULL){
+        if (head->symbol_type == EXTERNAL){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
 
 
