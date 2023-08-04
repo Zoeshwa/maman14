@@ -30,7 +30,7 @@ void make_files(File_Config *file_config, char* file_name){
     while (ins_head != NULL){     /*go over ins nodes*/
 
         bin_to_base64(ob_word, ins_head->bin_rep);
-        fprintf("%s\n", ob_word);
+        fprintf(ob_file, "%s\n", ob_word);
         ins_head = ins_head->next;
     }
     while (data_head != NULL){     /*go over data nodes*/
@@ -46,7 +46,7 @@ void make_files(File_Config *file_config, char* file_name){
         ent_file = fopen(ent_file_name, "w+");
         while (lable_head != NULL){
             if (lable_head->is_entry == 1){
-                fprintf("%s %d\n", lable_head->name, lable_head->counter_value);
+                fprintf(ent_file, "%s %d\n", lable_head->name, lable_head->counter_value);
             }
             lable_head = lable_head->next;
         }
@@ -57,7 +57,7 @@ void make_files(File_Config *file_config, char* file_name){
         ext_file = fopen(ext_file_name, "w+");
         while (lable_head != NULL){
             if (lable_head->symbol_type == EXTERNAL){
-                fprintf("%s %d\n", lable_head->name, lable_head->counter_value);
+                fprintf(ext_file, "%s %d\n", lable_head->name, lable_head->counter_value);
             }
             lable_head = lable_head->next;
         }
