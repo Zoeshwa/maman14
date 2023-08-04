@@ -18,15 +18,13 @@ int main(int argc, char* argv[]) {
         printf("\t----------START:file \"%s\"\n", argv[ctr]);
         am_file = make_am_file(argv[ctr]); 
 
-        /*open the am file to read*/
+        /*get the am_file name*/
         make_am_name(argv[ctr], am_file_name);
-        am_file = fopen(am_file_name, "r");
 
         /*first_pass*/
-        file_config = first_pass(am_file);
+        file_config = first_pass(am_file_name);
         
         printf("\n");
-        print_file_config(file_config);
 
         /* DELETE: free_ins_list(&(file_config->ins_head));*/
         if (!file_config->is_valid){
@@ -35,16 +33,16 @@ int main(int argc, char* argv[]) {
         }
 
         /*run secound pass*/
-        second_pass(&file_config, am_file);
+        second_pass(file_config, am_file_name);
 
         if (!file_config->is_valid){
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
+        print_file_config(file_config);
 
         /*TODO IDO: make files*/
 
-        fclose(am_file);
         free_file_config(&file_config);
         printf("\t----------END:file \"%s\"\n", argv[ctr]);
     }

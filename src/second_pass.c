@@ -47,15 +47,16 @@ void handle_entry(File_Config *file_config, char* line) {
 }
 
 
-void second_pass(File_Config **file_config, FILE* am_file) {
+void second_pass(File_Config *file_config, char* am_file_name) {
     /*initilazed varabels*/
     char input[MAX_LEN];
-
+    FILE* am_file;
     printf("\t---------START 2 PASS-----------\n");
+    am_file = fopen(am_file_name, "r");
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        printf("line: |%s| is entry\n", input);
+        printf("line: |%s|\n", input);
 
         if (empty_line(input) || comment_line(input)){continue;}
 
@@ -63,13 +64,14 @@ void second_pass(File_Config **file_config, FILE* am_file) {
 
         /*if the line is entry*/
         if(is_type_ins(is_entry_word, input) == TRUE) { 
-            printf("line: |%s| is entry\n", input);
-            handle_entry(*file_config, input);
+            printf("is entry\n");
+            handle_entry(file_config, input);
         } else {
 
             /*if code func handle  - IDO*/
         }
     }
+    fclose(am_file);
 
     printf("\t---------END 2 PASS-----------\n");
 

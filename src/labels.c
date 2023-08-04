@@ -148,7 +148,7 @@ void free_lable_list(Lable_Node** head) {
 
 
 int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
-    Lable_Node* label_node;
+    Lable_Node *label_node;
 
     label_node = find_lable(head, label_word);
 
@@ -157,7 +157,7 @@ int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
     } else {
         /*flag the label_node*/
         if(get_label_symbol_type(label_node) != EXTERNAL) {
-            label_node->is_entry = TRUE;
+            label_node->is_entry = 1;
             return TRUE;
         }
 
