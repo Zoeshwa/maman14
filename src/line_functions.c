@@ -13,7 +13,9 @@
 int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
+
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
+        printf("\tempty_line()\n");
         return TRUE; 
     }
     else{

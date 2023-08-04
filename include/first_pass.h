@@ -25,7 +25,7 @@
 #define _FIRST_PASS_HEADER_
 
 
-    File_Config* first_pass(FILE* file);
+    File_Config* first_pass(char* am_file_name);
     void handle_extren_line(File_Config* file_config,  char* line, char* curr_ptr);
     void handle_code_line(File_Config* file_config, char* ptr);
     void handle_data_ins(File_Config* file_config, char* line, char* ptr);
@@ -35,5 +35,8 @@
 
     int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index);
     int handle_data_int_store(File_Config* file_config, char **words, int len, int curr_index);
+
+    void second_pass(File_Config *file_config, char* am_file_name);
+
 #endif
 
