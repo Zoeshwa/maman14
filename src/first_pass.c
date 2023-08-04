@@ -51,8 +51,10 @@ File_Config* first_pass(char* am_file_name) {
 
     /*checks if needs to continue process since it might have an error*/
     if (file_config->is_valid){
-        /*TODO ZOE only what is type dataq string?*/
-        update_symbol_table_by_IC(file_config);
+        /*update counters*/
+        update_counters_label_list(file_config->label_head, file_config->IC_counter);
+        /*ASK: maybe not needed?*/
+        update_counters_data_list(file_config->data_head, file_config->IC_counter);
     }
     printf("\t---------END FIRST PASS-----------\n");
     fclose(am_file);
@@ -469,8 +471,4 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     insert_to_symbol_table(&(file_config->label_head), word, counter_value, symbol_type);
 }
 
-/*TODO: */
-void update_symbol_table_by_IC(File_Config * file_config) {
-
-}
 

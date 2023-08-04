@@ -19,6 +19,7 @@
     Data_Node* get_data_node_next(Data_Node* node);
     char* get_bin_rep_data(Data_Node* node);    
     void free_data_list(Data_Node** head);
+    void update_counters_data_list(Data_Node* head, int IC);
 #endif
 
 

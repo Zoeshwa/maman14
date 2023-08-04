@@ -5,7 +5,7 @@
 
 void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
-    Lable_Node* new_node = new_label_node(word,counter_value,symbol_type);
+    Lable_Node* new_node = new_label_node(word, counter_value, symbol_type);
     if (new_node == NULL) {
         printf("Failed to insert node. Memory allocation error.\n");
         return;
@@ -165,4 +165,17 @@ int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
         ERROR_LABEL_ENTRY_EXTERN(line_num);
     }
     return FALSE;
+}
+
+void update_counters_label_list(Lable_Node* head, int IC) {
+    Lable_Node* ptr;
+    ptr = head; /*start with ptr to head of the list*/
+    while (ptr != NULL)
+    {
+        /*check if the word is a knowen label*/
+        if(get_label_symbol_type(ptr) == DATA) {
+            ptr->counter_value = ptr->counter_value + IC;
+        }
+        ptr = get_label_next(ptr);
+    }
 }

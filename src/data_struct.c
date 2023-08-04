@@ -93,3 +93,14 @@ void free_data_list(Data_Node** head) {
     /* Set the head pointer to NULL after freeing the entire list */
     *head = NULL;
 }
+
+
+void update_counters_data_list(Data_Node* head, int IC) {
+    Data_Node* ptr;
+    ptr = head; /*start with ptr to head of the list*/
+    while (ptr != NULL)
+    {
+        ptr->DC_counter = ptr->DC_counter + IC;
+        ptr = get_data_node_next(ptr);
+    }
+}

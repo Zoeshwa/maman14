@@ -17,7 +17,7 @@ File_Config* intialiez_file_config() {
 
     file_config->curr_line_num = 1;
     file_config->is_valid = TRUE;
-    file_config->DC_counter = 0;
+    file_config->DC_counter = 1;
     file_config->IC_counter = 100; 
     return file_config;
 }
