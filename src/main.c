@@ -3,7 +3,7 @@
 #include <string.h>
 #include "main.h"
 
-#define MAX_LEN 80
+#define MAX_LEN 80 /*ASK: not include the \0*/
 
 
 
