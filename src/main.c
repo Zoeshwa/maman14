@@ -5,8 +5,6 @@
 
 #define MAX_LEN 80 /*ASK: not include the \0*/
 
-
-
 void make_files(File_Config *file_config, char* file_name){
     FILE* ob_file, *ext_file, *ent_file;
     char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], ob_word[2];
@@ -66,9 +64,7 @@ void make_files(File_Config *file_config, char* file_name){
 }
 
 int main(int argc, char* argv[]) {
-    /*char input[MAX_LEN];*/
     int ctr;
-    FILE* am_file;
     File_Config * file_config;
     char am_file_name[MAX_LEN];
 
@@ -76,7 +72,7 @@ int main(int argc, char* argv[]) {
     for (ctr = 1; ctr < argc; ctr++){
         /*creating an am file*/
         printf("\t----------START:file \"%s\"\n", argv[ctr]);
-        am_file = make_am_file(argv[ctr]); 
+        make_am_file(argv[ctr]); 
   
          /*open the am file to read*/
         add_extention(argv[ctr], am_file_name, "am");
@@ -101,8 +97,8 @@ int main(int argc, char* argv[]) {
         }
       
         print_file_config(file_config); 
-        make_files(file_config, argv[ctr]);
 
+        /*make_files(file_config, argv[ctr]);*/
         free_file_config(&file_config);
 
         printf("\t----------END:file \"%s\"\n", argv[ctr]);

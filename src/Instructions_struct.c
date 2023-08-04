@@ -12,6 +12,8 @@ Ins_Node* insert_ins_head() {
     ins_head->line_number = -1;
     ins_head->IC_count = 100;
     ins_head->type = 0;
+    ins_head->bin_rep = NULL;
+    ins_head->opcode = -1;
     ins_head->next = NULL;
     return ins_head;
 }
@@ -24,6 +26,7 @@ Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num) {
 
     newIns_Node->type = 0;
     newIns_Node->IC_count = IC_counter;
+
     (*head)->line_number = curr_line_num;
 
     (*head)->next = newIns_Node;
@@ -38,6 +41,7 @@ void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
     (*head)->opcode = com.en;
     (*head)->operrands[0] = param_type[0];
     (*head)->operrands[1] = param_type[1];
+    (*head)->bin_rep = NULL;
     (*head)->next = NULL;
     (*head)->bin_rep = NULL;
 }

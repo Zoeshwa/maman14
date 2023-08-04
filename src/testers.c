@@ -99,11 +99,11 @@ void print_Ins_Node(Ins_Node* head) {
         printf("\tis_lable: NULL,");
     }
 
-    if( head->bin_rep != NULL) {
+    if( head->bin_rep != NULL)
         printf("\tbin: %s",  head->bin_rep);
-    } else {
+    else
         printf("\tbin: NULL");
-    }
+
 
     if(head->next  != NULL) {
         printf("\tnext: \n");
