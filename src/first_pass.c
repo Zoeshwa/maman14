@@ -42,11 +42,14 @@ File_Config* first_pass(char* am_file_name) {
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
         printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
-        file_config->curr_line_num++;
 
-        if (empty_line(input) || comment_line(input)){continue;}
+        if (empty_line(input) || comment_line(input)){
+            file_config->curr_line_num++;
+            continue;
+        }
         
         handle_new_line(file_config, input);
+        file_config->curr_line_num++;
     }
 
     /*checks if needs to continue process since it might have an error*/
@@ -66,6 +69,7 @@ void handle_new_line(File_Config* file_config, char* line) {
     char * ptr;
     char cur_word[MAX_LEN];
     int is_line_have_symbol; 
+    
     ptr = line;
 
     /*get the first word*/
@@ -90,13 +94,13 @@ void handle_new_line(File_Config* file_config, char* line) {
         return;
 
     } else if(is_external_or_entry_ins(line)) { /*.entry or .extranal*/
-        
         /*insert symbol with type*/
         if(is_line_have_symbol) {
-            ptr += strlen(cur_word);
-            get_next_word(cur_word, ptr);
-            ptr = skip_spaces(ptr);
+            /*skip label word*/
+            ptr = skip_next_word(line, ptr);
         }
+        /*skip the extern/entry word*/
+        ptr = skip_next_word(line, ptr);
 
         if(is_extern_ins(line)) {
             handle_extren_line(file_config, line, ptr);

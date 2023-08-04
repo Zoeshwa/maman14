@@ -145,35 +145,3 @@ int main(int argc, char* argv[]) {
        (*head)->opcode = opcode; 
 }
 */
-int main_test(int argc, char* argv[]){
-    File_Config * file_config;
-
-
-    /*first_pass*/
-    file_config = first_pass("data_valid_file.am");
-    
-    printf("\n");
-
-    if (!file_config->is_valid){
-        printf("NOT GOOD - file  have errors.\n");
-    } else {
-
-        /*run secound pass*/
-        second_pass(file_config, "data_valid_file.am");
-        if (!file_config->is_valid){
-            printf("NOT GOOD - file  have errors.\n");
-        }
-
-    }
-
-
-    print_file_config(file_config); 
-
-    free_file_config(&file_config);
-
-
-    printf("\tTHE FINAL END\n");
-
-    return 0;
-
-}
