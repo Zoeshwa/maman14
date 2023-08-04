@@ -10,6 +10,7 @@ typedef struct Data_Node{
     int value; /*value of the char or the int to store*/
     Data_Type data_type; /*string or data*/
     int DC_counter;
+    char* bin_rep;
     struct Data_Node* next;
 } Data_Node;
 

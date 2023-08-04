@@ -4,9 +4,12 @@
 #include <ctype.h>
 #include "first_pass.h"
 
-void second_pass(File_Config **file_config, FILE* am_file) {
 
+
+
+void second_pass(File_Config **file_config, FILE* am_file) {
     /*initilazed varabels*/
+    FILE* ob_file, *ext_file, *ent_file;
     char input[MAX_LEN];
 
     printf("\t---------START 2 PASS-----------\n");
@@ -16,11 +19,25 @@ void second_pass(File_Config **file_config, FILE* am_file) {
         printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
         
         if (empty_line(input) || comment_line(input)){continue;}
-        
-        /*TODO: if line entry - handle entry zoe*/
-        /*if code func handle  - IDO*/
+
+        if (is_type_storge_string_ins(input) || is_extern_ins(input)){continue;}
+
+        /*if the line is entry*/
+        if(is_type_ins(is_entry_word, input) == TRUE) { 
+            handle_entry(file_config, input);
+        } else {
+
+            /*if code func handle  - IDO*/
+        }
+
     }
 
-    printf("\t---------END FIRST PASS-----------\n");
+    printf("\t---------END 2 PASS-----------\n");
 
 }
+
+/*dd*/
+void handle_entry(File_Config *file_config, char* input) {
+    
+}
+/*ssss*/

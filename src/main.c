@@ -5,6 +5,66 @@
 
 #define MAX_LEN 80
 
+
+
+void make_files(File_Config *file_config, char* file_name){
+    FILE* ob_file, *ext_file, *ent_file;
+    char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], ob_word[2];
+    Ins_Node *ins_head;
+    Data_Node *data_head;
+    Lable_Node * lable_head;
+
+    ins_head = file_config->ins_head;
+    data_head = file_config->data_head;
+
+    add_extention(file_name, ob_file_name, "ob");
+    add_extention(file_name, ext_file_name, "ext");
+    add_extention(file_name, ent_file_name, "ent");
+    
+    ob_file = fopen(ob_file_name, "w+");
+    /*write first line rep the number of IC and DC commands*/
+    fprintf(ob_file, "%d %d\n", file_config->IC_counter + 1 , file_config->DC_counter);
+    
+    /* mane object file*/
+
+    while (ins_head != NULL){     /*go over ins nodes*/
+
+        make_ob_word(ob_word, ins_head->bin_rep);
+        fprintf("%s\n", ob_word);
+        ins_head = ins_head->next;
+    }
+    while (data_head != NULL){     /*go over data nodes*/
+
+        make_ob_word(ob_word, data_head->bin_rep); /*TODO: bin rep? ask Zoe*/
+        fprintf("%s\n", ob_word);
+        data_head = get_data_node_next(data_head);
+    }
+
+    lable_head = file_config-> label_head;
+    /* make .ext and .ent files*/
+    if (is_entry_file_needed(lable_head)){
+        ent_file = fopen(ent_file_name, "w+");
+        while (lable_head != NULL){
+            if (lable_head->is_entry == 1){
+                fprintf("%s %d\n", lable_head->name, lable_head->counter_value);
+            }
+            lable_head = lable_head->next;
+        }
+    }
+
+    lable_head = file_config-> label_head;
+    if (is_ext_file_needed(lable_head)){
+        ext_file = fopen(ext_file_name, "w+");
+        while (lable_head != NULL){
+            if (lable_head->symbol_type == EXTERNAL){
+                fprintf("%s %d\n", lable_head->name, lable_head->counter_value);
+            }
+            lable_head = lable_head->next;
+        }
+    }
+
+}
+
 int main(int argc, char* argv[]) {
     /*char input[MAX_LEN];*/
     int ctr;
@@ -19,37 +79,34 @@ int main(int argc, char* argv[]) {
         am_file = make_am_file(argv[ctr]); 
 
         /*open the am file to read*/
-        make_am_name(argv[ctr], am_file_name);
+        add_extention(argv[ctr], am_file_name, "am");
         am_file = fopen(am_file_name, "r");
 
         /*first_pass*/
         file_config = first_pass(am_file);
         
         printf("\n");
-        printf("\t----------END:file \"%s\"\n", argv[ctr]);
         print_file_config(file_config); 
-        printf("\t----------END:file \"%s\"\n", argv[ctr]);
 
     /*   free_ins_list(&(file_config->ins_head)); */
-        printf("\t----------END:file \"%s\"\n", argv[ctr]);
 
+        /* DELETE: free_ins_list(&(file_config->ins_head));*/
         if (!file_config->is_valid){
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
 
         /*TODO: run secound pass*/
-     second_pass(&file_config, am_file);
+        second_pass(&file_config, am_file);
 
         if (!file_config->is_valid){
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
         
-        /*TODO IDO: make files*/
+        make_files(file_config, argv[ctr]);
 
         fclose(am_file);
-        printf("\t----------END:file \"%s\"\n", argv[ctr]);
 
     /*    free_file_config(&file_config); */
         printf("\t----------END:file \"%s\"\n", argv[ctr]);
