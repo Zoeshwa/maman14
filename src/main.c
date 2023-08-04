@@ -5,8 +5,6 @@
 
 #define MAX_LEN 80 /*ASK: not include the \0*/
 
-
-
 void make_files(File_Config *file_config, char* file_name){
     FILE* ob_file, *ext_file, *ent_file;
     char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], ob_word[2];
