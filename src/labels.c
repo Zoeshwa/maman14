@@ -19,7 +19,7 @@ Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
     Lable_Node* new_lable;
     new_lable = (Lable_Node*)malloc(sizeof(Lable_Node));
     set_label_name(new_lable, word);
-    set_label_types(new_lable, symbol_type);
+    new_lable->symbol_type = symbol_type;
     new_lable->counter_value = counter_value;
     new_lable->is_entry = FALSE;
     new_lable->next = NULL;
@@ -52,12 +52,9 @@ void set_label_name(Lable_Node* new_lable, char * word) {
     strcpy(new_lable->name, word);
 }
 
+/*DELETE*/
 void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type) {
     new_lable->symbol_type = symbol_type;
-}
-
-void set_lable_is_entry(Lable_Node* new_lable, int is_entry) {
-    new_lable->is_entry = is_entry;
 }
 
 /*Description: search if a given word is in the lable list*/
@@ -149,3 +146,23 @@ void free_lable_list(Lable_Node** head) {
     *head = NULL;
 }
 
+
+int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
+    Lable_Node *label_node;
+
+    label_node = find_lable(head, label_word);
+
+    if(label_node == NULL) {
+        ERROR_NOT_FOUND_ENTRY(line_num);
+    } else {
+        /*flag the label_node*/
+        if(get_label_symbol_type(label_node) != EXTERNAL) {
+            label_node->is_entry = 1;
+            return TRUE;
+        }
+
+        /*error the label is extern + entry*/
+        ERROR_LABEL_ENTRY_EXTERN(line_num);
+    }
+    return FALSE;
+}

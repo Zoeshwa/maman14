@@ -28,13 +28,16 @@ command com_conf[] = {
             {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
 };
 
-File_Config* first_pass(FILE* am_file) {
+File_Config* first_pass(char* am_file_name) {
     /*initilazed varabels*/
     File_Config* file_config;
     char input[MAX_LEN];
+    FILE* am_file;
 
     printf("\t---------START FIRST PASS-----------\n");
     file_config = intialiez_file_config();
+    am_file = fopen(am_file_name, "r");
+
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
@@ -44,7 +47,6 @@ File_Config* first_pass(FILE* am_file) {
         if (empty_line(input) || comment_line(input)){continue;}
         
         handle_new_line(file_config, input);
-        file_config->curr_line_num++;
     }
 
     /*checks if needs to continue process since it might have an error*/
@@ -53,6 +55,7 @@ File_Config* first_pass(FILE* am_file) {
         update_symbol_table_by_IC(file_config);
     }
     printf("\t---------END FIRST PASS-----------\n");
+    fclose(am_file);
 
     return file_config;
 }

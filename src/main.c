@@ -77,40 +77,36 @@ int main(int argc, char* argv[]) {
         /*creating an am file*/
         printf("\t----------START:file \"%s\"\n", argv[ctr]);
         am_file = make_am_file(argv[ctr]); 
-
-        /*open the am file to read*/
+  
+         /*open the am file to read*/
         add_extention(argv[ctr], am_file_name, "am");
-        am_file = fopen(am_file_name, "r");
 
         /*first_pass*/
-        file_config = first_pass(am_file);
+        file_config = first_pass(am_file_name);
         
         printf("\n");
+
+        if (!file_config->is_valid){
+            printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
+            continue;
+        }
+
+
+        /*run secound pass*/
+        second_pass(file_config, am_file_name);
+        if (!file_config->is_valid){
+            printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
+            continue;
+        }
+      
         print_file_config(file_config); 
 
-    /*   free_ins_list(&(file_config->ins_head)); */
-
-        /* DELETE: free_ins_list(&(file_config->ins_head));*/
-        if (!file_config->is_valid){
-            printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
-            continue;
-        }
-
-        /*TODO: run secound pass*/
-        second_pass(&file_config, am_file);
-
-        if (!file_config->is_valid){
-            printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
-            continue;
-        }
-        
-        make_files(file_config, argv[ctr]);
-
-        fclose(am_file);
-
-    /*    free_file_config(&file_config); */
         printf("\t----------END:file \"%s\"\n", argv[ctr]);
     }
+    make_files(file_config, argv[ctr]);
+
+    free_file_config(&file_config);
+
     printf("\tTHE FINAL END\n");
 
     return 0;
@@ -153,24 +149,6 @@ int main(int argc, char* argv[]) {
 }
 */
 int main_tester(){
-   
-
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
    
     /*
     File_Config* file_config;
