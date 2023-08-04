@@ -108,7 +108,7 @@ void free_file_config(File_Config** file_config_ptr) {
     free_data_list(&(file_config->data_head));
 
     free(file_config);
-
+    printf("sss\n");
     /* Set the file_config pointer to NULL to avoid accessing freed memory */
     *file_config_ptr = NULL;
 }

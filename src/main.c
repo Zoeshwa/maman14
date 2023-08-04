@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
       
         print_file_config(file_config); 
 
-        make_files(file_config, argv[ctr]);
+        /*make_files(file_config, argv[ctr]);*/
         free_file_config(&file_config);
 
         printf("\t----------END:file \"%s\"\n", argv[ctr]);
