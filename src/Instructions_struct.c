@@ -43,6 +43,7 @@ void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
     (*head)->operrands[1] = param_type[1];
     (*head)->bin_rep = NULL;
     (*head)->next = NULL;
+    (*head)->bin_rep = NULL;
 }
 
 void print_ins_node(Ins_Node* head){
