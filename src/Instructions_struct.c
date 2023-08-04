@@ -52,34 +52,36 @@ void free_ins_node(Ins_Node** node) {
 
     current = *node;
     if (current != NULL) {
-        if(current->lable != NULL )
+        if (current->lable != NULL)
             free(current->lable);
-        if(current->operrands != NULL){
+        if (current->operrands != NULL) {
             free(current->operrands);
-            free(current->operrands);
-        if (current->bin_rep != NULL){
+            /* Remove the duplicate free statement for operrands */
+        }
+        if (current->bin_rep != NULL) {
             free(current->bin_rep);
         }
-        }
-        free(*node);  /* Free the Ins_Node itself */
-        *node = NULL; /* Set the pointer to NULL after freeing */
-    }   
+        free(current); /* Free the memory pointed by the 'current' pointer */
+        *node = NULL;  /* Set the pointer to NULL after freeing */
+    }
 }
+
 
 /*Description: Function to free the entire linked list of Ins_Node and set the head pointer to NULL*/
 /*Input: a pointer to a pointer of the head of the list to free*/
 void free_ins_list(Ins_Node** head_ptr) {
     Ins_Node* current;
     Ins_Node* next_node;
+    printf("in free ins list\n");
     
     if (head_ptr == NULL || *head_ptr == NULL) {
         return;
     }
 
-    current = *head_ptr;
+    current = *head_ptr; /* Set current to the head of the list */
     while (current != NULL) {
-        next_node = current->next;
-        free_ins_node(&current);  /* Free the current node */
+        next_node = current->next; /* Store the next node before freeing the current node */
+        free_ins_node(&current);  /* Free the current node by passing a pointer to it */
         current = next_node; /* Move to the next node */
     }
 

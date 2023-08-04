@@ -15,8 +15,8 @@ typedef struct Macro_Node {
 
 FILE* make_am_file(char* orig_name){
     FILE* am_file, *src_file;
-    char *p, *file_name;
-    char cur_word[MAX_LEN], input[MAX_LEN];
+    char *p;
+    char cur_word[MAX_LEN], input[MAX_LEN], file_name[MAX_LEN];
     int mcro;
     struct Macro_Node* head, *head_ptr;
     
@@ -25,8 +25,8 @@ FILE* make_am_file(char* orig_name){
     head_ptr = NULL;
 
     /*open an am file*/
-    make_am_name(orig_name, cur_word);
-    file_name = orig_name;
+    add_extention(orig_name, cur_word, "am");
+    add_extention(orig_name, file_name, "as"); /*creates the files acual name*/
     am_file = fopen(cur_word,"w+");
     src_file = fopen(file_name, "r");
     if (am_file == NULL) {printf("Error creating am file");}
