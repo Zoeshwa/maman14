@@ -168,8 +168,6 @@ int is_legal_params(char *line, int line_num) {
     return TRUE;
 }
 
-
-
 void free_words(char** words) {
     int i, num_words;
     if (words == NULL) {
@@ -210,7 +208,6 @@ int get_len_words_array(char ** words) {
     }
     return num_words;
 }
-
 
 char* skip_next_word(char* line, char *curr_ptr) {
     char* p;

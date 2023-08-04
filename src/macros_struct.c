@@ -97,7 +97,6 @@ void insertMacro_Node(struct Macro_Node** head, char* name) {
     }
 }
 
-
 void update_macro_contect(struct Macro_Node** head, char* line){
     (*head)->lines += 1;
     (*head)->content = (char*)realloc((*head)->content, MAX_LEN*(*head)->lines*sizeof(char));
