@@ -174,7 +174,6 @@ void free_words(char** words) {
     if (words == NULL) {
         return; /*Nothing to free*/
     }
-    printf("free_words0\n");
 
     /*Find the number of words by iterating until a NULL pointer is encountered*/
     num_words = 0;
@@ -182,7 +181,6 @@ void free_words(char** words) {
         num_words++;
     }
 
-    printf("free_words\n");
 
     for (i = 0; i < num_words; i++) {
         if (words[i] != NULL) {
@@ -191,11 +189,8 @@ void free_words(char** words) {
         }
     }
 
-    printf("free_words2\n");
-
     free(words); /* Free the array of char pointers*/
     words = NULL;
-        printf("free_words3\n");
 
 }
 

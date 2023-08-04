@@ -154,7 +154,6 @@ int is_valid_lable_param(char *param) {
     return 1;
 }
 
-/*MAYBE: ido*/
 /* desc: gets the action from the command read */
 command get_action(char* input, const command* commands_list)
 {
@@ -294,12 +293,7 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     if (!is_legal_params(ptr, file_config->curr_line_num)){ /*checks the syntax and correctness of the parameters*/
         com.en = SKIP;
     }
-    printf("before params\n");
-
     params = get_words(ptr);     /*get all parameters in an array*/
-    
-    printf("after params\n");
-
 
     if (!is_valid_com(com, params, param_type, file_config->curr_line_num)){/*checks if the entered params are compatible with the command's requirements*/
         com.en = SKIP;
@@ -313,8 +307,6 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     /*get last node of list*/
     cur_node = &(file_config->ins_tail);
 
-    printf("11111\n");
-
     /*initialize first node*/
     if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type);
@@ -327,13 +319,10 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     }
     else{/*initialize any other node*/
         file_config->IC_counter += 1;
-
         cur_node = insert_ins_node(cur_node, file_config->IC_counter, file_config->curr_line_num); 
-
         intialiez_ins_node(cur_node, com, param_type); 
         make_bin_ins_word(cur_node); 
-
-        
+     
         /*test*/
         printf("ins word is: ");
         print_ins_node(*cur_node);

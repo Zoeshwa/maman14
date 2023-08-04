@@ -27,16 +27,16 @@ void tester_is_saved_word(char* input, int expected_result, int test_number) {
     }
 }
 
-void tester_bin_word(char* input, char* expected_input, int test_number) {
-    int result, test_result;
-    result = is_saved_word(input);
-    test_result = strcmp(result, expected_input);
+/*void tester_bin_word(Ins_Node** input, char* expected_input, int test_number) {
+    char* result, test_result;
+    make_bin_ins_word(input);
+    test_result = strcmp((*input)->bin_rep, expected_input);
     if (test_result == 0) {
         PASS_PRINT(test_result);
     } else {
         FAIL_PRINT(test_number, test_result, result);
     }
-}
+}*/
 
 void tester_get_next_word(char * str) {
     char * ptr;
