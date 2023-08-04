@@ -152,8 +152,9 @@ void make_am_name(char* file_original_name, char* am_name){
 const char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 void bin_to_base64(char arr[2], const char* binary_word) {
-    int bin_value = 0;
-    for (int i = 0; i < 12; i++) {
+    int i, bin_value;
+    bin_value = 0;
+    for (i = 0; i < 12; i++) {
         bin_value <<= 1;
         if (binary_word[i] == '1') {
             bin_value |= 1;
