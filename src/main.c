@@ -65,7 +65,7 @@ void make_files(File_Config *file_config, char* file_name){
 
 }
 
-int main_orignssss(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
     /*char input[MAX_LEN];*/
     int ctr;
     FILE* am_file;
@@ -149,7 +149,7 @@ int main_orignssss(int argc, char* argv[]) {
        (*head)->opcode = opcode; 
 }
 */
-int main(int argc, char* argv[]){
+int main_test(int argc, char* argv[]){
     File_Config * file_config;
 
 
