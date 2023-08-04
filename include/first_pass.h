@@ -35,5 +35,8 @@
 
     int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index);
     int handle_data_int_store(File_Config* file_config, char **words, int len, int curr_index);
+
+    void second_pass(File_Config **file_config, FILE* am_file);
+
 #endif
 

@@ -34,14 +34,14 @@ int main(int argc, char* argv[]) {
             continue;
         }
 
-        /*TODO: run secound pass*/
-/*      second_pass(&file_config, am_file);
+        /*run secound pass*/
+        second_pass(&file_config, am_file);
 
         if (!file_config->is_valid){
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
-*/
+
         /*TODO IDO: make files*/
 
         fclose(am_file);
