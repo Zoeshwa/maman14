@@ -251,8 +251,8 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
     j=0;
 
     if (param_type[0] == REG_DIR && param_type[1] == REG_DIR){ /*case of two parameters, both registers*/
-        file_config->IC_counter += 1;
         head = insert_ins_node(head,  file_config->IC_counter, file_config->curr_line_num); 
+        file_config->IC_counter += 1;
         (*head)->type = REG_DIR;
         (*head)->operrands[0] = get_reg_num(params[0]);
         (*head)->operrands[1] = get_reg_num(params[1]);
@@ -269,8 +269,8 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
                 (*head)->operrands[i] = 0;
             }
             else if (param_type[i]){/*otherwise another node should be added with values of params*/
-                file_config->IC_counter += 1;
                 head = insert_ins_node(head,  file_config->IC_counter, file_config->curr_line_num); 
+                file_config->IC_counter += 1;
                 (*head)->type = get_param_type(params[j]);
                 if (i == 0){
                     (*head)->operrands[0] = set_operand_value(params[j++], head); 
@@ -325,12 +325,13 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     /*initialize first node*/
     if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type);
-        make_bin_ins_word(cur_node);    
+        make_bin_ins_word(cur_node);  
+        file_config->IC_counter += 1;  
     }
     else{/*initialize any other node*/
-        file_config->IC_counter += 1;
         cur_node = insert_ins_node(cur_node, file_config->IC_counter, file_config->curr_line_num); 
         intialiez_ins_node(cur_node, com, param_type); 
+        file_config->IC_counter += 1;
         make_bin_ins_word(cur_node); 
     }
 

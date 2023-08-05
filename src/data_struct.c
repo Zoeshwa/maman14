@@ -101,7 +101,7 @@ void update_counters_data_list(Data_Node* head, int IC) {
     ptr = head; /*start with ptr to head of the list*/
     while (ptr != NULL)
     {
-        ptr->DC_counter = ptr->DC_counter + IC;
+        ptr->DC_counter = ptr->DC_counter + IC - 1;
         ptr = get_data_node_next(ptr);
     }
 }
