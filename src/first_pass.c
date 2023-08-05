@@ -268,11 +268,18 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
             if(param_type[i] == NONE){ /* if no params or 1 param set the src and dest accordinly with 0*/
                 (*head)->operrands[i] = 0;
             }
-            else{/*otherwise another node should be added with values of params*/
+            else if (param_type[i]){/*otherwise another node should be added with values of params*/
                 file_config->IC_counter += 1;
                 head = insert_ins_node(head,  file_config->IC_counter, file_config->curr_line_num); 
                 (*head)->type = get_param_type(params[j]);
-                (*head)->operrands[i] = set_operand_value(params[j++], head); /*accodring to type set the value in suitable src/dest*/
+                if (i == 0){
+                    (*head)->operrands[0] = set_operand_value(params[j++], head); 
+                    (*head)->operrands[1] = NONE;
+                }
+                else{
+                    (*head)->operrands[0] = NONE;
+                    (*head)->operrands[1] = set_operand_value(params[j++], head);  
+                }
                 make_bin_extra_word(head,i, file_config);
               
             }
@@ -318,25 +325,17 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     /*initialize first node*/
     if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type);
-        make_bin_ins_word(cur_node); 
-        
-        /*test*/
-        printf("first ins word is: ");
-        print_ins_node(*cur_node);
-
+        make_bin_ins_word(cur_node);    
     }
     else{/*initialize any other node*/
         file_config->IC_counter += 1;
         cur_node = insert_ins_node(cur_node, file_config->IC_counter, file_config->curr_line_num); 
         intialiez_ins_node(cur_node, com, param_type); 
         make_bin_ins_word(cur_node); 
-     
-        /*test*/
-        printf("ins word is: ");
-        print_ins_node(*cur_node);
     }
 
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
+    file_config->ins_tail = *cur_node;
     free_words(params);
 }
 
