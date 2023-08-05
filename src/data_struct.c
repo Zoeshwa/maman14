@@ -14,7 +14,6 @@ struct Data_Node{
     struct Data_Node* next;
 };
 
-
 /*Description: The function creates a new data node, allocates space in memory and initializes the data*/
 /*Input: value - value to save in the node, data_type - type of the value (string or data)*/
 /*Output: a pointer to the new node */

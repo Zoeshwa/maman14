@@ -63,7 +63,7 @@ void make_files(File_Config *file_config, char* file_name){
 
 }
 
-int main_o(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
     int ctr;
     File_Config * file_config;
     char am_file_name[MAX_LEN];
@@ -110,7 +110,7 @@ int main_o(int argc, char* argv[]) {
     return 0;
 }
 
-int main(int argc, char* argv[]) {
+int main_o(int argc, char* argv[]) {
     run_words_functions_testers();
 
 
