@@ -38,6 +38,7 @@
     #define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)
     #define END_TEST(fun_name) printf("END TEST: %s\n", fun_name)
 
+    void tester_O_int_I_charP_int(int (*function)(char*, int), char* input, int expected_result, int test_number);
     void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number);   
     void tester_get_next_word(char * str);
     void tester_file_get_int_fileds(File_Config* file_config, int (*function)(File_Config*), int expected_result, int test_number);
@@ -64,6 +65,7 @@
 
     /*tests - run tests*/
     void run_tester();
+    void run_words_functions_testers();
     void run_is_lable_testers();
     void run_input_testers();
     void run_is_external_or_entry_ins_testers();

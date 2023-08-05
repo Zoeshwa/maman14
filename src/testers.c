@@ -7,6 +7,16 @@
 #define FAIL_PRINT(test_number, expected_result, result) printf("X - FAIL: test_num (%d), Expected (%d) - Actual result (%d)\n",test_number, expected_result, result)
 
 
+void tester_O_int_I_charP_int(int (*function)(char*, int), char* input, int expected_result, int test_number) {
+    int result;
+    result = function(input, test_number);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
+
 void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number) {
     int result;
     result = function(input);

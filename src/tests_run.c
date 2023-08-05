@@ -3,6 +3,9 @@
 #include <string.h>
 #include "testers.h"
 
+
+
+
 void run_tester() 
 {
     tests_get_number();
@@ -91,47 +94,20 @@ char** get_lines_invalid(int* len) {
    return lines;
 }
 
+const char* valid_entry_lines_array[] = {
+    ".entry input",
+    "LOOP: .entry HI",
+    "    .entry     ZOE     ",
+    "\t.entry IDO",
+    "\t.entry\t IDO",
+    NULL
+};
+
 /*strings*/
-void run_is_saved_word(){
-    START_TEST("run_is_saved_word");
-    tester_is_saved_word("mov", 1, 1);
-    tester_is_saved_word("while", 0, 2);
-    tester_is_saved_word("jmp", 1, 3);
-    tester_is_saved_word("r0", 1, 4);
-    tester_is_saved_word("data", 1, 5);
-    tester_is_saved_word("Mov", 0, 6);
-    tester_is_saved_word("move", 0, 7);
-    END_TEST("run_is_saved_word");
-}
 
-void run_remove_colon_at_end() {
-    char word1[] = "Hello:";
-    char word2[] = "NoColon";
-    char word3[] = "Multiple::";
-    char word4[] = ":";
-    char word5[] = "LOOP:";
-    
-    START_TEST("run_remove_colon_at_end");
-    test_remove_colon_at_end(word1, 1, "Hello");
-    test_remove_colon_at_end(word2, 2, "NoColon");
-    test_remove_colon_at_end(word3, 3, "Multiple:");
-    test_remove_colon_at_end(word4, 4, "");
-    test_remove_colon_at_end(word5, 5, "LOOP");
 
-    END_TEST("run_remove_colon_at_end");
-  
-}
 
-void run_is_lable_testers() 
-{
-    int i;
-    i = 0;
-    START_TEST("run_label_testers");
-    tester_O_int_I_charP(is_lable, "hi:", 1, i++);
-    tester_O_int_I_charP(is_lable, "hi", 0, i++);
-    tester_O_int_I_charP(is_lable, "5i", 0, i++);
-    END_TEST("run_label_testers");
-}
+
 
 void run_input_testers() 
 {
@@ -148,61 +124,8 @@ void run_input_testers()
     END_TEST("input_testers");
 }
 
-void run_is_external_or_entry_ins_testers() 
-{
-    int i;
-    i = 0;
-    START_TEST("is_external_or_entry_ins");
-    tester_O_int_I_charP(is_external_or_entry_ins, "example input", 0, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "extern input", 0, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ". extern input", 0,i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ".data input", 0, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "entry input", 0, i++);
-    START_TEST("is_external_or_entry_ins");
-    tester_O_int_I_charP(is_external_or_entry_ins, "example input", 0, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "extern input", 0, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ". extern input", 0,i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ".data input", 0, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "entry input", 0, i++);
 
 
-    tester_O_int_I_charP(is_external_or_entry_ins, ".entry input", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP: .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_external_or_entry_ins, ".extern", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ".extern LOOP, JH", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_external_or_entry_ins, "\t.extern          ", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ".extern \t LOOP, JH", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ".entry input", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP: .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_external_or_entry_ins, ".extern", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ".extern LOOP, JH", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_external_or_entry_ins, "\t.extern          ", 1, i++);
-    tester_O_int_I_charP(is_external_or_entry_ins, ".extern \t LOOP, JH", 1, i++);
-    END_TEST("");
-}
-
-void run_is_extern_ins_testers() 
-{
-    int i;
-    i = 0;
-    START_TEST("is_extern_ins");
-    tester_O_int_I_charP(is_extern_ins, "example input", 0, i++);
-    tester_O_int_I_charP(is_extern_ins, "extern input", 0, i++);
-    tester_O_int_I_charP(is_extern_ins, ". extern input", 0, i++);
-    tester_O_int_I_charP(is_extern_ins, ".data input", 0, i++);
-    tester_O_int_I_charP(is_extern_ins, ".entry input", 0, i++);
-
-    tester_O_int_I_charP(is_extern_ins, "LOOP: .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_extern_ins, ".extern", 1, i++);
-    tester_O_int_I_charP(is_extern_ins, ".extern LOOP, JH", 1, i++);
-    tester_O_int_I_charP(is_extern_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
-    tester_O_int_I_charP(is_extern_ins, "\t.extern          ", 1, i++);
-    tester_O_int_I_charP(is_extern_ins, ".extern \t LOOP, JH", 1, i++);
-    END_TEST("is_extern_ins");
-
-}
 
 void run_empty_line_testers() 
 {
@@ -252,35 +175,6 @@ void tests_get_next_word() {
     tester_get_next_word("LOOP: .extern");
     END_TEST(" ");
 }
-
-void run_is_valid_quotes() 
-{
-    int i;
-    i = 0;
-    START_TEST("run_is_valid_quotes");
-    tester_O_int_I_charP(is_valid_quotes, "\"zoe\"", 1, i++);
-    tester_O_int_I_charP(is_valid_quotes, "\"zoe shwartz\"", 1, i++);
-    tester_O_int_I_charP(is_valid_quotes, "\"5i", 0, i++);
-    tester_O_int_I_charP(is_valid_quotes, "5i\"", 0, i++);
-    tester_O_int_I_charP(is_valid_quotes, "5\"i", 0, i++);
-
-    END_TEST("run_is_valid_quotes");
-}
-
-void tests_get_number(){
-
-    int i;
-    i = 0;
-    START_TEST("tests_get_number");
-    tester_O_int_I_charP(get_number, "5", 5, i++);
-    tester_O_int_I_charP(get_number, "+5", 5, i++);
-    tester_O_int_I_charP(get_number, "0", 0, i++);
-    tester_O_int_I_charP(get_number, "100", 100, i++);
-    tester_O_int_I_charP(get_number, "9", 9, i++);
-    tester_O_int_I_charP(get_number, "-100", -100, i++);
-    END_TEST("tests_get_number");
-}
-
 
 /*file config*/
 void run_file_config_tests() {
@@ -380,12 +274,6 @@ void run_is_legal_params() {
     END_TEST("run_is_legal_params");
 }
 
-/*TODO*/
-void run_is_visible_chars_only() {
-    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
-    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, 0);
-
-}
 
 /*labels*/
 void run_labels_tests() {
@@ -712,4 +600,272 @@ void run_tests_bin_word(){
     START_TEST("run_tests_bin_word");
     /*tester_bin_word("mov", 1, 1);*/
     END_TEST("run_tests_bin_word");
+}
+
+
+
+/*----------WORDS FUNCTIONS----------------*/
+/*TODO: char func*/
+
+void run_is_lable_testers() 
+{
+    int i;
+    i = 0;
+    START_TEST("run_label_testers");
+    tester_O_int_I_charP(is_lable, "hi:", 1, i++);
+    tester_O_int_I_charP(is_lable, "hi", 0, i++);
+    tester_O_int_I_charP(is_lable, "5i", 0, i++);
+    END_TEST("run_label_testers");
+}
+
+/*TODO*/
+void run_is_Ins_testers() 
+{
+    START_TEST("run_is_Ins_testers");
+    /*
+    int i;
+    i = 0;
+    tester_O_int_I_charP(is_Ins, "hi:", 1, i++);
+    tester_O_int_I_charP(is_space, "hi", 0, i++);
+    tester_O_int_I_charP(is_space, "5i", 0, i++);*/
+    END_TEST("run_is_Ins_testers");
+}
+
+void run_is_visible_chars_only() {
+    int i;
+    i = 0;
+    START_TEST("run_is_visible_chars_only");
+    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, i++);
+    tester_O_int_I_charP(is_visible_chars_only, "hiekejkdfjwek", 1, i++);
+    tester_O_int_I_charP(is_visible_chars_only, "hieke﻿jkdfjwek", 0, i++);
+    tester_O_int_I_charP(is_visible_chars_only, "hiek؜fjwek", 0, i++);
+    END_TEST("run_is_visible_chars_only");
+}
+
+void run_is_valid_quotes() {
+    int i;
+    i = 0;
+    START_TEST("run_is_valid_quotes");
+    tester_O_int_I_charP(is_valid_quotes, "\"hiekejkdfjwek\"", 1, i++);
+    tester_O_int_I_charP(is_valid_quotes, "hiek\"kdfjwek", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"hiekjwek", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "hiejwek\"", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"zoe\"", 1, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"zoe shwartz\"", 1, i++);
+    tester_O_int_I_charP(is_valid_quotes, "\"5i", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "5i\"", 0, i++);
+    tester_O_int_I_charP(is_valid_quotes, "5\"i", 0, i++);
+    END_TEST("run_is_valid_quotes");
+}
+
+void run_is_external_or_entry_ins_testers() 
+{
+    int i;
+    i = 0;
+    START_TEST("is_external_or_entry_ins");
+    tester_O_int_I_charP(is_external_or_entry_ins, "example input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "extern input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ". extern input", 0,i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".data input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "entry input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "example input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "extern input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ". extern input", 0,i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".data input", 0, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "entry input", 0, i++);
+
+
+    tester_O_int_I_charP(is_external_or_entry_ins, ".entry input", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP: .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern LOOP, JH", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, "\t.extern          ", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern \t LOOP, JH", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".entry input", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP: .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern LOOP, JH", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_external_or_entry_ins, "\t.extern          ", 1, i++);
+    tester_O_int_I_charP(is_external_or_entry_ins, ".extern \t LOOP, JH", 1, i++);
+    END_TEST("");
+}
+
+void run_is_data_storage_ins() 
+{
+    int i;
+    i = 0;
+    START_TEST("is_data_storage_ins");
+    tester_O_int_I_charP(is_data_storage_ins, "STR:    .string \"abcdef\"\n", 1, i++);
+    tester_O_int_I_charP(is_data_storage_ins, "LENGTH: .data 6,-9,15\n", 1, i++);
+    tester_O_int_I_charP(is_data_storage_ins, "\t.data 2", 1,i++);
+    tester_O_int_I_charP(is_data_storage_ins, "\tdata 2", 0,i++);
+    tester_O_int_I_charP(is_data_storage_ins, "\t.entry input", 0,i++);
+    tester_O_int_I_charP(is_data_storage_ins, "\t.entry data", 0,i++);
+    tester_O_int_I_charP(is_data_storage_ins, "\t.extern data", 0,i++);
+    tester_O_int_I_charP(is_data_storage_ins, "\t.extern data", 0,i++);
+    END_TEST("");
+}
+
+void run_is_extern_ins_testers() 
+{
+    int i;
+    i = 0;
+    START_TEST("is_extern_ins");
+    tester_O_int_I_charP(is_extern_ins, "example input", 0, i++);
+    tester_O_int_I_charP(is_extern_ins, "extern input", 0, i++);
+    tester_O_int_I_charP(is_extern_ins, ". extern input", 0, i++);
+    tester_O_int_I_charP(is_extern_ins, ".data input", 0, i++);
+    tester_O_int_I_charP(is_extern_ins, ".entry input", 0, i++);
+
+    tester_O_int_I_charP(is_extern_ins, "LOOP: .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_extern_ins, ".extern", 1, i++);
+    tester_O_int_I_charP(is_extern_ins, ".extern LOOP, JH", 1, i++);
+    tester_O_int_I_charP(is_extern_ins, "LOOP:          .extern", 1, i++); /*FAIL*/
+    tester_O_int_I_charP(is_extern_ins, "\t.extern          ", 1, i++);
+    tester_O_int_I_charP(is_extern_ins, ".extern \t LOOP, JH", 1, i++);
+    END_TEST("is_extern_ins");
+}
+
+void run_is_extern_word() {
+    int i;
+    i = 0;
+    START_TEST("run_is_extern_word");
+    tester_O_int_I_charP(is_extern_word, ".extern", 1, i++);
+    tester_O_int_I_charP(is_extern_word, "extern", 0, i++);
+    tester_O_int_I_charP(is_extern_word, ".externl", 0, i++);
+    tester_O_int_I_charP(is_extern_word, ".EXTERN", 0, i++);
+    END_TEST("run_is_extern_word");
+}
+
+void run_is_entry_word() {
+    int i;
+    i = 0;
+    START_TEST("run_is_entry_word");
+    tester_O_int_I_charP(is_entry_word, ".entry", 1, i++);
+    tester_O_int_I_charP(is_entry_word, "entry", 0, i++);
+    tester_O_int_I_charP(is_entry_word, ".entrys", 0, i++);
+    tester_O_int_I_charP(is_entry_word, ".ENTRY", 0, i++);
+    END_TEST("run_is_entry_word");
+}
+
+void run_is_data_word() {
+    int i;
+    i = 0;
+    START_TEST("run_is_data_word");
+    tester_O_int_I_charP(is_data_word, ".data", 1, i++);
+    tester_O_int_I_charP(is_data_word, "data", 0, i++);
+    tester_O_int_I_charP(is_data_word, ".entrys", 0, i++);
+    tester_O_int_I_charP(is_data_word, ".DATA", 0, i++);
+    END_TEST("run_is_data_word");
+}
+
+void run_is_word_equals_string() {
+    int i;
+    i = 0;
+    START_TEST("run_is_word_equals_string");
+    tester_O_int_I_charP(is_word_equals_string, ".string", 1, i++);
+    tester_O_int_I_charP(is_word_equals_string, "string", 0, i++);
+    tester_O_int_I_charP(is_word_equals_string, ".entrys", 0, i++);
+    tester_O_int_I_charP(is_word_equals_string, ".STRING", 0, i++);
+    END_TEST("run_is_word_equals_string");
+}
+
+void run_remove_colon_at_end() {
+    char word1[] = "Hello:";
+    char word2[] = "NoColon";
+    char word3[] = "Multiple::";
+    char word4[] = ":";
+    char word5[] = "LOOP:";
+    
+    START_TEST("run_remove_colon_at_end");
+    test_remove_colon_at_end(word1, 1, "Hello");
+    test_remove_colon_at_end(word2, 2, "NoColon");
+    test_remove_colon_at_end(word3, 3, "Multiple:");
+    test_remove_colon_at_end(word4, 4, "");
+    test_remove_colon_at_end(word5, 5, "LOOP");
+
+    END_TEST("run_remove_colon_at_end");
+  
+}
+
+void run_is_saved_word(){
+    START_TEST("run_is_saved_word");
+    tester_is_saved_word("mov", 1, 1);
+    tester_is_saved_word("while", 0, 2);
+    tester_is_saved_word("jmp", 1, 3);
+    tester_is_saved_word("r0", 1, 4);
+    tester_is_saved_word("data", 1, 5);
+    tester_is_saved_word("Mov", 0, 6);
+    tester_is_saved_word("move", 0, 7);
+    END_TEST("run_is_saved_word");
+}
+
+void tests_get_number(){
+
+    int i;
+    i = 0;
+    START_TEST("tests_get_number");
+    tester_O_int_I_charP(get_number, "5", 5, i++);
+    tester_O_int_I_charP(get_number, "+5", 5, i++);
+    tester_O_int_I_charP(get_number, "0", 0, i++);
+    tester_O_int_I_charP(get_number, "100", 100, i++);
+    tester_O_int_I_charP(get_number, "9", 9, i++);
+    tester_O_int_I_charP(get_number, "-100", -100, i++);
+    END_TEST("tests_get_number");
+}
+
+void run_is_valid_string_param() {
+    int i;
+    i = 0;
+    START_TEST("is_valid_string_param");
+    tester_O_int_I_charP_int(is_valid_string_param, "\"zoe\"", 1, i++);
+    tester_O_int_I_charP_int(is_valid_string_param, "\"zoe", 0, i++);
+    tester_O_int_I_charP_int(is_valid_string_param, "zoe\"", 0, i++);
+    tester_O_int_I_charP_int(is_valid_string_param, ".STR\"ING", 0, i++);
+    tester_O_int_I_charP_int(is_valid_string_param, "\"hieke﻿jkdfjwek\"", 0, i++);
+    tester_O_int_I_charP_int(is_valid_string_param, "\"hiek؜fjwek\"", 0, i++);
+    END_TEST("is_valid_string_param");
+}
+
+void run_is_valid_int_param() {
+    int i;
+    i = 0;
+    START_TEST("is_valid_int_param");
+    tester_O_int_I_charP_int(is_valid_int_param, "5", 1, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "+5", 1, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "0", 1, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "100", 1, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "9", 1, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "-100", 1, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "-100.15", 0, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "18.75", 0, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "1-4", 0, i++);
+    tester_O_int_I_charP_int(is_valid_int_param, "154ss54", 0, i++);
+    END_TEST("is_valid_int_param");
+}
+
+void run_words_functions_testers() 
+{
+    
+    START_TEST("words_functions_testers");
+    /*TODO: char func*/
+    run_is_lable_testers();
+    /*run_is_Ins_testers();*/
+    run_is_visible_chars_only();
+    run_is_valid_quotes();
+    run_is_external_or_entry_ins_testers();
+    run_is_data_storage_ins();
+    run_is_extern_ins_testers();
+    run_is_extern_word();
+    run_is_entry_word();
+    run_is_data_word();
+    run_is_word_equals_string();
+    run_remove_colon_at_end();
+    run_is_saved_word();
+    tests_get_number();
+    run_is_valid_string_param();
+    run_is_valid_int_param();
+    END_TEST("words_functions_testers");
 }

@@ -6,8 +6,6 @@
 
 #define ZERO_IN_ASCII 48
 
-
-
 int is_space(char c)
 {
  if( c== ' ' || c == '\t')
@@ -169,7 +167,6 @@ int is_valid_string_param(char * word, int line_number) {
     return is_valid;
 }
 
-
 void remove_colon_at_end(char* word) {
     size_t len = strlen(word);
     /* Check if the last character is ":" */
@@ -179,7 +176,6 @@ void remove_colon_at_end(char* word) {
 
     }
 }
-
 
 int is_type_ins(int (*function)(char*), char* input) {
     char * ptr;
@@ -203,7 +199,6 @@ int is_type_ins(int (*function)(char*), char* input) {
 
     return result;
 }
-
 
 /*TODO*/
 /* Function to get the array of saved words and the number of elements in the array */
@@ -311,7 +306,7 @@ int get_number(char* p){
 	return num;
 }
 
-int is_valid_int_param(char *curr_word,int curr_line_num) {
+int is_valid_int_param(char *curr_word ,int curr_line_num) {
     char *p;
     int sign;
 
