@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "words_functions.h"
+#include "string_functions.h"
 
-#define ZERO_IN_ASCII 48
 
 int is_space(char c)
 {
@@ -29,6 +28,68 @@ int get_sign_value(char curr_char) {
 
     printf("ERROR - this word dont have a sign like expected\n");
     return 0;
+}
+
+/*TODO: move to words*/
+int is_valid_lable_param(char *param) {
+    int i;
+
+    if (strlen(param) >30){
+        return FALSE;
+    }
+    /* Check if the first character is an alphabet character */
+    if (!isalpha(param[0]))
+        return FALSE;
+
+    /* Check the rest of the characters */
+    for ( i = 1; param[i] != '\0'; i++) {
+        if (!isalnum(param[i])) {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+}
+
+
+int get_param_type(char* param){
+    /*see if get words ends with \0*/
+
+    if (*param == '@'){ /*start of a register*/
+        param++;
+        if (*param == 'r'){
+            param++;
+            if (*param < 56 && *param > 47) /*is a number between 0 to 7*/
+            {
+                param++;
+                if (*param == '\0'){
+                    return REG_DIR;
+                }
+            } 
+        }
+        printf("not a valid reg\n");
+    }
+    else if(is_valid_number_param(param)){       
+        return IMM;
+    }
+    else if(is_valid_lable_param(param)){
+        return DIR;
+    }
+    return ERR;
+}
+
+/*TODO: zoe already exist*/
+int is_valid_number_param(char *param){
+    if(*param == '-'){
+        param++;
+    }
+    while (*param != '\0'){
+        if (!isdigit(*param)){
+            return 0;
+        }
+        param++;
+    }
+    return 1;
 }
 
 /*ask ido*/

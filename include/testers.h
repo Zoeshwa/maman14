@@ -5,14 +5,8 @@
     #include "labels.h"
 #endif
 
-#ifndef _WORDS_HEADER_
-#define _TESTERS_WORDS_HEADER_
-    #include "words_functions.h"
-#endif
-
-#ifndef _LINES_HEADER_
-#define _TESTERS_LINES_HEADER_
-    #include "line_functions.h"
+#ifndef _STRING_HEADER_
+    #include "string_functions.h"
 #endif
 
 #ifndef _DATA_HEADER_
@@ -33,6 +27,9 @@
 #define _TESTERS_HEADER_
 
 
+    #define PASS_PRINT(expected_result) printf("V - PASS: Expected result (%d) matches the actual result.\n", expected_result)
+    #define FAIL_PRINT(test_number, expected_result, result) printf("X - FAIL: test_num (%d), Expected (%d) - Actual result (%d)\n",test_number, expected_result, result)
+
     #define NOT_GOOD printf("----------BAD------------\n")
     #define GOOD printf("----------GOOD------------\n")
     #define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)
@@ -49,7 +46,6 @@ void tester_O_int_I_char(int (*function)(char), char input, int expected_result,
     void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number);
     void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number);
     void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number);
-    void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number);
     void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number);
     void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number);
 
