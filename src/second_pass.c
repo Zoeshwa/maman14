@@ -45,9 +45,9 @@ void handle_entry(File_Config *file_config, char* line) {
 }
 
 
+/*ASK IDO: why lable_head?*/
 void update_lable_adress(Ins_Node** node, Lable_Node* lable_head){
     (*node)->bin_rep = (char*)calloc(13,sizeof(char));
-
 
 }
 

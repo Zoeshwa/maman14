@@ -1,7 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "labels.h"
+
+
+ struct Lable_Node {
+        char* name;
+        int counter_value;
+        Symbol_Type symbol_type;
+        int is_entry; 
+        struct Lable_Node* next;
+    };
 
 void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
@@ -98,7 +108,7 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
 
     /*all othe chars is valid*/
     for(i = 0; i < strlen(word) - 1; i++) {
-        if(!is_letter_or_num_char(*ptr)){
+        if(!isalnum(*ptr)){
             ERROR_NOT_VALID_LABEL_CHAR(line_num);
             return FALSE;
         }
@@ -174,7 +184,7 @@ void update_counters_label_list(Lable_Node* head, int IC) {
     {
         /*check if the word is a knowen label*/
         if(get_label_symbol_type(ptr) == DATA) {
-            ptr->counter_value = ptr->counter_value + IC;
+            ptr->counter_value = ptr->counter_value + IC - 1;
         }
         ptr = get_label_next(ptr);
     }

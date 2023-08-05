@@ -2,7 +2,6 @@
 #ifndef _WORDS_HEADER_
 #define _WORDS_HEADER_
 
-    #define IS_NUMBER(c) (47< c && c<58)
     #define IS_UPPERCASE_LETTERS(c) (64< c && c<91)
     #define IS_LOWERCASE_LETTERS(c) (96< c && c<123)
     
@@ -18,7 +17,6 @@
 
 
     /*chars func*/
-    int is_letter_or_num_char(char c);
 
 
     int is_external_or_entry_ins(char* input);
@@ -38,10 +36,13 @@
     int is_visible_chars_only(char * input);
 
     int is_space(char c);
-    int is_number_char(char c);
     int get_number(char* p);
     int is_valid_string_param(char * word, int line_number);
     int is_end_line(char c);
+
+    /*TODO: FOR TESTS - NEED TO DEL*/
+    int get_sign_value(char curr_char);
+
 
 #endif
 

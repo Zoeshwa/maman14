@@ -25,7 +25,7 @@ char* int_to_binary_string(int number, int num_bits) {
 void make_bin_ins_word(Ins_Node** head){
     char *bin_src, *bin_opcode, *bin_dest, *bin_are;
 
-    (*head)->bin_rep = (char*)calloc(13,sizeof(char));
+    (*head)->bin_rep = (char*)calloc(WORD_LEN_BINARY+1,sizeof(char));
 
     /*save as string the bin rep of the fields*/
     bin_src = int_to_binary_string((*head)->operrands[0], 3);
@@ -94,7 +94,7 @@ void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
     if (lable == NULL){ /*lable would be declaired later so bin word stays NULL*/
         return;
     }
-    bin_adress = int_to_binary_string(lable->counter_value, 10);
+    bin_adress = int_to_binary_string(get_label_counter_value(lable), 10);
 
     if (get_label_symbol_type(lable) == EXTERNAL){
         bin_are = "01";

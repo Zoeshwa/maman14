@@ -43,10 +43,10 @@ void make_files(File_Config *file_config, char* file_name){
     if (is_entry_file_needed(lable_head)){
         ent_file = fopen(ent_file_name, "w+");
         while (lable_head != NULL){
-            if (lable_head->is_entry == 1){
-                fprintf(ent_file, "%s %d\n", lable_head->name, lable_head->counter_value);
+            if (get_label_is_entry(lable_head) == TRUE){
+                fprintf(ent_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
             }
-            lable_head = lable_head->next;
+            lable_head = get_label_next(lable_head);
         }
     }
 
@@ -54,10 +54,10 @@ void make_files(File_Config *file_config, char* file_name){
     if (is_ext_file_needed(lable_head)){
         ext_file = fopen(ext_file_name, "w+");
         while (lable_head != NULL){
-            if (lable_head->symbol_type == EXTERNAL){
-                fprintf(ext_file, "%s %d\n", lable_head->name, lable_head->counter_value);
+            if (get_label_symbol_type(lable_head) == EXTERNAL){
+                fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
             }
-            lable_head = lable_head->next;
+            lable_head = get_label_next(lable_head);
         }
     }
 
@@ -95,7 +95,8 @@ int main(int argc, char* argv[]) {
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
-      
+
+        /*DELETE*/
         print_file_config(file_config); 
 
         make_files(file_config, argv[ctr]);
@@ -109,39 +110,9 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+int main_o(int argc, char* argv[]) {
+    run_words_functions_testers();
 
 
-
-/*int main_ido(){
-    File_Config* file_conf;
-    FILE* am_file;
-    Ins_Node* test_ptr;
-    char input[MAX_LEN];
-
-    am_file = fopen("assembly.am","r");
-    file_conf = intialiez_file_config();
-
-    while (fgets(input, MAX_LEN, am_file) != NULL){  
-        printf("input is: %s\n", input)  ;
-        handle_code_line(file_conf, input);
-        file_conf->curr_line_num += 1;
-        print_ins_node(file_conf->ins_tail);
-
-    }
-
-    test_ptr = file_conf->ins_head;
-    while (test_ptr != NULL){
-        print_ins_node(test_ptr);
-        test_ptr = test_ptr->next;
-    }
     return 0;
-
-}*/
-
-/*void test_init_ins_node(Ins_Node** head, int type, int src, int dest, int opcode){
-       (*head)->type = type;
-       (*head)->operrands[0] = src; 
-       (*head)->operrands[1] =  dest;
-       (*head)->opcode = opcode; 
 }
-*/
