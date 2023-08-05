@@ -631,7 +631,7 @@ void run_is_end_line()
     END_TEST("run_is_end_line");
 }
 
-void run_is_letter_or_num_char() 
+/*void run_is_letter_or_num_char() 
 {
     int i;
     i = 0;
@@ -647,7 +647,7 @@ void run_is_letter_or_num_char()
     tester_O_int_I_char(is_letter_or_num_char, '1', 1, i++);
     tester_O_int_I_char(is_letter_or_num_char, '0', 1, i++);
     END_TEST("is_letter_or_num_char");
-}
+}*/
 
 void run_get_sign_value() 
 {
@@ -906,7 +906,6 @@ void run_words_functions_testers()
     /*char func*/
     run_is_space(); 
     run_is_end_line();
-    run_is_letter_or_num_char();
     run_get_sign_value();
 
     /*words fun*/

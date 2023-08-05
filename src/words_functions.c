@@ -20,16 +20,6 @@ int is_end_line(char c)
  return FALSE;
 }
 
-/*Description: check if a given char is a number or a letter*/
-/*Input: a char to check*/
-/*Output: true if the char is a number or a letter, else - false*/
-int is_letter_or_num_char(char c){
-    /*TODO: use isalpha for a-z, A-Z*/
-    if (isdigit(c) || IS_UPPERCASE_LETTERS(c) || IS_LOWERCASE_LETTERS(c))
-        return TRUE;
-    return FALSE;
-}
-
 int get_sign_value(char curr_char) {
 
     if (curr_char == '-')
@@ -40,7 +30,6 @@ int get_sign_value(char curr_char) {
     printf("ERROR - this word dont have a sign like expected\n");
     return 0;
 }
-
 
 /*ask ido*/
 int is_Ins(char* word){

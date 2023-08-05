@@ -366,3 +366,14 @@ int ido_main_for_pars(int argc, char* argv[]) {
        (*head)->opcode = opcode; 
 }
 */
+
+/*Description: check if a given char is a number or a letter*/
+/*Input: a char to check*/
+/*Output: true if the char is a number or a letter, else - false*/
+int is_letter_or_num_char(char c){
+    /*TODO: use isalpha for a-z, A-Z*/
+    /*if (isdigit(c) || IS_UPPERCASE_LETTERS(c) || IS_LOWERCASE_LETTERS(c))
+        return TRUE;
+    return FALSE;*/
+    return isalnum(c);
+}
