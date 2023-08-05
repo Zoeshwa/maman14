@@ -5,6 +5,7 @@
     #define FALSE 0
 
     #define WORD_LEN_BINARY 12
+    #define MAX_LEN 80
 
 
     /*ERROR STR*/

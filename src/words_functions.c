@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include "string_functions.h"
 
-#define ZERO_IN_ASCII 48
 
 int is_space(char c)
 {

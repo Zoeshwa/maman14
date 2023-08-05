@@ -3,11 +3,6 @@
 #include <string.h>
 #include "testers.h"
 
-#define PASS_PRINT(expected_result) printf("V - PASS: Expected result (%d) matches the actual result.\n", expected_result)
-#define FAIL_PRINT(test_number, expected_result, result) printf("X - FAIL: test_num (%d), Expected (%d) - Actual result (%d)\n",test_number, expected_result, result)
-
-
-
 void tester_O_int_I_char(int (*function)(char), char input, int expected_result, int test_number) {
     int result;
     result = function(input);

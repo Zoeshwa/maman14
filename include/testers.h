@@ -27,6 +27,9 @@
 #define _TESTERS_HEADER_
 
 
+    #define PASS_PRINT(expected_result) printf("V - PASS: Expected result (%d) matches the actual result.\n", expected_result)
+    #define FAIL_PRINT(test_number, expected_result, result) printf("X - FAIL: test_num (%d), Expected (%d) - Actual result (%d)\n",test_number, expected_result, result)
+
     #define NOT_GOOD printf("----------BAD------------\n")
     #define GOOD printf("----------GOOD------------\n")
     #define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)

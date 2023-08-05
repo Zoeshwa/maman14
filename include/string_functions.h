@@ -1,21 +1,14 @@
 
 #ifndef _STRING_HEADER_
 #define _STRING_HEADER_
-
-    #define MAX_LEN 80
-    #define MAX_LENGTH 80
-    #define MAX_WORDS 80
-
     
+    #define ZERO_IN_ASCII 48
+    #define QUOTES '\"'
+    #define COLON 58
+
     #define IS_UPPERCASE_LETTERS(c) (64< c && c<91)
     #define IS_LOWERCASE_LETTERS(c) (96< c && c<123)
     
-    #define QUOTES '\"'
-
-    /*TODO: maybe move to Labels*/
-    #define MAX_LABEL_LEN 31
-    #define COLON 58
-
     int empty_line(char* line);
     int comment_line(char* line);
     char* skip_spaces(char* p);

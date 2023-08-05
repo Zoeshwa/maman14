@@ -3,7 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "first_pass.h"
-#define MAX_LEN 80 /*TODO: maybe in the header?*/
 
 
 

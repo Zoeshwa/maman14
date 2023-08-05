@@ -1,6 +1,7 @@
 #include "string_functions.h"
 #include "enums.h"
 
+
 typedef struct Macro_Node Macro_Node;
 
 void make_am_file(char* orig_name);

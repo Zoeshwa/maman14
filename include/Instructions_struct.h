@@ -11,9 +11,9 @@
 
 #ifndef _INSTRUCTIONS_HEADER_
 #define _INSTRUCTIONS_HEADER_
-    #define MAX_LABLE_LEN 31
+    
+    #define INITIAL_IC_VALUE 100
     #define NUM_OF_COM 16
-
 
     typedef struct Command Command;
 

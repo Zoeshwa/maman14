@@ -4,9 +4,6 @@
 #include <ctype.h>
 #include "Instructions_struct.h"
 
-
-
-
 struct Ins_Node {
     int type;
     int IC_count; 
@@ -345,18 +342,19 @@ void print_Ins_Node(Ins_Node* head) {
         return;
     }
     printf("INS_NODE: \t");
-    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1]);
+    printf("type: %d, \tIC count: %d,", head->type,head->IC_count);
+
+    if( head->bin_rep != NULL)
+        printf("\tbin: %s",  head->bin_rep);
+    else
+        printf("\tbin: NULL");
     if(head->lable != NULL) {
         printf("\tis_lable: %s,", head->lable);
     } else {
         printf("\tis_lable: NULL,");
     }
 
-    if( head->bin_rep != NULL)
-        printf("\tbin: %s",  head->bin_rep);
-    else
-        printf("\tbin: NULL");
-
+    printf("\topcode: %d,\tsrc: %d,\t dest: %d,", head->opcode, head->operrands[0], head->operrands[1]);
 
     if(head->next  != NULL) {
         printf("\tnext: \n");

@@ -19,8 +19,7 @@
 
 #ifndef _FILES_FUNCTIONS_HEADER_
 #define _FILES_FUNCTIONS_HEADER_
-#define MAX_LABLE_LEN 31
-
+    
     typedef struct File_Config File_Config;
 
     File_Config* intialiez_file_config();

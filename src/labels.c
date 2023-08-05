@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include "labels.h"
 
-
  struct Lable_Node {
         char* name;
         int counter_value;
@@ -99,7 +98,7 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
 
     /*TODO: this only if the lable is in the first word !is_lable(word)*/
     /*have only max len for labels and end with ":" and no spaces before ":"*/
-    if(strlen(word) > MAX_LABEL_LEN) {
+    if(strlen(word) > MAX_LABLE_LEN) {
         ERROR_NOT_VALID_LABEL_LEN(line_num);
         return FALSE; 
     }

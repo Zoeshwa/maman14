@@ -3,8 +3,6 @@
 #include <string.h>
 #include "macros_struct.h"
 
-#define MAX_LEN 80
-
 /* Macro_Node in macro linked list*/
 struct Macro_Node {
     char* name;

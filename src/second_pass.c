@@ -73,7 +73,7 @@ void second_pass(File_Config *file_config, char* am_file_name) {
         }
     }
         /*go over the IC to update lable adresses*/
-        /*ZOE: MAYBE NEED ADDRESS*/
+        /*TODO ZOE: MAYBE NEED ADDRESS*/
     while(ins_head != NULL){
             if (get_ins_node_type(ins_head) == DIR){ /*encountered a lable line that doesnt have a bin adress since it wasnt known in first pass */
                 make_bin_DIR_word(&ins_head, file_config);

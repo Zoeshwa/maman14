@@ -3,9 +3,6 @@
 #include <string.h>
 #include "string_functions.h"
 
-
-
-
 /*Description: check if a given line is empty*/
 /*Input: a string line (pointer to array of chars)*/
 /*Output: 1 - true, the line have only space chars, 0- false the line is not empty*/
@@ -83,11 +80,11 @@ char* get_next_word_no_comma(char* word, char* line){
 /*Input: line - pointer to position in line*/
 /*Output: An array of the extracted words*/
 char** get_words(char *line) {
-    char copy_line[MAX_LENGTH], *p, **words, curr_word[MAX_LENGTH], *tmp;
+    char copy_line[MAX_LEN], *p, **words, curr_word[MAX_LEN], *tmp;
     int i;
     i = 0;
     strcpy(copy_line, line);
-    words = (char**)malloc(MAX_LENGTH * sizeof(char*));
+    words = (char**)malloc(MAX_LEN * sizeof(char*));
     p = copy_line;
     p = skip_spaces(p);
     if (*p == '\0' && *p == EOF && *p == '\n'){

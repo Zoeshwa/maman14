@@ -3,9 +3,6 @@
 #include <string.h>
 #include "testers.h"
 
-
-
-
 void run_tester() 
 {
     tests_get_number();
