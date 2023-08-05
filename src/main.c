@@ -3,8 +3,6 @@
 #include <string.h>
 #include "main.h"
 
-#define MAX_LEN 80 /*ASK: not include the \0*/
-
 
 int main(int argc, char* argv[]) {
     int ctr;
@@ -40,8 +38,10 @@ int main(int argc, char* argv[]) {
 
         /*DELETE*/
         print_file_config(file_config); 
+        printf("hi\n");
 
         make_files(file_config, argv[ctr]);
+        printf("hi\n");
         free_file_config(&file_config);
 
         printf("\t----------END:file \"%s\"\n", argv[ctr]);
