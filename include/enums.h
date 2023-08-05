@@ -15,6 +15,10 @@
     #define ERROR_LABEL_IS_SAVED_WORD(curr_line_num) print_error("Invalid lable - Using a reserved word as a label\n", curr_line_num)
     #define ERROR_NOT_VALID_LABEL_LEN(curr_line_num) print_error("Invalid label - length\n", curr_line_num)
 
+    /*entry errors*/
+    #define ERROR_NOT_FOUND_ENTRY(curr_line_num) print_error("The entry label was not found in the file\n", curr_line_num)
+    #define ERROR_LABEL_ENTRY_EXTERN(curr_line_num) print_error("It is not possible to define the same label as both entry and external in the same file\n", curr_line_num)
+
     /*ins errors*/
     #define ERROR_NOT_VALID_COMMAND_NAME(curr_line_num) print_error("not a valid command\n", curr_line_num)
     #define ERROR_NOT_COMPATIBLE_PARAMS(curr_line_num) print_error("not compatible num of params between enterd and command parameters\n", curr_line_num)
@@ -47,6 +51,16 @@
         NUM,
         STRING
     } Data_Type;
+
+    typedef enum Param_Type {
+        NONE = 0, 
+        IMM = 1, 
+        DIR = 3, 
+        REG_DIR = 5, 
+        ERR = 6
+    } Param_Type;
+    
+    typedef enum Coms{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP} Coms;
 
     void print_error(char* error_msg, int line_num);
 

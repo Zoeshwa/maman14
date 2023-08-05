@@ -126,5 +126,7 @@
     char** get_lines_valid(int* len);
     char** get_lines_invalid(int* len);
     void tests_get_number();
+
+    void tester_bin_word(char* input, char* expected_input, int test_number);
 #endif
 

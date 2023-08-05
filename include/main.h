@@ -10,5 +10,3 @@
 
 #include "testers.h"
 
-
-

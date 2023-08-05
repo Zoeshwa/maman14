@@ -3,15 +3,17 @@
 #include <string.h>
 #include "data_struct.h"
 
-#define INITIAL_DC_VALUE 0
+#define INITIAL_DC_VALUE 1
 
 /**/
 typedef struct Data_Node{
     int value; /*value of the char or the int to store*/
     Data_Type data_type; /*string or data*/
     int DC_counter;
+    char* bin_rep;
     struct Data_Node* next;
 } Data_Node;
+
 
 /*Description: The function creates a new data node, allocates space in memory and initializes the data*/
 /*Input: value - value to save in the node, data_type - type of the value (string or data)*/
@@ -25,6 +27,7 @@ Data_Node* create_data_node(int value, Data_Type data_type) {
 
     new_node->value = value;
     new_node->data_type = data_type;
+    new_node->bin_rep = int_to_binary_string(value, WORD_LEN_BINARY);    
     new_node->next = NULL;
 
     return new_node;
@@ -68,6 +71,10 @@ Data_Node* get_data_node_next(Data_Node* node) {
     return node->next;
 }
 
+char* get_bin_rep_data(Data_Node* node) {
+    return node->bin_rep;
+}
+
 /*Description: Function to free the entire linked list of Data_Nodes and set the head pointer to NULL*/
 /*Input: a pointer to a pointer of the head of the list to free*/
 void free_data_list(Data_Node** head) {
@@ -75,10 +82,25 @@ void free_data_list(Data_Node** head) {
     Data_Node* next_node;
 
     while (current != NULL) {
+        if(current->bin_rep != NULL) {
+            free(current->bin_rep);
+            current->bin_rep = NULL;
+        }
         next_node = get_data_node_next(current);
         free(current);
         current = next_node;
     }
     /* Set the head pointer to NULL after freeing the entire list */
     *head = NULL;
+}
+
+
+void update_counters_data_list(Data_Node* head, int IC) {
+    Data_Node* ptr;
+    ptr = head; /*start with ptr to head of the list*/
+    while (ptr != NULL)
+    {
+        ptr->DC_counter = ptr->DC_counter + IC;
+        ptr = get_data_node_next(ptr);
+    }
 }

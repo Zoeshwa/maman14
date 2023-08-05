@@ -13,8 +13,8 @@
 int empty_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer);
+
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
-        printf("\temply_line()\n");
         return TRUE; 
     }
     else{
@@ -182,6 +182,7 @@ void free_words(char** words) {
         num_words++;
     }
 
+
     for (i = 0; i < num_words; i++) {
         if (words[i] != NULL) {
             free(words[i]); /* Free each individual string */
@@ -191,6 +192,7 @@ void free_words(char** words) {
 
     free(words); /* Free the array of char pointers*/
     words = NULL;
+
 }
 
 /*Description: The function returns how many words there are in an array of words*/

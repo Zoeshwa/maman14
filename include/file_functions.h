@@ -33,12 +33,8 @@
         Data_Node* data_tail;
     }File_Config;
     
-    /*TODO*/
-    void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]);
-    Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf);
-    Ins_Node* insert_ins_head();
-    void print_ins_node(Ins_Node* head);
 
+    /*ds*/
 
 
     File_Config* intialiez_file_config();
@@ -56,5 +52,10 @@
     void update_DC_counter(File_Config** file_config, int num_to_add);
 
     void free_file_config(File_Config** file_config_ptr);
+
+
+    void bin_to_base64(char arr[2], const char* binary_word);
+    int is_entry_file_needed(Lable_Node *lable_head);
+    int is_ext_file_needed(Lable_Node *lable_head);
 #endif
 

@@ -17,7 +17,6 @@ void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_resu
     }
 }
 
-
 void tester_is_saved_word(char* input, int expected_result, int test_number) {
     int result;
     result = is_saved_word(input);
@@ -27,6 +26,17 @@ void tester_is_saved_word(char* input, int expected_result, int test_number) {
         FAIL_PRINT(test_number, expected_result, result);
     }
 }
+
+/*void tester_bin_word(Ins_Node** input, char* expected_input, int test_number) {
+    char* result, test_result;
+    make_bin_ins_word(input);
+    test_result = strcmp((*input)->bin_rep, expected_input);
+    if (test_result == 0) {
+        PASS_PRINT(test_result);
+    } else {
+        FAIL_PRINT(test_number, test_result, result);
+    }
+}*/
 
 void tester_get_next_word(char * str) {
     char * ptr;
@@ -82,7 +92,19 @@ void print_Ins_Node(Ins_Node* head) {
         return;
     }
     printf("INS_NODE: \t");
-    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,\t is_lable: %s", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
+    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1]);
+    if(head->lable != NULL) {
+        printf("\tis_lable: %s,", head->lable);
+    } else {
+        printf("\tis_lable: NULL,");
+    }
+
+    if( head->bin_rep != NULL)
+        printf("\tbin: %s",  head->bin_rep);
+    else
+        printf("\tbin: NULL");
+
+
     if(head->next  != NULL) {
         printf("\tnext: \n");
         print_Ins_Node(head->next);
@@ -123,7 +145,7 @@ void print_Data_Node(Data_Node* data_node) {
         printf("\tvalue: %d, ", get_data_node_value(data_node));
         printf("\ttype: DATA, ");
     }
-    printf("\tDC_counter: %d \n",get_data_node_DC_counter(data_node));
+    printf("\tbin: %s,\tDC_counter: %d \n", get_bin_rep_data(data_node), get_data_node_DC_counter(data_node));
     print_Data_Node(get_data_node_next(data_node));
 } 
 
@@ -158,7 +180,6 @@ void tester_file_set_int_fileds(File_Config* file_config, void (*set_func)(File_
         FAIL_PRINT(test_number, expected_result, result);
     }
 }
-
 
 /*Labels testers*/
 void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number) {

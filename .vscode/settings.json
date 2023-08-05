@@ -17,6 +17,7 @@
         "limits": "c",
         "new": "c",
         "ctype.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "binary_functions.h": "c"
     }
 }

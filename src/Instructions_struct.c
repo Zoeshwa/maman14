@@ -8,73 +8,46 @@
 
 Ins_Node* insert_ins_head() {
     Ins_Node* ins_head;
-    printf("in insert_ins_head()\n");
     ins_head = (Ins_Node*)malloc(sizeof(Ins_Node));
     ins_head->line_number = -1;
     ins_head->IC_count = 100;
     ins_head->type = 0;
+    ins_head->bin_rep = NULL;
+    ins_head->opcode = -1;
     ins_head->next = NULL;
     return ins_head;
 }
 
 /* Function to insert a new Ins_Node at the end of the list*/
-Ins_Node** insert_ins_node(Ins_Node** head, File_Config* file_conf) {
+Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num) {
     /* Create a new Ins_Node*/
     Ins_Node* newIns_Node;
     newIns_Node = (Ins_Node*)malloc(sizeof(Ins_Node));
 
     newIns_Node->type = 0;
-    newIns_Node->IC_count = file_conf->IC_counter;
-    (*head)->line_number = file_conf->curr_line_num;
+    newIns_Node->IC_count = IC_counter;
+
+    (*head)->line_number = curr_line_num;
 
     (*head)->next = newIns_Node;
     *head = newIns_Node;
     return head;
 }
 
-char* int_to_binary_string(unsigned int number, int num_bits) {
-    int i;
-    char* result = (char*)malloc((num_bits + 1) * sizeof(char));
-    for (i = num_bits; i >= 0; i--) {
-    for (i = num_bits - 1; i >= 0; i--) {
-            result[i] = (number & 1) + '0'; /* Convert bit to '0' or '1' */
-            number >>= 1; /* Shift right to get the next bit */
-        }
-        result[num_bits] = '\0'; /* Null-terminate the string */
-    }
-    return result;
-    }
-
-
-void make_bin_ins_word(char bin_word[12], int opcode, int param_type[2]){
-    char *bin_src, *bin_opcode, *bin_dest, *bin_are;
-    bin_src = int_to_binary_string(param_type[0], 3);
-    bin_dest = int_to_binary_string(param_type[1], 3);
-    bin_opcode = int_to_binary_string(opcode, 4);
-    bin_are = int_to_binary_string(0, 2);
-    printf("src:%d , %s dest:  %d, %s opcode  %d, %s\n", param_type[0], bin_src, param_type[1], bin_dest, opcode, bin_opcode);
-    strcat(bin_word, bin_src);
-    strcat(bin_word, bin_opcode);
-    strcat(bin_word, bin_dest);
-    strcat(bin_word, bin_are);
-    printf("bin_word is: %s\n", bin_word);
-    bin_word[12] = '\0';
-
-    return;
-}
-
 void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
 
-    (*head)->ARE = 0;
+    (*head)->type = NONE;
+    (*head)->ARE = NONE;
     (*head)->opcode = com.en;
     (*head)->operrands[0] = param_type[0];
     (*head)->operrands[1] = param_type[1];
-
+    (*head)->bin_rep = NULL;
     (*head)->next = NULL;
+    (*head)->bin_rep = NULL;
 }
 
 void print_ins_node(Ins_Node* head){
-    printf("type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable);
+    printf(" type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s, bin: %s\n\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable, head->bin_rep);
 }
 
 /*Description: Function to free a single Ins_Node and set the pointer to NULL*/
@@ -84,31 +57,36 @@ void free_ins_node(Ins_Node** node) {
 
     current = *node;
     if (current != NULL) {
-        if(current->lable != NULL )
+        if (current->lable != NULL)
             free(current->lable);
-        if(current->operrands != NULL){
+        if (current->operrands != NULL) {
             free(current->operrands);
-            free(current->operrands);
+            /* Remove the duplicate free statement for operrands */
         }
-        free(*node);  /* Free the Ins_Node itself */
-        *node = NULL; /* Set the pointer to NULL after freeing */
-    }   
+        if (current->bin_rep != NULL) {
+            free(current->bin_rep);
+        }
+        free(current); /* Free the memory pointed by the 'current' pointer */
+        *node = NULL;  /* Set the pointer to NULL after freeing */
+    }
 }
+
 
 /*Description: Function to free the entire linked list of Ins_Node and set the head pointer to NULL*/
 /*Input: a pointer to a pointer of the head of the list to free*/
 void free_ins_list(Ins_Node** head_ptr) {
     Ins_Node* current;
     Ins_Node* next_node;
+    printf("in free ins list\n");
     
     if (head_ptr == NULL || *head_ptr == NULL) {
         return;
     }
 
-    current = *head_ptr;
+    current = *head_ptr; /* Set current to the head of the list */
     while (current != NULL) {
-        next_node = current->next;
-        free_ins_node(&current);  /* Free the current node */
+        next_node = current->next; /* Store the next node before freeing the current node */
+        free_ins_node(&current);  /* Free the current node by passing a pointer to it */
         current = next_node; /* Move to the next node */
     }
 
