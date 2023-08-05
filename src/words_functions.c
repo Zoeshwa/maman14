@@ -6,11 +6,7 @@
 
 #define ZERO_IN_ASCII 48
 
-int is_Ins(char* word){
-    if (word[strlen(word)-1] == ':')
-        return TRUE;
-    return FALSE;
-}
+
 
 int is_space(char c)
 {
@@ -32,6 +28,25 @@ int is_end_line(char c)
 int is_letter_or_num_char(char c){
     /*TODO: use isalpha for a-z, A-Z*/
     if (isdigit(c) || IS_UPPERCASE_LETTERS(c) || IS_LOWERCASE_LETTERS(c))
+        return TRUE;
+    return FALSE;
+}
+
+int get_sign_value(char curr_char) {
+
+    if (curr_char == '-')
+        return -1;
+    if (curr_char == '+')
+        return 1;
+
+    printf("ERROR - this word dont have a sign like expected\n");
+    return 0;
+}
+
+
+/*ask ido*/
+int is_Ins(char* word){
+    if (word[strlen(word)-1] == ':')
         return TRUE;
     return FALSE;
 }
@@ -74,23 +89,6 @@ int is_valid_quotes(char* word) {
     return TRUE; 
 }
 
-int is_valid_string_param(char * word, int line_number) {
-    int is_valid;
-    is_valid = TRUE;
-
-    if(!is_visible_chars_only(word)){
-        ERROR_INVALID_CHARS(line_number);
-        is_valid = FALSE;
-    }
-
-    if(!is_valid_quotes(word)) {
-        ERROR_INVALID_QUOTES(line_number);
-        is_valid = FALSE;
-    }
-
-    return is_valid;
-}
-
 /*Description: check if a given word is a lable - end with ":"*/
 /*Input: a string word (pointer to array of chars)*/
 /*Output: 1 - true, 0- false*/
@@ -105,15 +103,6 @@ int is_lable(char* word) {
     return TRUE;
 }
 
-void remove_colon_at_end(char* word) {
-    size_t len = strlen(word);
-    /* Check if the last character is ":" */
-    if (len > 0 && word[len - 1] == ':') {
-        /* Set the last character to the null terminator "\0" */
-        word[len - 1] = '\0';
-
-    }
-}
 
 int is_external_or_entry_ins(char* input) {
    return (is_type_ins(is_extern_word, input) || is_type_ins(is_entry_word, input));
@@ -139,29 +128,6 @@ int is_extern_ins(char* input) {
    return is_type_ins(is_extern_word, input);
 }
 
-int is_type_ins(int (*function)(char*), char* input) {
-    char * ptr;
-    char cur_word[MAX_LEN];
-    int result; 
-
-    result = 0;
-    ptr = input;
-
-    get_next_word(cur_word, ptr);
-    ptr = skip_spaces(ptr); 
-    
-    if(is_lable(cur_word)) {
-        ptr =  ptr + strlen(cur_word);
-        get_next_word(cur_word, ptr);
-    }
-
-    if(function(cur_word)) {
-        result = 1;
-    }
-
-    return result;
-}
-
 int is_entry_word(char* cur_word) {
     if(strcmp(cur_word, ".entry") == 0) {
         return TRUE;
@@ -185,6 +151,59 @@ int is_word_equals_string(char* cur_word) {
         return FALSE;
     }
 }
+
+int is_valid_string_param(char * word, int line_number) {
+    int is_valid;
+    is_valid = TRUE;
+
+    if(!is_visible_chars_only(word)){
+        ERROR_INVALID_CHARS(line_number);
+        is_valid = FALSE;
+    }
+
+    if(!is_valid_quotes(word)) {
+        ERROR_INVALID_QUOTES(line_number);
+        is_valid = FALSE;
+    }
+
+    return is_valid;
+}
+
+
+void remove_colon_at_end(char* word) {
+    size_t len = strlen(word);
+    /* Check if the last character is ":" */
+    if (len > 0 && word[len - 1] == ':') {
+        /* Set the last character to the null terminator "\0" */
+        word[len - 1] = '\0';
+
+    }
+}
+
+
+int is_type_ins(int (*function)(char*), char* input) {
+    char * ptr;
+    char cur_word[MAX_LEN];
+    int result; 
+
+    result = 0;
+    ptr = input;
+
+    get_next_word(cur_word, ptr);
+    ptr = skip_spaces(ptr); 
+    
+    if(is_lable(cur_word)) {
+        ptr =  ptr + strlen(cur_word);
+        get_next_word(cur_word, ptr);
+    }
+
+    if(function(cur_word)) {
+        result = 1;
+    }
+
+    return result;
+}
+
 
 /*TODO*/
 /* Function to get the array of saved words and the number of elements in the array */
@@ -249,25 +268,15 @@ int is_saved_word(const char* word) {
     return FALSE;
 }
 
-int get_sign_value(char curr_char) {
-
-    if (curr_char == '-')
-        return -1;
-    if (curr_char == '+')
-        return 1;
-
-    printf("ERROR - this word dont have a sign like expected\n");
-    return 0;
-}
 
 /*TODO: DELETE delete this and use isdigit instade*/
-/* checks if a char read is a number */
+/* checks if a char read is a number 
 int is_number_char(char c){
     if(isdigit(c)) {
     	return TRUE;
     }
 	return FALSE;
-}
+}*/
 
 /* gets a pointer to a number or a '-' and reads the next chars to from the number as a double */
 int get_number(char* p){
@@ -276,7 +285,7 @@ int get_number(char* p){
 	sign = 1;
     is_valid = TRUE;
 
-	if(!is_number_char(*p)) {
+	if(!isdigit(*p)) {
         sign = get_sign_value(*p);
         /* DELETE
             if (*p == '-'){
@@ -288,7 +297,7 @@ int get_number(char* p){
         p++;
     }
 
-	while (is_number_char(*p) && is_valid == TRUE){
+	while (isdigit(*p) && is_valid == TRUE){
 		num = num * 10 + ((*p) - ZERO_IN_ASCII);
 		p++;
 	}

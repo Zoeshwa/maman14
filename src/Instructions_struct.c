@@ -112,7 +112,7 @@ int is_valid_number_param(char *param){
         param++;
     }
     while (*param != '\0'){
-        if (!is_number_char(*param)){
+        if (!isdigit(*param)){
             return 0;
         }
         param++;
