@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "Instructions_struct.h"
 
+
 struct Ins_Node {
     int type;
     int IC_count; 
@@ -51,7 +52,7 @@ Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num) {
     return head;
 }
 
-void intialiez_ins_node(Ins_Node** head, command com, int param_type[2]) {
+void intialiez_ins_node(Ins_Node** head, Command com, int param_type[2]) {
 
     (*head)->type = NONE;
     (*head)->ARE = NONE;
@@ -169,7 +170,7 @@ void free_ins_list(Ins_Node** head_ptr) {
 /*utils functions*/
 
 /* checks if the beggining of the input line is a valid command line */
-int is_legal_com_name(char* input, int i, const command* commands_list){
+int is_legal_com_name(char* input, int i, const Command* commands_list){
 	int j;
 	for ( j=0; j < strlen(commands_list[i].act); j++)  /* check if its one of the commands */
 	{
@@ -203,7 +204,7 @@ int is_compatible_types(int acual_type, int* expected_type){
     return 0;
 }
 
-int is_valid_com(command com,char** params, int param_types[2], int line_num){
+int is_valid_com(Command com,char** params, int param_types[2], int line_num){
     int num_of_params,i;
     num_of_params=0;
 

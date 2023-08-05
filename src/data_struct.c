@@ -3,14 +3,13 @@
 #include <string.h>
 #include "data_struct.h"
 
-#define INITIAL_DC_VALUE 1
 
-/**/
+/*Node in a linked list that store the data to storage in the memory*/
 struct Data_Node{
     int value; /*value of the char or the int to store*/
     Data_Type data_type; /*string or data*/
     int DC_counter;
-    char* binary_rep;
+    char* binary_rep; /*Representation of the value in binary*/
     struct Data_Node* next;
 };
 
@@ -54,18 +53,6 @@ void add_data_node(Data_Node** head, Data_Node** tail, int value, Data_Type data
     }
 }
 
-int get_data_node_type(Data_Node* node) {
-    return node->data_type;
-}
-
-int get_data_node_value(Data_Node* node) {
-    return node->value;
-}
-
-int get_data_node_DC_counter(Data_Node* node) {
-    return node->DC_counter;
-}
-
 char* get_bin_rep_data(Data_Node* node) {
     return node->binary_rep;
 }
@@ -95,7 +82,6 @@ void free_data_list(Data_Node** head) {
     *head = NULL;
 }
 
-
 void update_counters_data_list(Data_Node* head, int IC) {
     Data_Node* ptr;
     ptr = head; /*start with ptr to head of the list*/
@@ -104,4 +90,18 @@ void update_counters_data_list(Data_Node* head, int IC) {
         ptr->DC_counter = ptr->DC_counter + IC - 1;
         ptr = get_data_node_next(ptr);
     }
+}
+
+/*DELETE - only for tests*/
+
+int get_data_node_type(Data_Node* node) {
+    return node->data_type;
+}
+
+int get_data_node_value(Data_Node* node) {
+    return node->value;
+}
+
+int get_data_node_DC_counter(Data_Node* node) {
+    return node->DC_counter;
 }

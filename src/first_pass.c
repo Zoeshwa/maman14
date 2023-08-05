@@ -8,7 +8,7 @@
 
 
 /*MAYBE: ido need to ask in the forum*/
-command com_conf[] = {
+Command com_conf[] = {
             {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
             {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
             {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
@@ -163,9 +163,9 @@ int is_valid_lable_param(char *param) {
 }
 
 /* desc: gets the action from the command read */
-command get_action(char* input, const command* commands_list)
+Command get_action(char* input, const Command* commands_list)
 {
-	command com;
+	Command com;
 	int i;
 	for (i=0; i < NUM_OF_COM; i++)
 	{
@@ -282,7 +282,7 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
 void handle_code_line(File_Config* file_config, char *ptr) {
 
     char **params;
-    command com;
+    Command com;
     int param_type[2];
     Ins_Node **cur_node, *ins_tail;
 

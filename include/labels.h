@@ -25,6 +25,7 @@
     Lable_Node* find_lable(Lable_Node* head, char * symbol_name);
     int mark_entry_label(Lable_Node* head, char * label_word, int line_num);
     void update_counters_label_list(Lable_Node* head, int IC);
+    void set_label_name(Lable_Node* new_lable, char * word);
     
     void free_lable_list(Lable_Node** head);
     void free_label_node(Lable_Node** node);
