@@ -605,7 +605,60 @@ void run_tests_bin_word(){
 
 
 /*----------WORDS FUNCTIONS----------------*/
-/*TODO: char func*/
+
+void run_is_space() 
+{
+    int i;
+    i = 0;
+    START_TEST("run_is_space");
+    tester_O_int_I_char(is_space, '\t', 1, i++);
+    tester_O_int_I_char(is_space, ' ', 1, i++);
+    tester_O_int_I_char(is_space, 's', 0, i++);
+    END_TEST("run_is_space");
+}
+
+void run_is_end_line() 
+{
+    int i;
+    i = 0;
+    START_TEST("run_is_end_line");
+    tester_O_int_I_char(is_end_line, '\n', 1, i++);
+    tester_O_int_I_char(is_end_line, '\0', 1, i++);
+    tester_O_int_I_char(is_end_line, EOF, 1, i++);
+    tester_O_int_I_char(is_end_line, '\t', 0, i++);
+    tester_O_int_I_char(is_end_line, ' ', 0, i++);
+    tester_O_int_I_char(is_end_line, 's', 0, i++);
+    END_TEST("run_is_end_line");
+}
+
+void run_is_letter_or_num_char() 
+{
+    int i;
+    i = 0;
+    START_TEST("is_letter_or_num_char");
+    tester_O_int_I_char(is_letter_or_num_char, '\n', 0, i++);
+    tester_O_int_I_char(is_letter_or_num_char, '\0', 0, i++);
+    tester_O_int_I_char(is_letter_or_num_char, EOF, 0, i++);
+    tester_O_int_I_char(is_letter_or_num_char, '\t', 0, i++);
+    tester_O_int_I_char(is_letter_or_num_char, ' ', 0, i++);
+    tester_O_int_I_char(is_letter_or_num_char, 's', 1, i++);
+    tester_O_int_I_char(is_letter_or_num_char, 's', 1, i++);
+    tester_O_int_I_char(is_letter_or_num_char, '9', 1, i++);
+    tester_O_int_I_char(is_letter_or_num_char, '1', 1, i++);
+    tester_O_int_I_char(is_letter_or_num_char, '0', 1, i++);
+    END_TEST("is_letter_or_num_char");
+}
+
+void run_get_sign_value() 
+{
+    int i;
+    i = 0;
+    START_TEST("get_sign_value");
+    tester_O_int_I_char(get_sign_value, '-', -1, i++);
+    tester_O_int_I_char(get_sign_value, '+', 1, i++);
+    tester_O_int_I_char(get_sign_value, '5', 0, i++);
+    END_TEST("get_sign_value");
+}
 
 void run_is_lable_testers() 
 {
@@ -850,7 +903,13 @@ void run_words_functions_testers()
 {
     
     START_TEST("words_functions_testers");
-    /*TODO: char func*/
+    /*char func*/
+    run_is_space(); 
+    run_is_end_line();
+    run_is_letter_or_num_char();
+    run_get_sign_value();
+
+    /*words fun*/
     run_is_lable_testers();
     /*run_is_Ins_testers();*/
     run_is_visible_chars_only();

@@ -42,6 +42,9 @@
     int is_valid_string_param(char * word, int line_number);
     int is_end_line(char c);
 
+    /*TODO: FOR TESTS - NEED TO DEL*/
+    int get_sign_value(char curr_char);
+
 
 #endif
 
