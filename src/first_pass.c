@@ -140,53 +140,6 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     free_words(words);
 }
 
-/*TODO: move to words*/
-int is_valid_lable_param(char *param) {
-    int i;
-
-    if (strlen(param) >30){
-        return FALSE;
-    }
-    /* Check if the first character is an alphabet character */
-    if (!isalpha(param[0]))
-        return FALSE;
-
-    /* Check the rest of the characters */
-    for ( i = 1; param[i] != '\0'; i++) {
-        if (!isalnum(param[i])) {
-            return FALSE;
-        }
-    }
-
-    return TRUE;
-}
-
-
-int get_param_type(char* param){
-    /*see if get words ends with \0*/
-
-    if (*param == '@'){ /*start of a register*/
-        param++;
-        if (*param == 'r'){
-            param++;
-            if (*param < 56 && *param > 47) /*is a number between 0 to 7*/
-            {
-                param++;
-                if (*param == '\0'){
-                    return REG_DIR;
-                }
-            } 
-        }
-        printf("not a valid reg\n");
-    }
-    else if(is_valid_number_param(param)){       
-        return IMM;
-    }
-    else if(is_valid_lable_param(param)){
-        return DIR;
-    }
-    return ERR;
-}
 
 int is_valid_param_types(int com, char** params, int num_of_params, int param_type[2]){
     int i;

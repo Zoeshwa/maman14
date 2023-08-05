@@ -34,6 +34,10 @@
     void get_saved_words(const char*** saved_words, int* num_saved_words);
     int is_saved_word(const char* word);
     int is_visible_chars_only(char * input);
+    int is_valid_lable_param(char *param);
+    int get_param_type(char* param);
+    int is_valid_number_param(char *param);
+
 
     int is_space(char c);
     int get_number(char* p);

@@ -31,7 +31,6 @@
     Ins_Node* insert_ins_head();
     void print_ins_node(Ins_Node* head);
 
-   int is_valid_number_param(char *param);
    int is_compatible_types(int acual_type, const int* expected_type);
    int is_valid_com(Command com,char** params, int param_types[2], int line_num);
    int get_reg_num(char* reg);

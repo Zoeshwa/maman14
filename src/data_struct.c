@@ -92,8 +92,10 @@ void update_counters_data_list(Data_Node* head, int IC) {
     }
 }
 
-/*DELETE - only for tests*/
 
+
+
+/*DELETE - only for tests*/
 int get_data_node_type(Data_Node* node) {
     return node->data_type;
 }

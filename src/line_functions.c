@@ -29,11 +29,10 @@ int comment_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
-            printf("\tcomment_line()\n");
-        return 1; /*true*/
+        return TRUE; 
     }
     else{
-        return 0; /*false*/
+        return FALSE;
     }
 }
 
@@ -49,7 +48,7 @@ char* skip_spaces(char* p){
 
 /*TODO: check why ptr and return value*/
 char* get_next_word(char* word, char* line){
-    int i=0;
+    int i = 0;
     char * ptr;
     ptr = line; 
     ptr = skip_spaces(ptr);

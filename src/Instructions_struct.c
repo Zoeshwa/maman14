@@ -66,6 +66,8 @@ void intialiez_ins_node(Ins_Node** head, Command com, int param_type[2]) {
     (*head)->bin_rep = NULL;
 }
 
+/*get functions*/
+
 int get_ins_node_type(Ins_Node* node){
     return node->type;
 }
@@ -106,6 +108,8 @@ Ins_Node* get_ins_next(Ins_Node* node) {
     }
     return node->next;
 }
+
+
 /*set*/
 
 void set_ins_type(Ins_Node** node, int type) {
@@ -126,6 +130,7 @@ void set_ins_operands(Ins_Node** node, int operand1, int operand2) {
         (*node)->operrands[1] = operand2;
     }
 }
+
 void set_ins_operand(Ins_Node** node, int operrand_index, int operand_value) {
     if (*node != NULL && operrand_index < 2 && operrand_index >= 0) {
         (*node)->operrands[operrand_index] = operand_value;
@@ -182,19 +187,7 @@ int is_legal_com_name(char* input, int i, const Command* commands_list){
 	return 1;
 }
 
-/*TODO: zoe already exist*/
-int is_valid_number_param(char *param){
-    if(*param == '-'){
-        param++;
-    }
-    while (*param != '\0'){
-        if (!isdigit(*param)){
-            return 0;
-        }
-        param++;
-    }
-    return 1;
-}
+
 
 int is_compatible_types(int acual_type, const int* expected_type){
     int i;
@@ -225,7 +218,6 @@ int is_valid_com(Command com,char** params, int param_types[2], int line_num){
         return 1;
     }
 }
-
 
 int get_reg_num(char* reg){
     return (int)reg[2]-48;
@@ -374,7 +366,7 @@ void print_Ins_Node(Ins_Node* head) {
     }
 } 
 
-
+/*DELETE*/
 void print_ins_node(Ins_Node* head){
     printf(" type: %d, IC count: %d,opcode: %d src: %d, dest: %d, is_lable: %s, bin: %s\n\n", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1], head->lable, head->bin_rep);
 }
