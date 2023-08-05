@@ -44,6 +44,9 @@
 
      /*file*/
     #define ERROR_CREATING_FILE(file_name) print_error_file("creating file", file_name)
+    #define ERROR_WRITING_FILE(file_name) print_error_file("writing file", file_name)
+    #define ERROR_READING_FILE(file_name) print_error_file("reading file", file_name)
+
 
     typedef enum Symbol_Type {
         DATA,
@@ -69,3 +72,4 @@
     void print_error(char* error_msg, int line_num);
     void print_error_file(char* error_msg, char* file_name);
 #endif
+

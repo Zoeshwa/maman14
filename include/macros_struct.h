@@ -1,4 +1,5 @@
 #include "string_functions.h"
+#include "enums.h"
 
 typedef struct Macro_Node Macro_Node;
 
@@ -12,5 +13,7 @@ void print_macro_list(Macro_Node* head);
 
 
 
-
+#ifndef _ENUMS_HEADER_
+    #include "enums.h"
+#endif
 

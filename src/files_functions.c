@@ -105,12 +105,13 @@ Data_Node** get_file_data_tail_address(File_Config* file_config) {
 }
 
 void update_validity_file_config(File_Config** file_config, int validity) {
-    if(validity == FALSE)
+    if(validity == FALSE && *file_config != NULL)
         (*file_config)->curr_line_num = FALSE;
 }
 
 void update_line_num_file(File_Config** file_config) {
-    (*file_config)->curr_line_num++;
+    if(*file_config != NULL)
+        (*file_config)->curr_line_num++;
 }
 
 void update_DC_counter(File_Config** file_config, int num_to_add) {
@@ -119,11 +120,13 @@ void update_DC_counter(File_Config** file_config, int num_to_add) {
 }
 
 void update_IC_counter(File_Config** file_config, int num_to_add) {
-    (*file_config)->IC_counter += num_to_add;
+    if(*file_config != NULL)
+        (*file_config)->IC_counter += num_to_add;
 }
 
 void update_ins_tail_file(File_Config** file_config, Ins_Node* tail) {
-    (*file_config)->ins_tail = tail;
+    if(*file_config != NULL)
+        (*file_config)->ins_tail = tail;
 }
 
 /*Description: Function to free the memory of the File_Config data structure */

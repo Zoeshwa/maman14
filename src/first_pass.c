@@ -36,6 +36,7 @@ File_Config* first_pass(char* am_file_name) {
     printf("\t---------START FIRST PASS-----------\n");
     file_config = intialiez_file_config();
     am_file = fopen(am_file_name, "r");
+    if (am_file == NULL) {ERROR_READING_FILE("am_file_name");}
 
 
     /*for each line in the file*/
