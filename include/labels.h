@@ -4,7 +4,7 @@
 #endif
 
 #ifndef _WORDS_HEADER_
-    #include "words_functions.h"
+    #include "line_functions.h"
 #endif
 
 #ifndef _LABELS_HEADER_

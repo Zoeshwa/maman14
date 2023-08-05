@@ -3,8 +3,7 @@
 #include <string.h>
 #include "line_functions.h"
 
-#define MAX_LENGTH 80
-#define MAX_WORDS 80
+
 
 
 /*Description: check if a given line is empty*/

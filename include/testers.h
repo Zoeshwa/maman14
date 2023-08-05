@@ -7,7 +7,7 @@
 
 #ifndef _WORDS_HEADER_
 #define _TESTERS_WORDS_HEADER_
-    #include "words_functions.h"
+    #include "line_functions.h"
 #endif
 
 #ifndef _LINES_HEADER_
