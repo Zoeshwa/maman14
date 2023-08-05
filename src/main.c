@@ -95,7 +95,8 @@ int main(int argc, char* argv[]) {
             printf("NOT GOOD - file \"%s\" have errors.\n", am_file_name);
             continue;
         }
-      
+
+        /*DELETE*/
         print_file_config(file_config); 
 
         /*make_files(file_config, argv[ctr]);*/
@@ -108,40 +109,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
-
-
-
-/*int main_ido(){
-    File_Config* file_conf;
-    FILE* am_file;
-    Ins_Node* test_ptr;
-    char input[MAX_LEN];
-
-    am_file = fopen("assembly.am","r");
-    file_conf = intialiez_file_config();
-
-    while (fgets(input, MAX_LEN, am_file) != NULL){  
-        printf("input is: %s\n", input)  ;
-        handle_code_line(file_conf, input);
-        file_conf->curr_line_num += 1;
-        print_ins_node(file_conf->ins_tail);
-
-    }
-
-    test_ptr = file_conf->ins_head;
-    while (test_ptr != NULL){
-        print_ins_node(test_ptr);
-        test_ptr = test_ptr->next;
-    }
-    return 0;
-
-}*/
-
-/*void test_init_ins_node(Ins_Node** head, int type, int src, int dest, int opcode){
-       (*head)->type = type;
-       (*head)->operrands[0] = src; 
-       (*head)->operrands[1] =  dest;
-       (*head)->opcode = opcode; 
-}
-*/

@@ -288,8 +288,6 @@ int get_number(char* p){
         p++;
     }
 
-    /*nhjh*/
-
 	while (is_number_char(*p) && is_valid == TRUE){
 		num = num * 10 + ((*p) - ZERO_IN_ASCII);
 		p++;
