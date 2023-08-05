@@ -163,6 +163,7 @@ void bin_to_base64(char arr[2], const char* binary_word) {
 
     arr[0] = base64_table[(bin_value >> 6) & 0x3F];
     arr[1] = base64_table[bin_value & 0x3F];
+    arr[2] = '\0';
 }
 
 int is_entry_file_needed(Lable_Node *lable_head){
@@ -172,6 +173,7 @@ int is_entry_file_needed(Lable_Node *lable_head){
         if (head->is_entry == 1){
             return 1;
         }
+        head = head->next;
     }
     return 0;
 }
@@ -183,6 +185,7 @@ int is_ext_file_needed(Lable_Node *lable_head){
         if (head->symbol_type == EXTERNAL){
             return 1;
         }
+        head = head->next;
     }
     return 0;
 }

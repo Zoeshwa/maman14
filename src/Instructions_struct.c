@@ -23,6 +23,10 @@ Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num) {
     /* Create a new Ins_Node*/
     Ins_Node* newIns_Node;
     newIns_Node = (Ins_Node*)malloc(sizeof(Ins_Node));
+    if (newIns_Node == NULL) {
+        /* Failed to allocate memory, handle error */
+        return head;
+    }
 
     newIns_Node->type = 0;
     newIns_Node->IC_count = IC_counter;
@@ -57,12 +61,6 @@ void free_ins_node(Ins_Node** node) {
 
     current = *node;
     if (current != NULL) {
-        if (current->lable != NULL)
-            free(current->lable);
-        if (current->operrands != NULL) {
-            free(current->operrands);
-            /* Remove the duplicate free statement for operrands */
-        }
         if (current->bin_rep != NULL) {
             free(current->bin_rep);
         }
@@ -77,8 +75,7 @@ void free_ins_node(Ins_Node** node) {
 void free_ins_list(Ins_Node** head_ptr) {
     Ins_Node* current;
     Ins_Node* next_node;
-    printf("in free ins list\n");
-    
+
     if (head_ptr == NULL || *head_ptr == NULL) {
         return;
     }

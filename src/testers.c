@@ -77,7 +77,7 @@ void print_file_config(File_Config* file_config) {
     printf("FILE_CONFIG:\n");
     printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
     printf("\n");
-    print_Ins_Node(get_file_ins_head(file_config));
+    print_Ins_Node(file_config->ins_head);
     printf("\n");
     print_Lable_Node(file_config->label_head);
     printf("\n");

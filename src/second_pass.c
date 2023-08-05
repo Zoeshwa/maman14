@@ -55,11 +55,11 @@ void second_pass(File_Config *file_config, char* am_file_name) {
     /*initilazed varabels*/
     char input[MAX_LEN];
     FILE* am_file;
-    Ins_Node **ins_head;
+    Ins_Node *ins_head;
 
     printf("\t---------START 2 PASS-----------\n");
     am_file = fopen(am_file_name, "r");
-    ins_head = &(file_config->ins_head);
+    ins_head = file_config->ins_head;
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
@@ -74,17 +74,15 @@ void second_pass(File_Config *file_config, char* am_file_name) {
             printf("is entry\n");
             handle_entry(file_config, input);
         }
-
-        /*go over the IC to update lable adresses*/
-        while(*ins_head != NULL){
-            if ((*ins_head)->type == DIR && (*ins_head)->bin_rep == NULL){ /*encountered a lable line that doesnt have a bin adress since it wasnt known in first pass*/
-                (*ins_head)->bin_rep = (char*)calloc(13,sizeof(char));
-                make_bin_DIR_word(ins_head, file_config);
-            }
-            *ins_head = (*ins_head)->next;
-        }
-
     }
+        /*go over the IC to update lable adresses*/
+    while(ins_head != NULL){
+            if (ins_head->type == DIR){ /*encountered a lable line that doesnt have a bin adress since it wasnt known in first pass */
+                make_bin_DIR_word(&ins_head, file_config);
+            }
+            ins_head = ins_head->next;
+    } 
+
     fclose(am_file);
 
     printf("\t---------END 2 PASS-----------\n");
