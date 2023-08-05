@@ -88,6 +88,7 @@ void make_bin_REG_word(Ins_Node** head, int i){
 void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
     Lable_Node* lable;
     char* bin_adress, *bin_are;
+    (*head)->bin_rep = (char*)calloc(13,sizeof(char));
 
     lable = find_lable(file_conf->label_head, (*head)->lable);
     if (lable == NULL){ /*lable would be declaired later so bin word stays NULL*/
@@ -123,11 +124,8 @@ void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_conf){
         make_bin_REG_word(head,(*head)->operrands[param]);
         printf("reg_extra_word is: ");
 
-
-    }else if (type == DIR){ 
-        make_bin_DIR_word(head, file_conf);
-        printf("bin_dir_word is: ");
     }
+
     print_ins_node(*head);
 }
 

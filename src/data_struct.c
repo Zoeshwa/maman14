@@ -77,6 +77,7 @@ Data_Node* get_data_node_next(Data_Node* node) {
 /*Description: Function to free the entire linked list of Data_Nodes and set the head pointer to NULL*/
 /*Input: a pointer to a pointer of the head of the list to free*/
 void free_data_list(Data_Node** head) {
+    printf("in free data list\n");
     Data_Node* current = *head;
     Data_Node* next_node;
 
