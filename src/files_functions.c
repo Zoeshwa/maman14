@@ -180,11 +180,11 @@ int is_ext_file_needed(Lable_Node *lable_head){
     head = lable_head;
     while (head != NULL){
         if (get_label_symbol_type(head) == EXTERNAL){
-            return 1;
+            return TRUE;
         }
         head = get_label_next(head);
     }
-    return 0;
+    return FALSE;
 }
 
 void make_files(File_Config *file_config, char* file_name){
@@ -211,9 +211,9 @@ void make_files(File_Config *file_config, char* file_name){
 
     while (ins_head != NULL){     /*go over ins nodes*/
 
-        bin_to_base64(ob_word, ins_head->bin_rep);
+        bin_to_base64(ob_word, get_ins_binary_representation(ins_head));
         fprintf(ob_file, "%s\n", ob_word);
-        ins_head = ins_head->next;
+        ins_head = get_ins_next(ins_head);
     }
     while (data_head != NULL){     /*go over data nodes*/
         bin_to_base64(ob_word, get_bin_rep_data(data_head)); /*TODO: bin rep? ask Zoe*/

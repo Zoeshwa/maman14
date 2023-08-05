@@ -6,6 +6,9 @@
     #define TRUE 1
     #define FALSE 0
 
+    #define WORD_LEN_BINARY 12
+
+
     /*ERROR STR*/
    #define ERROR_GENERAL(curr_line_num) print_error("Something went worng", curr_line_num)
 

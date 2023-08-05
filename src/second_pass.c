@@ -45,11 +45,6 @@ void handle_entry(File_Config *file_config, char* line) {
 }
 
 
-/*ASK IDO: why lable_head?*/
-void update_lable_adress(Ins_Node** node, Lable_Node* lable_head){
-    (*node)->bin_rep = (char*)calloc(13,sizeof(char));
-
-}
 
 void second_pass(File_Config *file_config, char* am_file_name) {
     /*initilazed varabels*/
@@ -76,11 +71,12 @@ void second_pass(File_Config *file_config, char* am_file_name) {
         }
     }
         /*go over the IC to update lable adresses*/
+        /*ZOE: MAYBE NEED ADDRESS*/
     while(ins_head != NULL){
-            if (ins_head->type == DIR){ /*encountered a lable line that doesnt have a bin adress since it wasnt known in first pass */
+            if (get_ins_node_type(ins_head) == DIR){ /*encountered a lable line that doesnt have a bin adress since it wasnt known in first pass */
                 make_bin_DIR_word(&ins_head, file_config);
             }
-            ins_head = ins_head->next;
+            ins_head = get_ins_next(ins_head);
     } 
 
     fclose(am_file);

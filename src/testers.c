@@ -107,33 +107,6 @@ void print_file_config(File_Config* file_config) {
 
 }
 
-void print_Ins_Node(Ins_Node* head) {
-    if(head == NULL) {
-        printf("node = NULL\n");
-        return;
-    }
-    printf("INS_NODE: \t");
-    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1]);
-    if(head->lable != NULL) {
-        printf("\tis_lable: %s,", head->lable);
-    } else {
-        printf("\tis_lable: NULL,");
-    }
-
-    if( head->bin_rep != NULL)
-        printf("\tbin: %s",  head->bin_rep);
-    else
-        printf("\tbin: NULL");
-
-
-    if(head->next  != NULL) {
-        printf("\tnext: \n");
-        print_Ins_Node(head->next);
-    }else {
-        printf("\tnext: NULL\n");
-    }
-} 
-
 void print_Lable_Node(Lable_Node* label_node) {
     if(label_node == NULL) {
         printf("Lable_Node=NULL\n");
@@ -394,8 +367,8 @@ int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
         if(is_Ins_Node_equals(curr_node_a, curr_node_b) == 0) {
             return 0;
         }
-        curr_node_a = curr_node_a->next;
-        curr_node_b = curr_node_b->next;
+        curr_node_a = get_ins_next(curr_node_a);
+        curr_node_b = get_ins_next(curr_node_b);
     }
     if(curr_node_a == NULL && curr_node_b == NULL) {
         return 1;

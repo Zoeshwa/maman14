@@ -141,24 +141,25 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     free_words(words);
 }
 
+/*TODO: move to words*/
 int is_valid_lable_param(char *param) {
     int i;
 
     if (strlen(param) >30){
-        return 0;
+        return FALSE;
     }
     /* Check if the first character is an alphabet character */
     if (!isalpha(param[0]))
-        return 0;
+        return FALSE;
 
     /* Check the rest of the characters */
     for ( i = 1; param[i] != '\0'; i++) {
         if (!isalnum(param[i])) {
-            return 0;
+            return FALSE;
         }
     }
 
-    return 1;
+    return TRUE;
 }
 
 /* desc: gets the action from the command read */
@@ -232,55 +233,45 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
     return 1;
 }
 
-int set_operand_value(char* param, Ins_Node** head){
-    if ((*head)->type == DIR) { /*if parameter is lable - copy it to node*/
-        strcpy((*head)->lable,param);
-        return 0;
-    } else if ((*head)->type == REG_DIR){
-        return get_reg_num(param);
-    }
-    else{
-        return get_number(param);
-    }
-
-}
-
 Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int param_type[2], char** params){
-    int i,j;
-    j=0;
+    int i, j;
+    char* bin_word;
+    
+    j = 0;
 
     if (param_type[0] == REG_DIR && param_type[1] == REG_DIR){ /*case of two parameters, both registers*/
         head = insert_ins_node(head,  get_IC_counter(file_config), get_curr_line_number(file_config)); 
         update_IC_counter(&file_config, 1);
-        (*head)->type = REG_DIR;
-        (*head)->operrands[0] = get_reg_num(params[0]);
-        (*head)->operrands[1] = get_reg_num(params[1]);
-        (*head)->bin_rep = (char*)calloc(13,sizeof(char));
+        set_ins_type(head, REG_DIR);
+        set_ins_operand(head, 0, get_reg_num(params[0]));
+        set_ins_operand(head, 0, get_reg_num(params[1]));
+
+        bin_word = (char*)calloc(13,sizeof(char));
+        set_bin_rep_ins_node(head, bin_word);
         make_bin_REG_word(head, 0); 
-                /*test*/
+
+        /*test*/
         printf("reg_extra_word is: ");
         print_ins_node(*head);
 
-    }
-    else{    
-        for (i=0; i< 2; i++){
+    } else {    
+        for (i = 0; i < 2; i++){
             if(param_type[i] == NONE){ /* if no params or 1 param set the src and dest accordinly with 0*/
-                (*head)->operrands[i] = 0;
-            }
-            else if (param_type[i]){/*otherwise another node should be added with values of params*/
+                set_ins_operand(head, i, 0);
+            } else if (param_type[i]){/*otherwise another node should be added with values of params*/
                 head = insert_ins_node(head,  get_IC_counter(file_config), get_curr_line_number(file_config)); 
+                
                 update_IC_counter(&file_config, 1);
-                (*head)->type = get_param_type(params[j]);
-                if (i == 0){
-                    (*head)->operrands[0] = set_operand_value(params[j++], head); 
-                    (*head)->operrands[1] = NONE;
+                set_ins_type(head, get_param_type(params[j]));
+                
+                if (i == 0) {
+                    set_ins_operand(head, 0, set_operand_value(params[j++], head));
+                    set_ins_operand(head, 1, NONE);
+                } else {
+                    set_ins_operand(head, 0, NONE);
+                    set_ins_operand(head, 1, set_operand_value(params[j++], head));
                 }
-                else{
-                    (*head)->operrands[0] = NONE;
-                    (*head)->operrands[1] = set_operand_value(params[j++], head);  
-                }
-                make_bin_extra_word(head,i, file_config);
-              
+                make_bin_extra_word(head, i);
             }
         }
     
@@ -324,7 +315,7 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     cur_node = &ins_tail;
 
     /*initialize first node*/
-    if ((*cur_node)->line_number == -1){
+    if (get_ins_line_number(*cur_node)== -1){
         intialiez_ins_node(cur_node, com, param_type);
         make_bin_ins_word(cur_node);  
         update_IC_counter(&file_config, 1);  

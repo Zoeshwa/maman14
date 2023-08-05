@@ -396,3 +396,82 @@ void make_am_name(char* file_original_name, char* am_name){
     am_name[i] = '\0';
 }
 */
+
+
+
+void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
+    Lable_Node* lable;
+    char* bin_adress, *bin_are;
+    (*head)->bin_rep = (char*)calloc(13,sizeof(char));
+
+    lable = find_lable(get_label_node_head(file_conf), (*head)->lable);
+    /*ASK: IDO do we need this? there is a chanch its not valid because its not a label*/
+    if (lable == NULL){ /*lable would be declaired later so bin word stays NULL*/
+        return;
+    }
+    
+    bin_adress = int_to_binary_string(get_label_counter_value(lable), 10);
+
+    if (get_label_symbol_type(lable) == EXTERNAL){
+        bin_are = "01";
+    }
+    else{
+        bin_are = "10";
+    }
+    strcat((*head)->bin_rep, bin_adress);
+    strcat((*head)->bin_rep, bin_are);
+    (*head)->bin_rep[13] = '\0';
+
+}
+
+
+/*ASK IDO: why lable_head?*/
+void update_lable_adress(Ins_Node** node, Lable_Node* lable_head){
+    (*node)->bin_rep = (char*)calloc(13,sizeof(char));
+
+}
+
+
+
+Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int param_type[2], char** params){
+    int i,j;
+    j=0;
+
+    if (param_type[0] == REG_DIR && param_type[1] == REG_DIR){ /*case of two parameters, both registers*/
+        head = insert_ins_node(head,  get_IC_counter(file_config), get_curr_line_number(file_config)); 
+        update_IC_counter(&file_config, 1);
+        (*head)->type = REG_DIR;
+        (*head)->operrands[0] = get_reg_num(params[0]);
+        (*head)->operrands[1] = get_reg_num(params[1]);
+        (*head)->bin_rep = (char*)calloc(13,sizeof(char));
+        make_bin_REG_word(head, 0); 
+                /*test*/
+        printf("reg_extra_word is: ");
+        print_ins_node(*head);
+
+    }
+    else{    
+        for (i=0; i< 2; i++){
+            if(param_type[i] == NONE){ /* if no params or 1 param set the src and dest accordinly with 0*/
+                (*head)->operrands[i] = 0;
+            }
+            else if (param_type[i]){/*otherwise another node should be added with values of params*/
+                head = insert_ins_node(head,  get_IC_counter(file_config), get_curr_line_number(file_config)); 
+                update_IC_counter(&file_config, 1);
+                (*head)->type = get_param_type(params[j]);
+                if (i == 0){
+                    (*head)->operrands[0] = set_operand_value(params[j++], head); 
+                    (*head)->operrands[1] = NONE;
+                }
+                else{
+                    (*head)->operrands[0] = NONE;
+                    (*head)->operrands[1] = set_operand_value(params[j++], head);  
+                }
+                make_bin_extra_word(head,i, file_config);
+              
+            }
+        }
+    
+    }
+    return head;
+}

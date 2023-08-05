@@ -22,78 +22,18 @@ char* int_to_binary_string(int number, int num_bits) {
     return result;
 }
 
-void make_bin_ins_word(Ins_Node** head){
-    char *bin_src, *bin_opcode, *bin_dest, *bin_are;
-
-    (*head)->bin_rep = (char*)calloc(WORD_LEN_BINARY+1,sizeof(char));
-
-    /*save as string the bin rep of the fields*/
-    bin_src = int_to_binary_string((*head)->operrands[0], 3);
-    bin_dest = int_to_binary_string((*head)->operrands[1], 3);
-    bin_opcode = int_to_binary_string((*head)->opcode, 4);
-    bin_are = "00";
-
-    /*make the bin ins word*/
-    strcat((*head)->bin_rep, bin_src);
-    strcat((*head)->bin_rep, bin_opcode);
-    strcat((*head)->bin_rep, bin_dest);
-    strcat((*head)->bin_rep, bin_are);
-    (*head)->bin_rep[13] = '\0';
-
-
-    if(bin_src != NULL)
-        free(bin_src);
-    if(bin_dest != NULL)
-        free(bin_dest);
-    if(bin_opcode != NULL)
-        free(bin_opcode);
-}
-
-
-void make_bin_IMM_word(Ins_Node** head, int i){
-    char* bin_are, *bin_imm;
-    bin_are = "00";
-    bin_imm = int_to_binary_string(i, 10);
-
-    printf("oprerand is: %d, bin_imm is: %s, bin_are: %s\n", i, bin_imm, bin_are);
-
-    strcat((*head)->bin_rep, bin_imm);
-    strcat((*head)->bin_rep, bin_are);
-    (*head)->bin_rep[13] = '\0';
-
-    free(bin_imm);
-
-
-}
-
-void make_bin_REG_word(Ins_Node** head, int i){
-    char *bin_src, *bin_dest, *bin_are;
-
-    /*save as string the bin rep of the fields*/
-    bin_src = int_to_binary_string((*head)->operrands[0], 5);
-    bin_dest = int_to_binary_string((*head)->operrands[1], 5);
-    bin_are = int_to_binary_string(0, 2);
-    
-    strcat((*head)->bin_rep, bin_src);
-    strcat((*head)->bin_rep, bin_dest);
-    strcat((*head)->bin_rep, bin_are);
-    (*head)->bin_rep[13] = '\0';
-
-
-    free(bin_src);
-    free(bin_dest);
-
-}
-
-void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
+/*TODO TEST ZOE*/
+void make_bin_DIR_word(Ins_Node** node, File_Config* file_conf){
     Lable_Node* lable;
-    char* bin_adress, *bin_are;
-    (*head)->bin_rep = (char*)calloc(13,sizeof(char));
+    char* bin_adress, *bin_are, *result;
+    result = (char*)calloc(13,sizeof(char));
 
-    lable = find_lable(get_label_node_head(file_conf), (*head)->lable);
+    lable = find_lable(get_label_node_head(file_conf), get_ins_label(*node));
+    /*ASK: IDO do we need this? there is a chanch its not valid because its not a label*/
     if (lable == NULL){ /*lable would be declaired later so bin word stays NULL*/
         return;
     }
+    
     bin_adress = int_to_binary_string(get_label_counter_value(lable), 10);
 
     if (get_label_symbol_type(lable) == EXTERNAL){
@@ -102,34 +42,11 @@ void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
     else{
         bin_are = "10";
     }
-    strcat((*head)->bin_rep, bin_adress);
-    strcat((*head)->bin_rep, bin_are);
-    (*head)->bin_rep[13] = '\0';
-
-
+    strcat(result, bin_adress);
+    strcat(result, bin_are);
+    result[13] = '\0';
+    set_bin_rep_ins_node(node, result);
 }
-
-
-void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_conf){
-    int type;
-    (*head)->bin_rep = (char*)calloc(13,sizeof(char));
-    
-    type = (*head)->type;
-    if (type == IMM){ 
-        make_bin_IMM_word(head, (*head)->operrands[param]);
-        printf("imm_extra_word is: ");
-
-
-    }else if (type == REG_DIR){ 
-        make_bin_REG_word(head,(*head)->operrands[param]);
-        printf("reg_extra_word is: ");
-
-    }
-
-    print_ins_node(*head);
-}
-
-
 
 const char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
