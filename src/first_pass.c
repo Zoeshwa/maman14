@@ -3,30 +3,29 @@
 #include <string.h>
 #include <ctype.h>
 #include "first_pass.h"
-#define NUM_OF_COM 16
 #define MAX_LEN 80 /*TODO: maybe in the header?*/
 
 
-/*MAYBE: ido need to ask in the forum*/
-Command com_conf[] = {
-            {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
-            {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"sub",2, SUB,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"not",1, NOT, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"clr",1, CLR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"lea",2, LEA, {{DIR,-1}, {DIR, REG_DIR,-1}}},
-            {"inc",1, INC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"dec",1, DEC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"jmp",1, JMP, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"bne",1, BNE, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"red",1, RED, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"prn",1, PRN, {{NONE,-1}, {IMM, DIR, REG_DIR,-1}}},
-            {"jsr",1, JSR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
-            {"rts",0, RTS, {{NONE,-1}, {NONE,-1}}},
-            {"stop",0, STOP, {{NONE,-1}, {NONE,-1}}},
-            {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
-};
+
+static const Command com_conf[] = {
+        {"mov" ,2, MOV,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+        {"cmp" ,2, CMP,{{IMM, DIR, REG_DIR,-1}, {IMM, DIR, REG_DIR,-1}}},
+        {"add",2, ADD,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+        {"sub",2, SUB,{{IMM, DIR, REG_DIR,-1}, {DIR, REG_DIR,-1}}},
+        {"not",1, NOT, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"clr",1, CLR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"lea",2, LEA, {{DIR,-1}, {DIR, REG_DIR,-1}}},
+        {"inc",1, INC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"dec",1, DEC, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"jmp",1, JMP, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"bne",1, BNE, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"red",1, RED, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"prn",1, PRN, {{NONE,-1}, {IMM, DIR, REG_DIR,-1}}},
+        {"jsr",1, JSR, {{NONE,-1}, {DIR, REG_DIR,-1}}},
+        {"rts",0, RTS, {{NONE,-1}, {NONE,-1}}},
+        {"stop",0, STOP, {{NONE,-1}, {NONE,-1}}},
+        {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
+    };
 
 File_Config* first_pass(char* am_file_name) {
     /*initilazed varabels*/
@@ -162,22 +161,6 @@ int is_valid_lable_param(char *param) {
     return TRUE;
 }
 
-/* desc: gets the action from the command read */
-Command get_action(char* input, const Command* commands_list)
-{
-	Command com;
-	int i;
-	for (i=0; i < NUM_OF_COM; i++)
-	{
-		if (is_legal_com_name(input,i, commands_list)){
-			com = commands_list[i];
-			return com;
-		}
-	}
-	printf("\tUndifined command name\n");
-	com = commands_list[SKIP];
-	return com;
-}
 
 int get_param_type(char* param){
     /*see if get words ends with \0*/
@@ -344,7 +327,6 @@ void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
 
     curr_line_num = get_curr_line_number(file_config);
     binary_words_counter = 0, i = 0;
-    printf("hiiiiii\n");
     /*get array of the words in the line*/
     words = get_words(line);
     len = get_len_words_array(words);

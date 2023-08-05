@@ -12,16 +12,18 @@
 #ifndef _INSTRUCTIONS_HEADER_
 #define _INSTRUCTIONS_HEADER_
 #define MAX_LABLE_LEN 31
+#define NUM_OF_COM 16
 
 
-typedef struct Command Command;
-struct Command {
-	char* act;
-    int num_of_params;
-	int en;
-    int operands[2][4];
+    typedef struct Command Command;
 
-};
+    struct Command {
+        char* act;
+        int num_of_params;
+        int en;
+        int operands[2][4];
+    };
+
     typedef struct Ins_Node Ins_Node;
     
     Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num);
@@ -30,7 +32,7 @@ struct Command {
     void print_ins_node(Ins_Node* head);
 
    int is_valid_number_param(char *param);
-   int is_compatible_types(int acual_type, int* expected_type);
+   int is_compatible_types(int acual_type, const int* expected_type);
    int is_valid_com(Command com,char** params, int param_types[2], int line_num);
    int get_reg_num(char* reg);
    int is_valid_param_types(int com, char** params, int num_of_params, int param_types[2]);
@@ -56,6 +58,10 @@ struct Command {
     void make_bin_REG_word(Ins_Node** head, int i);
     void make_bin_IMM_word(Ins_Node** head, int i);
     void make_bin_ins_word(Ins_Node** head);
+
+
+    const Command* get_command_conf_array();
+    Command get_action(char* input, const Command* commands_list);
    #endif
 
 #ifndef _LABELS_HEADER_

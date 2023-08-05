@@ -5,6 +5,8 @@
 #include "Instructions_struct.h"
 
 
+
+
 struct Ins_Node {
     int type;
     int IC_count; 
@@ -194,7 +196,7 @@ int is_valid_number_param(char *param){
     return 1;
 }
 
-int is_compatible_types(int acual_type, int* expected_type){
+int is_compatible_types(int acual_type, const int* expected_type){
     int i;
     for (i=0; expected_type[i] != -1; i++){
         if (expected_type[i] == acual_type){
@@ -323,6 +325,25 @@ void make_bin_extra_word(Ins_Node** head, int param){
     }
 
     print_ins_node(*head);
+}
+
+
+
+/* desc: gets the action from the command read */
+Command get_action(char* input, const Command* commands_list)
+{
+	Command com;
+	int i;
+	for (i=0; i < NUM_OF_COM; i++)
+	{
+		if (is_legal_com_name(input,i, commands_list)){
+			com = commands_list[i];
+			return com;
+		}
+	}
+	printf("\tUndifined command name\n");
+	com = commands_list[SKIP];
+	return com;
 }
 
 /*DELETE*/
