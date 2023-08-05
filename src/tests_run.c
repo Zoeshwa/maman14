@@ -298,12 +298,6 @@ void run_labels_set_tests() {
     label_node = new_label_node("hi", 0, symbol_type);
 
     tester_set_label_name(label_node, "hi", test_number);
-
-    tester_set_label_types(label_node, symbol_type, test_number++);
-    symbol_type = CODE;
-    tester_set_label_types(label_node, symbol_type, test_number++);
-    symbol_type = EXTERNAL;
-    tester_set_label_types(label_node, symbol_type, test_number++);
     free_label_node(&label_node);
     END_TEST("labels_set_tests");
 }

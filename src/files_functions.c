@@ -187,6 +187,7 @@ int is_ext_file_needed(Lable_Node *lable_head){
     return FALSE;
 }
 
+/*TODO: ido - need to close after open? every file?*/
 void make_files(File_Config *file_config, char* file_name){
     FILE* ob_file, *ext_file, *ent_file;
     char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], ob_word[2];

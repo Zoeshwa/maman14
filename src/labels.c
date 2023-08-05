@@ -56,15 +56,11 @@ Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
 
+/*MAYBE- zoe*/
 void set_label_name(Lable_Node* new_lable, char * word) {
     /* Allocate memory for the name and copy the string*/
     new_lable->name = (char*)malloc((strlen(word) + 1) * sizeof(char));
     strcpy(new_lable->name, word);
-}
-
-/*DELETE*/
-void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type) {
-    new_lable->symbol_type = symbol_type;
 }
 
 /*Description: search if a given word is in the lable list*/

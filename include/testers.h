@@ -49,7 +49,6 @@ void tester_O_int_I_char(int (*function)(char), char input, int expected_result,
     void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number);
     void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number);
     void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number);
-    void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number);
     void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number);
     void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number);
 

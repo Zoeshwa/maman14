@@ -216,22 +216,6 @@ void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) 
     }
 }
 
-void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number) {
-    int result;
-    result = 0;
-    set_label_types(new_lable, symbol_type);
-
-
-    if(symbol_type == get_label_symbol_type(new_lable)) {
-        result = 1;
-    } 
-
-    if (result == 1) {
-        PASS_PRINT(1);
-    } else {
-        FAIL_PRINT(test_number, 1, result);
-    }
-}
 
 void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number){
     int result;
