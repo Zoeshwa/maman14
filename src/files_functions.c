@@ -172,7 +172,7 @@ int is_entry_file_needed(Lable_Node *lable_head){
         if (get_label_is_entry(head) == 1){
             return 1;
         }
-        head = head->next;
+        head = get_label_next(head);
     }
     return 0;
 }
@@ -184,7 +184,7 @@ int is_ext_file_needed(Lable_Node *lable_head){
         if (get_label_symbol_type(head) == EXTERNAL){
             return 1;
         }
-        head = head->next;
+        head = get_label_next(head);
     }
     return 0;
 }
