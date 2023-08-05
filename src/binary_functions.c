@@ -90,7 +90,7 @@ void make_bin_DIR_word(Ins_Node** head, File_Config* file_conf){
     char* bin_adress, *bin_are;
     (*head)->bin_rep = (char*)calloc(13,sizeof(char));
 
-    lable = find_lable(file_conf->label_head, (*head)->lable);
+    lable = find_lable(get_label_node_head(file_conf), (*head)->lable);
     if (lable == NULL){ /*lable would be declaired later so bin word stays NULL*/
         return;
     }
@@ -129,3 +129,21 @@ void make_bin_extra_word(Ins_Node** head, int param, File_Config* file_conf){
     print_ins_node(*head);
 }
 
+
+
+const char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+void bin_to_base64(char arr[2], const char* binary_word) {
+    int i, bin_value;
+    bin_value = 0;
+    for (i = 0; i < 12; i++) {
+        bin_value <<= 1;
+        if (binary_word[i] == '1') {
+            bin_value |= 1;
+        }
+    }
+
+    arr[0] = base64_table[(bin_value >> 6) & 0x3F];
+    arr[1] = base64_table[bin_value & 0x3F];
+    arr[2] = '\0';
+}

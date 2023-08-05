@@ -167,7 +167,7 @@ int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
     } else {
         /*flag the label_node*/
         if(get_label_symbol_type(label_node) != EXTERNAL) {
-            label_node->is_entry = 1;
+            label_node->is_entry = TRUE;
             return TRUE;
         }
 

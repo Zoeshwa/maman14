@@ -377,3 +377,22 @@ int is_letter_or_num_char(char c){
     return FALSE;*/
     return isalnum(c);
 }
+
+
+
+/*
+void make_am_name(char* file_original_name, char* am_name){
+    int i;
+    
+    i = 0;
+    while (*file_original_name != '.'){
+         am_name[i] = *file_original_name;
+         i++;
+         file_original_name++;
+    }
+    am_name[i++] = '.';
+    am_name[i++] = 'a';
+    am_name[i++] = 's';
+    am_name[i] = '\0';
+}
+*/

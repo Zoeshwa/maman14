@@ -44,20 +44,19 @@ File_Config* first_pass(char* am_file_name) {
         printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
 
         if (empty_line(input) || comment_line(input)){
-            file_config->curr_line_num++;
+            update_line_num_file(&file_config);
             continue;
         }
         
         handle_new_line(file_config, input);
-        file_config->curr_line_num++;
+        update_line_num_file(&file_config);
     }
 
     /*checks if needs to continue process since it might have an error*/
-    if (file_config->is_valid){
+    if (get_is_valid_file(file_config)){
         /*update counters*/
-        update_counters_label_list(file_config->label_head, file_config->IC_counter);
-        /*ASK: maybe not needed?*/
-        update_counters_data_list(file_config->data_head, file_config->IC_counter);
+        update_counters_label_list(get_label_node_head(file_config), get_IC_counter(file_config));
+        update_counters_data_list(get_data_node_head(file_config), get_IC_counter(file_config));
     }
     printf("\t---------END FIRST PASS-----------\n");
     fclose(am_file);
@@ -130,8 +129,8 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
 
     /*get the params as words array and validate*/
     words = get_words(ptr);
-    if(!is_legal_params(ptr, file_config->curr_line_num)) {
-        file_config->is_valid = FALSE;
+    if(!is_legal_params(ptr, get_curr_line_number(file_config))) {
+        update_validity_file_config(&file_config, FALSE);
     }
 
     /*add to symbol table each label*/
@@ -251,8 +250,8 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
     j=0;
 
     if (param_type[0] == REG_DIR && param_type[1] == REG_DIR){ /*case of two parameters, both registers*/
-        head = insert_ins_node(head,  file_config->IC_counter, file_config->curr_line_num); 
-        file_config->IC_counter += 1;
+        head = insert_ins_node(head,  get_IC_counter(file_config), get_curr_line_number(file_config)); 
+        update_IC_counter(&file_config, 1);
         (*head)->type = REG_DIR;
         (*head)->operrands[0] = get_reg_num(params[0]);
         (*head)->operrands[1] = get_reg_num(params[1]);
@@ -269,8 +268,8 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
                 (*head)->operrands[i] = 0;
             }
             else if (param_type[i]){/*otherwise another node should be added with values of params*/
-                head = insert_ins_node(head,  file_config->IC_counter, file_config->curr_line_num); 
-                file_config->IC_counter += 1;
+                head = insert_ins_node(head,  get_IC_counter(file_config), get_curr_line_number(file_config)); 
+                update_IC_counter(&file_config, 1);
                 (*head)->type = get_param_type(params[j]);
                 if (i == 0){
                     (*head)->operrands[0] = set_operand_value(params[j++], head); 
@@ -294,23 +293,25 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     char **params;
     command com;
     int param_type[2];
-    Ins_Node** cur_node;
+    Ins_Node **cur_node, *ins_tail;
+
+    ins_tail = get_file_ins_tail(file_config); 
 
     ptr = skip_spaces(ptr);
     com = get_action(ptr, com_conf); /*gets first word and checks if valid*/
     if (com.en == SKIP){
-        ERROR_NOT_VALID_COMMAND_NAME(file_config->curr_line_num);
+        ERROR_NOT_VALID_COMMAND_NAME(get_curr_line_number(file_config));
         update_validity_file_config(&file_config, FALSE);
         return;
     }
 
     ptr += strlen(com.act);
-    if (!is_legal_params(ptr, file_config->curr_line_num)){ /*checks the syntax and correctness of the parameters*/
+    if (!is_legal_params(ptr, get_curr_line_number(file_config))){ /*checks the syntax and correctness of the parameters*/
         com.en = SKIP;
     }
     params = get_words(ptr);     /*get all parameters in an array*/
 
-    if (!is_valid_com(com, params, param_type, file_config->curr_line_num)){/*checks if the entered params are compatible with the command's requirements*/
+    if (!is_valid_com(com, params, param_type, get_curr_line_number(file_config))){/*checks if the entered params are compatible with the command's requirements*/
         com.en = SKIP;
     }
 
@@ -320,23 +321,25 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     }
 
     /*get last node of list*/
-    cur_node = &(file_config->ins_tail);
+    cur_node = &ins_tail;
 
     /*initialize first node*/
     if ((*cur_node)->line_number == -1){
         intialiez_ins_node(cur_node, com, param_type);
         make_bin_ins_word(cur_node);  
-        file_config->IC_counter += 1;  
+        update_IC_counter(&file_config, 1);  
     }
     else{/*initialize any other node*/
-        cur_node = insert_ins_node(cur_node, file_config->IC_counter, file_config->curr_line_num); 
+        cur_node = insert_ins_node(cur_node, get_IC_counter(file_config), get_curr_line_number(file_config)); 
         intialiez_ins_node(cur_node, com, param_type); 
-        file_config->IC_counter += 1;
+        update_IC_counter(&file_config, 1);
         make_bin_ins_word(cur_node); 
     }
 
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
-    file_config->ins_tail = *cur_node;
+
+    /*DELETE file_config->ins_tail = *cur_node;*/
+    update_ins_tail_file(&file_config, *cur_node);
     free_words(params);
 }
 
@@ -350,7 +353,7 @@ void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
 
     curr_line_num = get_curr_line_number(file_config);
     binary_words_counter = 0, i = 0;
-
+    printf("hiiiiii\n");
     /*get array of the words in the line*/
     words = get_words(line);
     len = get_len_words_array(words);
@@ -395,9 +398,12 @@ void handle_data_ins(File_Config* file_config, char* line, char *curr_ptr) {
 int handle_data_int_store(File_Config* file_config, char **words, int len, int curr_index) {
     char *curr_word;
     int curr_line_num, num_of_params, curr_number;
+    Data_Node **data_head, **data_tail;
     
     num_of_params = 0;
     curr_line_num = get_curr_line_number(file_config);
+    data_head = get_file_data_head_address(file_config);
+    data_tail = get_file_data_tail_address(file_config); 
 
     /*for each param*/
     for(; curr_index < len; curr_index++) {
@@ -409,7 +415,7 @@ int handle_data_int_store(File_Config* file_config, char **words, int len, int c
         }
         /*add to data list as a node if its valid*/
         curr_number = get_number(curr_word);
-        add_data_node(&(file_config->data_head) ,&(file_config->data_tail), curr_number, DATA);
+        add_data_node(data_head, data_tail, curr_number, DATA);
         num_of_params++;
     }
 
@@ -422,9 +428,13 @@ int handle_data_int_store(File_Config* file_config, char **words, int len, int c
 int handle_data_string_store(File_Config* file_config, char **words, int len, int curr_index) {
     char *curr_word, *curr_char;
     int curr_line_num, num_of_chars, i;
-    num_of_chars = 0;
+    Data_Node **data_head, **data_tail;
+    
 
+    data_head = get_file_data_head_address(file_config);
+    data_tail = get_file_data_tail_address(file_config); 
     curr_line_num = get_curr_line_number(file_config);
+    num_of_chars = 0;
 
     if(curr_index + 1 > len ) { /*if there is more then one param its not valid*/
         ERROR_MULTIPLE_ARGUMENTS(curr_line_num);
@@ -446,12 +456,12 @@ int handle_data_string_store(File_Config* file_config, char **words, int len, in
         if((i == 0 || i == (strlen(curr_word) - 1)) && (*curr_char == '\"')) {
             continue;
         }
-        add_data_node(&(file_config->data_head) ,&(file_config->data_tail),*curr_char, STRING);
+        add_data_node(data_head ,data_tail,*curr_char, STRING);
         num_of_chars++;
     }
 
     /*insert the end of the string char*/
-    add_data_node(&(file_config->data_head) ,&(file_config->data_tail),'\0', STRING);
+    add_data_node(data_head ,data_tail,'\0', STRING);
     num_of_chars++;
 
     return num_of_chars;
@@ -461,9 +471,12 @@ int handle_data_string_store(File_Config* file_config, char **words, int len, in
 /*Input: file_config for the current file, word to handle, type of the lable*/
 void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type) { 
     int counter_value;
+    Lable_Node **label_head;
+
+    label_head = get_file_label_head_address(file_config);
 
     /*validate the starting label*/
-    if (!(is_valid_lable(file_config->label_head, word, file_config->curr_line_num))) {
+    if (!(is_valid_lable(*label_head, word, get_curr_line_number(file_config)))) {
         /*ASK: we need to continou?*/
         return;
     }
@@ -471,7 +484,7 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     counter_value = get_counter_by_type(file_config, symbol_type);
     remove_colon_at_end(word);
 
-    insert_to_symbol_table(&(file_config->label_head), word, counter_value, symbol_type);
+    insert_to_symbol_table(label_head, word, counter_value, symbol_type);
 }
 
 

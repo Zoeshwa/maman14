@@ -96,13 +96,13 @@ void print_file_config(File_Config* file_config) {
         return;
     }
     printf("FILE_CONFIG:\n");
-    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
+    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n", get_DC_counter(file_config), get_IC_counter(file_config), get_curr_line_number(file_config), get_is_valid_file(file_config));
     printf("\n");
-    print_Ins_Node(file_config->ins_head);
+    print_Ins_Node(get_file_ins_head(file_config));
     printf("\n");
-    print_Lable_Node(file_config->label_head);
+    print_Lable_Node(get_label_node_head(file_config));
     printf("\n");
-    print_Data_Node(file_config->data_head);
+    print_Data_Node(get_data_node_head(file_config));
     printf("\n");
 
 }
@@ -328,7 +328,7 @@ void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbo
     
     handle_label(file_config, word, symbol_type);
 
-    if(compare_Lable_Node(file_config->label_head, expted_lable_list) == 0) {
+    if(compare_Lable_Node(get_label_node_head(file_config), expted_lable_list) == 0) {
         result = 1;
     }
 

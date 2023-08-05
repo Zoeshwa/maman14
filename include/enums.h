@@ -41,6 +41,9 @@
     /*Warnning STR*/
     #define WARNING_LABEL_NOT_USE(curr_line_num) print_error("WARNING in line %d: This label is not use\n", curr_line_num)
 
+     /*file*/
+    #define ERROR_CREATING_FILE(file_name) print_error_file("creating file", file_name)
+
     typedef enum Symbol_Type {
         DATA,
         CODE,
@@ -63,6 +66,5 @@
     typedef enum Coms{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP} Coms;
 
     void print_error(char* error_msg, int line_num);
-
-
+    void print_error_file(char* error_msg, char* file_name);
 #endif

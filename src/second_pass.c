@@ -37,7 +37,7 @@ void handle_entry(File_Config *file_config, char* line) {
     }
 
     /*flag the label in the list to be entry*/
-    if (!mark_entry_label(file_config->label_head, words[i], curr_line_num)) {
+    if (!mark_entry_label(get_label_node_head(file_config), words[i], curr_line_num)) {
         update_validity_file_config(&file_config, FALSE);
     }
 
@@ -59,7 +59,7 @@ void second_pass(File_Config *file_config, char* am_file_name) {
 
     printf("\t---------START 2 PASS-----------\n");
     am_file = fopen(am_file_name, "r");
-    ins_head = file_config->ins_head;
+    ins_head = get_file_ins_head(file_config);
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
