@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "line_functions.h"
+#include "string_functions.h"
 
 
 

@@ -5,14 +5,8 @@
     #include "labels.h"
 #endif
 
-#ifndef _WORDS_HEADER_
-#define _TESTERS_WORDS_HEADER_
-    #include "line_functions.h"
-#endif
-
-#ifndef _LINES_HEADER_
-#define _TESTERS_LINES_HEADER_
-    #include "line_functions.h"
+#ifndef _STRING_HEADER_
+    #include "string_functions.h"
 #endif
 
 #ifndef _DATA_HEADER_

@@ -1,10 +1,20 @@
 
-#ifndef _LINES_HEADER_
-#define _LINES_HEADER_
+#ifndef _STRING_HEADER_
+#define _STRING_HEADER_
 
     #define MAX_LEN 80
     #define MAX_LENGTH 80
     #define MAX_WORDS 80
+
+    
+    #define IS_UPPERCASE_LETTERS(c) (64< c && c<91)
+    #define IS_LOWERCASE_LETTERS(c) (96< c && c<123)
+    
+    #define QUOTES '\"'
+
+    /*TODO: maybe move to Labels*/
+    #define MAX_LABEL_LEN 31
+    #define COLON 58
 
     int empty_line(char* line);
     int comment_line(char* line);
@@ -21,19 +31,6 @@
     /*DELETE*/
     void print_words(char** words, int len);
 
-#endif
-
-#ifndef _WORDS_HEADER_
-#define _WORDS_HEADER_
-
-    #define IS_UPPERCASE_LETTERS(c) (64< c && c<91)
-    #define IS_LOWERCASE_LETTERS(c) (96< c && c<123)
-    
-    #define QUOTES '\"'
-
-    /*TODO: maybe move to Labels*/
-    #define MAX_LABEL_LEN 31
-    #define COLON 58
 
     int is_Ins(char* word);
     int is_valid_quotes(char* word);
@@ -41,8 +38,6 @@
 
 
     /*chars func*/
-
-
     int is_external_or_entry_ins(char* input);
     int is_extern_ins(char* input);
     int is_data_storage_ins(char * input);
@@ -70,6 +65,14 @@
 
     /*TODO: FOR TESTS - NEED TO DEL*/
     int get_sign_value(char curr_char);
+
+#endif
+
+
+#ifndef _STRING_UTILS_MACRO_HEADER_
+#define _STRING_UTILS_MACRO_HEADER_
+    char* skip_spaces(char* p);
+    char* get_next_word(char* word, char* line);
 
 #endif
 

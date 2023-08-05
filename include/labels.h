@@ -3,8 +3,8 @@
     #include "enums.h"
 #endif
 
-#ifndef _WORDS_HEADER_
-    #include "line_functions.h"
+#ifndef _STRING_HEADER_
+    #include "string_functions.h"
 #endif
 
 #ifndef _LABELS_HEADER_

@@ -1,5 +1,4 @@
-#ifndef _MACROS_STRUCT_HEADER_
-#define _MACROS_STRUCT_HEADER_
+    #include "string_functions.h"
 
     typedef struct Macro_Node Macro_Node;
 
@@ -10,10 +9,8 @@
     struct Macro_Node* search_macro_list(struct Macro_Node* head, char* name);
     void free_macro_list(Macro_Node** head);
     void print_macro_list(Macro_Node* head);
-#endif
 
-#ifdef _MACROS_STRUCT_HEADER_
-    #include "line_functions.h"
-#endif
+
+
 
 

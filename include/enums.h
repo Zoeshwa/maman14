@@ -1,7 +1,5 @@
 #ifndef _ENUMS_HEADER_
 #define _ENUMS_HEADER_
-
-    #define _ENUMS_HEADER_
     
     #define TRUE 1
     #define FALSE 0

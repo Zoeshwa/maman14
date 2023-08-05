@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "line_functions.h"
+#include "string_functions.h"
 
 #define ZERO_IN_ASCII 48
 

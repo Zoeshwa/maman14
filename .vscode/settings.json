@@ -18,6 +18,8 @@
         "new": "c",
         "ctype.h": "c",
         "main.h": "c",
-        "binary_functions.h": "c"
+        "binary_functions.h": "c",
+        "string_functions.h": "c",
+        "macros_struct.h": "c"
     }
 }
