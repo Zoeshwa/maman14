@@ -193,7 +193,7 @@ int is_ext_file_needed(Lable_Node *lable_head){
 /*TODO: ido - need to close after open? every file?*/
 void make_files(File_Config *file_config, char* file_name){
     FILE* ob_file, *ext_file, *ent_file;
-    char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], ob_word[2];
+    char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], *ob_word;
     Ins_Node *ins_head;
     Data_Node *data_head;
     Lable_Node * lable_head;
@@ -204,43 +204,71 @@ void make_files(File_Config *file_config, char* file_name){
     add_extention(file_name, ob_file_name, "ob");
     add_extention(file_name, ext_file_name, "ext");
     add_extention(file_name, ent_file_name, "ent");
-    
+
+    printf("name of the files:\nob_file:%s\n", ob_file_name);
+    printf("ext_file_name: %s\n", ext_file_name);
+    printf("ent_file_name: %s\n", ent_file_name);
+
     ob_file = fopen(ob_file_name, "w+");
-    if (ob_file == NULL) {ERROR_CREATING_FILE(ob_file_name);}
+    if (ob_file == NULL) {
+        ERROR_CREATING_FILE(ob_file_name);
+    } else {
+        printf("Success - open ob_file\n");
+        /*write first line rep the number of IC and DC commands*/
+        fprintf(ob_file, "%d %d\n", get_IC_counter(file_config) + 1 , get_DC_counter(file_config));
+        /* mane object file*/
 
-    /*write first line rep the number of IC and DC commands*/
-    fprintf(ob_file, "%d %d\n", get_IC_counter(file_config) + 1 , get_DC_counter(file_config));
-    
-    /* mane object file*/
+        while (ins_head != NULL){     /*go over ins nodes*/
+            bin_to_base64(&ob_word, get_ins_binary_representation(ins_head));
+            if(ob_word  == NULL) {
+                printf("Error bin_to_base64 didnt work\n");
+            } else{
+                fprintf(ob_file, "%s\n", ob_word);
+                fprintf(stdout, "ob_word: %s\n", ob_word);
+            }
 
-    while (ins_head != NULL){     /*go over ins nodes*/
+            ins_head = get_ins_next(ins_head);
+        }
+        printf("done with ins list\n");
 
-        bin_to_base64(ob_word, get_ins_binary_representation(ins_head));
-        fprintf(ob_file, "%s\n", ob_word);
-        ins_head = get_ins_next(ins_head);
+        while (data_head != NULL){     /*go over data nodes*/
+            bin_to_base64(&ob_word, get_bin_rep_data(data_head)); /*TODO: bin rep? ask Zoe*/
+            fprintf(ob_file, "%s\n", ob_word);
+            data_head = get_data_node_next(data_head);
+        }
+        fclose(ob_file);
+        printf("done with data list\n");
     }
-    while (data_head != NULL){     /*go over data nodes*/
-        bin_to_base64(ob_word, get_bin_rep_data(data_head)); /*TODO: bin rep? ask Zoe*/
-        fprintf(ob_file, "%s\n", ob_word);
-        data_head = get_data_node_next(data_head);
-    }
+
 
     lable_head = get_label_node_head(file_config);
     /* make .ext and .ent files*/
     if (is_entry_file_needed(lable_head)){
-        ent_file = fopen(ent_file_name, "w+");
-        if (ent_file == NULL) {ERROR_CREATING_FILE(ent_file_name);}
+        printf("is_entry_file_needed TRUE\n");
 
-        while (lable_head != NULL){
-            if (get_label_is_entry(lable_head) == TRUE){
-                fprintf(ent_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
+        ent_file = fopen(ent_file_name, "w+");
+        if (ent_file == NULL) {
+            ERROR_CREATING_FILE(ent_file_name);
+        } else {
+            printf("Success - open ent_file\n");
+
+            while (lable_head != NULL){
+                if (get_label_is_entry(lable_head) == TRUE){
+                    fprintf(ent_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
+                }
+                lable_head = get_label_next(lable_head);
             }
-            lable_head = get_label_next(lable_head);
+            fclose(ent_file);
+            printf("done with ent_file\n");
+
         }
+
     }
 
     lable_head = get_label_node_head(file_config);
     if (is_ext_file_needed(lable_head)){
+        printf("is_ext_file_needed TRUE\n");
+
         ext_file = fopen(ext_file_name, "w+");
         if (ext_file == NULL) {ERROR_CREATING_FILE(ext_file_name);}
         while (lable_head != NULL){
@@ -249,6 +277,7 @@ void make_files(File_Config *file_config, char* file_name){
             }
             lable_head = get_label_next(lable_head);
         }
+        fclose(ext_file);
     }
 
 }

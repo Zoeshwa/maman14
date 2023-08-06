@@ -16,8 +16,7 @@
 #define _BINARY_HEADER_
     
    char* int_to_binary_string(int number, int num_bits);
-    void bin_to_base64(char arr[2], const char* binary_word);
-
+   void bin_to_base64(char **arr, const char* binary_word);
 #endif
 
 

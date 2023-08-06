@@ -48,11 +48,25 @@ void make_bin_DIR_word(Ins_Node** node, File_Config* file_conf){
     set_bin_rep_ins_node(node, result);
 }
 
-const char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-void bin_to_base64(char arr[2], const char* binary_word) {
+void bin_to_base64(char **arr, const char* binary_word) {
     int i, bin_value;
+    char *result;
+    static const  char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    result = (char*)calloc(2, sizeof(char));
+
     bin_value = 0;
+
+    printf("binary_word: %s\n", binary_word);
+
+    if(binary_word == NULL) {
+        /*TODO*/
+        printf("Error?\n");
+        *arr = NULL;
+        return;
+    }
+
     for (i = 0; i < 12; i++) {
         bin_value <<= 1;
         if (binary_word[i] == '1') {
@@ -60,7 +74,14 @@ void bin_to_base64(char arr[2], const char* binary_word) {
         }
     }
 
-    arr[0] = base64_table[(bin_value >> 6) & 0x3F];
-    arr[1] = base64_table[bin_value & 0x3F];
-    arr[2] = '\0';
+    result[0] = base64_table[(bin_value >> 6) & 0x3F];
+    result[1] = base64_table[bin_value & 0x3F];
+    result[2] = '\0';
+
+    printf("SS: %s\n", result);
+
+    strcpy(*arr, result);
+    free(result);
 }
+
+
