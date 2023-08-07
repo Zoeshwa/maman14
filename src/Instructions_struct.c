@@ -60,6 +60,7 @@ void intialiez_ins_node(Ins_Node** head, Command com, int param_type[2]) {
     (*head)->operrands[1] = param_type[1];
     (*head)->bin_rep = NULL;
     (*head)->next = NULL;
+    (*head)->lable[0] = '\0';
     (*head)->bin_rep = NULL;
 }
 
