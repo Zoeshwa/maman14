@@ -3,8 +3,6 @@
 #include <string.h>
 #include "macros_struct.h"
 
-#define MAX_LEN 80
-
 /* Macro_Node in macro linked list*/
 struct Macro_Node {
     char* name;
@@ -29,8 +27,8 @@ void make_am_file(char* orig_name){
     add_extention(orig_name, file_name, "as"); /*creates the files acual name*/
     am_file = fopen(cur_word,"w+");
     src_file = fopen(file_name, "r");
-    if (am_file == NULL) {printf("Error creating am file");}
-    if (src_file == NULL) {printf("Error creating reading file");}
+    if (am_file == NULL) {ERROR_CREATING_FILE("am file");}
+    if (src_file == NULL) {ERROR_CREATING_FILE("reading file");}
 
     /*start reading line by line*/
     while (fgets(input, MAX_LEN, src_file) != NULL) {
@@ -51,7 +49,7 @@ void make_am_file(char* orig_name){
 
         head_ptr = search_macro_list(head, cur_word);
         if (head_ptr != NULL){
-            if (fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file)<0) {printf("errorr writing to file\n");}
+            if (fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file)<0) {ERROR_WRITING_FILE("am file");}
         }
 
         /* beginning of macro def*/
@@ -65,7 +63,7 @@ void make_am_file(char* orig_name){
         /* regular line*/
         else{
             if (fwrite(input, 1, strlen(input), am_file)<0){
-                printf("errorr writing to file\n");
+                ERROR_WRITING_FILE("am file");
             }
         }
     }

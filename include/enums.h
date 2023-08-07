@@ -1,10 +1,12 @@
 #ifndef _ENUMS_HEADER_
 #define _ENUMS_HEADER_
-
-    #define _ENUMS_HEADER_
     
     #define TRUE 1
     #define FALSE 0
+
+    #define WORD_LEN_BINARY 12
+    #define MAX_LEN 80
+
 
     /*ERROR STR*/
    #define ERROR_GENERAL(curr_line_num) print_error("Something went worng", curr_line_num)
@@ -41,6 +43,12 @@
     /*Warnning STR*/
     #define WARNING_LABEL_NOT_USE(curr_line_num) print_error("WARNING in line %d: This label is not use\n", curr_line_num)
 
+     /*file*/
+    #define ERROR_CREATING_FILE(file_name) print_error_file("creating file", file_name)
+    #define ERROR_WRITING_FILE(file_name) print_error_file("writing file", file_name)
+    #define ERROR_READING_FILE(file_name) print_error_file("reading file", file_name)
+
+
     typedef enum Symbol_Type {
         DATA,
         CODE,
@@ -63,6 +71,6 @@
     typedef enum Coms{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP} Coms;
 
     void print_error(char* error_msg, int line_num);
-
-
+    void print_error_file(char* error_msg, char* file_name);
 #endif
+
