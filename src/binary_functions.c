@@ -53,6 +53,7 @@ const char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 void bin_to_base64(char arr[2], const char* binary_word) {
     int i, bin_value;
     bin_value = 0;
+
     for (i = 0; i < 12; i++) {
         bin_value <<= 1;
         if (binary_word[i] == '1') {
@@ -63,4 +64,5 @@ void bin_to_base64(char arr[2], const char* binary_word) {
     arr[0] = base64_table[(bin_value >> 6) & 0x3F];
     arr[1] = base64_table[bin_value & 0x3F];
     arr[2] = '\0';
+
 }

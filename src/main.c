@@ -38,10 +38,7 @@ int main(int argc, char* argv[]) {
 
         /*DELETE*/
         print_file_config(file_config); 
-        printf("hi\n");
-
         make_files(file_config, argv[ctr]);
-        printf("hi\n");
         free_file_config(&file_config);
 
         printf("\t----------END:file \"%s\"\n", argv[ctr]);
