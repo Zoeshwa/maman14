@@ -198,12 +198,17 @@ void make_files(File_Config *file_config, char* file_name){
     Data_Node *data_head;
     Lable_Node * lable_head;
 
+
     ins_head = get_file_ins_head(file_config);
     data_head = get_data_node_head(file_config);
 
     add_extention(file_name, ob_file_name, "ob");
     add_extention(file_name, ext_file_name, "ext");
     add_extention(file_name, ent_file_name, "ent");
+
+    printf("obj_file_n: %s \t", ob_file_name);
+    printf("ent_file_n: %s \t", ent_file_name);
+    printf("ext_file_n: %s \t", ext_file_name);
     
     ob_file = fopen(ob_file_name, "w+");
     if (ob_file == NULL) {ERROR_CREATING_FILE(ob_file_name);}
@@ -213,7 +218,7 @@ void make_files(File_Config *file_config, char* file_name){
     
     /* mane object file*/
 
-    while (ins_head != NULL){     /*go over ins nodes*/
+    while (ins_head != NULL && get_curr_line_number(file_config) != -1){     /*go over ins nodes*/
 
         bin_to_base64(ob_word, get_ins_binary_representation(ins_head));
         fprintf(ob_file, "%s\n", ob_word);
@@ -240,12 +245,20 @@ void make_files(File_Config *file_config, char* file_name){
     }
 
     lable_head = get_label_node_head(file_config);
+    ins_head = get_file_ins_head(file_config);
+
+
     if (is_ext_file_needed(lable_head)){
         ext_file = fopen(ext_file_name, "w+");
         if (ext_file == NULL) {ERROR_CREATING_FILE(ext_file_name);}
         while (lable_head != NULL){
             if (get_label_symbol_type(lable_head) == EXTERNAL){
-                fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
+                while(ins_head != NULL){
+                    if (strcmp(get_label_name(lable_head), get_ins_label(ins_head)) == 0){
+                        fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
+                    }
+                    ins_head = get_ins_next(ins_head);
+                }
             }
             lable_head = get_label_next(lable_head);
         }
