@@ -4,21 +4,31 @@
 #include <ctype.h>
 #include "string_functions.h"
 
-
-int is_space(char c)
-{
+/* Description: Checks if a character is a space kind (space or tab).
+   Input: The character to be checked.
+   Output: Returns 1 if the character is a space or tab, otherwise returns 0.
+*/
+int is_space(char c) {
  if( c== ' ' || c == '\t')
  	return TRUE;
  return FALSE;
 }
 
-int is_end_line(char c)
-{
+/* Description: Checks if a character is the end of a line, EOF, or null terminator.
+   Input: The character to be checked.
+   Output: Returns 1 if the character is '\n', EOF, or '\0', otherwise returns 0.
+*/
+int is_end_line(char c) {
  if( c== '\n' || c == EOF || c == '\0')
  	return TRUE;
  return FALSE;
 }
 
+/* Description: Returns the sign value of a character ('+' or '-'). It is assumed that a signal is sent which is a sign
+   Input: The character to be checked.
+   Output: Returns 1 for '+' sign, -1 for '-' sign, and 0 for any other character wich is error.
+    If the character is not '+' or '-', an error message is printed.
+*/
 int get_sign_value(char curr_char) {
 
     if (curr_char == '-')
@@ -30,11 +40,18 @@ int get_sign_value(char curr_char) {
     return 0;
 }
 
-/*TODO: move to words*/
+/* Description: Validates whether a parameter is a valid label word based on certain criteria.
+   Input: The parameter to be validated.
+   Output: Returns 1 if the parameter is a valid label, otherwise returns 0.
+           A valid label must meet the following conditions:
+           - Its length is at most 31 characters.
+           - The first character is an alphabet character.
+           - The rest of the characters are either alphabet characters or digits.
+*/
 int is_valid_lable_param(char *param) {
     int i;
 
-    if (strlen(param) >30){
+    if (strlen(param) > MAX_LABLE_LEN){
         return FALSE;
     }
     /* Check if the first character is an alphabet character */
@@ -77,10 +94,16 @@ int get_param_type(char* param){
     return ERR;
 }
 
+/* Description: Checks whether a given parameter is a valid numeric parameter.
+   Input: The parameter to be checked.
+   Output: Returns 1 if the parameter is a valid numeric parameter, otherwise returns 0.
+           A valid numeric parameter may start with '+' or '-' followed by digits only (no dot).
+*/
 int is_valid_number_param(char *param){
     if(*param == '-' || *param == '+'){
         param++;
     }
+
     while (*param != '\0'){
         if (!isdigit(*param)){
             return FALSE;
@@ -90,13 +113,12 @@ int is_valid_number_param(char *param){
     return TRUE;
 }
 
-/*ask ido*/
-int is_Ins(char* word){
-    if (word[strlen(word)-1] == ':')
-        return TRUE;
-    return FALSE;
-}
 
+/* Description: Checks whether a given string consists only of visible characters.
+   Input: The string to be checked.
+   Output: Returns 1 if the string contains only visible characters, otherwise returns 0.
+           Visible characters include printable characters and non-printable characters are considered not visible.
+*/
 int is_visible_chars_only(char * input) {
     char * curr_char;
 
@@ -149,11 +171,19 @@ int is_lable(char* word) {
     return TRUE;
 }
 
-
+/* Description: Checks whether the given input represents an external or entry instruction.
+   Input: The input string to be checked.
+   Output: Returns 1 if the input is an external or entry instruction, otherwise returns 0.
+           An external instruction is identified by the ".extern" keyword and an entry instruction is identified by the ".entry" keyword.
+*/
 int is_external_or_entry_ins(char* input) {
    return (is_type_ins(is_extern_word, input) || is_type_ins(is_entry_word, input));
 }
 
+/* Description: Checks whether the given current word matches the ".extern" keyword.
+   Input: The current word to be checked.
+   Output: Returns 1 if the current word is equal to the ".extern" keyword, otherwise returns 0.
+*/
 int is_extern_word(char* cur_word) {
     if(strcmp(cur_word, ".extern") == 0) {
         return TRUE;
@@ -162,18 +192,39 @@ int is_extern_word(char* cur_word) {
     }
 }
 
+
+/* Description: Checks whether the given input represents a data storage instruction.
+   Input: The input string to be checked.
+   Output: Returns TRUE if the input is a data storage instruction, otherwise returns FALSE.
+           A data storage instruction is identified by the ".data" keyword or the ".string" keyword.
+*/
 int is_data_storage_ins(char * input) {
     return (is_type_ins(is_data_word, input) || is_type_ins(is_word_equals_string, input));
 }
 
+/* Description: Checks whether the given input represents a string storage instruction.
+   Input: The input string to be checked.
+   Output: Returns TRUE if the input is a string storage instruction, otherwise returns FALSE.
+           A string storage instruction is identified by the ".string" keyword.
+*/
 int is_type_storge_string_ins(char * input) {
     return is_type_ins(is_word_equals_string, input);
 }
 
+/* Description: Checks whether the given input represents an external instruction.
+   Input: The input string to be checked.
+   Output: Returns TRUE if the input is an external instruction, otherwise returns FALSE.
+           An external instruction is identified by the ".extern" keyword.
+*/
 int is_extern_ins(char* input) {
    return is_type_ins(is_extern_word, input);
 }
 
+
+/* Description: Checks whether the given current word matches the ".entry" keyword.
+   Input: The current word to be checked.
+   Output: Returns 1 if the current word is equal to the ".entry" keyword, otherwise returns 0.
+*/
 int is_entry_word(char* cur_word) {
     if(strcmp(cur_word, ".entry") == 0) {
         return TRUE;
@@ -182,6 +233,10 @@ int is_entry_word(char* cur_word) {
     }
 }
 
+/* Description: Checks whether the given current word matches the ".data" keyword.
+   Input: The current word to be checked.
+   Output: Returns 1 if the current word is equal to the ".data" keyword, otherwise returns 0.
+*/
 int is_data_word(char* cur_word) {
     if(strcmp(cur_word, ".data") == 0) {
         return TRUE;
@@ -190,6 +245,11 @@ int is_data_word(char* cur_word) {
     }
 }
 
+
+/* Description: Checks whether the given current word matches the ".string" keyword.
+   Input: The current word to be checked.
+   Output: Returns 1 if the current word is equal to the ".string" keyword, otherwise returns 0.
+*/
 int is_word_equals_string(char* cur_word) {
     if(strcmp(cur_word, ".string") == 0) {
         return TRUE;
@@ -198,6 +258,11 @@ int is_word_equals_string(char* cur_word) {
     }
 }
 
+/* Description: Checks whether the given string parameter is a valid string containing visible characters and properly enclosed within double quotes.
+   Input: The string parameter to be checked, and the line number for error reporting.
+   Output: Returns 1 if the string parameter is a valid string, otherwise returns 0.
+           An error message is also generated if the string parameter contains invalid characters or improperly enclosed quotes.
+*/
 int is_valid_string_param(char * word, int line_number) {
     int is_valid;
     is_valid = TRUE;
@@ -215,6 +280,10 @@ int is_valid_string_param(char * word, int line_number) {
     return is_valid;
 }
 
+/* Description: Removes a trailing colon (":") from the given word.
+   Input: The word from which the trailing colon should be removed.
+   Output: The word with the trailing colon removed, if present.
+*/
 void remove_colon_at_end(char* word) {
     size_t len = strlen(word);
     /* Check if the last character is ":" */
@@ -225,12 +294,17 @@ void remove_colon_at_end(char* word) {
     }
 }
 
+/* Description: Checks whether the given input matches a specific instruction type determined by the provided function.
+   Input: A function pointer that takes a string as input and returns an integer (used to check the instruction type), 
+          and the input string to be checked.
+   Output: Returns 1 if the input matches the specified instruction type, otherwise returns 0.
+*/
 int is_type_ins(int (*function)(char*), char* input) {
     char * ptr;
     char cur_word[MAX_LEN + 1];
     int result; 
 
-    result = 0;
+    result = FALSE;
     ptr = input;
 
     get_next_word(cur_word, ptr);
@@ -242,14 +316,16 @@ int is_type_ins(int (*function)(char*), char* input) {
     }
 
     if(function(cur_word)) {
-        result = 1;
+        result = TRUE;
     }
 
     return result;
 }
 
-/*TODO*/
-/* Function to get the array of saved words and the number of elements in the array */
+/* Description: Retrieves the array of predefined saved words and the number of elements in the array.
+   Input: Pointers to store the array of saved words and the number of saved words.
+   Output: Updates the pointers with the array of saved words and the corresponding number of elements.
+*/
 void get_saved_words(const char*** saved_words, int* num_saved_words) {
     /* Simulated implementation - replace this with the actual implementation to get saved words */
     static const char* saved_words_array[] = {
@@ -295,8 +371,10 @@ void get_saved_words(const char*** saved_words, int* num_saved_words) {
     *num_saved_words = sizeof(saved_words_array) / sizeof(saved_words_array[0]);
 }
 
-/* Function to check if a word is a saved word */
-int is_saved_word(const char* word) {
+/* Description: Checks if a given word is a saved word by comparing it to the predefined list of saved words.
+   Input: The word to be checked.
+   Output: Returns TRUE if the word is a saved word, otherwise returns FALSE.
+*/int is_saved_word(const char* word) {
     const char** saved_words;
     int num_saved_words, i;
 
@@ -312,17 +390,10 @@ int is_saved_word(const char* word) {
     return FALSE;
 }
 
-
-/*TODO: DELETE delete this and use isdigit instade*/
-/* checks if a char read is a number 
-int is_number_char(char c){
-    if(isdigit(c)) {
-    	return TRUE;
-    }
-	return FALSE;
-}*/
-
-/* gets a pointer to a number or a '-' and reads the next chars to from the number as a double */
+/* Description: Reads the characters from a pointer to a number or sign char and converts them to an integer. The given word is assumed to be a number
+   Input: A pointer to the characters forming the number.
+   Output: Returns the integer value of the read number.
+*/
 int get_number(char* p){
 	int num, sign, is_valid;
     num = 0;
@@ -331,13 +402,6 @@ int get_number(char* p){
 
 	if(!isdigit(*p)) {
         sign = get_sign_value(*p);
-        /* DELETE
-            if (*p == '-'){
-                sign = -1;
-            } else if(*p != '+') {
-                is_valid = FALSE;
-            }
-        */
         p++;
     }
 
@@ -355,6 +419,10 @@ int get_number(char* p){
 	return num;
 }
 
+/* Description: Checks if a given string represents a valid integer parameter.
+   Input: The string to be checked and the current line number for error reporting.
+   Output: Returns TRUE if the string is a valid integer parameter, otherwise returns FALSE.
+*/
 int is_valid_int_param(char *curr_word ,int curr_line_num) {
     char *p;
     int sign;

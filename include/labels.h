@@ -10,7 +10,6 @@
 #ifndef _LABELS_HEADER_
 #define _LABELS_HEADER_
     
-    #define MAX_LABLE_LEN 31 
 
     typedef struct Lable_Node Lable_Node;
 

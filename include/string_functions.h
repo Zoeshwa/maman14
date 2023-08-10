@@ -21,15 +21,9 @@
     int get_len_words_array(char ** words);
     char* skip_next_word(char* line, char *curr_ptr);
 
-    /*DELETE*/
-    void print_words(char** words, int len);
-
-
     int is_valid_quotes(char* word);
     int is_valid_int_param(char *curr_word,int curr_line_num);
 
-
-    /*chars func*/
     int is_external_or_entry_ins(char* input);
     int is_extern_ins(char* input);
     int is_data_storage_ins(char * input);
@@ -54,8 +48,6 @@
     int get_number(char* p);
     int is_valid_string_param(char * word, int line_number);
     int is_end_line(char c);
-
-    /*TODO: FOR TESTS - NEED TO DEL*/
     int get_sign_value(char curr_char);
 
 #endif

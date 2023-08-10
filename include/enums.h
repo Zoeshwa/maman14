@@ -7,6 +7,8 @@
 
     #define WORD_LEN_BINARY 12 /*Binary word size*/
     #define MAX_LEN 80 /*Line length / length of lines in the file*/
+    #define MAX_LABLE_LEN 31 
+
 
     /*ERRORS*/
 
