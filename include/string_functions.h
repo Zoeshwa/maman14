@@ -25,7 +25,6 @@
     void print_words(char** words, int len);
 
 
-    int is_Ins(char* word);
     int is_valid_quotes(char* word);
     int is_valid_int_param(char *curr_word,int curr_line_num);
 

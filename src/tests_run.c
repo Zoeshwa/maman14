@@ -663,19 +663,6 @@ void run_is_lable_testers()
     END_TEST("run_label_testers");
 }
 
-/*TODO*/
-void run_is_Ins_testers() 
-{
-    START_TEST("run_is_Ins_testers");
-    /*
-    int i;
-    i = 0;
-    tester_O_int_I_charP(is_Ins, "hi:", 1, i++);
-    tester_O_int_I_charP(is_space, "hi", 0, i++);
-    tester_O_int_I_charP(is_space, "5i", 0, i++);*/
-    END_TEST("run_is_Ins_testers");
-}
-
 void run_is_visible_chars_only() {
     int i;
     i = 0;
@@ -902,7 +889,6 @@ void run_words_functions_testers()
 
     /*words fun*/
     run_is_lable_testers();
-    /*run_is_Ins_testers();*/
     run_is_visible_chars_only();
     run_is_valid_quotes();
     run_is_external_or_entry_ins_testers();
