@@ -4,7 +4,7 @@
 
 typedef struct Macro_Node Macro_Node;
 
-void make_am_file(char* orig_name);
+int make_am_file(char* orig_name);
 void add_extention(char* file_original_name, char* with_ext_name, char* ext);
 void insertMacro_Node(struct Macro_Node** head, char* name);
 void update_macro_contect(struct Macro_Node** head, char* line);

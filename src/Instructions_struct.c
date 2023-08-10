@@ -331,7 +331,6 @@ Command get_action(char* input, const Command* commands_list)
 			return com;
 		}
 	}
-	printf("\tUndifined command name\n");
 	com = commands_list[SKIP];
 	return com;
 }

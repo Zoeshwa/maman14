@@ -11,7 +11,7 @@ struct Macro_Node {
     struct Macro_Node* next;
 };
 
-void make_am_file(char* orig_name){
+int make_am_file(char* orig_name){
     FILE* am_file, *src_file;
     char *p;
     char cur_word[MAX_LEN], input[MAX_LEN], file_name[MAX_LEN];
@@ -27,8 +27,8 @@ void make_am_file(char* orig_name){
     add_extention(orig_name, file_name, "as"); /*creates the files acual name*/
     am_file = fopen(cur_word,"w+");
     src_file = fopen(file_name, "r");
-    if (am_file == NULL) {ERROR_CREATING_FILE("am file");}
-    if (src_file == NULL) {ERROR_CREATING_FILE("reading file");}
+    if (am_file == NULL) {ERROR_CREATING_FILE("am file"); return FALSE;}
+    if (src_file == NULL) {ERROR_CREATING_FILE("reading file"); return FALSE;}
 
     /*start reading line by line*/
     while (fgets(input, MAX_LEN, src_file) != NULL) {
@@ -71,6 +71,7 @@ void make_am_file(char* orig_name){
 
     print_macro_list(head);
     free_macro_list(&head);
+    return TRUE;
 }
 
 /* Function to insert a new Macro_Node at the beginning of the list*/
