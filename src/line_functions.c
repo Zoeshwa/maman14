@@ -236,14 +236,3 @@ char* skip_next_word(char* line, char *curr_ptr) {
 	return p;
 }
 
-/*DELETE*/
-void print_words(char** words, int len) {
-    int i;
-
-    printf("\tprint_words:\n");
-    for(i = 0; i< len; i++) {
-        printf("\twords[%d]=|%s|\n", i, words[i]);
-    }
-    printf("\tEND print_words\n");
-
-}
