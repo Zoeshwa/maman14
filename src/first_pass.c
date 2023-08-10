@@ -415,7 +415,7 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     counter_value = get_counter_by_type(file_config, symbol_type);
     remove_colon_at_end(word);
 
-    insert_to_symbol_table(label_head, word, counter_value, symbol_type);
+    insert_to_lable_list(label_head, word, counter_value, symbol_type);
 }
 
 

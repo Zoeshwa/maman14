@@ -15,7 +15,7 @@
     typedef struct Lable_Node Lable_Node;
 
     Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type);
-    void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type);
+    void insert_to_lable_list(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type);
     
     int get_label_counter_value(Lable_Node* new_lable);
     int get_label_is_entry(Lable_Node* new_lable);

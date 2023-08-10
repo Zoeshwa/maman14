@@ -4,19 +4,25 @@
 #include <ctype.h>
 #include "labels.h"
 
+/*A linked list of labels in a file*/
  struct Lable_Node {
-        char* name;
-        int counter_value;
-        Symbol_Type symbol_type;
-        int is_entry; 
+        char* name; /*the lable name*/
+        int counter_value; /*address*/
+        Symbol_Type symbol_type; /*type of the lable*/
+        int is_entry; /*is it entry (1-true, 0-false)*/
         struct Lable_Node* next;
     };
 
-void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
+
+/* Description: Insert a new node into the lables linked list in the head list.
+   Input: A double pointer to the head of the symbol table linked list, a string containing the label name,
+          an integer representing the counter value, and an enum Symbol_Type representing the symbol type.
+*/
+void insert_to_lable_list(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
     Lable_Node* new_node = new_label_node(word, counter_value, symbol_type);
     if (new_node == NULL) {
-        printf("Failed to insert node. Memory allocation error.\n");
+        fprintf(stdout,"Failed to insert node. Memory allocation error.\n");
         return;
     }
     /* Make the new node the new head of the list */
@@ -55,7 +61,6 @@ Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
 
-/*MAYBE- zoe*/
 void set_label_name(Lable_Node* new_lable, char * word) {
     if(new_lable != NULL){
         /* Allocate memory for the name and copy the string*/
@@ -96,7 +101,6 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
         return FALSE; 
     }
 
-    /*TODO: this only if the lable is in the first word !is_lable(word)*/
     /*have only max len for labels and end with ":" and no spaces before ":"*/
     if(strlen(word) > MAX_LABLE_LEN) {
         ERROR_NOT_VALID_LABEL_LEN(line_num);
