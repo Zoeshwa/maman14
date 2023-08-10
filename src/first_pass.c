@@ -70,7 +70,7 @@ File_Config* first_pass(char* am_file_name) {
 
 void handle_new_line(File_Config* file_config, char* line) {
     char * ptr;
-    char cur_word[MAX_LEN];
+    char cur_word[MAX_LEN + 1];
     int is_line_have_symbol; 
     
     ptr = line;

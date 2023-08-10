@@ -227,7 +227,7 @@ void remove_colon_at_end(char* word) {
 
 int is_type_ins(int (*function)(char*), char* input) {
     char * ptr;
-    char cur_word[MAX_LEN];
+    char cur_word[MAX_LEN + 1];
     int result; 
 
     result = 0;

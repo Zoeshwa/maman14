@@ -14,7 +14,7 @@ struct Macro_Node {
 int make_am_file(char* orig_name){
     FILE* am_file, *src_file;
     char *p;
-    char cur_word[MAX_LEN], input[MAX_LEN], file_name[MAX_LEN];
+    char cur_word[MAX_LEN + 1], input[MAX_LEN + 1], file_name[MAX_LEN + 1];
     int mcro;
     struct Macro_Node* head, *head_ptr;
     
@@ -23,6 +23,7 @@ int make_am_file(char* orig_name){
     head_ptr = NULL;
 
     /*open an am file*/
+    /*TODO: calloc the words before*/
     add_extention(orig_name, cur_word, "am");
     add_extention(orig_name, file_name, "as"); /*creates the files acual name*/
     am_file = fopen(cur_word,"w+");

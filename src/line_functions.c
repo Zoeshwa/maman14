@@ -12,8 +12,7 @@ int empty_line(char* line){
 
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
         return TRUE; 
-    }
-    else{
+    } else {
         return FALSE; 
     }
 }
@@ -26,8 +25,7 @@ int comment_line(char* line){
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
         return TRUE; 
-    }
-    else{
+    } else {
         return FALSE;
     }
 }
@@ -42,14 +40,20 @@ char* skip_spaces(char* p){
 	return p;
 }
 
-/*TODO: check why ptr and return value*/
+/* Description: Extracts the next word from a line. It is assumed that no line is longer than 80 characters
+   Input: A pointer to a character array to store the extracted word, and a pointer to the line from which the word is to be extracted.
+   Output: A pointer to the extracted word.
+*/
 char* get_next_word(char* word, char* line){
-    int i = 0;
+    int i;
     char * ptr;
+
+    i = 0;
     ptr = line; 
     ptr = skip_spaces(ptr);
+
     while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t'){
-        word[i] = *ptr;
+        word[i] = *ptr; /*store the char*/
         i++;
         ptr++;
     }
