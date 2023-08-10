@@ -286,11 +286,12 @@ void get_saved_words(const char*** saved_words, int* num_saved_words) {
         "r5",
         "r6",
         "r7",
-        /*TODO: check if really save word*/
         "PSW",
         "PC",
         "data",
         "string",
+        "entry", 
+        "extern"
     };
     *saved_words = saved_words_array;
     *num_saved_words = sizeof(saved_words_array) / sizeof(saved_words_array[0]);

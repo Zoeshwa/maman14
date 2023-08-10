@@ -250,13 +250,12 @@ void make_files(File_Config *file_config, char* file_name){
         ext_file = fopen(ext_file_name, "w+");
         if (ext_file == NULL) {ERROR_CREATING_FILE(ext_file_name);}
         while (lable_head != NULL){
-                printf("lable node lable is: %s, type is: %d\n", get_label_name(lable_head), get_label_symbol_type(lable_head));
+                /*printf("lable node lable is: %s, type is: %d\n", get_label_name(lable_head), get_label_symbol_type(lable_head));*/
             if (get_label_symbol_type(lable_head) == EXTERNAL){
                 ins_head = get_file_ins_head(file_config);
                 while(ins_head != NULL){
-                    printf("ins node lable is: %s\n", get_ins_label(ins_head));
+                    /*printf("ins node lable is: %s\n", get_ins_label(ins_head));*/
                     if (strcmp(get_label_name(lable_head), get_ins_label(ins_head)) == 0){
-                        printf("inside\n");
                         fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_ins_IC_count(ins_head));
                     }
                     ins_head = get_ins_next(ins_head);

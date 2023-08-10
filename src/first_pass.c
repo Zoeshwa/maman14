@@ -132,7 +132,7 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
         update_validity_file_config(&file_config, FALSE);
     }
 
-    /*add to symbol table each label*/
+    /*add to symbol table each label in the command as extern*/
     for(i = 0; words[i] != NULL; i++) {
         handle_label(file_config, words[i], EXTERNAL);
     }
@@ -186,9 +186,9 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
         set_bin_rep_ins_node(head, bin_word);
         make_bin_REG_word(head, 0); 
 
-        /*test*/
+        /*test
         printf("reg_extra_word is: ");
-        print_ins_node(*head);
+        print_ins_node(*head);*/
 
     } else {    
         for (i = 0; i < 2; i++){

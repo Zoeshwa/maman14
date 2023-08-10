@@ -267,7 +267,7 @@ void make_bin_IMM_word(Ins_Node** head, int i){
     bin_are = "00";
     bin_imm = int_to_binary_string(i, 10);
 
-    printf("oprerand is: %d, bin_imm is: %s, bin_are: %s\n", i, bin_imm, bin_are);
+    /*printf("oprerand is: %d, bin_imm is: %s, bin_are: %s\n", i, bin_imm, bin_are);*/
 
     strcat((*head)->bin_rep, bin_imm);
     strcat((*head)->bin_rep, bin_are);
@@ -305,16 +305,16 @@ void make_bin_extra_word(Ins_Node** head, int param){
     type = (*head)->type;
     if (type == IMM){ 
         make_bin_IMM_word(head, (*head)->operrands[param]);
-        printf("imm_extra_word is: ");
+        /*printf("imm_extra_word is: ");*/
 
 
     }else if (type == REG_DIR){ 
         make_bin_REG_word(head,(*head)->operrands[param]);
-        printf("reg_extra_word is: ");
+        /*printf("reg_extra_word is: ");*/
 
     }
 
-    print_ins_node(*head);
+    /*print_ins_node(*head);*/
 }
 
 

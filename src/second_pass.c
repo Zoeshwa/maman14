@@ -30,7 +30,7 @@ void handle_entry(File_Config *file_config, char* line) {
         return;
     }
 
-    /*validate the entry line - have one params*/
+    /*validate the entry line - have only one param*/
     if(len - i != 1) {
         update_validity_file_config(&file_config, FALSE);
         ERROR_MULTIPLE_ARGUMENTS(curr_line_num);
@@ -60,7 +60,6 @@ void second_pass(File_Config *file_config, char* am_file_name) {
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        printf("line: |%s|\n", input);
 
         if (empty_line(input) || comment_line(input)){continue;}
 
@@ -68,7 +67,6 @@ void second_pass(File_Config *file_config, char* am_file_name) {
 
         /*if the line is entry*/
         if(is_type_ins(is_entry_word, input) == TRUE) { 
-            printf("is entry\n");
             handle_entry(file_config, input);
         }
     }
