@@ -48,6 +48,7 @@ File_Config* first_pass(char* am_file_name) {
         }
         
         handle_new_line(file_config, input);
+        printf("after handle line %d\n", get_curr_line_number(file_config) );
         update_line_num_file(&file_config);
     }
 
@@ -70,7 +71,7 @@ void handle_new_line(File_Config* file_config, char* line) {
     
     ptr = line;
 
-    /*get the first word*/
+    /*get the first word - assuming that wehave at least one space between label and the rest of the line*/
     get_next_word(cur_word, ptr);
     ptr = skip_spaces(ptr);
 
@@ -185,10 +186,6 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
         bin_word = (char*)calloc(13,sizeof(char));
         set_bin_rep_ins_node(head, bin_word);
         make_bin_REG_word(head, 0); 
-
-        /*test*/
-        printf("reg_extra_word is: ");
-        print_ins_node(*head);
 
     } else {    
         for (i = 0; i < 2; i++){
@@ -400,6 +397,7 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     Lable_Node **label_head;
 
     label_head = get_file_label_head_address(file_config);
+    
 
     /*validate the starting label*/
     if (!(is_valid_lable(*label_head, word, get_curr_line_number(file_config)))) {

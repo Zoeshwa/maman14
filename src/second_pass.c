@@ -60,7 +60,6 @@ void second_pass(File_Config *file_config, char* am_file_name) {
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        printf("line: |%s|\n", input);
 
         if (empty_line(input) || comment_line(input)){continue;}
 

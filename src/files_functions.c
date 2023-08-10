@@ -106,7 +106,7 @@ Data_Node** get_file_data_tail_address(File_Config* file_config) {
 
 void update_validity_file_config(File_Config** file_config, int validity) {
     if(validity == FALSE && *file_config != NULL)
-        (*file_config)->curr_line_num = FALSE;
+        (*file_config)->is_valid = FALSE;
 }
 
 void update_line_num_file(File_Config** file_config) {

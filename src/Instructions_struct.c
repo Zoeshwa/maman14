@@ -305,16 +305,13 @@ void make_bin_extra_word(Ins_Node** head, int param){
     type = (*head)->type;
     if (type == IMM){ 
         make_bin_IMM_word(head, (*head)->operrands[param]);
-        printf("imm_extra_word is: ");
 
 
     }else if (type == REG_DIR){ 
         make_bin_REG_word(head,(*head)->operrands[param]);
-        printf("reg_extra_word is: ");
 
     }
 
-    print_ins_node(*head);
 }
 
 
