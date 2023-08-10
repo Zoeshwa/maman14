@@ -45,19 +45,19 @@ char* skip_spaces(char* p){
    Output: A pointer to the extracted word.
 */
 char* get_next_word(char* word, char* line){
-    int i;
+    int char_index;
     char * ptr;
 
-    i = 0;
+    char_index = 0;
     ptr = line; 
     ptr = skip_spaces(ptr);
 
     while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t'){
-        word[i] = *ptr; /*store the char*/
-        i++;
+        word[char_index] = *ptr; /*store the char*/
+        char_index++;
         ptr++;
     }
-    word[i] = '\0';
+    word[char_index] = '\0';
     return word;
 }
 
