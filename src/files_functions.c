@@ -218,7 +218,7 @@ void make_files(File_Config *file_config, char* file_name){
     
     /* mane object file*/
 
-    while (ins_head != NULL && get_curr_line_number(file_config) != -1){     /*go over ins nodes*/
+    while (ins_head != NULL && get_ins_line_number(ins_head) != -1){     /*go over ins nodes*/
 
         bin_to_base64(ob_word, get_ins_binary_representation(ins_head));
         fprintf(ob_file, "%s\n", ob_word);
