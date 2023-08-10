@@ -89,6 +89,9 @@ Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
 
+/* Description: Set the name of a label node.
+   Input: A pointer to a label node and a string containing the name to set.
+*/
 void set_label_name(Lable_Node* new_lable, char * word) {
     if(new_lable != NULL){
         /* Allocate memory for the name and copy the string*/
@@ -163,7 +166,9 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
 /*Input: a pointer to a pointer of the node to free*/
 void free_label_node(Lable_Node** node) {
     if (*node != NULL) {
-        free((*node)->name); /* Free the dynamically allocated name */
+        if((*node)->name != NULL) {
+            free((*node)->name); /* Free the dynamically allocated name */
+        }
         free(*node);  /* Free the Lable_Node itself */
         *node = NULL; /* Set the pointer to NULL after freeing */
     }
