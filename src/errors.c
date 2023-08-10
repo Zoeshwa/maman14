@@ -8,6 +8,5 @@ void print_error(char* error_msg, int line_num) {
 }
 
 void print_error_file(char* error_msg, char* file_name) {
-    printf("SSSSS: %s\n", file_name);
     fprintf(stdout,"ERROR: %s - %s\n", error_msg, file_name);
 }

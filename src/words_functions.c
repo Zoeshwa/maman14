@@ -67,9 +67,8 @@ int get_param_type(char* param){
                 }
             } 
         }
-        printf("not a valid reg\n");
     }
-    else if(is_valid_number_param(param)){       
+    else if(is_valid_number_param(param)){ 
         return IMM;
     }
     else if(is_valid_lable_param(param)){
@@ -78,18 +77,17 @@ int get_param_type(char* param){
     return ERR;
 }
 
-/*TODO: zoe already exist*/
 int is_valid_number_param(char *param){
-    if(*param == '-'){
+    if(*param == '-' || *param == '+'){
         param++;
     }
     while (*param != '\0'){
         if (!isdigit(*param)){
-            return 0;
+            return FALSE;
         }
         param++;
     }
-    return 1;
+    return TRUE;
 }
 
 /*ask ido*/

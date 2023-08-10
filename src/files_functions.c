@@ -193,11 +193,14 @@ int is_ext_file_needed(Lable_Node *lable_head){
 /*TODO: ido - need to close after open? every file?*/
 void make_files(File_Config *file_config, char* file_name){
     FILE* ob_file, *ext_file, *ent_file;
-    char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], ob_word[2];
+    char *ob_file_name, *ext_file_name, *ent_file_name, ob_word[2];
     Ins_Node *ins_head;
     Data_Node *data_head;
     Lable_Node * lable_head;
 
+    ob_file_name = (char*) calloc(MAX_LEN, sizeof(char));
+    ext_file_name = (char*) calloc(MAX_LEN, sizeof(char));
+    ent_file_name = (char*) calloc(MAX_LEN, sizeof(char));
 
     ins_head = get_file_ins_head(file_config);
     data_head = get_data_node_head(file_config);
@@ -206,10 +209,8 @@ void make_files(File_Config *file_config, char* file_name){
     add_extention(file_name, ext_file_name, "ext");
     add_extention(file_name, ent_file_name, "ent");
 
-    printf("obj_file_n: %s \t", ob_file_name);
-    printf("ent_file_n: %s \t", ent_file_name);
-    printf("ext_file_n: %s \t", ext_file_name);
-    
+    printf("add_extention ent_file_name: %s\n", ent_file_name);
+
     ob_file = fopen(ob_file_name, "w+");
     if (ob_file == NULL) {ERROR_CREATING_FILE(ob_file_name);}
 
@@ -233,6 +234,7 @@ void make_files(File_Config *file_config, char* file_name){
     lable_head = get_label_node_head(file_config);
     /* make .ext and .ent files*/
     if (is_entry_file_needed(lable_head)){
+        printf("this ent_file name: %s\n", ent_file_name);
         ent_file = fopen(ent_file_name, "w+");
         if (ent_file == NULL) {ERROR_CREATING_FILE(ent_file_name);}
 
@@ -250,13 +252,10 @@ void make_files(File_Config *file_config, char* file_name){
         ext_file = fopen(ext_file_name, "w+");
         if (ext_file == NULL) {ERROR_CREATING_FILE(ext_file_name);}
         while (lable_head != NULL){
-                printf("lable node lable is: %s, type is: %d\n", get_label_name(lable_head), get_label_symbol_type(lable_head));
             if (get_label_symbol_type(lable_head) == EXTERNAL){
                 ins_head = get_file_ins_head(file_config);
                 while(ins_head != NULL){
-                    printf("ins node lable is: %s\n", get_ins_label(ins_head));
                     if (strcmp(get_label_name(lable_head), get_ins_label(ins_head)) == 0){
-                        printf("inside\n");
                         fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_ins_IC_count(ins_head));
                     }
                     ins_head = get_ins_next(ins_head);
@@ -265,6 +264,10 @@ void make_files(File_Config *file_config, char* file_name){
             lable_head = get_label_next(lable_head);
         }
     }
+
+    free(ent_file_name);
+    free(ext_file_name);
+    free(ob_file_name);
 
 }
 

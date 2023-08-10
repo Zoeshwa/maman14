@@ -191,29 +191,29 @@ int is_compatible_types(int acual_type, const int* expected_type){
     int i;
     for (i=0; expected_type[i] != -1; i++){
         if (expected_type[i] == acual_type){
-            return 1;
+            return TRUE;
         }
     }
-    return 0;
+    return FALSE;
 }
 
 int is_valid_com(Command com,char** params, int param_types[2], int line_num){
     int num_of_params,i;
-    num_of_params=0;
+    num_of_params = 0;
 
-    for (i=0; params[i] != NULL ; i++){    /*count num of params in array*/
+    for (i = 0; params[i] != NULL ; i++){    /*count num of params in array*/
         num_of_params+=1;
     }
+
     if (num_of_params != com.num_of_params){
         ERROR_NOT_COMPATIBLE_PARAMS(line_num);
-        return 0;
-    }
-    else if(!is_valid_param_types(com.en, params, num_of_params, param_types)){
-        /*error - type of params is not compatible (printed inside)*/
-        return 0;
+        return FALSE;
+    } else if(!is_valid_param_types(com.en, params, num_of_params, param_types)){
+        ERROR_NOT_VALID_PARAMS(line_num);
+        return FALSE;
     }
     else{
-        return 1;
+        return TRUE;
     }
 }
 

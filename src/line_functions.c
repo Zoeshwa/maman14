@@ -121,7 +121,6 @@ int is_legal_params(char *line, int line_num) {
     
     /*first not space char is comma*/
     if(*p == ',') {
-        printf("1\n");
         ERROR_ILLEGAL_COMMA(line_num);
         return FALSE;
     }

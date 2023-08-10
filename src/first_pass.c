@@ -48,7 +48,6 @@ File_Config* first_pass(char* am_file_name) {
         }
         
         handle_new_line(file_config, input);
-        printf("after handle line %d\n", get_curr_line_number(file_config) );
         update_line_num_file(&file_config);
     }
 
@@ -144,16 +143,16 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
 
 int is_valid_param_types(int com, char** params, int num_of_params, int param_type[2]){
     int i;
-    i=0;
+    i = 0;
     
     /*fill the types of entered params*/
     if (num_of_params == 0){ /*case of no params*/
-        while (i<2){
+        while (i < 2){
             param_type[i] = NONE;
             i++;
         }
     }
-    else if(num_of_params == 1){ /*case of 1 param*/
+    else if(num_of_params == TRUE){ /*case of 1 param*/
         param_type[0] = NONE;
         param_type[1] = get_param_type(params[0]);
     }
@@ -164,7 +163,7 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
     }
     for (i=0; i<2;i++){/*comparing between acual read types to possible action types*/
         if (!is_compatible_types(param_type[i], com_conf[com].operands[i])){
-            return 0;
+            return FALSE;
             }
     } 
     return 1;
@@ -235,17 +234,20 @@ void handle_code_line(File_Config* file_config, char *ptr) {
     ptr += strlen(com.act);
     if (!is_legal_params(ptr, get_curr_line_number(file_config))){ /*checks the syntax and correctness of the parameters*/
         com.en = SKIP;
+        update_validity_file_config(&file_config, FALSE);
+        return;
     }
+
+
+
     params = get_words(ptr);     /*get all parameters in an array*/
 
     if (!is_valid_com(com, params, param_type, get_curr_line_number(file_config))){/*checks if the entered params are compatible with the command's requirements*/
         com.en = SKIP;
-    }
-
-    if (com.en == SKIP){
         update_validity_file_config(&file_config, FALSE);
         return;
     }
+
 
     /*get last node of list*/
     cur_node = &ins_tail;

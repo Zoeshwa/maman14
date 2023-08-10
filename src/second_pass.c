@@ -67,7 +67,6 @@ void second_pass(File_Config *file_config, char* am_file_name) {
 
         /*if the line is entry*/
         if(is_type_ins(is_entry_word, input) == TRUE) { 
-            printf("is entry\n");
             handle_entry(file_config, input);
         }
     }

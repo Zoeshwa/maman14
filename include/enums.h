@@ -24,7 +24,7 @@
     /*ins errors*/
     #define ERROR_NOT_VALID_COMMAND_NAME(curr_line_num) print_error("not a valid command\n", curr_line_num)
     #define ERROR_NOT_COMPATIBLE_PARAMS(curr_line_num) print_error("not compatible num of params between enterd and command parameters\n", curr_line_num)
-
+    #define ERROR_NOT_VALID_PARAMS(curr_line_num) print_error("not a valid parameter/s \n", curr_line_num)
 
     /*commas errors*/
     #define ERROR_ILLEGAL_COMMA(curr_line_num) print_error("Comma in illegal place\n", curr_line_num)
