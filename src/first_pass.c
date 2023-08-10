@@ -180,7 +180,7 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
         update_IC_counter(&file_config, 1);
         set_ins_type(head, REG_DIR);
         set_ins_operand(head, 0, get_reg_num(params[0]));
-        set_ins_operand(head, 0, get_reg_num(params[1]));
+        set_ins_operand(head, 1, get_reg_num(params[1]));
 
         bin_word = (char*)calloc(13,sizeof(char));
         set_bin_rep_ins_node(head, bin_word);
@@ -214,6 +214,9 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
     }
     return head;
 }
+
+
+
 
 void handle_code_line(File_Config* file_config, char *ptr) {
 
@@ -262,10 +265,7 @@ void handle_code_line(File_Config* file_config, char *ptr) {
         update_IC_counter(&file_config, 1);
         make_bin_ins_word(cur_node); 
     }
-
     cur_node = add_extra_ins_words(cur_node, file_config, param_type, params); /*updates the IC list according to number of extra words needed*/
-
-    /*DELETE file_config->ins_tail = *cur_node;*/
     update_ins_tail_file(&file_config, *cur_node);
     free_words(params);
 }

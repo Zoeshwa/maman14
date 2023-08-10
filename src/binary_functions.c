@@ -58,15 +58,6 @@ void bin_to_base64(char **arr, const char* binary_word) {
 
     bin_value = 0;
 
-    printf("binary_word: %s\n", binary_word);
-
-    if(binary_word == NULL) {
-        /*TODO*/
-        printf("Error?\n");
-        *arr = NULL;
-        return;
-    }
-
     for (i = 0; i < 12; i++) {
         bin_value <<= 1;
         if (binary_word[i] == '1') {
@@ -74,14 +65,10 @@ void bin_to_base64(char **arr, const char* binary_word) {
         }
     }
 
-    result[0] = base64_table[(bin_value >> 6) & 0x3F];
-    result[1] = base64_table[bin_value & 0x3F];
-    result[2] = '\0';
+    arr[0] = base64_table[(bin_value >> 6) & 0x3F];
+    arr[1] = base64_table[bin_value & 0x3F];
+    arr[2] = '\0';
 
-    printf("SS: %s\n", result);
-
-    strcpy(*arr, result);
-    free(result);
 }
 
 
