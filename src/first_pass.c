@@ -29,7 +29,7 @@ static const Command com_conf[] = {
 File_Config* first_pass(char* am_file_name) {
     /*initilazed varabels*/
     File_Config* file_config;
-    char input[MAX_LEN];
+    char input[MAX_LEN + 1];
     FILE* am_file;
 
     /*DELETE*/
