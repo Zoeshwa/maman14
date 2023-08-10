@@ -20,6 +20,7 @@
         "main.h": "c",
         "binary_functions.h": "c",
         "string_functions.h": "c",
-        "macros_struct.h": "c"
+        "macros_struct.h": "c",
+        "functional": "c"
     }
 }
