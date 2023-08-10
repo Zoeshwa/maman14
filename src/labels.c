@@ -14,7 +14,7 @@
     };
 
 
-/* Description: Insert a new node into the lables linked list in the head list.
+/* Description: Insert a new node into the lables linked list in the head of the list.
    Input: A double pointer to the head of the symbol table linked list, a string containing the label name,
           an integer representing the counter value, and an enum Symbol_Type representing the symbol type.
 */
@@ -30,33 +30,61 @@ void insert_to_lable_list(Lable_Node** head, char* word, int counter_value, Symb
     *head = new_node;
 }
 
+/* Description: Create a new label node with the given properties.
+   Input: A string containing the label name, an integer representing the counter value,
+          and an enum Symbol_Type representing the symbol type.
+   Output: A pointer to the newly created label node.
+*/
 Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type) {
     Lable_Node* new_lable;
+
     new_lable = (Lable_Node*)malloc(sizeof(Lable_Node));
+
     set_label_name(new_lable, word);
     new_lable->symbol_type = symbol_type;
     new_lable->counter_value = counter_value;
     new_lable->is_entry = FALSE;
     new_lable->next = NULL;
+
     return new_lable;
 }
 
+/* Description: Get the counter value of a label node.
+   Input: A pointer to a label node.
+   Output: The counter value stored in the label node.
+*/
 int get_label_counter_value(Lable_Node* new_lable) {
     return new_lable->counter_value;
 }
 
+/* Description: Get the 'is_entry' status of a label node.
+   Input: A pointer to a label node.
+   Output: The 'is_entry' status (1 true or 0 false) stored in the label node.
+*/
 int get_label_is_entry(Lable_Node* new_lable) {
     return new_lable->is_entry;
 }
 
+/* Description: Get the name of a label node.
+   Input: A pointer to a label node.
+   Output: A pointer to the string containing the label name stored in the label node.
+*/
 char* get_label_name(Lable_Node* new_lable) {
     return new_lable->name;
 }
 
+/* Description: Get the symbol type of a label node.
+   Input: A pointer to a label node.
+   Output: The symbol type (enum Symbol_Type) stored in the label node.
+*/
 Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
     return new_lable->symbol_type;
 }
 
+/* Description: Get the pointer to the next label node in the linked list.
+   Input: A pointer to a label node.
+   Output: A pointer to the next label node in the linked list.
+*/
 Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
