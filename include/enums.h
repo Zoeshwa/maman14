@@ -44,9 +44,9 @@
     #define WARNING_LABEL_NOT_USE(curr_line_num) print_error("WARNING in line %d: This label is not use\n", curr_line_num)
 
      /*files error*/
-    #define ERROR_CREATING_FILE(file_name) print_error_file("creating file", file_name)
-    #define ERROR_WRITING_FILE(file_name) print_error_file("writing file", file_name)
-    #define ERROR_READING_FILE(file_name) print_error_file("reading file", file_name)
+    #define ERROR_CREATING_FILE(file_name) print_error_file("cannot create this file: ", file_name)
+    #define ERROR_WRITING_FILE(file_name) print_error_file("cannot write this file:", file_name)
+    #define ERROR_READING_FILE(file_name) print_error_file("cannot read this file:", file_name)
 
 
     typedef enum Symbol_Type {

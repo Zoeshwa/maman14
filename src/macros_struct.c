@@ -28,7 +28,7 @@ int make_am_file(char* orig_name){
     am_file = fopen(cur_word,"w+");
     src_file = fopen(file_name, "r");
     if (am_file == NULL) {ERROR_CREATING_FILE("am file"); return FALSE;}
-    if (src_file == NULL) {ERROR_CREATING_FILE("reading file"); return FALSE;}
+    if (src_file == NULL) {ERROR_READING_FILE("src file"); return FALSE;}
 
     /*start reading line by line*/
     while (fgets(input, MAX_LEN, src_file) != NULL) {
