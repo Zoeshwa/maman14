@@ -13,7 +13,9 @@ int main(int argc, char* argv[]) {
     for (ctr = 1; ctr < argc; ctr++){
         /*creating an am file*/
         printf("\t----------START:file \"%s\"\n", argv[ctr]);
-        make_am_file(argv[ctr]); 
+        if (make_am_file(argv[ctr]) == FALSE){
+            continue;
+        };
   
          /*open the am file to read*/
         add_extention(argv[ctr], am_file_name, "am");
@@ -38,10 +40,7 @@ int main(int argc, char* argv[]) {
 
         /*DELETE*/
         print_file_config(file_config); 
-        printf("hi\n");
-
         make_files(file_config, argv[ctr]);
-        printf("hi\n");
         free_file_config(&file_config);
 
         printf("\t----------END:file \"%s\"\n", argv[ctr]);

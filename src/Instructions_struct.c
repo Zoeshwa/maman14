@@ -191,29 +191,29 @@ int is_compatible_types(int acual_type, const int* expected_type){
     int i;
     for (i=0; expected_type[i] != -1; i++){
         if (expected_type[i] == acual_type){
-            return 1;
+            return TRUE;
         }
     }
-    return 0;
+    return FALSE;
 }
 
 int is_valid_com(Command com,char** params, int param_types[2], int line_num){
     int num_of_params,i;
-    num_of_params=0;
+    num_of_params = 0;
 
-    for (i=0; params[i] != NULL ; i++){    /*count num of params in array*/
+    for (i = 0; params[i] != NULL ; i++){    /*count num of params in array*/
         num_of_params+=1;
     }
+
     if (num_of_params != com.num_of_params){
         ERROR_NOT_COMPATIBLE_PARAMS(line_num);
-        return 0;
-    }
-    else if(!is_valid_param_types(com.en, params, num_of_params, param_types)){
-        /*error - type of params is not compatible (printed inside)*/
-        return 0;
+        return FALSE;
+    } else if(!is_valid_param_types(com.en, params, num_of_params, param_types)){
+        ERROR_NOT_VALID_PARAMS(line_num);
+        return FALSE;
     }
     else{
-        return 1;
+        return TRUE;
     }
 }
 
@@ -267,15 +267,11 @@ void make_bin_IMM_word(Ins_Node** head, int i){
     bin_are = "00";
     bin_imm = int_to_binary_string(i, 10);
 
-    printf("oprerand is: %d, bin_imm is: %s, bin_are: %s\n", i, bin_imm, bin_are);
-
     strcat((*head)->bin_rep, bin_imm);
     strcat((*head)->bin_rep, bin_are);
     (*head)->bin_rep[13] = '\0';
 
     free(bin_imm);
-
-
 }
 
 void make_bin_REG_word(Ins_Node** head, int i){
@@ -305,16 +301,13 @@ void make_bin_extra_word(Ins_Node** head, int param){
     type = (*head)->type;
     if (type == IMM){ 
         make_bin_IMM_word(head, (*head)->operrands[param]);
-        printf("imm_extra_word is: ");
 
 
     }else if (type == REG_DIR){ 
         make_bin_REG_word(head,(*head)->operrands[param]);
-        printf("reg_extra_word is: ");
 
     }
 
-    print_ins_node(*head);
 }
 
 
@@ -331,7 +324,6 @@ Command get_action(char* input, const Command* commands_list)
 			return com;
 		}
 	}
-	printf("\tUndifined command name\n");
 	com = commands_list[SKIP];
 	return com;
 }

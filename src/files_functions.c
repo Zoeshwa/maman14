@@ -106,7 +106,7 @@ Data_Node** get_file_data_tail_address(File_Config* file_config) {
 
 void update_validity_file_config(File_Config** file_config, int validity) {
     if(validity == FALSE && *file_config != NULL)
-        (*file_config)->curr_line_num = FALSE;
+        (*file_config)->is_valid = FALSE;
 }
 
 void update_line_num_file(File_Config** file_config) {
@@ -193,10 +193,14 @@ int is_ext_file_needed(Lable_Node *lable_head){
 /*TODO: ido - need to close after open? every file?*/
 void make_files(File_Config *file_config, char* file_name){
     FILE* ob_file, *ext_file, *ent_file;
-    char ob_file_name[MAX_LEN], ext_file_name[MAX_LEN], ent_file_name[MAX_LEN], ob_word[2];
+    char *ob_file_name, *ext_file_name, *ent_file_name, ob_word[2];
     Ins_Node *ins_head;
     Data_Node *data_head;
     Lable_Node * lable_head;
+
+    ob_file_name = (char*) calloc(MAX_LEN, sizeof(char));
+    ext_file_name = (char*) calloc(MAX_LEN, sizeof(char));
+    ent_file_name = (char*) calloc(MAX_LEN, sizeof(char));
 
     ins_head = get_file_ins_head(file_config);
     data_head = get_data_node_head(file_config);
@@ -204,7 +208,7 @@ void make_files(File_Config *file_config, char* file_name){
     add_extention(file_name, ob_file_name, "ob");
     add_extention(file_name, ext_file_name, "ext");
     add_extention(file_name, ent_file_name, "ent");
-    
+
     ob_file = fopen(ob_file_name, "w+");
     if (ob_file == NULL) {ERROR_CREATING_FILE(ob_file_name);}
 
@@ -213,7 +217,7 @@ void make_files(File_Config *file_config, char* file_name){
     
     /* mane object file*/
 
-    while (ins_head != NULL){     /*go over ins nodes*/
+    while (ins_head != NULL && get_ins_line_number(ins_head) != -1){     /*go over ins nodes*/
 
         bin_to_base64(ob_word, get_ins_binary_representation(ins_head));
         fprintf(ob_file, "%s\n", ob_word);
@@ -240,16 +244,27 @@ void make_files(File_Config *file_config, char* file_name){
     }
 
     lable_head = get_label_node_head(file_config);
+
     if (is_ext_file_needed(lable_head)){
         ext_file = fopen(ext_file_name, "w+");
         if (ext_file == NULL) {ERROR_CREATING_FILE(ext_file_name);}
         while (lable_head != NULL){
             if (get_label_symbol_type(lable_head) == EXTERNAL){
-                fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_label_counter_value(lable_head));
+                ins_head = get_file_ins_head(file_config);
+                while(ins_head != NULL){
+                    if (strcmp(get_label_name(lable_head), get_ins_label(ins_head)) == 0){
+                        fprintf(ext_file, "%s %d\n", get_label_name(lable_head), get_ins_IC_count(ins_head));
+                    }
+                    ins_head = get_ins_next(ins_head);
+                }
             }
             lable_head = get_label_next(lable_head);
         }
     }
+
+    free(ent_file_name);
+    free(ext_file_name);
+    free(ob_file_name);
 
 }
 
