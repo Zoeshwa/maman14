@@ -267,15 +267,11 @@ void make_bin_IMM_word(Ins_Node** head, int i){
     bin_are = "00";
     bin_imm = int_to_binary_string(i, 10);
 
-    printf("oprerand is: %d, bin_imm is: %s, bin_are: %s\n", i, bin_imm, bin_are);
-
     strcat((*head)->bin_rep, bin_imm);
     strcat((*head)->bin_rep, bin_are);
     (*head)->bin_rep[13] = '\0';
 
     free(bin_imm);
-
-
 }
 
 void make_bin_REG_word(Ins_Node** head, int i){

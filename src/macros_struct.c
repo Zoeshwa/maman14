@@ -69,7 +69,6 @@ int make_am_file(char* orig_name){
     }
     fclose(am_file);
 
-    print_macro_list(head);
     free_macro_list(&head);
     return TRUE;
 }

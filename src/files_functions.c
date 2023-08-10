@@ -209,8 +209,6 @@ void make_files(File_Config *file_config, char* file_name){
     add_extention(file_name, ext_file_name, "ext");
     add_extention(file_name, ent_file_name, "ent");
 
-    printf("add_extention ent_file_name: %s\n", ent_file_name);
-
     ob_file = fopen(ob_file_name, "w+");
     if (ob_file == NULL) {ERROR_CREATING_FILE(ob_file_name);}
 
@@ -234,7 +232,6 @@ void make_files(File_Config *file_config, char* file_name){
     lable_head = get_label_node_head(file_config);
     /* make .ext and .ent files*/
     if (is_entry_file_needed(lable_head)){
-        printf("this ent_file name: %s\n", ent_file_name);
         ent_file = fopen(ent_file_name, "w+");
         if (ent_file == NULL) {ERROR_CREATING_FILE(ent_file_name);}
 

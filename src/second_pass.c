@@ -51,6 +51,8 @@ void second_pass(File_Config *file_config, char* am_file_name) {
     char input[MAX_LEN];
     FILE* am_file;
     Ins_Node *ins_head;
+    Lable_Node *lable_head;
+    int ext_in_use;
 
     printf("\t---------START 2 PASS-----------\n");
     am_file = fopen(am_file_name, "r");
@@ -71,13 +73,34 @@ void second_pass(File_Config *file_config, char* am_file_name) {
         }
     }
         /*go over the IC to update lable adresses*/
-        /*TODO ZOE: MAYBE NEED ADDRESS*/
     while(ins_head != NULL){
             if (get_ins_node_type(ins_head) == DIR){ /*encountered a lable line that doesnt have a bin adress since it wasnt known in first pass */
                 make_bin_DIR_word(&ins_head, file_config);
             }
             ins_head = get_ins_next(ins_head);
     } 
+
+    ins_head = get_file_ins_head(file_config);
+    lable_head = get_label_node_head(file_config);
+
+    while (lable_head != NULL){
+        ext_in_use = 0;
+        if (get_label_symbol_type(lable_head) == EXTERNAL){
+                ins_head = get_file_ins_head(file_config);
+                while(ins_head != NULL){
+                    if (strcmp(get_label_name(lable_head), get_ins_label(ins_head)) == 0){
+                        ext_in_use = 1;
+                        continue;
+                    }
+                    ins_head = get_ins_next(ins_head);
+                }
+                if (ext_in_use == 0){
+                    ERR_EXT_NOT_IN_USE(get_curr_line_number(file_config));
+                    update_validity_file_config(&file_config, FALSE);   
+                }
+        }
+        lable_head = get_label_next(lable_head);
+    }
 
     fclose(am_file);
 

@@ -66,7 +66,6 @@ Data_Node* get_data_node_next(Data_Node* node) {
 void free_data_list(Data_Node** head) {
     Data_Node* current;
     Data_Node* next_node;
-    printf("in free data list\n");
     current = *head;
 
     while (current != NULL) {
