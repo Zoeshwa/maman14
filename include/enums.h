@@ -62,11 +62,11 @@
     } Data_Type;
 
     typedef enum Param_Type {
-        NONE = 0, 
-        IMM = 1, 
-        DIR = 3, 
-        REG_DIR = 5, 
-        ERR = 6
+        NONE = 0,  /*no param*/
+        IMM = 1, /*number*/
+        DIR = 3, /*label*/
+        REG_DIR = 5,  /*register*/
+        ERR = 6 /*there is error*/
     } Param_Type;
     
     typedef enum Coms{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP} Coms;
