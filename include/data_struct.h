@@ -15,7 +15,6 @@
     typedef struct Data_Node Data_Node;
     
     void add_data_node(Data_Node** head, Data_Node** tail, int value, Data_Type data_type);
-
     Data_Node* get_data_node_next(Data_Node* node);
     char* get_bin_rep_data(Data_Node* node);    
     void free_data_list(Data_Node** head);

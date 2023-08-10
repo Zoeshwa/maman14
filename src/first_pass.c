@@ -32,6 +32,7 @@ File_Config* first_pass(char* am_file_name) {
     char input[MAX_LEN];
     FILE* am_file;
 
+    /*DELETE*/
     printf("\t---------START FIRST PASS-----------\n");
     file_config = intialiez_file_config();
     am_file = fopen(am_file_name, "r");
@@ -40,6 +41,7 @@ File_Config* first_pass(char* am_file_name) {
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
+        /*DELETE*/
         printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
 
         if (empty_line(input) || comment_line(input)){
@@ -51,13 +53,16 @@ File_Config* first_pass(char* am_file_name) {
         update_line_num_file(&file_config);
     }
 
-    /*checks if needs to continue process since it might have an error*/
-    if (get_is_valid_file(file_config)){
+    
+    if (get_is_valid_file(file_config)){ /*checks if needs to continue process since it might have an error*/
         /*update counters*/
         update_counters_label_list(get_label_node_head(file_config), get_IC_counter(file_config));
         update_counters_data_list(get_data_node_head(file_config), get_IC_counter(file_config));
     }
+    
+    /*DELETE*/
     printf("\t---------END FIRST PASS-----------\n");
+
     fclose(am_file);
 
     return file_config;

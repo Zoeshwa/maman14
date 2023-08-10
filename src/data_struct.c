@@ -6,8 +6,8 @@
 
 /*Node in a linked list that store the data to storage in the memory*/
 struct Data_Node{
-    int value; /*value of the char or the int to store*/
-    Data_Type data_type; /*string or data*/
+    int value; /* value of the char or the int to store */
+    Data_Type data_type; /* string or data */
     int DC_counter;
     char* binary_rep; /*Representation of the value in binary*/
     struct Data_Node* next;
@@ -18,13 +18,16 @@ struct Data_Node{
 /*Output: a pointer to the new node */
 Data_Node* create_data_node(int value, Data_Type data_type) {
     Data_Node* new_node = (Data_Node*)malloc(sizeof(Data_Node));
+    
     if (new_node == NULL) {
-        fprintf(stderr, "Memory allocation failed for Data_Node.\n");
+        fprintf(stdout, "Memory allocation failed for Data_Node.\n");
         return NULL;
     }
 
+    /*Place the data in the node*/
     new_node->value = value;
     new_node->data_type = data_type;
+    /*Building the binary representation of the value*/
     new_node->binary_rep = int_to_binary_string(value, WORD_LEN_BINARY);    
     new_node->next = NULL;
 
@@ -53,10 +56,16 @@ void add_data_node(Data_Node** head, Data_Node** tail, int value, Data_Type data
     }
 }
 
+/* Description: Retrieve the binary representation of a Data_Node.*/
+/*Input: A pointer to a Data_Node.*/
+/*Output: A pointer to the binary representation (char*) stored in the given Data_Node.*/
 char* get_bin_rep_data(Data_Node* node) {
     return node->binary_rep;
 }
 
+/* Description: Get the next Data_Node in the linked list.*/
+/*Input: A pointer to a Data_Node.*/
+/*Output: A pointer to the next Data_Node in the linked list, or NULL if the given node is the last node.*/
 Data_Node* get_data_node_next(Data_Node* node) {
     return node->next;
 }
@@ -66,8 +75,10 @@ Data_Node* get_data_node_next(Data_Node* node) {
 void free_data_list(Data_Node** head) {
     Data_Node* current;
     Data_Node* next_node;
+
     current = *head;
 
+    /*for each node in the list*/
     while (current != NULL) {
         if(get_bin_rep_data(current) != NULL) {
             free(current->binary_rep);
@@ -81,17 +92,18 @@ void free_data_list(Data_Node** head) {
     *head = NULL;
 }
 
+/*Description: Updating the addresses in the data image - threading the data to the end of the instructions*/
+/*Input: head - a pointer to a pointer of the head of the data_nope list, IC - the num to add to the counters in the data list*/
 void update_counters_data_list(Data_Node* head, int IC) {
     Data_Node* ptr;
+
     ptr = head; /*start with ptr to head of the list*/
-    while (ptr != NULL)
-    {
+
+    while (ptr != NULL) {
         ptr->DC_counter = ptr->DC_counter + IC - 1;
         ptr = get_data_node_next(ptr);
     }
 }
-
-
 
 
 /*DELETE - only for tests*/
