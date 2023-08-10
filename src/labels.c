@@ -190,7 +190,10 @@ void free_lable_list(Lable_Node** head) {
     *head = NULL;
 }
 
-
+/* Description: Marks a label node as an entry label. print error if needed
+   Input: A pointer to the head of the label nodes list, a string containing the label's name, and an integer representing the line number.
+   Output: TRUE (1) if the label was successfully marked as an entry, FALSE (0) otherwise.
+*/
 int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
     Lable_Node *label_node;
 
@@ -205,18 +208,19 @@ int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
             return TRUE;
         }
 
-        /*error the label is extern + entry*/
-        ERROR_LABEL_ENTRY_EXTERN(line_num);
+        ERROR_LABEL_ENTRY_EXTERN(line_num); /*error the label is extern and entry*/
     }
     return FALSE;
 }
 
+/*Description: Updating the addresses in the labels list - threading the data to the end of the instructions*/
+/*Input: head - a pointer to a pointer of the head of the lable list, IC - the num to add to the counters in the data list*/
 void update_counters_label_list(Lable_Node* head, int IC) {
     Lable_Node* ptr;
     ptr = head; /*start with ptr to head of the list*/
     while (ptr != NULL)
     {
-        /*check if the word is a knowen label*/
+        /*if the word is knowen as data update its counter*/
         if(get_label_symbol_type(ptr) == DATA) {
             ptr->counter_value = ptr->counter_value + IC - 1;
         }
