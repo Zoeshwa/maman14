@@ -10,7 +10,7 @@ OBJ_DIR := obj
 BIN_DIR := bin
 
 # Files
-EXECUTABLE := myproject
+EXECUTABLE := assembler
 SOURCES := $(wildcard $(SRC_DIR)/*.c)
 HEADERS := $(wildcard $(INC_DIR)/*.h)
 OBJECTS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SOURCES))
