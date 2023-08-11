@@ -5,14 +5,8 @@
     #include "labels.h"
 #endif
 
-#ifndef _WORDS_HEADER_
-#define _TESTERS_WORDS_HEADER_
-    #include "words_functions.h"
-#endif
-
-#ifndef _LINES_HEADER_
-#define _TESTERS_LINES_HEADER_
-    #include "line_functions.h"
+#ifndef _STRING_HEADER_
+    #include "string_functions.h"
 #endif
 
 #ifndef _DATA_HEADER_
@@ -33,11 +27,15 @@
 #define _TESTERS_HEADER_
 
 
+    #define PASS_PRINT(expected_result) printf("V - PASS: Expected result (%d) matches the actual result.\n", expected_result)
+    #define FAIL_PRINT(test_number, expected_result, result) printf("X - FAIL: test_num (%d), Expected (%d) - Actual result (%d)\n",test_number, expected_result, result)
+
     #define NOT_GOOD printf("----------BAD------------\n")
     #define GOOD printf("----------GOOD------------\n")
     #define START_TEST(fun_name) printf("\nSTART TEST: %s\n", fun_name)
     #define END_TEST(fun_name) printf("END TEST: %s\n", fun_name)
-
+void tester_O_int_I_char(int (*function)(char), char input, int expected_result, int test_number);
+    void tester_O_int_I_charP_int(int (*function)(char*, int), char* input, int expected_result, int test_number);
     void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number);   
     void tester_get_next_word(char * str);
     void tester_file_get_int_fileds(File_Config* file_config, int (*function)(File_Config*), int expected_result, int test_number);
@@ -48,7 +46,6 @@
     void tester_is_valid_lable(Lable_Node* lable_head, char* word,  int expected_result, int test_number);
     void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_type, int test_number);
     void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number);
-    void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number);
     void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number);
     void tester_label_get_label_name(Lable_Node* label, char* word, int expected_result, int test_number);
 
@@ -64,6 +61,7 @@
 
     /*tests - run tests*/
     void run_tester();
+    void run_words_functions_testers();
     void run_is_lable_testers();
     void run_input_testers();
     void run_is_external_or_entry_ins_testers();
@@ -111,7 +109,7 @@
     void print_Lable_Node(Lable_Node* label_node);
     void print_Ins_Node(Ins_Node* ins);
 
-    int compare_Lable_Node(const Lable_Node* node1, const Lable_Node* node2);
+    int compare_Lable_Node(Lable_Node* node1, Lable_Node* node2);
 
     void tester_is_saved_word(char* input, int expected_result, int test_number);
     void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type, Lable_Node* expted_lable_list, int test_number);

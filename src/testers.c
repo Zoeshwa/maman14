@@ -3,9 +3,25 @@
 #include <string.h>
 #include "testers.h"
 
-#define PASS_PRINT(expected_result) printf("V - PASS: Expected result (%d) matches the actual result.\n", expected_result)
-#define FAIL_PRINT(test_number, expected_result, result) printf("X - FAIL: test_num (%d), Expected (%d) - Actual result (%d)\n",test_number, expected_result, result)
+void tester_O_int_I_char(int (*function)(char), char input, int expected_result, int test_number) {
+    int result;
+    result = function(input);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
 
+void tester_O_int_I_charP_int(int (*function)(char*, int), char* input, int expected_result, int test_number) {
+    int result;
+    result = function(input, test_number);
+    if (result == expected_result) {
+        PASS_PRINT(expected_result);
+    } else {
+        FAIL_PRINT(test_number, expected_result, result);
+    }
+}
 
 void tester_O_int_I_charP(int (*function)(char*), char* input, int expected_result, int test_number) {
     int result;
@@ -75,43 +91,16 @@ void print_file_config(File_Config* file_config) {
         return;
     }
     printf("FILE_CONFIG:\n");
-    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n", get_DC_counter(file_config), get_IC_counter(file_config), file_config->curr_line_num, file_config->is_valid);
+    printf("\t DC: %d, IC: %d, curr_line_num:%d, is_valid:%d \n", get_DC_counter(file_config), get_IC_counter(file_config), get_curr_line_number(file_config), get_is_valid_file(file_config));
     printf("\n");
     print_Ins_Node(get_file_ins_head(file_config));
     printf("\n");
-    print_Lable_Node(file_config->label_head);
+    print_Lable_Node(get_label_node_head(file_config));
     printf("\n");
-    print_Data_Node(file_config->data_head);
+    print_Data_Node(get_data_node_head(file_config));
     printf("\n");
 
 }
-
-void print_Ins_Node(Ins_Node* head) {
-    if(head == NULL) {
-        printf("node = NULL\n");
-        return;
-    }
-    printf("INS_NODE: \t");
-    printf("type: %d, \t IC count: %d,\topcode: %d,\tsrc: %d,\t dest: %d,", head->type,head->IC_count, head->opcode, head->operrands[0], head->operrands[1]);
-    if(head->lable != NULL) {
-        printf("\tis_lable: %s,", head->lable);
-    } else {
-        printf("\tis_lable: NULL,");
-    }
-
-    if( head->bin_rep != NULL)
-        printf("\tbin: %s",  head->bin_rep);
-    else
-        printf("\tbin: NULL");
-
-
-    if(head->next  != NULL) {
-        printf("\tnext: \n");
-        print_Ins_Node(head->next);
-    }else {
-        printf("\tnext: NULL\n");
-    }
-} 
 
 void print_Lable_Node(Lable_Node* label_node) {
     if(label_node == NULL) {
@@ -119,13 +108,13 @@ void print_Lable_Node(Lable_Node* label_node) {
         return;
     }
     printf("Lable_Node: ");
-    printf("\tname: %s, ",label_node->name);
-    printf("\tcounter_value: %d,",label_node->counter_value);
-    printf("\tsymbol_type: %d,",label_node->symbol_type);
-    printf("\tis_entry: %d,",label_node->is_entry);
-    if(label_node->next  != NULL) {
+    printf("\tname: %s, ",get_label_name(label_node));
+    printf("\tcounter_value: %d,",get_label_counter_value(label_node));
+    printf("\tsymbol_type: %d,",get_label_symbol_type(label_node));
+    printf("\tis_entry: %d,",get_label_is_entry(label_node));
+    if(get_label_next(label_node) != NULL) {
         printf("\tnext: \n");
-        print_Lable_Node(label_node->next);
+        print_Lable_Node(get_label_next(label_node));
     }else {
         printf("\tnext: NULL\n");
     }
@@ -214,7 +203,7 @@ void tester_new_label_node(char* word, int counter_value, Symbol_Type symbol_typ
 void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) {
     int result;
     set_label_name(new_lable, word);
-    result = strcmp(new_lable->name, word);
+    result = strcmp(get_label_name(new_lable), word);
     if (result == 0) {
         PASS_PRINT(0);
     } else {
@@ -222,22 +211,6 @@ void tester_set_label_name(Lable_Node* new_lable, char * word, int test_number) 
     }
 }
 
-void tester_set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type, int test_number) {
-    int result;
-    result = 0;
-    set_label_types(new_lable, symbol_type);
-
-
-    if(symbol_type == new_lable->symbol_type) {
-        result = 1;
-    } 
-
-    if (result == 1) {
-        PASS_PRINT(1);
-    } else {
-        FAIL_PRINT(test_number, 1, result);
-    }
-}
 
 void tester_label_get_int_fileds(Lable_Node* label, int (*function)(Lable_Node*), int expected_result, int test_number){
     int result;
@@ -307,7 +280,7 @@ void tester_handle_label(File_Config* file_config, char* word, Symbol_Type symbo
     
     handle_label(file_config, word, symbol_type);
 
-    if(compare_Lable_Node(file_config->label_head, expted_lable_list) == 0) {
+    if(compare_Lable_Node(get_label_node_head(file_config), expted_lable_list) == 0) {
         result = 1;
     }
 
@@ -346,16 +319,16 @@ int is_file_config_equals(File_Config* file_config_a, File_Config* file_config_b
 */
 
 /* Function to compare two Lable_Node */
-int compare_Lable_Node(const Lable_Node* node1, const Lable_Node* node2) {
+int compare_Lable_Node(Lable_Node* node1, Lable_Node* node2) {
     if (node1 == NULL && node2 == NULL) {
-        return 1; 
+        return TRUE; 
     } else if (node1 == NULL || node2 == NULL) {
-        return 0; 
+        return FALSE; 
     }
 
-    if (strcmp(node1->name, node2->name) == 0
+    if (strcmp(get_label_name(node1), get_label_name(node2)) == 0
         /* Add comparisons for other fields as needed */
-        && compare_Lable_Node(node1->next, node2->next)) {
+        && compare_Lable_Node(get_label_next(node1), get_label_next(node2))) {
         return 1; 
     }
 
@@ -373,8 +346,8 @@ int is_Ins_List_equals(Ins_Node* ins_head_a, Ins_Node* ins_head_b) {
         if(is_Ins_Node_equals(curr_node_a, curr_node_b) == 0) {
             return 0;
         }
-        curr_node_a = curr_node_a->next;
-        curr_node_b = curr_node_b->next;
+        curr_node_a = get_ins_next(curr_node_a);
+        curr_node_b = get_ins_next(curr_node_b);
     }
     if(curr_node_a == NULL && curr_node_b == NULL) {
         return 1;
@@ -390,10 +363,6 @@ int is_Ins_Node_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
     return 1;
 }
 
-int is_Ins_Node_err_equals(Ins_Node* curr_node_a, Ins_Node* curr_node_b) {
-    /*TODO: more filds*/
-    return 1;
-}
 
 int is_data_Node_equals(Data_Node* curr_node_a, Data_Node* curr_node_b) {
     

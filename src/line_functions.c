@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "line_functions.h"
-
-#define MAX_LENGTH 80
-#define MAX_WORDS 80
-
+#include "string_functions.h"
 
 /*Description: check if a given line is empty*/
 /*Input: a string line (pointer to array of chars)*/
@@ -29,11 +25,10 @@ int comment_line(char* line){
     char* pointer = line;
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
-            printf("\tcomment_line()\n");
-        return 1; /*true*/
+        return TRUE; 
     }
     else{
-        return 0; /*false*/
+        return FALSE;
     }
 }
 
@@ -49,7 +44,7 @@ char* skip_spaces(char* p){
 
 /*TODO: check why ptr and return value*/
 char* get_next_word(char* word, char* line){
-    int i=0;
+    int i = 0;
     char * ptr;
     ptr = line; 
     ptr = skip_spaces(ptr);
@@ -85,11 +80,11 @@ char* get_next_word_no_comma(char* word, char* line){
 /*Input: line - pointer to position in line*/
 /*Output: An array of the extracted words*/
 char** get_words(char *line) {
-    char copy_line[MAX_LENGTH], *p, **words, curr_word[MAX_LENGTH], *tmp;
+    char copy_line[MAX_LEN], *p, **words, curr_word[MAX_LEN], *tmp;
     int i;
     i = 0;
     strcpy(copy_line, line);
-    words = (char**)malloc(MAX_LENGTH * sizeof(char*));
+    words = (char**)malloc(MAX_LEN * sizeof(char*));
     p = copy_line;
     p = skip_spaces(p);
     if (*p == '\0' && *p == EOF && *p == '\n'){
@@ -126,7 +121,6 @@ int is_legal_params(char *line, int line_num) {
     
     /*first not space char is comma*/
     if(*p == ',') {
-        printf("1\n");
         ERROR_ILLEGAL_COMMA(line_num);
         return FALSE;
     }
@@ -168,8 +162,6 @@ int is_legal_params(char *line, int line_num) {
     return TRUE;
 }
 
-
-
 void free_words(char** words) {
     int i, num_words;
     if (words == NULL) {
@@ -210,7 +202,6 @@ int get_len_words_array(char ** words) {
     }
     return num_words;
 }
-
 
 char* skip_next_word(char* line, char *curr_ptr) {
     char* p;

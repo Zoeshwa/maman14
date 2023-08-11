@@ -1,7 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "labels.h"
+
+ struct Lable_Node {
+        char* name;
+        int counter_value;
+        Symbol_Type symbol_type;
+        int is_entry; 
+        struct Lable_Node* next;
+    };
 
 void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
@@ -46,15 +55,13 @@ Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
 
+/*MAYBE- zoe*/
 void set_label_name(Lable_Node* new_lable, char * word) {
-    /* Allocate memory for the name and copy the string*/
-    new_lable->name = (char*)malloc((strlen(word) + 1) * sizeof(char));
-    strcpy(new_lable->name, word);
-}
-
-/*DELETE*/
-void set_label_types(Lable_Node* new_lable, Symbol_Type symbol_type) {
-    new_lable->symbol_type = symbol_type;
+    if(new_lable != NULL){
+        /* Allocate memory for the name and copy the string*/
+        new_lable->name = (char*)malloc((strlen(word) + 1) * sizeof(char));
+        strcpy(new_lable->name, word);
+    }
 }
 
 /*Description: search if a given word is in the lable list*/
@@ -91,14 +98,14 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
 
     /*TODO: this only if the lable is in the first word !is_lable(word)*/
     /*have only max len for labels and end with ":" and no spaces before ":"*/
-    if(strlen(word) > MAX_LABEL_LEN) {
+    if(strlen(word) > MAX_LABLE_LEN) {
         ERROR_NOT_VALID_LABEL_LEN(line_num);
         return FALSE; 
     }
 
     /*all othe chars is valid*/
     for(i = 0; i < strlen(word) - 1; i++) {
-        if(!is_letter_or_num_char(*ptr)){
+        if(!isalnum(*ptr)){
             ERROR_NOT_VALID_LABEL_CHAR(line_num);
             return FALSE;
         }
@@ -157,7 +164,7 @@ int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
     } else {
         /*flag the label_node*/
         if(get_label_symbol_type(label_node) != EXTERNAL) {
-            label_node->is_entry = 1;
+            label_node->is_entry = TRUE;
             return TRUE;
         }
 
@@ -174,7 +181,7 @@ void update_counters_label_list(Lable_Node* head, int IC) {
     {
         /*check if the word is a knowen label*/
         if(get_label_symbol_type(ptr) == DATA) {
-            ptr->counter_value = ptr->counter_value + IC;
+            ptr->counter_value = ptr->counter_value + IC - 1;
         }
         ptr = get_label_next(ptr);
     }

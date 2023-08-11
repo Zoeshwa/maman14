@@ -23,7 +23,8 @@
 
 #ifndef _FIRST_PASS_HEADER_
 #define _FIRST_PASS_HEADER_
-
+    
+    /*#define MAX_LEN 80 */
 
     File_Config* first_pass(char* am_file_name);
     void handle_extren_line(File_Config* file_config,  char* line, char* curr_ptr);

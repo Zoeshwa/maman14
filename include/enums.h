@@ -1,10 +1,12 @@
 #ifndef _ENUMS_HEADER_
 #define _ENUMS_HEADER_
-
-    #define _ENUMS_HEADER_
     
     #define TRUE 1
     #define FALSE 0
+
+    #define WORD_LEN_BINARY 12
+    #define MAX_LEN 80
+
 
     /*ERROR STR*/
    #define ERROR_GENERAL(curr_line_num) print_error("Something went worng", curr_line_num)
@@ -14,6 +16,7 @@
     #define ERROR_LABEL_ALREADY_EXISTS(curr_line_num) print_error("Invalid lable - The label already exists\n", curr_line_num)
     #define ERROR_LABEL_IS_SAVED_WORD(curr_line_num) print_error("Invalid lable - Using a reserved word as a label\n", curr_line_num)
     #define ERROR_NOT_VALID_LABEL_LEN(curr_line_num) print_error("Invalid label - length\n", curr_line_num)
+    #define ERR_EXT_NOT_IN_USE(curr_line_num) print_error("External lable not in use\n", curr_line_num)
 
     /*entry errors*/
     #define ERROR_NOT_FOUND_ENTRY(curr_line_num) print_error("The entry label was not found in the file\n", curr_line_num)
@@ -22,7 +25,7 @@
     /*ins errors*/
     #define ERROR_NOT_VALID_COMMAND_NAME(curr_line_num) print_error("not a valid command\n", curr_line_num)
     #define ERROR_NOT_COMPATIBLE_PARAMS(curr_line_num) print_error("not compatible num of params between enterd and command parameters\n", curr_line_num)
-
+    #define ERROR_NOT_VALID_PARAMS(curr_line_num) print_error("not a valid parameter/s \n", curr_line_num)
 
     /*commas errors*/
     #define ERROR_ILLEGAL_COMMA(curr_line_num) print_error("Comma in illegal place\n", curr_line_num)
@@ -40,6 +43,12 @@
 
     /*Warnning STR*/
     #define WARNING_LABEL_NOT_USE(curr_line_num) print_error("WARNING in line %d: This label is not use\n", curr_line_num)
+
+     /*files error*/
+    #define ERROR_CREATING_FILE(file_name) print_error_file("cannot create this file: ", file_name)
+    #define ERROR_WRITING_FILE(file_name) print_error_file("cannot write this file:", file_name)
+    #define ERROR_READING_FILE(file_name) print_error_file("cannot read this file:", file_name)
+
 
     typedef enum Symbol_Type {
         DATA,
@@ -63,6 +72,6 @@
     typedef enum Coms{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP} Coms;
 
     void print_error(char* error_msg, int line_num);
-
-
+    void print_error_file(char* error_msg, char* file_name);
 #endif
+

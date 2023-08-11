@@ -3,17 +3,15 @@
 #include <string.h>
 #include "macros_struct.h"
 
-#define MAX_LEN 80
-
 /* Macro_Node in macro linked list*/
-typedef struct Macro_Node {
+struct Macro_Node {
     char* name;
     char* content;
     int lines;
     struct Macro_Node* next;
-} Macro_Node;
+};
 
-void make_am_file(char* orig_name){
+int make_am_file(char* orig_name){
     FILE* am_file, *src_file;
     char *p;
     char cur_word[MAX_LEN], input[MAX_LEN], file_name[MAX_LEN];
@@ -29,8 +27,8 @@ void make_am_file(char* orig_name){
     add_extention(orig_name, file_name, "as"); /*creates the files acual name*/
     am_file = fopen(cur_word,"w+");
     src_file = fopen(file_name, "r");
-    if (am_file == NULL) {printf("Error creating am file");}
-    if (src_file == NULL) {printf("Error creating reading file");}
+    if (am_file == NULL) {ERROR_CREATING_FILE("am file"); return FALSE;}
+    if (src_file == NULL) {ERROR_READING_FILE("src file"); return FALSE;}
 
     /*start reading line by line*/
     while (fgets(input, MAX_LEN, src_file) != NULL) {
@@ -51,7 +49,7 @@ void make_am_file(char* orig_name){
 
         head_ptr = search_macro_list(head, cur_word);
         if (head_ptr != NULL){
-            if (fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file)<0) {printf("errorr writing to file\n");}
+            if (fwrite(head_ptr->content, 1, strlen(head_ptr->content), am_file)<0) {ERROR_WRITING_FILE("am file");}
         }
 
         /* beginning of macro def*/
@@ -65,14 +63,14 @@ void make_am_file(char* orig_name){
         /* regular line*/
         else{
             if (fwrite(input, 1, strlen(input), am_file)<0){
-                printf("errorr writing to file\n");
+                ERROR_WRITING_FILE("am file");
             }
         }
     }
     fclose(am_file);
 
-    print_macro_list(head);
     free_macro_list(&head);
+    return TRUE;
 }
 
 /* Function to insert a new Macro_Node at the beginning of the list*/
@@ -96,7 +94,6 @@ void insertMacro_Node(struct Macro_Node** head, char* name) {
         *head = newMacro_Node;
     }
 }
-
 
 void update_macro_contect(struct Macro_Node** head, char* line){
     (*head)->lines += 1;
