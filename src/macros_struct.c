@@ -11,6 +11,7 @@ struct Macro_Node {
     struct Macro_Node* next;
 };
 
+/*Description: Function to create the .am file of a given .as file  */
 int make_am_file(char* orig_name){
     FILE* am_file, *src_file;
     char *p;
@@ -96,6 +97,7 @@ void insertMacro_Node(struct Macro_Node** head, char* name) {
     }
 }
 
+/* Function to update a new Macro_Node at the beginning of the list*/
 void update_macro_contect(struct Macro_Node** head, char* line){
     (*head)->lines += 1;
     (*head)->content = (char*)realloc((*head)->content, MAX_LEN*(*head)->lines*sizeof(char));
@@ -121,6 +123,7 @@ struct Macro_Node* search_macro_list(struct Macro_Node* head, char* name) {
     return NULL;  /* Value not found, return NULL*/
 }
 
+/* Function to free all macro nodes*/
 void free_macro_list(Macro_Node** head) {
     while (*head != NULL) {
         Macro_Node* temp = *head;
