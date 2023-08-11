@@ -4,10 +4,11 @@
 #include <ctype.h>
 #include "Instructions_struct.h"
 
+/*A data structure for a binary word that is part of an instruction parser*/
 struct Ins_Node {
-    int type;
-    int IC_count; 
-    int line_number; 
+    int type; /*type of the word - Param_Type*/
+    int IC_count; /*the adress*/
+    int line_number;  /*for which line in the file its belong*/
     int ARE;
     int opcode; 
     int operrands[2];
