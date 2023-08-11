@@ -12,8 +12,7 @@ int empty_line(char* line){
 
     if (*pointer == '\n' || *pointer == '\0' || *pointer == EOF){
         return TRUE; 
-    }
-    else{
+    } else {
         return FALSE; 
     }
 }
@@ -26,8 +25,7 @@ int comment_line(char* line){
     pointer = skip_spaces(pointer); /*ASK: where it is? */
     if (*pointer == ';'){
         return TRUE; 
-    }
-    else{
+    } else {
         return FALSE;
     }
 }
@@ -42,22 +40,28 @@ char* skip_spaces(char* p){
 	return p;
 }
 
-/*TODO: check why ptr and return value*/
+/* Description: Extracts the next word from a line. It is assumed that no line is longer than 80 characters
+   Input: A pointer to a character array to store the extracted word, and a pointer to the line from which the word is to be extracted.
+   Output: A pointer to the extracted word.
+*/
 char* get_next_word(char* word, char* line){
-    int i = 0;
+    int char_index;
     char * ptr;
+
+    char_index = 0;
     ptr = line; 
     ptr = skip_spaces(ptr);
+
     while(*ptr != '\n' && *ptr != EOF && *ptr != ' ' && *ptr != '\t'){
-        word[i] = *ptr;
-        i++;
+        word[char_index] = *ptr; /*store the char*/
+        char_index++;
         ptr++;
     }
-    word[i] = '\0';
+    word[char_index] = '\0';
     return word;
 }
 
-/*Description: The function extracts from a line the next word in the line and puts it in the word variable.*/
+/*Description: The function extracts from a line the next word in the line and puts it in the word variable. It is assumed that no line is longer than 80 characters*/
 /*Input: word - the varbiale to store the next word, line - pointer to position in line*/
 /*Output: Returns the pointer to the line at the position after the word*/
 char* get_next_word_no_comma(char* word, char* line){
@@ -76,24 +80,27 @@ char* get_next_word_no_comma(char* word, char* line){
     return ptr; /*return the current position in line*/
 }
 
-/*Description: The function extracts the words from the line and returns an array of words. The words are without spaces and without commas.*/
+/*Description: The function extracts the words from the line and returns an array of words.
+    The words are without spaces and without commas.*/
 /*Input: line - pointer to position in line*/
 /*Output: An array of the extracted words*/
 char** get_words(char *line) {
     char copy_line[MAX_LEN], *p, **words, curr_word[MAX_LEN], *tmp;
     int i;
+
     i = 0;
-    strcpy(copy_line, line);
     words = (char**)malloc(MAX_LEN * sizeof(char*));
+
+    strcpy(copy_line, line); /*make copy of the line string*/
     p = copy_line;
     p = skip_spaces(p);
+
     if (*p == '\0' && *p == EOF && *p == '\n'){
         words[i] = NULL;
         return words;
     }
 
-    while (*p != '\0' && *p != EOF && *p != '\n')
-    {
+    while (*p != '\0' && *p != EOF && *p != '\n') {
         if (*p == ','){p++;}
         p = get_next_word_no_comma(curr_word, p);
         if(curr_word[0] != '\0' ) {
@@ -103,10 +110,15 @@ char** get_words(char *line) {
         }
         p = skip_spaces(p);
     }
-    words[i] = NULL;
+
+    words[i] = NULL; /*the last cell in the array is null*/
     return words;
 }
 
+/* Description: given a position of the start of the params in line - validate if the params separation and print errors if needed
+   Input: A pointer to a position of the start of the params in line, line number to print errors if needed.
+   Output: A pointer to the extracted word.
+*/
 int is_legal_params(char *line, int line_num) {
     char copy_line[MAX_LEN], *p;
     int comma_flag;
@@ -152,7 +164,7 @@ int is_legal_params(char *line, int line_num) {
         p = skip_spaces(p);
     }
     if(*p == '\0' || *p == EOF || *p == '\n') {
-        /*the final word?*/
+        /*the final word*/
         if(comma_flag == TRUE) {
             printf("2\n");
             ERROR_ILLEGAL_COMMA(line_num);
@@ -162,6 +174,9 @@ int is_legal_params(char *line, int line_num) {
     return TRUE;
 }
 
+/* Description: Frees memory allocated for an array of strings and the array itself.
+   Input: A double pointer to an array of strings.
+*/
 void free_words(char** words) {
     int i, num_words;
     if (words == NULL) {
@@ -184,7 +199,6 @@ void free_words(char** words) {
 
     free(words); /* Free the array of char pointers*/
     words = NULL;
-
 }
 
 /*Description: The function returns how many words there are in an array of words*/
@@ -200,17 +214,21 @@ int get_len_words_array(char ** words) {
     while (words[num_words] != NULL) {
         num_words++;
     }
+
     return num_words;
 }
 
+/* Description: Skips the next word in the input line.
+   Input: A pointer to the current position in the line, and the entire line itself.
+   Output: A pointer to the position after the skipped word.
+*/
 char* skip_next_word(char* line, char *curr_ptr) {
     char* p;
 
     p = curr_ptr;
 
     p = skip_spaces(p);
-    while (!is_space(*p) && !is_end_line(*p))
-    {
+    while (!is_space(*p) && !is_end_line(*p)) {
         p++;
     }
     p = skip_spaces(p);
@@ -218,14 +236,3 @@ char* skip_next_word(char* line, char *curr_ptr) {
 	return p;
 }
 
-/*DELETE*/
-void print_words(char** words, int len) {
-    int i;
-
-    printf("\tprint_words:\n");
-    for(i = 0; i< len; i++) {
-        printf("\twords[%d]=|%s|\n", i, words[i]);
-    }
-    printf("\tEND print_words\n");
-
-}

@@ -1,14 +1,17 @@
 #ifndef _ENUMS_HEADER_
 #define _ENUMS_HEADER_
     
+    /*Defining macros of true or false for the benefit of code readings*/
     #define TRUE 1
     #define FALSE 0
 
-    #define WORD_LEN_BINARY 12
-    #define MAX_LEN 80
+    #define WORD_LEN_BINARY 12 /*Binary word size*/
+    #define MAX_LEN 80 /*Line length / length of lines in the file*/
+    #define MAX_LABLE_LEN 31 
 
 
-    /*ERROR STR*/
+    /*ERRORS*/
+
    #define ERROR_GENERAL(curr_line_num) print_error("Something went worng", curr_line_num)
 
     /*labels errors*/
@@ -38,37 +41,38 @@
     #define ERROR_INVALID_QUOTES(curr_line_num) print_error("The string must be enclosed in double quotes\n", curr_line_num)
     #define ERROR_MISSING_ARGUMENTS(curr_line_num) print_error("Arguments are missing\n", curr_line_num)
 
-
     #define ERROR_INVALID_NUM(curr_line_num) print_error("Invalid number\n", curr_line_num)
-
-    /*Warnning STR*/
-    #define WARNING_LABEL_NOT_USE(curr_line_num) print_error("WARNING in line %d: This label is not use\n", curr_line_num)
 
      /*files error*/
     #define ERROR_CREATING_FILE(file_name) print_error_file("cannot create this file: ", file_name)
     #define ERROR_WRITING_FILE(file_name) print_error_file("cannot write this file:", file_name)
     #define ERROR_READING_FILE(file_name) print_error_file("cannot read this file:", file_name)
 
+    /*ENUMS*/
 
+    /*enums for label type*/
     typedef enum Symbol_Type {
         DATA,
         CODE,
         EXTERNAL
     }Symbol_Type;
 
+    /*emums for data storage type*/
     typedef enum Data_Type {
         NUM,
         STRING
     } Data_Type;
 
+    /*enums for param type*/
     typedef enum Param_Type {
-        NONE = 0, 
-        IMM = 1, 
-        DIR = 3, 
-        REG_DIR = 5, 
-        ERR = 6
+        NONE = 0,  /*no param*/
+        IMM = 1, /*number*/
+        DIR = 3, /*label*/
+        REG_DIR = 5,  /*register*/
+        ERR = 6 /*there is error*/
     } Param_Type;
     
+    /*commands*/
     typedef enum Coms{MOV, CMP, ADD, SUB, NOT, CLR, LEA, INC, DEC, JMP, BNE, RED, PRN, JSR, RTS, STOP, SKIP} Coms;
 
     void print_error(char* error_msg, int line_num);

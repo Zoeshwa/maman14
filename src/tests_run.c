@@ -359,13 +359,13 @@ void run_tests_is_symbol_already_exist() {
     tester_is_symbol_already_exist(head, "a5$i:", 0, test_number++);
 
     symbol_type = DATA;
-    insert_to_symbol_table(&head, "hi:", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi:", test_number, symbol_type);
 
     tester_is_symbol_already_exist(head, "hi:", 1, test_number++);
     tester_is_symbol_already_exist(head, "hi", 0, test_number++); 
     tester_is_symbol_already_exist(head, "i555ADMSasjd555:", 0, test_number++);
 
-    insert_to_symbol_table(&head, "hi2:", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi2:", test_number, symbol_type);
 
     tester_is_symbol_already_exist(head, "hi:", 1, test_number++); 
     tester_is_symbol_already_exist(head, "hi2:", 1, test_number++);
@@ -373,11 +373,11 @@ void run_tests_is_symbol_already_exist() {
     tester_is_symbol_already_exist(head, "i555ADMSasjd555:", 0, test_number++);
 
     symbol_type = CODE;
-    insert_to_symbol_table(&head, "hi3:", test_number, symbol_type);
-    insert_to_symbol_table(&head, "hi4:", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi3:", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi4:", test_number, symbol_type);
     symbol_type = EXTERNAL;
-    insert_to_symbol_table(&head, "hi5:", test_number, symbol_type);
-    insert_to_symbol_table(&head, "hi6:", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi5:", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi6:", test_number, symbol_type);
 
     tester_is_symbol_already_exist(head, "hi:", 1, test_number++); 
     tester_is_symbol_already_exist(head, "hi2:", 1, test_number++);
@@ -413,13 +413,13 @@ void run_tests_is_valid_lable() {
     tester_is_valid_lable(head, "a5$i:", 0, test_number++);
 
     symbol_type = DATA;
-    insert_to_symbol_table(&head, "hi", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi", test_number, symbol_type);
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
     tester_is_valid_lable(head, "hi", 0, test_number++);
 
     tester_is_valid_lable(head, "i555ADMSasjd555:", 1, test_number++);
-    insert_to_symbol_table(&head, "hi2", test_number, symbol_type);
+    insert_to_lable_list(&head, "hi2", test_number, symbol_type);
 
     tester_is_valid_lable(head, "hi:", 0, test_number++);
     tester_is_valid_lable(head, "hi", 0, test_number++); 
@@ -462,14 +462,14 @@ void run_tests_handle_label() {
     tester_handle_label(file_config, bad_word1, symbol_type, expted_lable_head, test_num++);
     
     /*good word - should be added*/
-    insert_to_symbol_table(&(expted_lable_head), "hi", get_DC_counter(file_config), symbol_type);
+    insert_to_lable_list(&(expted_lable_head), "hi", get_DC_counter(file_config), symbol_type);
     tester_handle_label(file_config, good_word1, symbol_type, expted_lable_head, test_num++);
     /*should not add twice*/
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
 
     symbol_type = CODE;
     strcpy(good_word1, "LOOP:");
-    insert_to_symbol_table(&(expted_lable_head), "LOOP", get_DC_counter(file_config), symbol_type);
+    insert_to_lable_list(&(expted_lable_head), "LOOP", get_DC_counter(file_config), symbol_type);
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
     /*should not add twice*/
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
@@ -480,7 +480,7 @@ void run_tests_handle_label() {
 
     symbol_type = EXTERNAL;
     strcpy(good_word1, "sdjkU:");
-    insert_to_symbol_table(&(expted_lable_head), "sdjkU", get_DC_counter(file_config), symbol_type);
+    insert_to_lable_list(&(expted_lable_head), "sdjkU", get_DC_counter(file_config), symbol_type);
     tester_handle_label(file_config, good_word1, symbol_type,expted_lable_head, test_num++);
 
     symbol_type = CODE;
@@ -661,19 +661,6 @@ void run_is_lable_testers()
     tester_O_int_I_charP(is_lable, "hi", 0, i++);
     tester_O_int_I_charP(is_lable, "5i", 0, i++);
     END_TEST("run_label_testers");
-}
-
-/*TODO*/
-void run_is_Ins_testers() 
-{
-    START_TEST("run_is_Ins_testers");
-    /*
-    int i;
-    i = 0;
-    tester_O_int_I_charP(is_Ins, "hi:", 1, i++);
-    tester_O_int_I_charP(is_space, "hi", 0, i++);
-    tester_O_int_I_charP(is_space, "5i", 0, i++);*/
-    END_TEST("run_is_Ins_testers");
 }
 
 void run_is_visible_chars_only() {
@@ -902,7 +889,6 @@ void run_words_functions_testers()
 
     /*words fun*/
     run_is_lable_testers();
-    /*run_is_Ins_testers();*/
     run_is_visible_chars_only();
     run_is_valid_quotes();
     run_is_external_or_entry_ins_testers();

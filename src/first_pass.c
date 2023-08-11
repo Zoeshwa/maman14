@@ -26,13 +26,18 @@ static const Command com_conf[] = {
         {"skip",0,SKIP, {{NONE,-1}, {NONE,-1}}}
     };
 
+/* Description: Performs the first pass on the am file - opens appropriate file_config - reads line by line and handles it
+   Input: Gets a string with the name of the file to handle
+   Output: Returns the file config
+*/
 File_Config* first_pass(char* am_file_name) {
     /*initilazed varabels*/
     File_Config* file_config;
-    char input[MAX_LEN];
+    char input[MAX_LEN + 1];
     FILE* am_file;
 
-    printf("\t---------START FIRST PASS-----------\n");
+    
+    printf("\t---------START FIRST PASS-----------\n"); /*DELETE*/
     file_config = intialiez_file_config();
     am_file = fopen(am_file_name, "r");
     if (am_file == NULL) {ERROR_READING_FILE("am_file_name");}
@@ -40,7 +45,8 @@ File_Config* first_pass(char* am_file_name) {
 
     /*for each line in the file*/
     while (fgets(input, MAX_LEN, am_file) != NULL){    
-        printf("\tline %d: %s\n", get_curr_line_number(file_config), input);
+        
+        printf("\tline %d: %s\n", get_curr_line_number(file_config), input); /*DELETE*/
 
         if (empty_line(input) || comment_line(input)){
             update_line_num_file(&file_config);
@@ -51,21 +57,25 @@ File_Config* first_pass(char* am_file_name) {
         update_line_num_file(&file_config);
     }
 
-    /*checks if needs to continue process since it might have an error*/
-    if (get_is_valid_file(file_config)){
+    if (get_is_valid_file(file_config)){ /*checks if needs to continue process since it might have an error*/
         /*update counters*/
         update_counters_label_list(get_label_node_head(file_config), get_IC_counter(file_config));
         update_counters_data_list(get_data_node_head(file_config), get_IC_counter(file_config));
     }
-    printf("\t---------END FIRST PASS-----------\n");
+    
+    printf("\t---------END FIRST PASS-----------\n"); /*DELETE*/
+
     fclose(am_file);
 
     return file_config;
 }
 
+/* Description: The function is responsible for classifying the given row and sending it to be handled according to the type
+   Input: file_config of the current file, line - the string of the line
+*/
 void handle_new_line(File_Config* file_config, char* line) {
     char * ptr;
-    char cur_word[MAX_LEN];
+    char cur_word[MAX_LEN + 1];
     int is_line_have_symbol; 
     
     ptr = line;
@@ -103,7 +113,7 @@ void handle_new_line(File_Config* file_config, char* line) {
         if(is_extern_ins(line)) {
             handle_extren_line(file_config, line, ptr);
         }
-        return ;
+        return;
 
     } else{ /* is instruction*/
         if (is_line_have_symbol) {
@@ -113,7 +123,7 @@ void handle_new_line(File_Config* file_config, char* line) {
         }
 
         handle_code_line(file_config, ptr);
-        return ;
+        return;
     }
 }
 
@@ -410,7 +420,7 @@ void handle_label(File_Config* file_config, char* word, Symbol_Type symbol_type)
     counter_value = get_counter_by_type(file_config, symbol_type);
     remove_colon_at_end(word);
 
-    insert_to_symbol_table(label_head, word, counter_value, symbol_type);
+    insert_to_lable_list(label_head, word, counter_value, symbol_type);
 }
 
 

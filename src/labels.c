@@ -4,19 +4,25 @@
 #include <ctype.h>
 #include "labels.h"
 
+/*A linked list of labels in a file*/
  struct Lable_Node {
-        char* name;
-        int counter_value;
-        Symbol_Type symbol_type;
-        int is_entry; 
+        char* name; /*the lable name*/
+        int counter_value; /*address*/
+        Symbol_Type symbol_type; /*type of the lable*/
+        int is_entry; /*is it entry (1-true, 0-false)*/
         struct Lable_Node* next;
     };
 
-void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
+
+/* Description: Insert a new node into the lables linked list in the head of the list.
+   Input: A double pointer to the head of the symbol table linked list, a string containing the label name,
+          an integer representing the counter value, and an enum Symbol_Type representing the symbol type.
+*/
+void insert_to_lable_list(Lable_Node** head, char* word, int counter_value, Symbol_Type symbol_type) {
     /* Create a new node */
     Lable_Node* new_node = new_label_node(word, counter_value, symbol_type);
     if (new_node == NULL) {
-        printf("Failed to insert node. Memory allocation error.\n");
+        fprintf(stdout,"Failed to insert node. Memory allocation error.\n");
         return;
     }
     /* Make the new node the new head of the list */
@@ -24,38 +30,68 @@ void insert_to_symbol_table(Lable_Node** head, char* word, int counter_value, Sy
     *head = new_node;
 }
 
+/* Description: Create a new label node with the given properties.
+   Input: A string containing the label name, an integer representing the counter value,
+          and an enum Symbol_Type representing the symbol type.
+   Output: A pointer to the newly created label node.
+*/
 Lable_Node* new_label_node(char* word, int counter_value, Symbol_Type symbol_type) {
     Lable_Node* new_lable;
+
     new_lable = (Lable_Node*)malloc(sizeof(Lable_Node));
+
     set_label_name(new_lable, word);
     new_lable->symbol_type = symbol_type;
     new_lable->counter_value = counter_value;
     new_lable->is_entry = FALSE;
     new_lable->next = NULL;
+
     return new_lable;
 }
 
+/* Description: Get the counter value of a label node.
+   Input: A pointer to a label node.
+   Output: The counter value stored in the label node.
+*/
 int get_label_counter_value(Lable_Node* new_lable) {
     return new_lable->counter_value;
 }
 
+/* Description: Get the 'is_entry' status of a label node.
+   Input: A pointer to a label node.
+   Output: The 'is_entry' status (1 true or 0 false) stored in the label node.
+*/
 int get_label_is_entry(Lable_Node* new_lable) {
     return new_lable->is_entry;
 }
 
+/* Description: Get the name of a label node.
+   Input: A pointer to a label node.
+   Output: A pointer to the string containing the label name stored in the label node.
+*/
 char* get_label_name(Lable_Node* new_lable) {
     return new_lable->name;
 }
 
+/* Description: Get the symbol type of a label node.
+   Input: A pointer to a label node.
+   Output: The symbol type (enum Symbol_Type) stored in the label node.
+*/
 Symbol_Type get_label_symbol_type(Lable_Node* new_lable) {
     return new_lable->symbol_type;
 }
 
+/* Description: Get the pointer to the next label node in the linked list.
+   Input: A pointer to a label node.
+   Output: A pointer to the next label node in the linked list.
+*/
 Lable_Node* get_label_next(Lable_Node* new_lable) {
     return new_lable->next;
 }
 
-/*MAYBE- zoe*/
+/* Description: Set the name of a label node.
+   Input: A pointer to a label node and a string containing the name to set.
+*/
 void set_label_name(Lable_Node* new_lable, char * word) {
     if(new_lable != NULL){
         /* Allocate memory for the name and copy the string*/
@@ -96,7 +132,6 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
         return FALSE; 
     }
 
-    /*TODO: this only if the lable is in the first word !is_lable(word)*/
     /*have only max len for labels and end with ":" and no spaces before ":"*/
     if(strlen(word) > MAX_LABLE_LEN) {
         ERROR_NOT_VALID_LABEL_LEN(line_num);
@@ -131,7 +166,9 @@ int is_valid_lable(Lable_Node* head, char* word, int line_num){
 /*Input: a pointer to a pointer of the node to free*/
 void free_label_node(Lable_Node** node) {
     if (*node != NULL) {
-        free((*node)->name); /* Free the dynamically allocated name */
+        if((*node)->name != NULL) {
+            free((*node)->name); /* Free the dynamically allocated name */
+        }
         free(*node);  /* Free the Lable_Node itself */
         *node = NULL; /* Set the pointer to NULL after freeing */
     }
@@ -153,7 +190,10 @@ void free_lable_list(Lable_Node** head) {
     *head = NULL;
 }
 
-
+/* Description: Marks a label node as an entry label. print error if needed
+   Input: A pointer to the head of the label nodes list, a string containing the label's name, and an integer representing the line number.
+   Output: TRUE (1) if the label was successfully marked as an entry, FALSE (0) otherwise.
+*/
 int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
     Lable_Node *label_node;
 
@@ -168,18 +208,19 @@ int mark_entry_label(Lable_Node* head, char * label_word, int line_num) {
             return TRUE;
         }
 
-        /*error the label is extern + entry*/
-        ERROR_LABEL_ENTRY_EXTERN(line_num);
+        ERROR_LABEL_ENTRY_EXTERN(line_num); /*error the label is extern and entry*/
     }
     return FALSE;
 }
 
+/*Description: Updating the addresses in the labels list - threading the data to the end of the instructions*/
+/*Input: head - a pointer to a pointer of the head of the lable list, IC - the num to add to the counters in the data list*/
 void update_counters_label_list(Lable_Node* head, int IC) {
     Lable_Node* ptr;
     ptr = head; /*start with ptr to head of the list*/
     while (ptr != NULL)
     {
-        /*check if the word is a knowen label*/
+        /*if the word is knowen as data update its counter*/
         if(get_label_symbol_type(ptr) == DATA) {
             ptr->counter_value = ptr->counter_value + IC - 1;
         }
