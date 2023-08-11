@@ -150,7 +150,7 @@ void handle_extren_line(File_Config* file_config, char* line, char* curr_ptr) {
     free_words(words);
 }
 
-
+/*Description: Given an array of parameters, checks if the parameters enterd are the expected parametes for a certain command*/
 int is_valid_param_types(int com, char** params, int num_of_params, int param_type[2]){
     int i;
     i = 0;
@@ -179,6 +179,7 @@ int is_valid_param_types(int com, char** params, int num_of_params, int param_ty
     return 1;
 }
 
+/*Description: Given entered parameters and parameters type, this function adds instruction nodes according to the types of the parameters*/
 Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int param_type[2], char** params){
     int i, j;
     char* bin_word;
@@ -223,7 +224,7 @@ Ins_Node** add_extra_ins_words(Ins_Node** head, File_Config* file_config, int pa
 
 
 
-
+/*Description: Given a line of type instruction - handles the line. That is, it performs validation and, if necessary, adds words according to the parameters*/
 void handle_code_line(File_Config* file_config, char *ptr) {
 
     char **params;
