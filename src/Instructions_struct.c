@@ -52,6 +52,8 @@ Ins_Node** insert_ins_node(Ins_Node** head, int IC_counter, int curr_line_num) {
     return head;
 }
 
+/*Description: Function to inisialize an instruction node with deafult values*/
+/*Input: head - a pointer to pointer to node to inisialize, com struct of the node, array that holds the parameters type*/
 void intialiez_ins_node(Ins_Node** head, Command com, int param_type[2]) {
 
     (*head)->type = NONE;
@@ -187,7 +189,8 @@ int is_legal_com_name(char* input, int i, const Command* commands_list){
 }
 
 
-
+/*Description: Function to check that a parameter type entered is the same as expected*/
+/*Input: acual_type - the entered parameter, expected_type - expected parameter type */
 int is_compatible_types(int acual_type, const int* expected_type){
     int i;
     for (i=0; expected_type[i] != -1; i++){
@@ -198,6 +201,7 @@ int is_compatible_types(int acual_type, const int* expected_type){
     return FALSE;
 }
 
+/*Description: Function to check if a line is a valid instruction line*/
 int is_valid_com(Command com,char** params, int param_types[2], int line_num){
     int num_of_params,i;
     num_of_params = 0;
@@ -218,10 +222,13 @@ int is_valid_com(Command com,char** params, int param_types[2], int line_num){
     }
 }
 
+/*Description: Function to get the number of a register, when the givven reg is of the form '@r(number)'*/
 int get_reg_num(char* reg){
     return (int)reg[2]-48;
 }
 
+
+/*Description: Function to set the value of the parameter to the node*/
 int set_operand_value(char* param, Ins_Node** head){
     if ((*head)->type == DIR) { /*if parameter is lable - copy it to node*/
         strcpy((*head)->lable,param);
@@ -235,7 +242,7 @@ int set_operand_value(char* param, Ins_Node** head){
 
 }
 
-/*bin functions*/
+/*Description: Function to make the base bin word of an instruction node (word containing the type of parameters and opcode)*/
 void make_bin_ins_word(Ins_Node** head){
     char *bin_src, *bin_opcode, *bin_dest, *bin_are;
 
@@ -263,6 +270,7 @@ void make_bin_ins_word(Ins_Node** head){
         free(bin_opcode);
 }
 
+/*Description: Function to make the extra bin word of an instruction node in case the parameter is a number */
 void make_bin_IMM_word(Ins_Node** head, int i){
     char* bin_are, *bin_imm;
     bin_are = "00";
@@ -275,6 +283,7 @@ void make_bin_IMM_word(Ins_Node** head, int i){
     free(bin_imm);
 }
 
+/*Description: Function to make the extra bin word of an instruction node in case the parameter is register */
 void make_bin_REG_word(Ins_Node** head, int i){
     char *bin_src, *bin_dest, *bin_are;
 
@@ -294,7 +303,7 @@ void make_bin_REG_word(Ins_Node** head, int i){
 
 }
 
-
+/*Description: Function to decide which extra bin word should br maid */
 void make_bin_extra_word(Ins_Node** head, int param){
     int type;
     (*head)->bin_rep = (char*)calloc(13,sizeof(char));
