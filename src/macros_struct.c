@@ -110,6 +110,7 @@ void update_macro_contect(struct Macro_Node** head, char* line){
     strcat( (*head)->content, line);
 }
 
+/* Function to search a Macro_Node in list*/
 struct Macro_Node* search_macro_list(struct Macro_Node* head, char* name) {
     struct Macro_Node* current = head;
 
